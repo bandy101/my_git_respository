@@ -102,3 +102,31 @@ def str2int(s):
     相当于 log(now)  >>> now()
         call now():
         2015-3-25
+因为返回的那个wrapper()函数名字就是'wrapper'，所以，需要把原始函数的__name__等属性复制到wrapper()函数中，否则，有些依赖函数签名的代码执行就会出错。
+不需要编写wrapper.__name__ = func.__name__这样的代码，Python内置的functools.wraps就是干这个事的，所以，一个完整的decorator的写法如下：
+    import functools
+    def log(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('call %s():' % func.__name__)
+            return func(*args, **kw)
+        return wrapper
+    if decorator need a args:
+        def log(text):
+            def decorator(func):
+                import functools
+                @functools.wrap(func)
+                def wrapper(*args,**k):
+                    print()
+                    return func(*args,**k)
+                return  wrapper
+            return decorator
+            callable(func_name) ##查看参数是否可调用
+
+#偏函数
+    调用 functools.partial
+    example:
+        int2 = functools.partial(int,base=2)## int2('10000',2)=16
+        int2('10010') 创建偏函数时，实际上可以接收函数对象、*args和**kw这3个参数，当传入：相当如下：
+            kw = { 'base': 2 }
+            int('10000', **kw)
