@@ -34,6 +34,7 @@ bool FTPClient::SendCommand()//向ftp服务器发送命令
 	//控制连接发送数据
 	int nSend;
 	nSend = send(SocketControl,Command, strlen(Command), 0);
+	cout << "nSend:" << nSend << endl;
 	if (nSend == SOCKET_ERROR) {
 		cout << "Socket send error!" << endl;
 		return false;
@@ -59,7 +60,7 @@ bool FTPClient::DataConnect(char* ServerAddr)
 	}
 	//分离PASV的应答信息
 	char* part[6];
-	if (strtok(ReplyMsg, "("))
+	if (strtok(ReplyMsg,"("))
 	{
 		for (int i = 0; i<5; i++)
 		{
@@ -241,7 +242,7 @@ bool FTPClient::usepass()
 		cout.flush();
 		for (int i = 0; i<MAX_SIZE; i++)
 		{
-			CmdBuf[i] == getch();
+			CmdBuf[i] = getch();
 			if (CmdBuf[i] == '\r')
 			{
 				CmdBuf[i] = '\0';
@@ -288,6 +289,7 @@ void FTPClient::storfile(char* FTPIP)
 			return;
 		}
 	string strPath(CmdBuf);
+	cout << "str:" << strPath << endl;
 	string filepath, filename;
 	int nPos = strPath.rfind('\\');
 	if (-1 != nPos)
@@ -299,6 +301,8 @@ void FTPClient::storfile(char* FTPIP)
 		memset(CmdBuf, 0, MAX_SIZE);
 		memcpy(CmdBuf, filename.data(), strlen(filename.data()));
 	}
+	else
+		cout << "nPos:" << nPos << endl;
 	char Ftpstor[MAX_SIZE];
 	memset(Ftpstor, 0, MAX_SIZE);
 	memcpy(Ftpstor, FTPIP, strlen(FTPIP));
@@ -535,3 +539,36 @@ void FTPClient::quitftp()
 		}
 		WSACleanup();
 	}
+//--输入和转换IP地址
+void FTPClient::subcommend(string& filepath, string& filename)
+{
+	memset(CmdBuf, 0, MAX_SIZE);
+	cin.getline(CmdBuf, MAX_SIZE, '\n');
+	string strPath(CmdBuf);
+	int nPos = strPath.rfind(' ');
+	if (-1 != nPos)
+	{
+		filename = strPath.substr(nPos + 1, strPath.length() - nPos - 1);
+		filepath = strPath.substr(0, nPos);
+	}
+	else
+		filepath = CmdBuf;
+}
+void FTPClient::about()
+{
+	cout << "--------关于FTP客户端控制台版-----------" << endl;
+	cout << "2018-5-23" << endl;
+}
+
+void FTPClient::help()
+{
+	cout << "---------FTPClient控制台版帮助-----------" << endl;
+	cout << "ls 列出所有目录文件\n";
+	cout << "stor 上传文件\n";
+	cout << "retr 下载文件\n";
+	cout << "dele 删除文件\n";
+	cout << "cwd 进入指定目录\n";
+	cout << "help 帮助\n";
+	cout << "about 关于\n";
+	cout << "------------" << endl;
+}

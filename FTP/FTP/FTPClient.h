@@ -20,7 +20,7 @@ public:
 	bool FTPConnection(char* FTPIP, int port);  //建立与Soccket库绑定
 	bool useuser();  // user命令 认证用户名
 	bool usepass(); //pass命令 认证密码
-	bool subcommend(string& filepath, string& filename); //输入和转换IP地址
+	void subcommend(string& filepath, string& filename); //输入和转换IP地址
 	void storfile(char* FTPIP);//上传文件
 	void retrfile(char* FTPIP);//下载文件
 	void listftp(char* FTPIP);  //列出FTP服务器目录
