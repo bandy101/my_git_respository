@@ -11,14 +11,15 @@ int main(int argc,char* argv[])
 	//检测命令含参数
 	if (argc != 2)
 	{
-		cout << "请输入FTP服务器IP地址:";
+		//cout << "请输入FTP服务器IP地址:";
 		string a, b;
-		ftp.subcommend(a, b);
-		while (!(const_cast<char*>(a.c_str())))
-		{
-			cout << "连接失败！请检查正确！" << endl;
-			ftp.subcommend(a, b);
-		}
+		//ftp.subcommend(a, b);
+		//while (!(const_cast<char*>(a.c_str())))
+		//{
+		//	cout << "连接失败！请检查正确！" << endl;
+		//	ftp.subcommend(a, b);
+		//}
+		a = "192.168.1.176";
 		if (ftp.FTPConnection(const_cast<char*>	(a.c_str()), 21))
 		{
 			bool flag;
@@ -34,12 +35,12 @@ int main(int argc,char* argv[])
 				cout << "FTP>";
 				string order, detail;
 				ftp.subcommend(order, detail);
-				if (detail.length() != 0)
+	/*			if (detail.length() != 0)
 				{
 					memset(ftp.CmdBuf, 0, MAX_SIZE);
 					memcpy(ftp.CmdBuf, detail.data(), detail.length());
 					ftp.ishavedetail = true;
-				}
+				}*/
 				if (order == "ls")
 					ftp.listftp(const_cast<char*>(a.c_str()));
 				else if(order == "stor")

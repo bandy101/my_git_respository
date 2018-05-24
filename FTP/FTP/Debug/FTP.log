@@ -1,15 +1,15 @@
-﻿生成启动时间为 2018/5/23 23:25:28。
+﻿生成启动时间为 2018/5/24 23:12:20。
      1>项目“E:\git\my_git_respositroty\FTP\FTP\FTP.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt FTPClient.cpp
          FTPClient.cpp
-     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(93): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(94): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
          c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
-     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(182): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(183): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
          c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
-     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(245): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(246): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
          c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\conio.h(452): note: 参见“getch”的声明
-     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(274): warning C4715: “FTPClient::usepass”: 不是所有的控件路径都返回值
+     1>e:\git\my_git_respositroty\ftp\ftp\ftpclient.cpp(275): warning C4715: “FTPClient::usepass”: 不是所有的控件路径都返回值
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\git\my_git_respositroty\FTP\Debug\FTP.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"E:\git\my_git_respositroty\FTP\Debug\FTP.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\git\my_git_respositroty\FTP\Debug\FTP.lib" /MACHINE:X86 Debug\FTPClient.obj
          Debug\main.obj
@@ -18,4 +18,4 @@
 
 已成功生成。
 
-已用时间 00:00:02.76
+已用时间 00:00:02.07

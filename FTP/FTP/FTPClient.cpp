@@ -4,12 +4,13 @@
 #include <string>
 #include <fstream>
 #include "FTPClient.h"
+unsigned long ul = 1;
 #define MAX_SIZE 4096
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
 //---控制连接接收
 bool FTPClient::RecvReply()  //控制连接接收
-{
+{	
 	int nRecv;
 	memset(ReplyMsg, 0, MAX_SIZE);//memset?
 	nRecv = recv(SocketControl, ReplyMsg, MAX_SIZE, 0);
@@ -46,8 +47,8 @@ bool FTPClient::DataConnect(char* ServerAddr)
 {
 	//发送PASV命令
 	memset(Command, 0, MAX_SIZE);
-	memcpy(Command, "PASV", strlen("PASV"));
-	memcpy(Command+strlen("PASV"), "\r\n", 2);
+	memcpy(Command, "PASV ", strlen("PASV "));
+	memcpy(Command+strlen("PASV "), "\r\n", 2);
 	if (!SendCommand())
 		return false;
 	//获取PASV命令的应答信息
@@ -210,9 +211,9 @@ bool FTPClient::useuser()
 	memset(CmdBuf, 0, MAX_SIZE);
 	cin.getline(CmdBuf, MAX_SIZE, '\n');
 	memset(Command, 0, MAX_SIZE);
-	memcpy(Command, "USER", strlen("USER"));
-	memcpy(Command + strlen("USER"), CmdBuf, strlen(CmdBuf));
-	memcpy(Command + strlen("USER") + strlen(CmdBuf), "\r\n", 2);
+	memcpy(Command, "USER ", strlen("USER "));
+	memcpy(Command + strlen("USER "), CmdBuf, strlen(CmdBuf));
+	memcpy(Command + strlen("USER ") + strlen(CmdBuf), "\r\n", 2);
 	cout << "Command:" << Command << endl;
 	if (!SendCommand())
 		return false;
@@ -253,9 +254,9 @@ bool FTPClient::usepass()
 		}
 		cout << endl;
 		memset(Command, 0, MAX_SIZE);
-		memcpy(Command, "PASS", strlen("PASS"));
-		memcpy(Command + strlen("PASS"), CmdBuf, strlen(CmdBuf));
-		memcpy(Command + strlen("PASS") + strlen(CmdBuf), "\r\n", 2);
+		memcpy(Command, "PASS ", strlen("PASS "));
+		memcpy(Command + strlen("PASS "), CmdBuf, strlen(CmdBuf));
+		memcpy(Command + strlen("PASS ") + strlen(CmdBuf), "\r\n", 2);
 		if (!SendCommand())
 			return false;
 		//获取PASS命令的应答信息
@@ -275,14 +276,14 @@ bool FTPClient::usepass()
 //--上传文件
 void FTPClient::storfile(char* FTPIP)
 {
-	if (!ishavedetail)
-	{
+	//if (!ishavedetail)
+	//{
 		cout << "请输入上传文件名:";
 		memset(CmdBuf, 0, MAX_SIZE);
 		cin.getline(CmdBuf, MAX_SIZE, '\n');
-	}
+	//}
 	ifstream f2;
-	f2.open(CmdBuf, ios::in);
+	f2.open(CmdBuf, ios::binary);
 		if (!f2)
 		{
 			cout << "Cannot open file!" << endl;
@@ -309,9 +310,9 @@ void FTPClient::storfile(char* FTPIP)
 	if (!DataConnect(Ftpstor))
 		return;
 	memset(Command, 0, MAX_SIZE);
-	memcpy(Command, "STOR", strlen("STOR"));
-	memcpy(Command + strlen("STOR"), CmdBuf, strlen(CmdBuf));
-	memcpy(Command + strlen("STOR") + strlen(CmdBuf), "\r\n", 2);
+	memcpy(Command, "STOR ", strlen("STOR "));
+	memcpy(Command + strlen("STOR "), CmdBuf, strlen(CmdBuf));
+	memcpy(Command + strlen("STOR ") + strlen(CmdBuf), "\r\n", 2);	
 	if (!SendCommand())
 		return;
 	//获取STOR 上传文件命令的应答信息
@@ -338,7 +339,8 @@ void FTPClient::storfile(char* FTPIP)
 			closesocket(SocketData);
 			return;
 		}
-		break;
+		if (f2.eof())
+			break;
 	}
 	f2.close();
 	closesocket(SocketData);

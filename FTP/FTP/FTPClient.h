@@ -36,6 +36,7 @@ private:
 	int nReplycode;
 	bool bConnected;
 	bool buser;
+	SOCKET SocketControl_;
 	SOCKET SocketControl;
 	SOCKET SocketData;
 };
