@@ -4,18 +4,26 @@
 #include <string>
 #include <fstream>
 #include "FTPClient.h"
+<<<<<<< HEAD
 unsigned long ul = 1;
+=======
+#include <time.h>
+>>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e
 #define MAX_SIZE 4096
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
+
 //---控制连接接收
 bool FTPClient::RecvReply()  //控制连接接收
 {	
 	int nRecv;
-	memset(ReplyMsg, 0, MAX_SIZE);//memset?
-	nRecv = recv(SocketControl, ReplyMsg, MAX_SIZE, 0);
+	memset(ReplyMsg, 0, MAX_SIZE);// 数组ReplyMsg置0
+	cout << "string 1 ReplyMsg int :" << ReplyMsg << endl;
+	nRecv = recv(SocketControl, ReplyMsg, MAX_SIZE, 0);//返回实际读入缓冲的数据的字节数
+	cout << "string 2 ReplyMsg int :" << ReplyMsg << endl;
 	if (nRecv == SOCKET_ERROR)
 	{
+		
 		cout << "Socket receive error!" << endl;
 		closesocket(SocketControl);
 		return false;
@@ -25,7 +33,9 @@ bool FTPClient::RecvReply()  //控制连接接收
 		char *ReplyCodes = new char[3];
 		memset(ReplyCodes, 0, 3);
 		memcpy(ReplyCodes, ReplyMsg, 3);
-		nReplycode = atoi(ReplyCodes); //??	
+		nReplycode = atoi(ReplyCodes); //将字符串转换为整数 220：main first load return value
+		
+		
 	}
 	return true;
 }
@@ -34,7 +44,8 @@ bool FTPClient::SendCommand()//向ftp服务器发送命令
 {
 	//控制连接发送数据
 	int nSend;
-	nSend = send(SocketControl,Command, strlen(Command), 0);
+	printf("%s", Command);
+	nSend = send(SocketControl,Command, strlen(Command), 0);//flag =0 ->write
 	cout << "nSend:" << nSend << endl;
 	if (nSend == SOCKET_ERROR) {
 		cout << "Socket send error!" << endl;
@@ -169,23 +180,31 @@ bool FTPClient::FTPConnection(char* FTPIP, int port)
 		return false;
 	}
 	//创建控制连接Socket
-	SocketControl = socket(AF_INET, SOCK_STREAM, 0);
-	if (SocketControl == INVALID_SOCKET)
+	//int socket(int domain, int type, int protocol);socket() 只是返回你以后在系统调用种可能用到的 socket 描述符
+	SocketControl = socket(AF_INET, SOCK_STREAM, 0); //AF_INET指明使用TCP / IP协议族；
+	if (SocketControl == INVALID_SOCKET)//SOCK_STREAM, IPPROTO_TCP具体指明使用TCP协议  
 	{
 		cout << "Creat socket error!" << endl;
 		return false;
 	}
 	//定义Socket地址和端口
-	sockaddr_in serveraddr;
-	memset(&serveraddr, 0, sizeof(serveraddr));
-	serveraddr.sin_family = AF_INET;
-	serveraddr.sin_port = htons(port);//端口
-	serveraddr.sin_addr.S_un.S_addr = inet_addr(FTPIP);//地址
-													   //向FTP服务器发送Connect请求
+	sockaddr_in serveraddr;  //结构体
+	memset(&serveraddr, 0, sizeof(serveraddr));  //
+	serveraddr.sin_family = AF_INET;   //声明格式  地址家族 host byte order
+	//端口.sin_port = 0（o）; /* 随机选择一个没有使用的端口 */
+	serveraddr.sin_port = htons(port);//端口	将它从本机字节顺序 (Host Byte Order) 转换过来。【short, network byte order】
+	//htons(0) 随机一个没有使用的端口
+	serveraddr.sin_addr.S_un.S_addr = inet_addr(FTPIP);//指明连接服务器的IP地址     //inet_addr(),将IP地址从点数格式转换成无符号长整型。
+	//
+	//bzero(&(dest_addr.sin_zero), ; /* zero the rest of the struct */		//向FTP服务器发送Connect请求
+	//inet_addr()返回的地址已经是网络字节格式，所以你无需再调用 函数htonl()。 
+	//将一个in_addr结构体输出成点数格式 inet_ntoa 和inet_addr 功能相反	
 	cout << "FTP >Control connect..."<<endl;
 		int nConnect;
-	nConnect = connect(SocketControl, (sockaddr*)&serveraddr, sizeof(serveraddr));
-	if (nConnect == SOCKET_ERROR) {
+		////connect 和bind函数类似功能将套接字和机器上一定端口相连
+		//int bind(int sockfd, struct sockaddr *my_addr, int addrlen);
+	nConnect = connect(SocketControl, (sockaddr*)&serveraddr, sizeof(serveraddr)); //bind
+	if (nConnect <=SOCKET_ERROR) {
 		cout << endl << "Server connect error!" << endl;
 		return false;
 	}
@@ -193,7 +212,7 @@ bool FTPClient::FTPConnection(char* FTPIP, int port)
 	if (RecvReply())
 	{
 		if (nReplycode == 220)
-			cout << ReplyMsg << endl;
+			cout << "ReplyMsg:"<<ReplyMsg << endl;
 		else
 		{
 			cout << "Connet response error!" << endl;
@@ -292,7 +311,7 @@ void FTPClient::storfile(char* FTPIP)
 	string strPath(CmdBuf);
 	cout << "str:" << strPath << endl;
 	string filepath, filename;
-	int nPos = strPath.rfind('\\');
+	int nPos = strPath.rfind(':');
 	if (-1 != nPos)
 	{
 		filename = strPath.substr(nPos + 1, strPath.length() - nPos - 1);
@@ -312,7 +331,11 @@ void FTPClient::storfile(char* FTPIP)
 	memset(Command, 0, MAX_SIZE);
 	memcpy(Command, "STOR ", strlen("STOR "));
 	memcpy(Command + strlen("STOR "), CmdBuf, strlen(CmdBuf));
+<<<<<<< HEAD
 	memcpy(Command + strlen("STOR ") + strlen(CmdBuf), "\r\n", 2);	
+=======
+	memcpy(Command + strlen("STOR ") + strlen(CmdBuf), "\r\n", 2);
+>>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e
 	if (!SendCommand())
 		return;
 	//获取STOR 上传文件命令的应答信息
@@ -324,6 +347,7 @@ void FTPClient::storfile(char* FTPIP)
 		{
 			cout << "STOR response error!" << endl;
 			closesocket(SocketControl);
+			//Sleep(1);
 			return;
 		}
 	}
@@ -331,16 +355,37 @@ void FTPClient::storfile(char* FTPIP)
 	while (true)
 	{
 		memset(ListBuf2, 0, MAX_SIZE);
-		f2.read(ListBuf2, MAX_SIZE);
-		int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
-		if (nStor == SOCKET_ERROR)
+		if (!f2.eof())
 		{
-			cout << endl << "Socket send error!" << endl;
-			closesocket(SocketData);
-			return;
+			f2.read(ListBuf2, MAX_SIZE);
+			int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
+
+			if (nStor == SOCKET_ERROR)
+			{
+				cout << endl << "Socket send error!" << endl;
+				closesocket(SocketData);
+				return;
+			}
+			if (RecvReply())
+			{
+				if (nReplycode == 226)
+					cout << ReplyMsg << endl;
+				else
+				{
+					cout << "STOR response error!" << endl;
+					closesocket(SocketControl);
+					return;
+				}
+			}
 		}
+<<<<<<< HEAD
 		if (f2.eof())
 			break;
+=======
+		else
+			break;
+		//break;
+>>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e
 	}
 	f2.close();
 	closesocket(SocketData);
@@ -430,20 +475,21 @@ void FTPClient::retrfile(char* FTPIP)
 }
 //--FTP发送list命令
 void FTPClient::listftp(char* FTPIP)
-{
+{	
 	char FtpServer[MAX_SIZE];
 	memset(FtpServer, 0, MAX_SIZE);
 	memcpy(FtpServer, FTPIP, strlen(FTPIP));
 	if (!DataConnect(FtpServer))
 		return;
 	memset(Command, 0, MAX_SIZE);
-	memcpy(Command, "LIST", strlen("LIST"));
-	memcpy(Command + strlen("LIST"), "\r\n", 2);
+	memcpy(Command, "LIST ", strlen("LIST "));
+	memcpy(Command + strlen("LIST "), "\r\n", 2);
 	if (!SendCommand())
 		return;
 	//获取LIST命令的应答信息
+	Sleep(1);
 	if (RecvReply())
-	{
+	{	
 		//125:Data connection alreadlyopen;transfer staring.
 		//150:File status okay,about to data connection;
 		//226:closing data connection ;150:Opening ASCII mode data connection for/bin/ls
@@ -453,6 +499,7 @@ void FTPClient::listftp(char* FTPIP)
 		{
 			cout << "LIST response error!" << endl;
 			closesocket(SocketControl);
+			//Sleep(1);
 			return;
 		}
 	}

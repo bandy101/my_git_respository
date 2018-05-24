@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿生成启动时间为 2018/5/24 23:12:20。
      1>项目“E:\git\my_git_respositroty\FTP\FTP\FTP.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
@@ -19,3 +20,16 @@
 已成功生成。
 
 已用时间 00:00:02.07
+=======
+﻿cl : 命令行 warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
+  FTPClient.cpp
+FTPClient.cpp(101): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
+FTPClient.cpp(193): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
+FTPClient.cpp(261): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\conio.h(452): note: 参见“getch”的声明
+g:\git\my_git_respository\ftp\ftp\ftpclient.cpp(290): warning C4715: “FTPClient::usepass”: 不是所有的控件路径都返回值
+  FTP.vcxproj -> G:\git\my_git_respository\FTP\Debug\FTP.exe
+  FTP.vcxproj -> G:\git\my_git_respository\FTP\Debug\FTP.pdb (Full PDB)
+>>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e

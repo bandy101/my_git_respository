@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc,char* argv[])
 {	
-	SetConsoleTitleA("FTP客户端控制台版 v1.0");
+	SetConsoleTitleA("FTP客户端控制台 v1.0_sfe");
 	FTPClient ftp;
 	//检测命令含参数
 	if (argc != 2)
@@ -19,7 +19,11 @@ int main(int argc,char* argv[])
 		//	cout << "连接失败！请检查正确！" << endl;
 		//	ftp.subcommend(a, b);
 		//}
+<<<<<<< HEAD
 		a = "192.168.1.176";
+=======
+		a = "192.168.96.1";
+>>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e
 		if (ftp.FTPConnection(const_cast<char*>	(a.c_str()), 21))
 		{
 			bool flag;
@@ -40,7 +44,12 @@ int main(int argc,char* argv[])
 					memset(ftp.CmdBuf, 0, MAX_SIZE);
 					memcpy(ftp.CmdBuf, detail.data(), detail.length());
 					ftp.ishavedetail = true;
+<<<<<<< HEAD
 				}*/
+=======
+					printf("ishave = true detail:%s", detail);
+				}
+>>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e
 				if (order == "ls")
 					ftp.listftp(const_cast<char*>(a.c_str()));
 				else if(order == "stor")
@@ -76,6 +85,11 @@ int main(int argc,char* argv[])
 					cout << "FTP>无此命令！查看help命令帮助" << endl;
 					ftp.ishavedetail = false;
 				}
+				//
+				//if (!ftp.FTPConnection(const_cast<char*>	(a.c_str()), 21))
+				//{
+				//	break;
+				//}
 			}
 		}
 	}
