@@ -18,10 +18,10 @@ public:
 	bool mkdirectory();//FTP服务器发送MKD命令，创建目录
 	bool changedir(); //发送CWD命令，改变目录
 	bool FTPConnection(char* FTPIP, int port);  //建立与Soccket库绑定
-	bool useuser();  // user命令 认证用户名
-	bool usepass(); //pass命令 认证密码
+	bool useuser(char *user);  // user命令 认证用户名
+	bool usepass(char *pwd); //pass命令 认证密码
 	void subcommend(string& filepath, string& filename); //输入和转换IP地址
-	void storfile(char* FTPIP);//上传文件
+	void storfile(char* FTPIP,char* path);//上传文件
 	void retrfile(char* FTPIP);//下载文件
 	void listftp(char* FTPIP);  //列出FTP服务器目录
 	void deletefile(); //删除文件
@@ -32,10 +32,11 @@ public:
 	char CmdBuf[MAX_SIZE];
 	char Command[MAX_SIZE];
 	char ReplyMsg[MAX_SIZE];
-private:
+public:
 	int nReplycode;
 	bool bConnected;
 	bool buser;
+	string error ="PARENT";
 	SOCKET SocketControl;
 	SOCKET SocketData;
 };

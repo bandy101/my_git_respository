@@ -1,6 +1,6 @@
 #include <iostream>
 #include "FTPClient.h"
-
+#include "../FTPMFC/MFCFTPClient.hpp"
 using namespace std;
 
 
@@ -20,8 +20,11 @@ int main(int argc,char* argv[])
 		//	ftp.subcommend(a, b);
 		//}
 		a = "192.168.96.1";
+		cout << "a:" << a << endl;
+		cout << "const_cast<char*>" << const_cast<char*>(a.c_str())<< endl;
 		if (ftp.FTPConnection(const_cast<char*>	(a.c_str()), 21))
-		{
+		{	
+			printf("a.c_str%s", a.c_str());
 			bool flag;
 			do
 			{
@@ -35,17 +38,17 @@ int main(int argc,char* argv[])
 				cout << "FTP>";
 				string order, detail;
 				ftp.subcommend(order, detail);
-				if (detail.length() != 0)
-				{
-					memset(ftp.CmdBuf, 0, MAX_SIZE);
-					memcpy(ftp.CmdBuf, detail.data(), detail.length());
-					ftp.ishavedetail = true;
-					printf("ishave = true detail:%s", detail);
-				}
+				//if (detail.length() != 0)
+				//{
+				//	memset(ftp.CmdBuf, 0, MAX_SIZE);
+				//	memcpy(ftp.CmdBuf, detail.data(), detail.length());
+				//	ftp.ishavedetail = true;
+				//	printf("ishave = true detail:%s", detail);
+				//}
 				if (order == "ls")
 					ftp.listftp(const_cast<char*>(a.c_str()));
 				else if(order == "stor")
-					ftp.storfile(const_cast<char*>(a.c_str()));
+					ftp.storfile(const_cast<char*>(a.c_str()),NULL);
 				else if(order == "retr")
 					ftp.retrfile(const_cast<char*>(a.c_str()));
 				else if(order == "cwd")

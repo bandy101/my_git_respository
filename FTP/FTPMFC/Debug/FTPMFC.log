@@ -1,0 +1,8 @@
+﻿cl : 命令行 warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
+  FTPMFCDlg.cpp
+g:\git\my_git_respository\ftp\ftpmfc\../FTP/FTPClient.cpp(106): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
+g:\git\my_git_respository\ftp\ftpmfc\../FTP/FTPClient.cpp(202): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
+  FTPMFC.vcxproj -> G:\git\my_git_respository\FTP\Debug\FTPMFC.exe
+  FTPMFC.vcxproj -> G:\git\my_git_respository\FTP\Debug\FTPMFC.pdb (Full PDB)

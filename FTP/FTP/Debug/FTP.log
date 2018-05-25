@@ -1,11 +1,6 @@
 ﻿cl : 命令行 warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
-  FTPClient.cpp
-FTPClient.cpp(101): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
-FTPClient.cpp(193): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
-FTPClient.cpp(261): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\conio.h(452): note: 参见“getch”的声明
-g:\git\my_git_respository\ftp\ftp\ftpclient.cpp(290): warning C4715: “FTPClient::usepass”: 不是所有的控件路径都返回值
-  FTP.vcxproj -> G:\git\my_git_respository\FTP\Debug\FTP.exe
-  FTP.vcxproj -> G:\git\my_git_respository\FTP\Debug\FTP.pdb (Full PDB)
+  main.cpp
+main.cpp(31): error C2660: “FTPClient::useuser”: 函数不接受 0 个参数
+main.cpp(32): error C2660: “FTPClient::usepass”: 函数不接受 0 个参数
+main.cpp(74): error C2660: “FTPClient::useuser”: 函数不接受 0 个参数
+main.cpp(75): error C2660: “FTPClient::usepass”: 函数不接受 0 个参数

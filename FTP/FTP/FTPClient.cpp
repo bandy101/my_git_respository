@@ -1,6 +1,7 @@
 #include<conio.h>
 #include <iostream>
 #include <winsock2.h>
+//#include <Winineti.h>
 #include <string>
 #include <fstream>
 #include "FTPClient.h"
@@ -8,19 +9,20 @@
 #define MAX_SIZE 4096
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
-
+//#define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
 //---控制连接接收
 bool FTPClient::RecvReply()  //控制连接接收
 {
 	int nRecv;
 	memset(ReplyMsg, 0, MAX_SIZE);// 数组ReplyMsg置0
-	cout << "string 1 ReplyMsg int :" << ReplyMsg << endl;
+	//cout << "string 1 ReplyMsg int :" << ReplyMsg << endl;
 	nRecv = recv(SocketControl, ReplyMsg, MAX_SIZE, 0);//返回实际读入缓冲的数据的字节数
-	cout << "string 2 ReplyMsg int :" << ReplyMsg << endl;
+	//cout << "string 2 ReplyMsg int :" << ReplyMsg << endl;
 	if (nRecv == SOCKET_ERROR)
 	{
 		
 		cout << "Socket receive error!" << endl;
+		error += "Socket receive error!";
 		closesocket(SocketControl);
 		return false;
 	}
@@ -41,9 +43,11 @@ bool FTPClient::SendCommand()//向ftp服务器发送命令
 	//控制连接发送数据
 	int nSend;
 	printf("%s", Command);
+	error += Command;
 	nSend = send(SocketControl,Command, strlen(Command), 0);//flag =0 ->write
 	cout << "nSend:" << nSend << endl;
 	if (nSend == SOCKET_ERROR) {
+		error += "Socket Socket send error!!";
 		cout << "Socket send error!" << endl;
 		return false;
 	}
@@ -62,6 +66,7 @@ bool FTPClient::DataConnect(char* ServerAddr)
 	if (RecvReply()) {
 		if (nReplycode != 227){
 			cout << "PASV response error!" << endl;
+			error += "PASV response error!";
 			closesocket(SocketControl);
 			return false;
 		}
@@ -99,11 +104,14 @@ bool FTPClient::DataConnect(char* ServerAddr)
 	serveraddr2.sin_family = AF_INET;
 	serveraddr2.sin_port = htons(ServerPort);
 	serveraddr2.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
+
+	//serveraddr2.sin_addr.S_un.S_addr = inet_pton(ServerAddr);
 	//向FTP服务器发送Connect请求
 	int nConnect;
 	nConnect = connect(SocketData, (sockaddr*)&serveraddr2, sizeof(serveraddr2));
 	if (nConnect == SOCKET_ERROR) {
 		cout << endl << "Server connect error!" << endl;
+		error += "PASV  connect error!!";
 		return false;
 	}
 	return true;
@@ -168,6 +176,7 @@ bool FTPClient::changedir()
 ///---------建立与Socket库绑定
 bool FTPClient::FTPConnection(char* FTPIP, int port)
 {
+	cout << "FTPCONNECT:" << FTPIP << endl;
 	WSADATA WSAData;//WSADATA:该结构被用来储存调用
 					//AfxSocketInit 全局函数返回Windows Socket 初始化信息
 	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)//WSAStartup:初始化当前线程通信环境，MAKEWORD:合并短整数
@@ -220,18 +229,22 @@ bool FTPClient::FTPConnection(char* FTPIP, int port)
 	return true;
 }
 //--向服务器发送USER 认证用户命令
-bool FTPClient::useuser()
+bool FTPClient::useuser(char *user)
 {
+	//char *user;
+	//user = "NHT";
 	cout << "FTP>用户名:";
 	memset(CmdBuf, 0, MAX_SIZE);
-	cin.getline(CmdBuf, MAX_SIZE, '\n');
+	//cin.getline(CmdBuf, MAX_SIZE, '\n');
 	memset(Command, 0, MAX_SIZE);
 	memcpy(Command, "USER ", strlen("USER "));
-	memcpy(Command + strlen("USER "), CmdBuf, strlen(CmdBuf));
-	memcpy(Command + strlen("USER ") + strlen(CmdBuf), "\r\n", 2);
+	memcpy(Command + strlen("USER "), user, strlen(user));
+	memcpy(Command + strlen("USER ") + strlen(user), "\r\n", 2);
 	cout << "Command:" << Command << endl;
 	if (!SendCommand())
-		return false;
+	{
+		error += "user send command"; return false;
+	}
 	//获得USER命令的应答信息
 	if (RecvReply())
 	{
@@ -239,8 +252,11 @@ bool FTPClient::useuser()
 			cout << ReplyMsg << endl;
 		else
 		{
-			cout << "USER response error!" << endl;
-			closesocket(SocketControl);
+			//cout << "USER response error!" << endl;
+			//closesocket(SocketControl);
+			//return false;
+			buser = false;
+			error += "user Recvreply command";
 			return false;
 		}
 	}
@@ -248,32 +264,24 @@ bool FTPClient::useuser()
 	return true;
 }
 //--向服务器发送PASS 认证密码命令
-bool FTPClient::usepass()
+bool  FTPClient::usepass(char *pwd)
 {
 	if (buser)
 	{
+		//char *pwd;
+		//pwd = "ibelieve";
 		buser = false;
 		cout << "FTP>密码";
 		memset(CmdBuf, 0, MAX_SIZE);
-		cout.flush();
-		for (int i = 0; i<MAX_SIZE; i++)
-		{
-			CmdBuf[i] = getch();
-			if (CmdBuf[i] == '\r')
-			{
-				CmdBuf[i] = '\0';
-				break;
-			}
-			else
-				cout << "*";
-		}
-		cout << endl;
+
 		memset(Command, 0, MAX_SIZE);
 		memcpy(Command, "PASS ", strlen("PASS "));
-		memcpy(Command + strlen("PASS "), CmdBuf, strlen(CmdBuf));
-		memcpy(Command + strlen("PASS ") + strlen(CmdBuf), "\r\n", 2);
+		memcpy(Command + strlen("PASS "), pwd, strlen(pwd));
+		memcpy(Command + strlen("PASS ") + strlen(pwd), "\r\n", 2);
 		if (!SendCommand())
-			return false;
+		{
+			error += "send command"; return false;
+		}
 		//获取PASS命令的应答信息
 		if (RecvReply())
 		{
@@ -282,32 +290,110 @@ bool FTPClient::usepass()
 			else
 			{
 				cout << "PASS response error!" << endl;
+				error += "Recvreply command";
 				return false;
 			}
 		}
 		return true;
 	}
+	return false;
 }
+
+//bool FTPClient::useuser()
+//{
+//	cout << "FTP>用户名:";
+//	memset(CmdBuf, 0, MAX_SIZE);
+//	cin.getline(CmdBuf, MAX_SIZE, '\n');
+//	memset(Command, 0, MAX_SIZE);
+//	memcpy(Command, "USER ", strlen("USER "));
+//	memcpy(Command + strlen("USER "), CmdBuf, strlen(CmdBuf));
+//	memcpy(Command + strlen("USER ") + strlen(CmdBuf), "\r\n", 2);
+//	cout << "Command:" << Command << endl;
+//	if (!SendCommand())
+//		return false;
+//	//获得USER命令的应答信息
+//	if (RecvReply())
+//	{
+//		if (nReplycode == 331)//230:User logged in,procced;//331:User Name okay,need password;
+//			cout << ReplyMsg << endl;
+//		else
+//		{
+//			//cout << "USER response error!" << endl;
+//			//closesocket(SocketControl);
+//			//return false;
+//			buser = false;
+//			return false;
+//		}
+//	}
+//	//buser = true;
+//	return true;
+//}
+//--向服务器发送PASS 认证密码命令
+//bool FTPClient::usepass()
+//{
+//	if (buser)
+//	{
+//		buser = false;
+//		cout << "FTP>密码";
+//		memset(CmdBuf, 0, MAX_SIZE);
+//		cout.flush();
+//		for (int i = 0; i<MAX_SIZE; i++)
+//		{
+//			CmdBuf[i] = getch();
+//			if (CmdBuf[i] == '\r')
+//			{
+//				CmdBuf[i] = '\0';
+//				break;
+//			}
+//			else
+//				cout << "*";
+//		}
+//		cout << endl;
+//		memset(Command, 0, MAX_SIZE);
+//		memcpy(Command, "PASS ", strlen("PASS "));
+//		memcpy(Command + strlen("PASS "), CmdBuf, strlen(CmdBuf));
+//		memcpy(Command + strlen("PASS ") + strlen(CmdBuf), "\r\n", 2);
+//		if (!SendCommand())
+//			return false;
+//		//获取PASS命令的应答信息
+//		if (RecvReply())
+//		{
+//			if (nReplycode == 230)//230:User logged in,procced;//331:User Name okay,need password;
+//				cout << ReplyMsg << endl;
+//			else
+//			{
+//				cout << "PASS response error!" << endl;
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+//	return false;
+//}
 //--上传文件
-void FTPClient::storfile(char* FTPIP)
+void FTPClient::storfile(char* FTPIP,char *path_)
 {
 	//if (!ishavedetail)
 	//{
-		cout << "请输入上传文件名:";
-		memset(CmdBuf, 0, MAX_SIZE);
-		cin.getline(CmdBuf, MAX_SIZE, '\n');
+		//cout << "请输入上传文件名:";
+		//memset(CmdBuf, 0, MAX_SIZE);
+		//cin.getline(CmdBuf, MAX_SIZE, '\n');
 	//}
 	ifstream f2;
-	f2.open(CmdBuf, ios::binary);
+	//char *path;
+	//path = "G:\\git\\my_git_respository\\FTP\\FTP\\python.txt";
+	//path = "python.txt";
+	f2.open(path_, ios::binary);
 		if (!f2)
 		{
 			cout << "Cannot open file!" << endl;
+			error += "Cannot open file!";
 			return;
 		}
-	string strPath(CmdBuf);
+	string strPath(path_);
 	cout << "str:" << strPath << endl;
 	string filepath, filename;
-	int nPos = strPath.rfind(':');
+	int nPos = strPath.rfind('\\');
 	if (-1 != nPos)
 	{
 		filename = strPath.substr(nPos + 1, strPath.length() - nPos - 1);
@@ -333,11 +419,13 @@ void FTPClient::storfile(char* FTPIP)
 	//获取STOR 上传文件命令的应答信息
 	if (RecvReply())
 	{
+		cout << ReplyMsg << endl;
 		if (nReplycode == 125 || nReplycode == 150 || nReplycode == 226)
 			cout << ReplyMsg << endl;
 		else
 		{
-			cout << "STOR response error!" << endl;
+			cout << "STOR response error111!" << endl;
+			error += "STOR response error111";
 			closesocket(SocketControl);
 			//Sleep(1);
 			return;
@@ -347,33 +435,24 @@ void FTPClient::storfile(char* FTPIP)
 	while (true)
 	{
 		memset(ListBuf2, 0, MAX_SIZE);
-		if (!f2.eof())
-		{
-			f2.read(ListBuf2, MAX_SIZE);
-			int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
+	
+		f2.read(ListBuf2, MAX_SIZE);
+		int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
 
-			if (nStor == SOCKET_ERROR)
-			{
-				cout << endl << "Socket send error!" << endl;
-				closesocket(SocketData);
-				return;
-			}
-			if (RecvReply())
-			{
-				if (nReplycode == 226)
-					cout << ReplyMsg << endl;
-				else
-				{
-					cout << "STOR response error!" << endl;
-					closesocket(SocketControl);
-					return;
-				}
-			}
+		if (nStor == SOCKET_ERROR)
+		{
+			cout << endl << "Socket send error!" << endl;
+			error += "Socket send error!";
+			closesocket(SocketData);
+			return;
 		}
-		else
+	
+			
+		
+		if  (f2.eof())
 			break;
-		//break;
 	}
+		//break;
 	f2.close();
 	closesocket(SocketData);
 	if (RecvReply())
