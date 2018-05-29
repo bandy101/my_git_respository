@@ -23,7 +23,9 @@ class ModelMetaclass(type):
             return type.__new__(cls, name, bases, attrs)
         print('Found model: %s' % name)
         mappings = dict()
+        ###-----attrs.items: {(id,name,email,password),(Filed(type))}
         for k, v in attrs.items():
+            print('k:',k)
             if isinstance(v, Field):
                 print('Found mapping: %s ==> %s' % (k, v))
                 mappings[k] = v
@@ -51,7 +53,11 @@ class Model(dict, metaclass=ModelMetaclass):
         fields = []
         params = []
         args = []
-        for k, v in self.__mappings__.items():
+        ##----key,value=class 
+        ###-----attrs.items: {(id,name,email,password),(Filed(type))}
+        print('------mappings-----------')
+        print(self.__mappings__)
+        for k, v in self.__mappings__.items():       
             fields.append(v.name)
             params.append('?')
             args.append(getattr(self, k, None))
