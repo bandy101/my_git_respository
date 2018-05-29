@@ -1,0 +1,70 @@
+import platform
+from ctypes import *
+elif platform.system() =='Linux':
+    libc = cdll.LoadLibrary('libc.so.6')
+if platform.system() == 'Windows':
+    libc = cdll.LoadLibrary('msvcrt.dll')
+调用即： libc.function()
+D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
+cl /c Test.c  
+link /dll Test.obj  
+python -m pip install --upgrade pip
+pip list 
+pip install numpy 
+pip install opencv-python,scipy
+安装keras 出错
+原因： uinicodetype :  chcp 65001
+chcp 65001  就是换成UTF-8代码页
+chcp 936 可以换回默认的GBK
+chcp 437 是美国英语
+pip install pypiwin32（安装pyhook and pythoncom)
+逻辑回归是应用非常广泛的一个分类机器学习算法，它将数据拟合到一个logit函数(或者叫做logistic函数)中，从而能够完成对事件发生的概率进行预测。
+pip install pillow
+
+
+
+wget https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9  #pip下载，官网去下载。
+tar zxf pip-9.0.1.tar.gz 
+cd pip-9.0.1
+python3 setup.py install
+
+192.168.4.235：567
+ssh 22
+host:sfe pwd:sfe@ftp
+
+
+len(os.walk(path):返回三个元素的元祖（dirname,foldername,filename) =该目录下文件夹数
+str.endwith(suffix(后缀名))==（表达式）
+线程：
+在threading 模块中，如果任何- 一个派生线程派生线程在运行，程序不会推出  只有将该线程设置 成守护（daemon)线程才能正常退出
+状态码 0 正常退出
+设置守护线程： 随父程序退出而退出
+os.pipe 返回两个文件描述符（输入，输出端）
+os.pipe()返回2个文件描述符(r, w)表示可读的和可写的（0，1）
+管道是一个单向通道,有点类似共享内存缓存.管道有两端,包括输入端和输出端..对于一个进程的而言,它只能看到管道一端,即要么是输入端要么是输出端.
+rpipe, wpipe = os.pipe()
+recv = os.read(rpipe, 32)
+不用os.read()从管道中读取二进制字节,而是从文件对象中读取字符串.这时需要用到os.fdopen()把底层的文件描述符(管道)包装成文件对象,然后再用文件对象中的readline()方法读取.
+ fobj = os.fdopen(rpipe, 'r')
+recv = fobj.readline()[:-1]
+.os.dup2()实现输出和输入的重定向
+
+multiporcing pool   xxx=Pool(processes=n)  多个处理器处理任务
+xxx.map()
+import fnmatch as F  F.fnmatch(name,pattern)  pattern:判断name是否匹配于pattren (个人理解：pattern 类似于正则)
+
+-h or --help：显示帮助信息
+-m or --module：模块名称   例如：ansible all -m shell -a 'date'
+-a or --args：模块对于的参数  例如：ansible all -m shell -a 'date'
+-v or --version：显示版本
+__getattr__方法:
+拦截点号运算。当对未定义的属性名称和实例进行点号运算时，就会用属性名作为字符串调用这个方法。如果继承树可以找到该属性，则不调用此方法
+
+
+bytes --> unicode utf-8
+    修改字符集参数，一般这种情况出现得较多是在国标码(GBK)和utf8之间选择出现了问题。
+    出现异常报错是由于设置了decode()方法的第二个参数errors为严格（strict）形式造成的，因为默认就是这个参数，将其更改为ignore等即可。例如:
+
+line.decode("utf8","ignore")
+
+__getattr__(,) 引入不明属性时调用
