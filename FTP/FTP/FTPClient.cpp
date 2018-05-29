@@ -43,7 +43,7 @@ bool FTPClient::SendCommand()//向ftp服务器发送命令
 	//控制连接发送数据
 	int nSend;
 	printf("%s", Command);
-	error += Command;
+	//error += Command;
 	nSend = send(SocketControl,Command, strlen(Command), 0);//flag =0 ->write
 	cout << "nSend:" << nSend << endl;
 	if (nSend == SOCKET_ERROR) {
@@ -173,7 +173,7 @@ bool FTPClient::changedir()
 	}
 	return true;
 }
-///---------建立与Socket库绑定
+//---------建立与Socket库绑定
 bool FTPClient::FTPConnection(char* FTPIP, int port)
 {
 	cout << "FTPCONNECT:" << FTPIP << endl;
@@ -229,22 +229,18 @@ bool FTPClient::FTPConnection(char* FTPIP, int port)
 	return true;
 }
 //--向服务器发送USER 认证用户命令
-bool FTPClient::useuser(char *user)
+bool FTPClient::useuser()
 {
-	//char *user;
-	//user = "NHT";
 	cout << "FTP>用户名:";
 	memset(CmdBuf, 0, MAX_SIZE);
-	//cin.getline(CmdBuf, MAX_SIZE, '\n');
+	cin.getline(CmdBuf, MAX_SIZE, '\n');
 	memset(Command, 0, MAX_SIZE);
 	memcpy(Command, "USER ", strlen("USER "));
-	memcpy(Command + strlen("USER "), user, strlen(user));
-	memcpy(Command + strlen("USER ") + strlen(user), "\r\n", 2);
+	memcpy(Command + strlen("USER "), CmdBuf, strlen(CmdBuf));
+	memcpy(Command + strlen("USER ") + strlen(CmdBuf), "\r\n", 2);
 	cout << "Command:" << Command << endl;
 	if (!SendCommand())
-	{
-		error += "user send command"; return false;
-	}
+		return false;
 	//获得USER命令的应答信息
 	if (RecvReply())
 	{
@@ -256,32 +252,39 @@ bool FTPClient::useuser(char *user)
 			//closesocket(SocketControl);
 			//return false;
 			buser = false;
-			error += "user Recvreply command";
 			return false;
 		}
 	}
-	buser = true;
+	//buser = true;
 	return true;
 }
 //--向服务器发送PASS 认证密码命令
-bool  FTPClient::usepass(char *pwd)
+bool FTPClient::usepass()
 {
 	if (buser)
 	{
-		//char *pwd;
-		//pwd = "ibelieve";
 		buser = false;
 		cout << "FTP>密码";
 		memset(CmdBuf, 0, MAX_SIZE);
-
+		cout.flush();
+		for (int i = 0; i<MAX_SIZE; i++)
+		{
+			CmdBuf[i] = _getch();
+			if (CmdBuf[i] == '\r')
+			{
+				CmdBuf[i] = '\0';
+				break;
+			}
+			else
+				cout << "*";
+		}
+		cout << endl;
 		memset(Command, 0, MAX_SIZE);
 		memcpy(Command, "PASS ", strlen("PASS "));
-		memcpy(Command + strlen("PASS "), pwd, strlen(pwd));
-		memcpy(Command + strlen("PASS ") + strlen(pwd), "\r\n", 2);
+		memcpy(Command + strlen("PASS "), CmdBuf, strlen(CmdBuf));
+		memcpy(Command + strlen("PASS ") + strlen(CmdBuf), "\r\n", 2);
 		if (!SendCommand())
-		{
-			error += "send command"; return false;
-		}
+			return false;
 		//获取PASS命令的应答信息
 		if (RecvReply())
 		{
@@ -290,7 +293,6 @@ bool  FTPClient::usepass(char *pwd)
 			else
 			{
 				cout << "PASS response error!" << endl;
-				error += "Recvreply command";
 				return false;
 			}
 		}
@@ -298,78 +300,6 @@ bool  FTPClient::usepass(char *pwd)
 	}
 	return false;
 }
-
-//bool FTPClient::useuser()
-//{
-//	cout << "FTP>用户名:";
-//	memset(CmdBuf, 0, MAX_SIZE);
-//	cin.getline(CmdBuf, MAX_SIZE, '\n');
-//	memset(Command, 0, MAX_SIZE);
-//	memcpy(Command, "USER ", strlen("USER "));
-//	memcpy(Command + strlen("USER "), CmdBuf, strlen(CmdBuf));
-//	memcpy(Command + strlen("USER ") + strlen(CmdBuf), "\r\n", 2);
-//	cout << "Command:" << Command << endl;
-//	if (!SendCommand())
-//		return false;
-//	//获得USER命令的应答信息
-//	if (RecvReply())
-//	{
-//		if (nReplycode == 331)//230:User logged in,procced;//331:User Name okay,need password;
-//			cout << ReplyMsg << endl;
-//		else
-//		{
-//			//cout << "USER response error!" << endl;
-//			//closesocket(SocketControl);
-//			//return false;
-//			buser = false;
-//			return false;
-//		}
-//	}
-//	//buser = true;
-//	return true;
-//}
-//--向服务器发送PASS 认证密码命令
-//bool FTPClient::usepass()
-//{
-//	if (buser)
-//	{
-//		buser = false;
-//		cout << "FTP>密码";
-//		memset(CmdBuf, 0, MAX_SIZE);
-//		cout.flush();
-//		for (int i = 0; i<MAX_SIZE; i++)
-//		{
-//			CmdBuf[i] = getch();
-//			if (CmdBuf[i] == '\r')
-//			{
-//				CmdBuf[i] = '\0';
-//				break;
-//			}
-//			else
-//				cout << "*";
-//		}
-//		cout << endl;
-//		memset(Command, 0, MAX_SIZE);
-//		memcpy(Command, "PASS ", strlen("PASS "));
-//		memcpy(Command + strlen("PASS "), CmdBuf, strlen(CmdBuf));
-//		memcpy(Command + strlen("PASS ") + strlen(CmdBuf), "\r\n", 2);
-//		if (!SendCommand())
-//			return false;
-//		//获取PASS命令的应答信息
-//		if (RecvReply())
-//		{
-//			if (nReplycode == 230)//230:User logged in,procced;//331:User Name okay,need password;
-//				cout << ReplyMsg << endl;
-//			else
-//			{
-//				cout << "PASS response error!" << endl;
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
-//	return false;
-//}
 //--上传文件
 void FTPClient::storfile(char* FTPIP,char *path_)
 {

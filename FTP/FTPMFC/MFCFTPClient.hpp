@@ -1,24 +1,22 @@
 #pragma once
 #include "../FTP/FTPClient.h"
+#include <opencv2/opencv.hpp>
 class MFCFTPClient : public FTPClient
 {
 public:
 	//--向服务器发送USER 认证用户命令
-	bool useuser()
+	bool useuser(char *user)
 	{
-		char *user;
-		user = "NHT";
 		cout << "FTP>用户名:";
 		memset(CmdBuf, 0, MAX_SIZE);
-		//cin.getline(CmdBuf, MAX_SIZE, '\n');
 		memset(Command, 0, MAX_SIZE);
 		memcpy(Command, "USER ", strlen("USER "));
 		memcpy(Command + strlen("USER "), user, strlen(user));
 		memcpy(Command + strlen("USER ") + strlen(user), "\r\n", 2);
-		cout << "Command:" << Command << endl;
+		//cout << "Command:" << Command << endl;
 		if (!SendCommand())
 		{
-			error += "user send command"; return false;
+			error += "user send command error!\r\n"; return false;
 		}
 		//获得USER命令的应答信息
 		if (RecvReply())
@@ -31,7 +29,7 @@ public:
 				//closesocket(SocketControl);
 				//return false;
 				buser = false;
-				error += "user Recvreply command";
+				error += "user error!\r\n";
 				return false;
 			}
 		}
@@ -39,16 +37,13 @@ public:
 		return true;
 	}
 	//--向服务器发送PASS 认证密码命令
-	bool usepass()
+	bool usepass(char *pwd)
 	{
 		if (buser)
 		{
-			char *pwd;
-			pwd = "ibelieve";
 			buser = false;
 			cout << "FTP>密码";
 			memset(CmdBuf, 0, MAX_SIZE);
-
 			memset(Command, 0, MAX_SIZE);
 			memcpy(Command, "PASS ", strlen("PASS "));
 			memcpy(Command + strlen("PASS "), pwd, strlen(pwd));
@@ -63,9 +58,9 @@ public:
 				if (nReplycode == 230)//230:User logged in,procced;//331:User Name okay,need password;
 					cout << ReplyMsg << endl;
 				else
-				{	
+				{
 					cout << "PASS response error!" << endl;
-					error  += "Recvreply command";
+					error += "pass or user error!\r\n";
 					return false;
 				}
 			}
@@ -74,5 +69,5 @@ public:
 		return false;
 	}
 public:
-	string error="not false!";
+	//string error;
 };

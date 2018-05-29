@@ -1,6 +1,0 @@
-﻿cl : 命令行 warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
-  main.cpp
-main.cpp(31): error C2660: “FTPClient::useuser”: 函数不接受 0 个参数
-main.cpp(32): error C2660: “FTPClient::usepass”: 函数不接受 0 个参数
-main.cpp(74): error C2660: “FTPClient::useuser”: 函数不接受 0 个参数
-main.cpp(75): error C2660: “FTPClient::usepass”: 函数不接受 0 个参数

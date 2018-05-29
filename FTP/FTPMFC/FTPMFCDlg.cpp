@@ -8,9 +8,18 @@
 #include "afxdialogex.h"
 #include "MFCFTPClient.hpp"
 #include "../FTP/FTPClient.cpp"
+#include <opencv2/opencv.hpp>
+#include "opencv2/features2d/features2d.hpp"
+#include "cv.h"
+#include "highgui.h"
+//#include <opencv2/opencv.hpp>
+using namespace std;
+using namespace cv;
+//#include "Resource.h"s
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
+#define IDC_PICTURE                     1008
 #endif
 
 
@@ -80,6 +89,7 @@ void CFTPMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RECORD, m_recodeinfo);
 	DDX_Text(pDX, IDC_USER, m_user);
 	DDX_Text(pDX, IDC_PWD, m_pwd);
+	DDX_Control(pDX, IDC_PICTURE, m_img);
 }
 
 BEGIN_MESSAGE_MAP(CFTPMFCDlg, CDialogEx)
@@ -88,6 +98,8 @@ BEGIN_MESSAGE_MAP(CFTPMFCDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_LOGIN, &CFTPMFCDlg::OnBnClickedLogin)
 	ON_BN_CLICKED(IDC_STOR, &CFTPMFCDlg::OnBnClickedStor)
+	ON_BN_CLICKED(IDC_MULSTOR, &CFTPMFCDlg::OnBnClickedMulstor)
+	ON_STN_CLICKED(IDC_PICTURE, &CFTPMFCDlg::OnStnClickedPicture)
 END_MESSAGE_MAP()
 
 
@@ -123,7 +135,7 @@ BOOL CFTPMFCDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_record.SetWindowTextW(_T("请登陆！\n"));
+	m_record.SetWindowTextW(_T("请登陆！\r\n"));
 	info = "";
 	MFCFTPClient ftp;
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -146,6 +158,31 @@ void CFTPMFCDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
+void  CFTPMFCDlg::ShowMat(cv::Mat image, int IDC)
+{
+	//CDC* pDC = GetDlgItem(IDC)->GetDC();           //根据ID获得窗口指针再获取与该窗口关联的上下文指针  
+	//HDC hDC = pDC->GetSafeHdc();                    // 获取设备上下文句柄  
+	CStatic* pStc = (CStatic*)GetDlgItem(IDC);
+	CRect rect;
+	pStc->GetClientRect(rect);
+	CDC* pDC = pStc->GetDC();
+	HDC hDC = pDC->GetSafeHdc();
+	//GetDlgItem(IDC)->GetClientRect(rect);        //获取显示区  
+	//GetDlgItem(IDC_PICTURE)->GetClientRect(rect);
+	Mat im; 
+	resize(image, im, Size(rect.Width(), rect.Height()));
+	//imshow("s", im);
+	//cvResize(&(image.operator IplImage()), &(cimage.operator IplImage()), CV_INTER_LINEAR);
+	IplImage imgTmp = im;
+	IplImage *img = cvCloneImage(&imgTmp);
+	//IplImage *src = cvLoadImage("09.png", 1);
+	CvvImage iimg;                              //创建一个CvvImage对象  
+	iimg.CopyOf(img);
+	iimg.DrawToHDC(hDC, &rect);
+	cvReleaseImage(&img);
+	ReleaseDC(pDC);
+	iimg.Destroy();
+}
 void CFTPMFCDlg::OnPaint()
 {
 	if (IsIconic())
@@ -182,81 +219,125 @@ HCURSOR CFTPMFCDlg::OnQueryDragIcon()
 
 void CFTPMFCDlg::OnBnClickedLogin()
 {
-	
+
 	// TODO: 在此添加控件通知处理程序代码s
-	UpdateData(true);
-	//string FTPIP = (char *)m_ipaddr.GetBuffer(0);  
-	FTPIP = (LPCSTR)(CStringA)(m_ipaddr);
-	FTPIP = trim(FTPIP);
-	string port_ = (LPCSTR)(CStringA)(m_port);
-	port_ = trim(port_);
-	//int PORT = atoi((char*)m_port.GetBuffer(0));
-	string::size_type sz;
-	int PORT=stoi(port_, &sz);
-	 //= int(port_);
-	//FTPIP = const_cast<char*>(FTPIP.c_str());
-	if (!(ftp.FTPConnection(const_cast<char*>(FTPIP.c_str()),PORT)))
-	{
-		CString cs(FTPIP.c_str());
-		//s.Format(_T("%s"), FTPIP.c_str());
-		m_recodeinfo += cs;//string->CString;;;
-		m_recodeinfo += ":";
-		m_recodeinfo +=m_port;
-		info = "  -!连接失败请重新连接！";
-		m_recodeinfo += info;
-		UpdateData(false);
-		m_recodeinfo = "请登陆！\n";
-		//return;
-	}
-	else
-	{
-		m_recodeinfo += FTPIP.c_str();
-		m_recodeinfo += m_port;
-		string user = (LPCSTR)(CStringA)(m_user);
-		string pwd = (LPCSTR)(CStringA)(m_pwd);
-		user = trim(user);
-		pwd = trim(pwd);
-		bool user_ = ftp.useuser(const_cast<char*>(user.c_str()));
-		bool pwd_ = ftp.usepass(const_cast<char*>(pwd.c_str()));
-		CString ero(ftp.error.c_str());
-		
-		if (user_&&pwd_)
-		{
-			m_recodeinfo += ero;
-			m_recodeinfo += "\n登陆成功！放心操作";
-			
-		}
+	try {
+		UpdateData(true);
+		FTPIP = (LPCSTR)(CStringA)(m_ipaddr);
+		FTPIP = trim(FTPIP);
+		string port_ = (LPCSTR)(CStringA)(m_port);
+		port_ = trim(port_);
+		string::size_type sz;
+		int PORT = stoi(port_, &sz);
+		if (!islogin) {
+			if (!(ftp.FTPConnection(const_cast<char*>(FTPIP.c_str()), PORT)))
+			{
+				CString cs(FTPIP.c_str());
+				//s.Format(_T("%s"), FTPIP.c_str());
+				m_recodeinfo += cs;//string->CString;;;
+				m_recodeinfo += ":";
+				m_recodeinfo += m_port;
+				info = "连接失败请重新连接！请确认IP或PORT\r\n";
+				m_recodeinfo = info;
+				UpdateData(false);
+				m_record.LineScroll(m_record.GetLineCount()); //输入显示在当前编辑框
+				m_recodeinfo = "请重新输入IP_PORT！\r\n";
+				//return;
+			}
+			else
+			{
+				m_recodeinfo += FTPIP.c_str();
+				m_recodeinfo += ":";
+				m_recodeinfo += m_port;
+				m_recodeinfo += "\r\n";
+				string user = (LPCSTR)(CStringA)(m_user);
+				string pwd = (LPCSTR)(CStringA)(m_pwd);
+				user = trim(user);
+				pwd = trim(pwd);
+				bool user_ = ftp.useuser(const_cast<char*>(user.c_str()));
+				bool pwd_ = ftp.usepass(const_cast<char*>(pwd.c_str()));
+				CString ero(ftp.error.c_str());
+
+				if (user_&&pwd_)
+				{
+					m_recodeinfo += ero;
+					m_recodeinfo += "登陆成功！放心操作\r\n";
+					GetDlgItem(IDC_LOGIN)->SetWindowText(LPCTSTR(CString("Out")));
+					islogin = true;
+				}
+				else
+				{
+					m_recodeinfo += ero;
+					m_recodeinfo += "请检查用户名和密码！\r\n";
+					ftp.error = "";
+				}
+
+				UpdateData(false);
+				m_record.LineScroll(m_record.GetLineCount());
+			}
+		}//islogin
 		else
 		{
-			m_recodeinfo += ero;
-			m_recodeinfo += "请检查用户名和密码！";
-			//UpdateData(false);
-			//return;
+			islogin = false;
+			GetDlgItem(IDC_LOGIN)->SetWindowText(LPCTSTR(CString("Login")));
+			m_recodeinfo = "请登陆！\r\n";
+			UpdateData(false);
 		}
+	}//try
+	catch(exception)
+	{
+		m_recodeinfo = "请确认输入无误！\r\n";
 		UpdateData(false);
+		m_recodeinfo = "";
 	}
 }
-
 
 void CFTPMFCDlg::OnBnClickedStor()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	BOOL isOpen = TRUE;     //是否打开(否则为保存)  
-	CString defaultDir = L"E:\\";   //默认打开的文件路径  
-	CString fileName = L"";         //默认打开的文件名  
-	CString filter = L"文件 (*.txt; *.png; *.jpg;*.jpeg)|*.txt;*.png;*.jpg;*.jpeg||";   //文件过虑的类型  
-	CFileDialog openFileDlg(isOpen, NULL, fileName, OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
-	openFileDlg.DoModal();
-	CString filePath = openFileDlg.GetPathName();
-	string filePath_ = (LPCSTR)(CStringA)(filePath);
-	filePath_ = trim(filePath_);
-	ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(filePath_.c_str()));
-	CString error(ftp.error.c_str());
-	m_recodeinfo += "上传成功：\n";
-	m_recodeinfo += filePath;
-	m_recodeinfo += error;
-	m_recodeinfo += "上传成功：\n";
-	UpdateData(false);
+	if (islogin) {
+		ftp.error = "";
+		BOOL isOpen = TRUE;     //是否打开(否则为保存)  
+		CString defaultDir = L"E:\\";   //默认打开的文件路径  
+		CString fileName = L"";         //默认打开的文件名  
+		CString filter = L"文件 (*.txt; *.png; *.jpg;*.jpeg)|*.txt;*.png;*.jpg;*.jpeg||";   //文件过虑的类型  
+		CFileDialog openFileDlg(isOpen, NULL, fileName, OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
+		openFileDlg.DoModal();
+		CString filePath = openFileDlg.GetPathName();
+		if (filePath != "")
+		{
+			string filePath_ = (LPCSTR)(CStringA)(filePath);
+			filePath_ = trim(filePath_);
+			ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(filePath_.c_str()));
+			CString error(ftp.error.c_str());
+			if (error != "")
+			{
+				m_recodeinfo += "上传失败!\r\n";
+				m_recodeinfo += error; m_recodeinfo + "\r\n";
+				UpdateData(false);
+				m_record.LineScroll(m_record.GetLineCount());
+
+			}
+			else
+			{															
+				
+				cv::Mat frame = cv::imread(filePath_);
+				ShowMat(frame, IDC_PICTURE);
+
+				m_recodeinfo += "上传成功：\r\n";
+				m_recodeinfo += filePath;
+				m_recodeinfo += "\r\n";
+				UpdateData(false);
+				m_record.LineScroll(m_record.GetLineCount());
+				
+			}
+		}
+	}
+	else {
+		m_recodeinfo = "请先登陆！";
+		UpdateData(false);
+		m_recodeinfo = "";
+	}
 }
 
 
@@ -264,3 +345,27 @@ void CFTPMFCDlg::OnBnClickedStor()
 //{
 //	// TODO: 在此添加控件通知处理程序代码
 //}
+
+
+void CFTPMFCDlg::OnBnClickedMulstor()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (islogin)
+	{
+		m_recodeinfo += "尙无该功能\r\n";
+
+	}
+	else
+	{
+		m_recodeinfo += "请先登陆！\r\n";
+	}
+	UpdateData(false);
+	m_record.LineScroll(m_record.GetLineCount());
+}
+
+
+void CFTPMFCDlg::OnStnClickedPicture()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//m_img.LOad
+}

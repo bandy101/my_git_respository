@@ -6,7 +6,8 @@
 #include "afxwin.h"
 #include "MFCFTPClient.hpp"
 #include "../FTP/FTPClient.h"
-
+#include "opencv2/opencv.hpp"
+#include "CvvImage.h"
 // CFTPMFCDlg 对话框
 class CFTPMFCDlg : public CDialogEx
 {
@@ -29,13 +30,14 @@ protected:
 
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
+	void ShowMat(cv::Mat image, int IDC);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
 	CEdit m_record;
-	FTPClient ftp;
+	MFCFTPClient ftp;
 	afx_msg void OnBnClickedLogin();
 	CString m_ipaddr;
 	CString m_port;
@@ -46,4 +48,9 @@ public:
 //	afx_msg void OnBnClickedMulstor();
 	CString m_user;
 	CString m_pwd;
+	bool islogin = false;
+	afx_msg void OnBnClickedMulstor();
+	afx_msg void OnStnClickedPicture();
+	CStatic m_img;
 };
+
