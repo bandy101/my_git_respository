@@ -28,5 +28,8 @@ public:
 
 	DECLARE_MESSAGE_MAP()
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
 extern CFTPMFCApp theApp;

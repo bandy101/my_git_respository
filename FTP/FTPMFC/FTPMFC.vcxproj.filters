@@ -33,6 +33,15 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="MFCFTPClient.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CvvImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FTPMFC.cpp">
@@ -44,6 +53,12 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="CvvImage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FTPMFC.rc">

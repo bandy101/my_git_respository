@@ -1,6 +1,7 @@
 #include<conio.h>
 #include <iostream>
 #include <winsock2.h>
+//#include <Winineti.h>
 #include <string>
 #include <fstream>
 #include "FTPClient.h"
@@ -12,19 +13,20 @@ unsigned long ul = 1;
 #define MAX_SIZE 4096
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
-
+//#define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
 //---控制连接接收
 bool FTPClient::RecvReply()  //控制连接接收
 {	
 	int nRecv;
 	memset(ReplyMsg, 0, MAX_SIZE);// 数组ReplyMsg置0
-	cout << "string 1 ReplyMsg int :" << ReplyMsg << endl;
+	//cout << "string 1 ReplyMsg int :" << ReplyMsg << endl;
 	nRecv = recv(SocketControl, ReplyMsg, MAX_SIZE, 0);//返回实际读入缓冲的数据的字节数
-	cout << "string 2 ReplyMsg int :" << ReplyMsg << endl;
+	//cout << "string 2 ReplyMsg int :" << ReplyMsg << endl;
 	if (nRecv == SOCKET_ERROR)
 	{
 		
 		cout << "Socket receive error!" << endl;
+		error += "Socket receive error!";
 		closesocket(SocketControl);
 		return false;
 	}
@@ -45,9 +47,11 @@ bool FTPClient::SendCommand()//向ftp服务器发送命令
 	//控制连接发送数据
 	int nSend;
 	printf("%s", Command);
+	//error += Command;
 	nSend = send(SocketControl,Command, strlen(Command), 0);//flag =0 ->write
 	cout << "nSend:" << nSend << endl;
 	if (nSend == SOCKET_ERROR) {
+		error += "Socket Socket send error!!";
 		cout << "Socket send error!" << endl;
 		return false;
 	}
@@ -66,6 +70,7 @@ bool FTPClient::DataConnect(char* ServerAddr)
 	if (RecvReply()) {
 		if (nReplycode != 227){
 			cout << "PASV response error!" << endl;
+			error += "PASV response error!";
 			closesocket(SocketControl);
 			return false;
 		}
@@ -103,11 +108,14 @@ bool FTPClient::DataConnect(char* ServerAddr)
 	serveraddr2.sin_family = AF_INET;
 	serveraddr2.sin_port = htons(ServerPort);
 	serveraddr2.sin_addr.S_un.S_addr = inet_addr(ServerAddr);
+
+	//serveraddr2.sin_addr.S_un.S_addr = inet_pton(ServerAddr);
 	//向FTP服务器发送Connect请求
 	int nConnect;
 	nConnect = connect(SocketData, (sockaddr*)&serveraddr2, sizeof(serveraddr2));
 	if (nConnect == SOCKET_ERROR) {
 		cout << endl << "Server connect error!" << endl;
+		error += "PASV  connect error!!";
 		return false;
 	}
 	return true;
@@ -169,9 +177,10 @@ bool FTPClient::changedir()
 	}
 	return true;
 }
-///---------建立与Socket库绑定
+//---------建立与Socket库绑定
 bool FTPClient::FTPConnection(char* FTPIP, int port)
 {
+	cout << "FTPCONNECT:" << FTPIP << endl;
 	WSADATA WSAData;//WSADATA:该结构被用来储存调用
 					//AfxSocketInit 全局函数返回Windows Socket 初始化信息
 	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)//WSAStartup:初始化当前线程通信环境，MAKEWORD:合并短整数
@@ -243,12 +252,14 @@ bool FTPClient::useuser()
 			cout << ReplyMsg << endl;
 		else
 		{
-			cout << "USER response error!" << endl;
-			closesocket(SocketControl);
+			//cout << "USER response error!" << endl;
+			//closesocket(SocketControl);
+			//return false;
+			buser = false;
 			return false;
 		}
 	}
-	buser = true;
+	//buser = true;
 	return true;
 }
 //--向服务器发送PASS 认证密码命令
@@ -262,7 +273,7 @@ bool FTPClient::usepass()
 		cout.flush();
 		for (int i = 0; i<MAX_SIZE; i++)
 		{
-			CmdBuf[i] = getch();
+			CmdBuf[i] = _getch();
 			if (CmdBuf[i] == '\r')
 			{
 				CmdBuf[i] = '\0';
@@ -291,27 +302,32 @@ bool FTPClient::usepass()
 		}
 		return true;
 	}
+	return false;
 }
 //--上传文件
-void FTPClient::storfile(char* FTPIP)
+void FTPClient::storfile(char* FTPIP,char *path_)
 {
 	//if (!ishavedetail)
 	//{
-		cout << "请输入上传文件名:";
-		memset(CmdBuf, 0, MAX_SIZE);
-		cin.getline(CmdBuf, MAX_SIZE, '\n');
+		//cout << "请输入上传文件名:";
+		//memset(CmdBuf, 0, MAX_SIZE);
+		//cin.getline(CmdBuf, MAX_SIZE, '\n');
 	//}
 	ifstream f2;
-	f2.open(CmdBuf, ios::binary);
+	//char *path;
+	//path = "G:\\git\\my_git_respository\\FTP\\FTP\\python.txt";
+	//path = "python.txt";
+	f2.open(path_, ios::binary);
 		if (!f2)
 		{
 			cout << "Cannot open file!" << endl;
+			error += "Cannot open file!";
 			return;
 		}
-	string strPath(CmdBuf);
+	string strPath(path_);
 	cout << "str:" << strPath << endl;
 	string filepath, filename;
-	int nPos = strPath.rfind(':');
+	int nPos = strPath.rfind('\\');
 	if (-1 != nPos)
 	{
 		filename = strPath.substr(nPos + 1, strPath.length() - nPos - 1);
@@ -341,11 +357,13 @@ void FTPClient::storfile(char* FTPIP)
 	//获取STOR 上传文件命令的应答信息
 	if (RecvReply())
 	{
+		cout << ReplyMsg << endl;
 		if (nReplycode == 125 || nReplycode == 150 || nReplycode == 226)
 			cout << ReplyMsg << endl;
 		else
 		{
-			cout << "STOR response error!" << endl;
+			cout << "STOR response error111!" << endl;
+			error += "STOR response error111";
 			closesocket(SocketControl);
 			//Sleep(1);
 			return;
@@ -355,29 +373,18 @@ void FTPClient::storfile(char* FTPIP)
 	while (true)
 	{
 		memset(ListBuf2, 0, MAX_SIZE);
-		if (!f2.eof())
-		{
-			f2.read(ListBuf2, MAX_SIZE);
-			int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
+	
+		f2.read(ListBuf2, MAX_SIZE);
+		int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
 
-			if (nStor == SOCKET_ERROR)
-			{
-				cout << endl << "Socket send error!" << endl;
-				closesocket(SocketData);
-				return;
-			}
-			if (RecvReply())
-			{
-				if (nReplycode == 226)
-					cout << ReplyMsg << endl;
-				else
-				{
-					cout << "STOR response error!" << endl;
-					closesocket(SocketControl);
-					return;
-				}
-			}
+		if (nStor == SOCKET_ERROR)
+		{
+			cout << endl << "Socket send error!" << endl;
+			error += "Socket send error!";
+			closesocket(SocketData);
+			return;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (f2.eof())
 			break;
@@ -386,7 +393,15 @@ void FTPClient::storfile(char* FTPIP)
 			break;
 		//break;
 >>>>>>> 6396caecee30bc8c1d57e921a4e4440e54a1390e
+=======
+	
+			
+		
+		if  (f2.eof())
+			break;
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
 	}
+		//break;
 	f2.close();
 	closesocket(SocketData);
 	if (RecvReply())

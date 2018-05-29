@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
+<<<<<<< HEAD
     <ProjectGuid>{ED175F7B-297E-4ABA-AD71-2FE701664EB8}</ProjectGuid>
+=======
+    <ProjectGuid>{16175ED2-F6CF-4A45-9F95-613A95BEAD3C}</ProjectGuid>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
     <RootNamespace>FTPMFC</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
@@ -30,7 +34,11 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+<<<<<<< HEAD
     <UseOfMfc>Dynamic</UseOfMfc>
+=======
+    <UseOfMfc>Static</UseOfMfc>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -45,7 +53,11 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+<<<<<<< HEAD
     <UseOfMfc>Dynamic</UseOfMfc>
+=======
+    <UseOfMfc>Static</UseOfMfc>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -62,12 +74,20 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+<<<<<<< HEAD
+=======
+    <Import Project="PropertySheet.props" />
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+<<<<<<< HEAD
+=======
+    <Import Project="PropertySheet.props" />
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -90,8 +110,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+<<<<<<< HEAD
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+=======
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,8 +140,16 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+<<<<<<< HEAD
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+=======
+      <PreprocessorDefinitions>WIN64;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -189,13 +224,24 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="FTPMFC.h" />
     <ClInclude Include="FTPMFCDlg.h" />
+=======
+    <ClInclude Include="CvvImage.h" />
+    <ClInclude Include="FTPMFC.h" />
+    <ClInclude Include="FTPMFCDlg.h" />
+    <ClInclude Include="MFCFTPClient.hpp" />
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="CvvImage.cpp" />
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
     <ClCompile Include="FTPMFC.cpp" />
     <ClCompile Include="FTPMFCDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

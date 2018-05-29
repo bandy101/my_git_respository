@@ -21,7 +21,7 @@ public:
 	bool useuser();  // user命令 认证用户名
 	bool usepass(); //pass命令 认证密码
 	void subcommend(string& filepath, string& filename); //输入和转换IP地址
-	void storfile(char* FTPIP);//上传文件
+	void storfile(char* FTPIP,char* path);//上传文件
 	void retrfile(char* FTPIP);//下载文件
 	void listftp(char* FTPIP);  //列出FTP服务器目录
 	void deletefile(); //删除文件
@@ -32,11 +32,15 @@ public:
 	char CmdBuf[MAX_SIZE];
 	char Command[MAX_SIZE];
 	char ReplyMsg[MAX_SIZE];
-private:
+public:
 	int nReplycode;
 	bool bConnected;
 	bool buser;
+<<<<<<< HEAD
 	SOCKET SocketControl_;
+=======
+	string error ="";
+>>>>>>> f2d1bff8386d248d0e43dde78561647827744fe8
 	SOCKET SocketControl;
 	SOCKET SocketData;
 };
