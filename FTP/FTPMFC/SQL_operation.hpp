@@ -30,7 +30,7 @@ public:
 		}
 	}
 	~MySql() {};
-	bool read_data(int data_row = 36)
+	bool read_data_save_img(int data_row = 36)
 	{
 
 
@@ -56,11 +56,12 @@ public:
 				datas += ",";
 			}
 			datas += "\n";
-
+			string image_name = row[26];
+			int pos = image_name.rfind("/");
 			unsigned long *lengths = mysql_fetch_lengths(result); //lenghs[n] ¸Ã×Ö¶Î³¤¶È
 			destIDs = (uint32_t *)malloc(lengths[2]);
 			memcpy(destIDs, row[2], lengths[2]);
-			ofstream fout('', ios::binary);
+			ofstream fout(image_name.substr(pos,sizeof(image_name)+1), ios::binary);
 			temp = (uint32_t *)malloc(lengths[2]);
 			temp = destIDs;
 			fout.write((char*)destIDs, lengths[2]);
