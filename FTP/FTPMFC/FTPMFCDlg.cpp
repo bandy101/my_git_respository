@@ -100,6 +100,8 @@ BEGIN_MESSAGE_MAP(CFTPMFCDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_STOR, &CFTPMFCDlg::OnBnClickedStor)
 	ON_BN_CLICKED(IDC_MULSTOR, &CFTPMFCDlg::OnBnClickedMulstor)
 	ON_STN_CLICKED(IDC_PICTURE, &CFTPMFCDlg::OnStnClickedPicture)
+	ON_BN_CLICKED(IDC_BUTTON1, &CFTPMFCDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CFTPMFCDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -228,7 +230,7 @@ void CFTPMFCDlg::OnBnClickedLogin()
 		string port_ = (LPCSTR)(CStringA)(m_port);
 		port_ = trim(port_);
 		string::size_type sz;
-		int PORT = stoi(port_, &sz);
+		PORT = stoi(port_, &sz);
 		if (!islogin) {
 			if (!(ftp.FTPConnection(const_cast<char*>(FTPIP.c_str()), PORT)))
 			{
@@ -250,8 +252,8 @@ void CFTPMFCDlg::OnBnClickedLogin()
 				m_recodeinfo += ":";
 				m_recodeinfo += m_port;
 				m_recodeinfo += "\r\n";
-				string user = (LPCSTR)(CStringA)(m_user);
-				string pwd = (LPCSTR)(CStringA)(m_pwd);
+				user = (LPCSTR)(CStringA)(m_user);
+				pwd = (LPCSTR)(CStringA)(m_pwd);
 				user = trim(user);
 				pwd = trim(pwd);
 				bool user_ = ftp.useuser(const_cast<char*>(user.c_str()));
@@ -273,7 +275,7 @@ void CFTPMFCDlg::OnBnClickedLogin()
 				}
 
 				UpdateData(false);
-				m_record.LineScroll(m_record.GetLineCount());
+				m_record.LineScroll(m_record.GetLineCount());//使编辑框内容处于焦点
 			}
 		}//islogin
 		else
@@ -304,19 +306,31 @@ void CFTPMFCDlg::OnBnClickedStor()
 		CFileDialog openFileDlg(isOpen, NULL, fileName, OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
 		openFileDlg.DoModal();
 		CString filePath = openFileDlg.GetPathName();
+		//string filePath = "09.png";
 		if (filePath != "")
 		{
 			string filePath_ = (LPCSTR)(CStringA)(filePath);
 			filePath_ = trim(filePath_);
-			ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(filePath_.c_str()));
+			//string filePath = "09.png";
+			char *in_path="tests\\0";
+			if (!ftp.mkdirectory(in_path)) 
+			{ 
+				ftp.FTPConnection(const_cast<char*>(FTPIP.c_str()), PORT); 
+				ftp.useuser(const_cast<char*>(user.c_str()));
+				ftp.usepass(const_cast<char*>(pwd.c_str()));
+				ftp.error = "";
+			}
+			
+
+			ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(filePath_.c_str()),in_path);
+			//ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(filePath.c_str()));
 			CString error(ftp.error.c_str());
 			if (error != "")
-			{
+			{	
 				m_recodeinfo += "上传失败!\r\n";
 				m_recodeinfo += error; m_recodeinfo + "\r\n";
 				UpdateData(false);
 				m_record.LineScroll(m_record.GetLineCount());
-
 			}
 			else
 			{															
@@ -368,4 +382,34 @@ void CFTPMFCDlg::OnStnClickedPicture()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//m_img.LOad
+}
+
+
+void CFTPMFCDlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	char *user = "root";         //username
+	char *pswd = "IkaZ3qSviy64";         //password
+	char *host = "192.168.20.16";    //or"127.0.0.1"
+	char *table = "equipment";        //database
+	unsigned int port = 3369;           //server port  
+	MySql  *sql = new MySql(host, user, pswd, table, port);
+	m_recodeinfo += "数据库连接成功！\r\n";
+	sql->read_data_save_img(42);
+	
+	//m_recodeinfo += sql->image_name.substr(9,sizeof(sql->image_name)).c_str();
+	UpdateData(false);
+
+}
+
+
+void CFTPMFCDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	ftp.error = " ";
+	char *in_path = "test\\\\";
+	ftp.changedir(in_path);
+	CString x(ftp.error.c_str());
+	m_recodeinfo += x;
+	UpdateData(false); 
 }
