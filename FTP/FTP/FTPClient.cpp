@@ -8,6 +8,7 @@
 #include <time.h>
 #define MAX_SIZE 4096
 #pragma comment(lib, "ws2_32.lib")
+
 using namespace std;
 //#define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
 //---控制连接接收
@@ -57,14 +58,16 @@ bool FTPClient::DataConnect(char* ServerAddr)
 {
 	//发送PASV命令
 	memset(Command, 0, MAX_SIZE);
-	memcpy(Command, "PASV", strlen("PASV"));
-	memcpy(Command+strlen("PASV"), "\r\n", 2);
+	memcpy(Command, "PASV ", strlen("PASV "));
+	memcpy(Command+strlen("PASV "), "\r\n", 2);
 	if (!SendCommand())
 		return false;
 	//获取PASV命令的应答信息
 	if (RecvReply()) {
 		if (nReplycode != 227){
 			cout << "PASV response error!" << endl;
+			error += ReplyMsg;
+			error += "\r\n";
 			error += "PASV response error!";
 			closesocket(SocketControl);
 			return false;
@@ -116,13 +119,15 @@ bool FTPClient::DataConnect(char* ServerAddr)
 	return true;
 }
 //---ftp服务器发送mkd命令 create direction////
+
+
 bool FTPClient::mkdirectory()
 {
-	if (!ishavedetail) {
+	//if (!ishavedetail) {
 		cout << "请输入你要创建的文件夹名：";
 		memset(CmdBuf, 0, MAX_SIZE);
 		cin.getline(CmdBuf, MAX_SIZE, '\b');
-	}
+	//}
 	memset(Command, 0, MAX_SIZE);
 	memcpy(Command, "MKD", strlen("MKD"));
 	memcpy(Command + strlen("MKD"), CmdBuf, strlen(CmdBuf));
@@ -145,16 +150,16 @@ bool FTPClient::mkdirectory()
 //--ftp服务器发送CWD（改变工作目录命令）---///
 bool FTPClient::changedir()
 {
-	if (!ishavedetail)
-	{
+	//if (!ishavedetail)
+	//{
 		cout << "请输入需要进入的文件夹路径";
 		memset(CmdBuf, 0, MAX_SIZE);
 		cin.getline(CmdBuf, MAX_SIZE, '\n');
 
-	}
+	//}
 	memset(Command, 0, MAX_SIZE);
-	memcpy(Command, "CWD", strlen("CWD"));
-	memcpy(Command + strlen("CWD") + strlen(CmdBuf), "\r\n", 2);
+	memcpy(Command, "CWD ", strlen("CWD "));
+	memcpy(Command + strlen("CWD ") + strlen(CmdBuf), "\r\n", 2);
 		if (!SendCommand())
 			return false;
 	//---------------获得cwd命令应答信息------------------
@@ -254,7 +259,7 @@ bool FTPClient::useuser()
 			return false;
 		}
 	}
-	//buser = true;
+	buser = true;
 	return true;
 }
 //--向服务器发送PASS 认证密码命令
@@ -341,10 +346,9 @@ void FTPClient::storfile(char* FTPIP,char *path_)
 		return;
 	memset(Command, 0, MAX_SIZE);
 	memcpy(Command, "STOR ", strlen("STOR "));
-	memcpy(Command, "test_/", strlen("test_/"));
-	memcpy(Command + strlen("STOR ")+ strlen("test_/"), CmdBuf, strlen(CmdBuf));
+	memcpy(Command + strlen("STOR "), CmdBuf, strlen(CmdBuf));
 	//memcpy(Command + strlen("STOR ") + strlen("test_\\") + strlen(CmdBuf), "\r\n", 2);
-	memcpy(Command + strlen("STOR ") + strlen("test_/") +strlen(CmdBuf), "\r\n", 2);
+	memcpy(Command + strlen("STOR ")  +strlen(CmdBuf), "\r\n", 2);
 	if (!SendCommand())
 		return;
 	//获取STOR 上传文件命令的应答信息
@@ -365,9 +369,11 @@ void FTPClient::storfile(char* FTPIP,char *path_)
 	char ListBuf2[MAX_SIZE];
 	while (true)
 	{
+
 		memset(ListBuf2, 0, MAX_SIZE);
 	
 		f2.read(ListBuf2, MAX_SIZE);
+		error += ListBuf2;
 		int nStor = send(SocketData, ListBuf2, MAX_SIZE, 0);
 
 		if (nStor == SOCKET_ERROR)
