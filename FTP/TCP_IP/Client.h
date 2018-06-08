@@ -10,10 +10,13 @@ class Client
 public:
 	Client();
 	~Client();
-
+	void send_recv();
 private:
 	SOCKET sockfd;
 	char buf[4096];
+	SOCKET sockfd;
+	sockaddr_in their_addr;
+	WSADATA WSAData;//WSADATA:该结构被用来储存调用
 public:
 	string error;
 	char *datas;

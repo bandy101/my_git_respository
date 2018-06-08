@@ -3,12 +3,14 @@
 //
 
 #pragma once
+
 #include "afxwin.h"
 #include "MFCFTPClient.hpp"
 #include "../FTP/FTPClient.h"
 #include "opencv2/opencv.hpp"
 #include "CvvImage.h"
 #include "SQL_operation.hpp"
+#include "../TCP_IP/Client.h"
 // CFTPMFCDlg ¶Ô»°¿ò
 class CFTPMFCDlg : public CDialogEx
 {
@@ -39,6 +41,7 @@ protected:
 public:
 	CEdit m_record;
 	MFCFTPClient ftp;
+	Client client;
 	MySql  *sql;
 	string user;
 	string pwd;

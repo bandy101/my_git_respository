@@ -12,21 +12,23 @@ unsigned int port = 3369;           //server port
 */
 Client::Client() {
 	error = " "; datas = " ";
-	WSADATA WSAData;//WSADATA:该结构被用来储存调用
-	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)//WSAStartup:初始化当前线程通信环境，MAKEWORD:合并短整数
-	{
+	// WSAStartup:初始化当前线程通信环境，MAKEWORD:合并短整数
+	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)
 		cout << "WSAStartup error!" << endl;
-	}
-	SOCKET sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	sockaddr_in their_addr; 
+
+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	memset(&their_addr, 0, sizeof(their_addr));  //bin_zero
 	their_addr.sin_family = AF_INET;   //声明格式  地址家族 host byte order
 	their_addr.sin_port = htons(9019);//端口
 	their_addr.sin_addr.S_un.S_addr = inet_addr(IP);//指明连接服务器的IP地
+
 	if (connect(sockfd, (sockaddr *)&their_addr, sizeof(sockaddr)) <= SOCKET_ERROR) {
 		error += "Server connect error!\r\n";
 	}
-	//memcpy(buf, data, strlen(data));
+}
+
+void Client::send_recv()
+{
 	int nSend = send(sockfd, buf, sizeof(buf), 0); // 0:flag write
 	if (nSend == SOCKET_ERROR) {
 		error += "Socket send error!\r\n";
@@ -37,6 +39,6 @@ Client::Client() {
 			error += "Socket receive error!\r\n";
 			break;
 		}
-		strcat(datas,buf); //return datas
+		strcat(datas, buf); //return datas
 	}
 }
