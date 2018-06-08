@@ -44,6 +44,8 @@ public:
 	string pwd;
 	int PORT;
 
+	string *img_path_name;
+
 	afx_msg void OnBnClickedLogin();
 	CString m_ipaddr;
 	CString m_port;

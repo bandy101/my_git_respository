@@ -393,9 +393,18 @@ void CFTPMFCDlg::OnBnClickedButton1()
 	char *host = "192.168.20.16";    //or"127.0.0.1"
 	char *table = "equipment";        //database
 	unsigned int port = 3369;           //server port  
-	MySql  *sql = new MySql(host, user, pswd, table, port);
+	sql = new MySql(host, user, pswd, table, port);
 	m_recodeinfo += "数据库连接成功！\r\n";
 	sql->read_data_save_img(42);
+	string *img_path_name = sql->name;
+	//CString name((*img_path_name).c_str());
+	for (int i = 0; i < sql->cord_num; i++)
+	{
+		CString name((*img_path_name).c_str());
+		m_recodeinfo += name;
+		m_recodeinfo += "\r\n";
+		img_path_name++;
+	}
 	
 	//m_recodeinfo += sql->image_name.substr(9,sizeof(sql->image_name)).c_str();
 	UpdateData(false);
