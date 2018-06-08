@@ -86,8 +86,8 @@ public:
 			else
 			{
 				cout << "MKD response error!" << endl;
-				//error += "create file error!\r\n";
-				//closesocket(SocketControl);
+				error += "create file error!\r\n";
+				closesocket(SocketControl);
 				return false;
 			}
 		}
@@ -110,13 +110,14 @@ public:
 			cout << "nReplycode:" << nReplycode << endl;
 			if (nReplycode == 250) //257
 			{
-				error += ReplyMsg;
+				//error += ReplyMsg;p
+			
 			}
 			else
 			{
 				cout << "CWD response error!" << endl;
 				error += "change dir error!\r\n";
-				closesocket(SocketControl);
+				//closesocket(SocketControl);
 				return false;
 			}
 		}
@@ -170,11 +171,13 @@ public:
 			return;
 		memset(Command, 0, MAX_SIZE);
 		memcpy(Command, "STOR ", strlen("STOR "));
-		//memcpy(Command + strlen("STOR "), stor_path, strlen(stor_path));
 		memcpy(Command + strlen("STOR "), str3, strlen(str3));
 		memcpy(Command + strlen("STOR ")+ strlen(str3), CmdBuf, strlen(CmdBuf));
-		//memcpy(Command + strlen("STOR ")  + strlen("test\\") + strlen(CmdBuf), "\r\n", 2);
 		memcpy(Command + strlen("STOR ") +strlen(str3) +strlen(CmdBuf), "\r\n", 2);
+
+		//memcpy(Command, "STOR ", strlen("STOR "));
+		//memcpy(Command + strlen("STOR ") , CmdBuf, strlen(CmdBuf));
+		//memcpy(Command + strlen("STOR ") + strlen(CmdBuf), "\r\n", 2);
 		if (!SendCommand())
 			return;
 		//获取STOR 上传文件命令的应答信息

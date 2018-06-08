@@ -8,6 +8,7 @@
 #include "../FTP/FTPClient.h"
 #include "opencv2/opencv.hpp"
 #include "CvvImage.h"
+#include "SQL_operation.hpp"
 // CFTPMFCDlg ¶Ô»°¿ò
 class CFTPMFCDlg : public CDialogEx
 {
@@ -38,6 +39,11 @@ protected:
 public:
 	CEdit m_record;
 	MFCFTPClient ftp;
+	MySql  *sql;
+	string user;
+	string pwd;
+	int PORT;
+
 	afx_msg void OnBnClickedLogin();
 	CString m_ipaddr;
 	CString m_port;
@@ -52,5 +58,7 @@ public:
 	afx_msg void OnBnClickedMulstor();
 	afx_msg void OnStnClickedPicture();
 	CStatic m_img;
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
 };
 
