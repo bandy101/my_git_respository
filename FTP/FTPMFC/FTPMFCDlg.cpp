@@ -405,6 +405,7 @@ void CFTPMFCDlg::OnBnClickedButton1()
 		m_recodeinfo += "\r\n";
 		img_path_name++;
 	}
+	client
 	
 	//m_recodeinfo += sql->image_name.substr(9,sizeof(sql->image_name)).c_str();
 	UpdateData(false);
