@@ -12,6 +12,7 @@ public:
 private:
 	SOCKET socketServer;
 	SOCKET socketData;
+	SOCKET other;
 	sockaddr_in serveraddr;
 	sockaddr_in otheraddr;
 };

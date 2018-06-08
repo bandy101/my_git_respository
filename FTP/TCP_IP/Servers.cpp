@@ -4,7 +4,7 @@
 #include <stdio.h>
 #pragma comment(lib, "ws2_32.lib")
 #define MAX_SIZE 4096
-#define CLIENT_NUM 1
+#define CLIENT_NUM 3
 bool Servers::server_init(char *IP, int port) {
 	WSADATA WSAData;//WSADATA:该结构被用来储存调用
 	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)//WSAStartup:初始化当前线程通信环境，MAKEWORD:合并短整数
@@ -42,32 +42,44 @@ void Servers::server_begin()
 	char recvs[MAX_SIZE];
 	memset(recvs, 0, MAX_SIZE);
 	cout << "welcome create servers local" << endl;
+	//other = accept(socketServer, (struct sockaddr *)&otheraddr, &sin_size);
 	while (1) {
 		sin_size = sizeof(struct sockaddr_in);
 		//otheraddr 返回接受的服务
-		SOCKET other = accept(socketServer, (struct sockaddr *)&otheraddr, &sin_size);
+		other = accept(socketServer, (struct sockaddr *)&otheraddr, &sin_size);
+		memset(buf, 0, MAX_SIZE);
 		if ((numbytes = recv(other, buf, MAX_SIZE, 0)) == SOCKET_ERROR) {
-			////exit(1);
 			cout << "Socket receive error!" << endl;
-
+			
+			//closesocket(socketServer);   //关闭套接字  
+			closesocket(other);   //关闭套接字       
+			//WSACleanup();           //释放套接字资源; 
+			//cout << "close connect";
+			break;
+		}
+		else {
+			cout << "buf:" << buf << endl;
 		}
 		//char *other_addr = inet_ntoa(otheraddr.sin_addr);
 		string data_0 = buf;
-		int pos0 = data_0.rfind("@");
-		data_0.insert(pos0+1, "1;");
-		//int pos1 = data_0.rfind('tek');
-		//data_0.insert(pos1+2,"")
-		char data_c[MAX_SIZE];
+		//-----成功标志----//
+		//int pos0 = data_0.rfind("@");
+		//data_0.insert(pos0+1, "1;");
+		//---//
+		data_0 = "Hellow_-" + data_0;
+		char data_c[MAX_SIZE]; memset(data_c, 0, MAX_SIZE);
 		strcpy(data_c, data_0.c_str());
-		cout << "buf:" << buf << endl;
-		memcpy(recvs,&data_c, strlen(data_c));
-		cout << "recvs:" << recvs << endl;
+		
+		//memcpy(recvs,data_c, strlen(data_c));
+		//cout << "recvs:" << data_c << endl;
 		string s = *buf + "dd";
-		int nSend = send(other,recvs, strlen(recvs), 0); // 0:flag write
+		int nSend = send(other, data_c, strlen(data_c), 0); // 0:flag write
 		if (nSend == SOCKET_ERROR) {
 			cout << "Socket send error!" << endl;
-			//return false;
 		}
-		closesocket(other); /* parent doesn't need this */
+		memset(buf, 0, MAX_SIZE);
 	}
+		closesocket(socketServer); /* parent doesn't need this */
+		closesocket(other); /* parent doesn't need this */
+	
 }

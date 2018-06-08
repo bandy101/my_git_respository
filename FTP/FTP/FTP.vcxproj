@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="FTPClient.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="test_sql.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTPClient.h" />
