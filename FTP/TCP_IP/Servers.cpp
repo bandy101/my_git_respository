@@ -2,9 +2,10 @@
 #include <string.h>
 #include <string>
 #include <stdio.h>
+
 #pragma comment(lib, "ws2_32.lib")
 #define MAX_SIZE 4096
-#define CLIENT_NUM 3
+#define CLIENT_NUM 1
 bool Servers::server_init(char *IP, int port) {
 	WSADATA WSAData;//WSADATA:该结构被用来储存调用
 	if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)//WSAStartup:初始化当前线程通信环境，MAKEWORD:合并短整数

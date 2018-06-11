@@ -12,6 +12,7 @@
 #include "opencv2/features2d/features2d.hpp"
 #include "cv.h"
 #include "highgui.h"
+#include "../TCP_IP/Client.cpp"
 //#include <opencv2/opencv.hpp>
 using namespace std;
 using namespace cv;
@@ -102,6 +103,7 @@ BEGIN_MESSAGE_MAP(CFTPMFCDlg, CDialogEx)
 	ON_STN_CLICKED(IDC_PICTURE, &CFTPMFCDlg::OnStnClickedPicture)
 	ON_BN_CLICKED(IDC_BUTTON1, &CFTPMFCDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CFTPMFCDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_START, &CFTPMFCDlg::OnBnClickedStart)
 END_MESSAGE_MAP()
 
 
@@ -312,7 +314,7 @@ void CFTPMFCDlg::OnBnClickedStor()
 			string filePath_ = (LPCSTR)(CStringA)(filePath);
 			filePath_ = trim(filePath_);
 			//string filePath = "09.png";
-			char *in_path="tests\\0";
+			char *in_path="tes\\0";
 			if (!ftp.mkdirectory(in_path)) 
 			{ 
 				ftp.FTPConnection(const_cast<char*>(FTPIP.c_str()), PORT); 
@@ -396,18 +398,14 @@ void CFTPMFCDlg::OnBnClickedButton1()
 	sql = new MySql(host, user, pswd, table, port);
 	m_recodeinfo += "数据库连接成功！\r\n";
 	sql->read_data_save_img(42);
-	string *img_path_name = sql->name;
-	//CString name((*img_path_name).c_str());
-	for (int i = 0; i < sql->cord_num; i++)
-	{
-		CString name((*img_path_name).c_str());
-		m_recodeinfo += name;
-		m_recodeinfo += "\r\n";
-		img_path_name++;
-	}
-	client
-	
-	//m_recodeinfo += sql->image_name.substr(9,sizeof(sql->image_name)).c_str();
+	img_path_name = sql->name;
+
+
+	int pos = (*img_path_name).rfind("/");
+	string finepath= (*img_path_name).substr(0, pos).c_str();
+	char *in_path = const_cast<char*>(finepath.c_str());
+	CString str1(in_path);
+
 	UpdateData(false);
 
 }
@@ -422,4 +420,55 @@ void CFTPMFCDlg::OnBnClickedButton2()
 	CString x(ftp.error.c_str());
 	m_recodeinfo += x;
 	UpdateData(false); 
+}
+
+
+//void CFTPMFCDlg::OnBnClickedButton3()
+//{
+//	// TODO: 在此添加控件通知处理程序代码
+//}
+
+
+void CFTPMFCDlg::OnBnClickedStart()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	
+	if (islogin) {
+
+
+		for (int i = 0; i < sql->cord_num; i++)
+		{
+			int pos = (*img_path_name).rfind("/");
+			string finepath = (*img_path_name).substr(0, pos);
+
+			char *in_path = const_cast<char*>(finepath.c_str());
+
+			if (!ftp.mkdirectory(in_path))
+			{
+				ftp.FTPConnection(const_cast<char*>(FTPIP.c_str()), PORT);
+				ftp.useuser(const_cast<char*>(user.c_str()));
+				ftp.usepass(const_cast<char*>(pwd.c_str()));
+				ftp.error = "";
+			}
+			ftp.error = "";
+			string finepath_ = (*img_path_name).substr(pos + 1, (*img_path_name).length() - pos - 1);
+			//CString str1(finepath_.c_str);
+			//m_recodeinfo += str1;
+			//m_recodeinfo += "\r\n";
+			ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(finepath_.c_str()), in_path);
+			CString name((*img_path_name).c_str());
+			CString error(ftp.error.c_str());
+			m_recodeinfo += name;
+			m_recodeinfo += "\r\n";
+			m_recodeinfo += error;
+			img_path_name++;
+			UpdateData(false);
+		}
+	}
+	else
+	{
+		m_recodeinfo = "";
+		m_recodeinfo += "请先登陆FTP\r\n";
+		UpdateData(false);
+	}
 }

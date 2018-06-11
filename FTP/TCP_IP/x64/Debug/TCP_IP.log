@@ -1,6 +1,11 @@
-﻿  Servers.cpp
-g:\git\my_git_respository\ftp\tcp_ip\servers.cpp(25): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+﻿  Client.cpp
+g:\git\my_git_respository\ftp\ftpmfc\mfcftpclient.hpp(163): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+g:\git\my_git_respository\ftp\tcp_ip\client.cpp(23): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
   c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(1850): note: 参见“inet_addr”的声明
-g:\git\my_git_respository\ftp\tcp_ip\servers.cpp(76): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+g:\git\my_git_respository\ftp\tcp_ip\client.cpp(42): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+g:\git\my_git_respository\ftp\tcp_ip\client.cpp(43): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+g:\git\my_git_respository\ftp\tcp_ip\client.cpp(51): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+g:\git\my_git_respository\ftp\tcp_ip\client.cpp(70): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+g:\git\my_git_respository\ftp\tcp_ip\client.cpp(41): warning C4101: “data”: 未引用的局部变量
   TCP_IP.vcxproj -> G:\git\my_git_respository\FTP\x64\Debug\TCP_IP.exe
   TCP_IP.vcxproj -> G:\git\my_git_respository\FTP\x64\Debug\TCP_IP.pdb (Full PDB)

@@ -1,11 +1,12 @@
 #pragma once
+
 #include <mysql.h>
 #include <WinSock2.h>
 #include <iostream>
 #include <string>
 #include <stdio.h>
 #include <fstream>
-#include "../FTP/FTPClient.h"
+#include "MFCFTPClient.hpp"
 #define CORD_SIZE 100
 //#include <cstring>
 using namespace std;
@@ -91,7 +92,7 @@ public:
 	string name[CORD_SIZE];
 private:
 	
-	FTPClient ftp;
+	MFCFTPClient ftp;
 	char *encode;
 	MYSQL_RES *result_img;
 	MYSQL_RES *result_msg;

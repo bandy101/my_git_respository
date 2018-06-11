@@ -47,6 +47,8 @@ bool FTPClient::SendCommand()//向ftp服务器发送命令
 	nSend = send(SocketControl,Command, strlen(Command), 0);//flag =0 ->write
 	cout << "nSend:" << nSend << endl;
 	if (nSend == SOCKET_ERROR) {
+		error += Command;
+		error += "\r\n";
 		error += "Socket Socket send error!!";
 		cout << "Socket send error!" << endl;
 		return false;

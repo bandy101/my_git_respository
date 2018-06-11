@@ -6,11 +6,11 @@
 
 #include "afxwin.h"
 #include "MFCFTPClient.hpp"
-#include "../FTP/FTPClient.h"
 #include "opencv2/opencv.hpp"
 #include "CvvImage.h"
 #include "SQL_operation.hpp"
 #include "../TCP_IP/Client.h"
+
 // CFTPMFCDlg ¶Ô»°¿ò
 class CFTPMFCDlg : public CDialogEx
 {
@@ -45,9 +45,9 @@ public:
 	MySql  *sql;
 	string user;
 	string pwd;
-	int PORT;
-
 	string *img_path_name;
+	int PORT;
+	int sql_cord_num;
 
 	afx_msg void OnBnClickedLogin();
 	CString m_ipaddr;
@@ -65,5 +65,7 @@ public:
 	CStatic m_img;
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
+//	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedStart();
 };
 

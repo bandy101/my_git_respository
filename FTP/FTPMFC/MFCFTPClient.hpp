@@ -1,6 +1,9 @@
 #pragma once
+
 #include "../FTP/FTPClient.h"
 #include <opencv2/opencv.hpp>
+
+
 class MFCFTPClient : public FTPClient
 {
 public:
@@ -77,6 +80,9 @@ public:
 		//memcpy(Command + strlen("MKD ")+ strlen(filename), CmdBuf, strlen(CmdBuf));
 		//memcpy(Command + strlen("MKD ") + strlen(filename) + strlen(CmdBuf), "\r\n", 2);
 		memcpy(Command + strlen("MKD ") + strlen(filename), "\r\n", 2);
+		error += "#######";
+		error += Command;
+		
 		if (!SendCommand())
 			return false;
 		if (RecvReply())
@@ -86,7 +92,7 @@ public:
 			else
 			{
 				cout << "MKD response error!" << endl;
-				error += "create file error!\r\n";
+				error += "create file_dir    error!\r\n";
 				closesocket(SocketControl);
 				return false;
 			}
@@ -126,12 +132,7 @@ public:
 
 	void storfile(char* FTPIP, char *path_,char *stor_path)
 	{
-		//if (!ishavedetail)
-		//{
-		//cout << "请输入上传文件名:";
-		//memset(CmdBuf, 0, MAX_SIZE);
-		//cin.getline(CmdBuf, MAX_SIZE, '\n');
-		//}
+
 		char str3[100];
 		memset(str3, 0, 100);
 		strcpy(str3, stor_path);
@@ -142,6 +143,12 @@ public:
 		//char *path;
 		//path = "G:\\git\\my_git_respository\\FTP\\FTP\\python.txt";
 		//path = "python.txt";
+	/*	if (int pos_= string(path_).rfind("/") != -1)
+
+		{
+			f2.open(string(path_).substr(pos_ + 1, string(path_).length() - pos_ - 1).c_str(), ios::binary);
+		}
+		else*/
 		f2.open(path_, ios::binary);
 		if (!f2)
 		{
@@ -152,7 +159,13 @@ public:
 		string strPath(path_);
 		cout << "str:" << strPath << endl;
 		string filepath, filename;
-		int nPos = strPath.rfind('\\');
+		//int nPos =strPath.rfind("\\");
+		int nPos = strPath.rfind("/");
+		//if (strPath.rfind("\\")==-1|| strPath.rfind("/")==-1)
+		//{
+		//	nPos = -1;
+		//}
+		//
 		if (-1 != nPos)
 		{
 			filename = strPath.substr(nPos + 1, strPath.length() - nPos - 1);
@@ -163,7 +176,12 @@ public:
 			memcpy(CmdBuf, filename.data(), strlen(filename.data()));
 		}
 		else
+		{
 			cout << "nPos:" << nPos << endl;
+			memset(CmdBuf, 0, MAX_SIZE);
+			memcpy(CmdBuf, strPath.data(), strlen(strPath.data()));
+
+		}
 		char Ftpstor[MAX_SIZE];
 		memset(Ftpstor, 0, MAX_SIZE);
 		memcpy(Ftpstor, FTPIP, strlen(FTPIP));
@@ -185,10 +203,14 @@ public:
 		{
 			cout << ReplyMsg << endl;
 			if (nReplycode == 125 || nReplycode == 150 || nReplycode == 226)
+			{
 				cout << ReplyMsg << endl;
+				//error += ReplyMsg;
+			}
 			else
 			{
 				cout << "STOR response error111!" << endl;
+				error += ReplyMsg;
 				error += "STOR response error111";
 				closesocket(SocketControl);
 				//Sleep(1);
