@@ -17,6 +17,7 @@
 using namespace std;
 using namespace cv;
 //#include "Resource.h"s
+#pragma execution_character_set("GB2312")
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

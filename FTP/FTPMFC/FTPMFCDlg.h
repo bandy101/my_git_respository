@@ -10,7 +10,7 @@
 #include "CvvImage.h"
 #include "SQL_operation.hpp"
 #include "../TCP_IP/Client.h"
-
+#pragma execution_character_set("GB2312")
 // CFTPMFCDlg ¶Ô»°¿ò
 class CFTPMFCDlg : public CDialogEx
 {
