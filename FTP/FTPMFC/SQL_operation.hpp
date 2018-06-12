@@ -34,9 +34,11 @@ public:
 	{
 		pCon = mysql_init(NULL);
 		pCon_img = mysql_init(NULL);
+		pCon_ziduan = mysql_init(NULL);
 		datas = " "; error = " "; cord_num = 0;
 		if (mysql_real_connect(pCon, host, user, pwd, table, port, NULL, 0)&& mysql_real_connect(pCon_img, host, user, pwd, table, port, NULL, 0))
 		{	
+			mysql_real_connect(pCon_ziduan, host, user, pwd, table, port, NULL, 0);
 			//…Ë÷√±‡¬Î
 			encode = "SET NAMES 'gb2312'";
 			mysql_query(pCon, encode);

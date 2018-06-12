@@ -251,6 +251,9 @@ void CFTPMFCDlg::OnBnClickedLogin()
 			}
 			else
 			{
+
+			}
+			{
 				m_recodeinfo += FTPIP.c_str();
 				m_recodeinfo += ":";
 				m_recodeinfo += m_port;
@@ -270,7 +273,7 @@ void CFTPMFCDlg::OnBnClickedLogin()
 					GetDlgItem(IDC_LOGIN)->SetWindowText(LPCTSTR(CString("Out")));
 					islogin = true;
 				}
-				else
+				else 
 				{
 					m_recodeinfo += ero;
 					m_recodeinfo += "请检查用户名和密码！\r\n";

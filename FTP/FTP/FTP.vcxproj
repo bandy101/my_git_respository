@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FTPClient.cpp" />
+    <ClCompile Include="hex.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test_sql.cpp" />
   </ItemGroup>
