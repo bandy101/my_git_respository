@@ -93,6 +93,46 @@ void outc(char c)
 #include <cstdio>
 #include <sstream>
 using namespace std;
+
+//ASCII码中将字符转换成对应的十进制数 
+int char2int(char input)
+{
+	return input>64 ? (input - 55) : (input - 48);
+}
+//ASCII码中将十进制数转换成对应的字符 
+int int2char(char input)
+{
+	return input>9 ? (input + 55) : (input + 48);
+}
+//将十六进制字符串HexStr1和HexStr2异或得到HexStr
+void hexstrxor(char * HexStr1, char * HexStr2, char * HexStr)
+{
+	int i, iHexStr1Len, iHexStr2Len, iHexStrLenLow, iHexStrLenGap;
+	//转换成大写并求长度, strupr是非标准的C函数，在Linux下不支持，所以需要
+	//自己实现或者使用glib中的g_string_ascii_up () 
+	strupr(HexStr1);
+	strupr(HexStr2);
+	iHexStr1Len = strlen(HexStr1);
+	iHexStr2Len = strlen(HexStr2);
+	//获取最小的长度 
+	iHexStrLenLow = iHexStr1Len<iHexStr2Len ? iHexStr1Len : iHexStr2Len;
+	//获取长度差值 iHexStrLenGap = abs( iHexStr1Len-iHexStr2Len ); 
+	//两个十六进制的字符串进行异或 
+	for (i = 0; i<iHexStrLenLow; i++)
+	{
+		*(HexStr + i) = char2int(HexStr1[i]) ^ char2int(HexStr2[i]);
+		*(HexStr + i) = int2char(*(HexStr + i));
+	}
+	if (iHexStr1Len>iHexStr2Len)
+		memcpy(HexStr + i, HexStr1 + i, iHexStrLenGap);
+	else if (iHexStr1Len<iHexStr2Len) memcpy(HexStr + i, HexStr2 + i, iHexStrLenGap);
+	*(HexStr + iHexStrLenLow + iHexStrLenGap) = 0x00;
+}
+
+
+
+
+
 std::string char2hex(std::string const &s)
 {
 	std::string ret;
@@ -127,3 +167,16 @@ int main()
 	getchar();
 	return 0;
 }
+
+int main(int argc, char * argv[]) 
+{ //两个十六进制的字符串以及异或的结果result
+	char HexStr1[] = "F1A37CD826BE0A38"; 
+	char HexStr2[] = "4FBC926A2EED4F0A"; 
+	char result[17] = {0}; 
+	//调用异或方法 
+	hexstrxor( HexStr1, HexStr2, result ); 
+	//打印异或结果 
+	printf( "\nresult=[%s]\n", result ); return 0; 
+}
+
+
