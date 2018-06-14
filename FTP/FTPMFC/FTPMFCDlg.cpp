@@ -392,7 +392,8 @@ void CFTPMFCDlg::OnStnClickedPicture()
 
 
 void CFTPMFCDlg::OnBnClickedButton1()
-{
+{	
+
 	// TODO: 在此添加控件通知处理程序代码
 	char *user = "root";         //username
 	char *pswd = "IkaZ3qSviy64";         //password
@@ -401,14 +402,12 @@ void CFTPMFCDlg::OnBnClickedButton1()
 	unsigned int port = 3369;           //server port  
 	sql = new MySql(host, user, pswd, table, port);
 	m_recodeinfo += "数据库连接成功！\r\n";
-	sql->read_data_save_img(42);
-	img_path_name = sql->name;
 
 
-	int pos = (*img_path_name).rfind("/");
-	string finepath= (*img_path_name).substr(0, pos).c_str();
-	char *in_path = const_cast<char*>(finepath.c_str());
-	CString str1(in_path);
+	//int pos = (*img_path_name).rfind("/");
+	//string finepath= (*img_path_name).substr(0, pos).c_str();
+	//char *in_path = const_cast<char*>(finepath.c_str());
+	//CString str1(in_path);
 
 	UpdateData(false);
 
@@ -439,7 +438,15 @@ void CFTPMFCDlg::OnBnClickedStart()
 	
 	if (islogin) {
 
-
+		if (sql->read_data_save_img())
+		{
+			ftp.error += "操作完成！\r\n";
+		}
+		else
+		{
+			return;
+		}
+		img_path_name = sql->name;
 		for (int i = 0; i < sql->cord_num; i++)
 		{
 			int pos = (*img_path_name).rfind("/");
@@ -459,6 +466,7 @@ void CFTPMFCDlg::OnBnClickedStart()
 			//CString str1(finepath_.c_str);
 			//m_recodeinfo += str1;
 			//m_recodeinfo += "\r\n";
+			
 			ftp.storfile(const_cast<char*>(FTPIP.c_str()), const_cast<char*>(finepath_.c_str()), in_path);
 			CString name((*img_path_name).c_str());
 			CString error(ftp.error.c_str());

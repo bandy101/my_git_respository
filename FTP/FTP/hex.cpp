@@ -94,16 +94,16 @@ void outc(char c)
 #include <sstream>
 using namespace std;
 
-//ASCII码中将字符转换成对应的十进制数 
-int char2int(char input)
-{
-	return input>64 ? (input - 55) : (input - 48);
-}
-//ASCII码中将十进制数转换成对应的字符 
-int int2char(char input)
-{
-	return input>9 ? (input + 55) : (input + 48);
-}
+////ASCII码中将字符转换成对应的十进制数 
+//int char2int(char input)
+//{
+//	return input>64 ? (input - 55) : (input - 48);
+//}
+////ASCII码中将十进制数转换成对应的字符 
+//int int2char(char input)
+//{
+//	return input>9 ? (input + 55) : (input + 48);
+//}
 //将十六进制字符串HexStr1和HexStr2异或得到HexStr
 void hexstrxor(char * HexStr1, char * HexStr2, char * HexStr)
 {

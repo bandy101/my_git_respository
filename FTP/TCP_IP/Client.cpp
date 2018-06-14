@@ -37,13 +37,14 @@ void Client::send_recv(MySql *sql)
 
 	string *name = sql->name;
 	int pos, last_pos;
-	string datas = sql->datas;
+	string datas = sql->datas_;
 	char *data;
 	last_pos = datas.rfind("\n");
 	pos = datas.find("\n");
 	int num = sql->cord_num;
 	int first_times = 0;
 	while (num) {
+		num--;
 		memset(buf, 0, MAX_SIZE);
 		strcpy(buf, datas.substr(first_times, pos- first_times).c_str());
 		first_times = pos;

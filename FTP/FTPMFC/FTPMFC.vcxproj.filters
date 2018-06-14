@@ -42,6 +42,9 @@
     <ClInclude Include="SQL_operation.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Char_Int.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FTPMFC.cpp">

@@ -196,6 +196,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Char_Int.hpp" />
     <ClInclude Include="CvvImage.h" />
     <ClInclude Include="FTPMFC.h" />
     <ClInclude Include="FTPMFCDlg.h" />

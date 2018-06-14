@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <fstream>
 #include "MFCFTPClient.hpp"
+//#include "Char_Int.hpp"
 #define CORD_SIZE 100
 #define CORD 42
 #pragma execution_character_set("GB2312")
@@ -60,7 +61,7 @@ public:
 		}
 	}
 	~MySql() {};
-	bool read_data_save_img(int data_row = 42)
+	bool read_data_save_img(int data_row = 38)
 	{
 		bool rd = true;
 
@@ -74,6 +75,9 @@ public:
 		while (row = mysql_fetch_row(result_msg))
 		{
 			row_img = mysql_fetch_row(result_img);
+			datas_ += "RS01440105001";
+			datas_ += row[4];
+
 			for (int i = 0; i < data_row; i++)
 				try
 			{
@@ -98,6 +102,7 @@ public:
 				rd = false;
 				datas += ",";
 			}
+			//bit 类型数据
 			for (int l = 0; l < 3; l++)
 			{
 				datas += ziduan[38 + l];
@@ -116,8 +121,30 @@ public:
 			datas += (char*)row[41];
 			datas += ",";
 			datas += ";";
-			datas += "\n";
+			ss_ <<hex << int(datas.length());
+			ss_ >> xor_value;
+			switch (xor_value.length())
+			{
+				case 1:datas_ += "000"; break;
+				case 2:datas_ += "00"; break;
+				case 3:datas_ += "0"; break;
+				default: break;
 
+			}
+			datas_ += xor_value;
+			datas_ += "@@@";//固定分隔符
+			datas_ += datas;
+			datas_ += "tek";//@7固定分割符
+
+			ss << hex << int(_xor(datas_));
+			ss >> xor_value;
+			if (xor_value.length() < 2)
+				xor_value = "0" + xor_value;
+			datas_ += xor_value;
+			datas_ += "####";//结束符（4）
+			datas_ += "\n";
+			//xor值
+			xor[cord_num] = _xor(datas);
 			image_name = row[27];
 			name[cord_num++] = image_name; //记录imge_表名
 			unsigned long *lengths = mysql_fetch_lengths(result_img); //lenghs[n] 该字段长度
@@ -131,13 +158,14 @@ public:
 			fout.close();
 			//cord_num += 1;
 
+
 		}
 		memset(trans, 0, MAX_SIZE);
 		memcpy(trans, datas.c_str(), strlen(datas.c_str()));
 
 		//操作单字节
-		for (int j = 0; j<strlen(trans) - 1; j++)
-			cout << "\n:size:" << trans[j] << "\n";
+		//for (int j = 0; j<strlen(trans) - 1; j++)
+		//	cout << "\n:size:" << trans[j] << "\n";
 
 		mysql_free_result(result_img);
 		mysql_free_result(result_msg);
@@ -147,8 +175,43 @@ public:
 		mysql_close(pCon);
 		return rd;
 	}
+	std::string char2hex(std::string const &s)
+	{
+		std::string ret;
+		for (unsigned i = 0; i != s.size(); ++i)
+		{
+			char hex[5];
+			sprintf(hex, "%#.2x ", (unsigned char)s[i]);
+			ret += hex;
+		}
+		return ret;
+	}
+
+	int char2int(char input)
+	{
+		return input>96 ? (input - 87) : (input - 48);
+	}
+
+	int _xor(string ss) {
+
+		string ret;
+		ret = char2hex(ss);
+		//ret = char2hex("A");
+		std::cout << ret << std::endl;
+		int fi_result = 0, x = 0;
+		for (int i = 0; i < ss.length(); i++)
+		{
+			string s = ret.substr(x, 4);
+			int result = char2int(s[2]) * 16 + char2int(s[3]);
+			fi_result = fi_result^result;
+			cout << fi_result << endl;
+			x += 5;
+		}
+		return fi_result;
+	}
 public:
 	string datas;
+	string datas_;
 	string error;
 	char buf[4096];
 	uint32_t *destIDs, *temp;
@@ -157,12 +220,15 @@ public:
 	int cord_num;
 	string name[CORD_SIZE];
 private:
+	string xor_value;
+	stringstream ss,ss_;
 	byte *d;
 	int da;
 	char trans[4096];
 	MFCFTPClient ftp;
 	char *encode;
 	char *ziduan[CORD];
+	int xor[CORD];
 	MYSQL_RES *result_img;
 	MYSQL_RES *result_msg;
 	MYSQL_RES *result_zd;
