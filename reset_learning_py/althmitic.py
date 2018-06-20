@@ -69,19 +69,21 @@ def build_heap(lists,last_p):
 
 global i
 i=1
+
 def quicksort(lists,left,right):
     global i
     if  (left>=right):
         return
     temp = lists[left]  ##基准数
-    l,r = left+1,right
+    l,r = left,right
     while l!=r:
         while lists[r]>=temp and l<r:
             r -=1
         while lists[l]<=temp and l<r:
             l +=1
-        print("l:%d,r:%d"%(l,r))
-        print("####################")
+            
+        # print("l:%d,r:%d"%(l,r))
+        # print("####################")
         if l<r: 
             # print("temp:",temp)
             print("l:%d,r:%d"%(l,r))
@@ -94,9 +96,44 @@ def quicksort(lists,left,right):
     quicksort(lists,left,l-1)
     quicksort(lists,l+1,right)
 
+def quicksort_1(lists,p,r):
+    if p>=r:return
 
+    i = p + R.randint(0,r-p)
+    swap(lists,p,i)
+    x = lists[p]
+    j = p
+    i = p+1
+    while i<=r:
+        if a[i]<x:
+            try:
+                swap(lists,j,i)
+            except:pass
+            j=j+1
+    try:
+        swap(lists,p,j)
+    except:pass
+    quicksort_1(lists,p,j-1)
+    quicksort_1(lists,j+1,r)
 
+a='631758924'
+a = list('631758924')
 
+#ads
+###解密qq
+p =[]
+def queue(a):
+    if (len(a)==1):
+        p.append(a[0])
+        return
+    i =0
+    while i<len(a)-1:
+        p.append(a[i])
+        a.append(a[i+1])
+        i +=2
+    queue(a[i:])
+queue(a)
+print(p)
 
 c = [3,4,5]
 # start = len(lists)//2-1
@@ -104,6 +141,6 @@ a =[R.randint(0,100) for i in range(10)]
 
 
 b= [31, 95, 98, 40, 61, 78, 20, 94, 6, 46]
-print("origin:",b)
-quicksort(b,0,len(b)-1)
-print("sort:",b)
+# print("origin:",b)
+# quicksort_1(b,0,len(b)-1)
+# print("sort:",b)
