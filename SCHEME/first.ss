@@ -46,17 +46,26 @@
                  ((and (<= b a) (<= b c))   (+ a c))
                  (else              
                                        (+ a b))))
-
     ;实例1.17 牛顿求根法
+    (define (new-if p g x)
+            (cond ((p) g)
+             (else x)))
+
     (define (sqrt guess x)
-            ( if (sqrt_cond guess x) 
-                guess
-                (sqrt (/ (+ 
-                           (/ x guess)
-                            guess)
-                        2) 
-                            x)))
-                ()
+            ( new-if (sqrt_cond guess (sqrt (/ (+ 
+                               (/ x guess)
+                                guess)
+                            2) 
+                                x))))
+
+
+            ; (if (sqrt_cond guess x) 
+            ;     guess
+            ;     (sqrt (/ (+ 
+            ;                (/ x guess)
+            ;                 guess)
+            ;             2) 
+            ;                 x)))
     
     (define (sqrt_cond guess x)
             (< (abs(- (* guess guess) x)) 0.00000000000001))
