@@ -153,5 +153,16 @@
                                 3))))
         ;f(3)+2*f(2)+3*f(1)=7+f(3) =7+ f(2) +2*f(1)+3*f(0) =14 ok
         ;迭代ways
-        
+        (define (F n)
+                (define k n)
+                (f_iter 0 1 2 k n))
+        (define (f_iter a b c k n)
+                (define z (* a 3))
+                (define x (* b 2))
+                (define s (+ z x c))
+                (if (< n 3)
+                 k
+                 (f_iter b c s s (- n 1))
+                ))
+                ;(F 4)->(f 0 1 2 4 4)->(f 1 2 2*1+2(4) s 3)->(f 2 4 2*2+3*1+4 s 2)
         (newline))        
