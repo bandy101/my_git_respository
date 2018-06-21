@@ -52,25 +52,106 @@
              (else x)))
 
     (define (sqrt guess x)
-            ( new-if (sqrt_cond guess (sqrt (/ (+ 
-                               (/ x guess)
-                                guess)
-                            2) 
-                                x))))
-
-
-            ; (if (sqrt_cond guess x) 
-            ;     guess
-            ;     (sqrt (/ (+ 
-            ;                (/ x guess)
-            ;                 guess)
-            ;             2) 
-            ;                 x)))
+            ; ( new-if (sqrt_cond guess (sqrt (/ (+ 
+            ;                    (/ x guess)
+            ;                     guess)
+            ;                 2) 
+            ;                     x))))
+            (if (sqrt_cond guess x) 
+                guess
+                (sqrt (/ (+ 
+                           (/ x guess)
+                            guess)
+                        2) 
+                            x)))
     
     (define (sqrt_cond guess x)
-            (< (abs(- (* guess guess) x)) 0.00000000000001))
+            (< (abs(- (* guess guess) x)) 0.001))
     
     ;  (((y/g)+g)/2**2 -y)<value
     ;1.6 重新定义 正则序 (完全展开后归约) ：正则序的递归 会陷入死循环
-    (newline))
-    ;3(6-2)(2-7)
+    
+    ;1.7
+    (define (sqrt_cond_ie guess guess_)
+            (< (/ (abs(- guess guess_)) guess) 0.001))
+    (define (sqrt_ guess x)
+            (define t (/ (+ 
+                (/ x guess)
+                 guess)
+             2) )
+            (if(sqrt_cond_ie guess t)
+                guess
+                (sqrt_ t  x))
+    )
+    ;1.8 (1.34 实现一般牛顿法)
+    (define (cubic_cond_ie guess guess_)
+            (< (/ (abs(- guess guess_)) guess) 0.001))
+    (define (cubic y x)
+                (define t (/ (+ (/ x (* y y))
+                                (* y 2))
+                                3))
+                (if (cubic_cond_ie y t)   ;t 可替换成函数
+                    y
+                    (cubic t x))
+    )   
+    
+    ;递归的执行：[执行器推迟执行（需要执行的）链条长度，对于阶乘，长度随n正比，这个过程：线性递归]
+    ;对于阶乘，另外一种不会推迟执行的计算，而是将计算保存在一个轨迹中，这个过程：线性迭代
+
+    ;1.9    
+        ; (define (+ a b)
+        ;         (if (= a 0)
+        ;             b
+        ;             (inc(+ (dec a) b))))  
+
+        ;   (+ 4 5)
+        ; -> inc (+ 3 5) ->
+        ; |   inc(inc (+ 2 5))
+        ; |   inc(inc(inc(+ 1 5)))
+        ; |   inc(inc(inc(inc(+ 0 5))))
+        ; |   inc(inc(inc(inc(5))))
+        ; | 递归  推迟了轨迹的计算的执行
+        ;   (define + a b)
+                    ; (if (= a 0)
+                    ;     b
+                    ;     (+ dec(a) inc(b))))
+        ; |   (+ 4 5) ->
+        ; |   ( + 3 6) ->
+        ; |   (+ 2 7) -> (+ 1 8) -> (+ 0 9) -> 9   
+        ; |  迭代 轨迹保存于本身
+        ; |
+        ;practice 1.10
+
+        (define (A x y)
+                (cond ((= y 0) 0)
+                      ((= x 0) (* 2 y))
+                      ((= y 1) 2)
+                      (else (A (- x 1)
+                               (A x (- y 1))))))
+        ;代换模式: (A 1 10)    2**N
+        ;|         ->(A 0 (A 1 9))
+        ;|            -> (A 0 (A 0 (A 1 8))) 
+        ;|                -> (A 0 (A 0 (A 0 (A 1 7))) .......(A 0 (A 1 1)) =9[(A 0] (A 1 1))  ->2**9*2
+        ;          (A 2 4):: (A 1 16)    ;(2**2)**(N-1)
+        ;           ->(A 1 (A 2 3))         
+        ;               -> (A 1 (A 1 (A 2 2)))
+        ;                    ->(A 1 (A 1 (A 1 (A 2 1))))  -->(A 1 (A 1 (A 1 2)) -->(A 1 (A 1 4)) --> (A 1 2**4) ->(A 1 16) = 2**16
+        ;          (A 3 3)
+        ;           ->(A 2 (A 3 2))
+        ;              ->(A 2 (A 2 (A 3 1)))
+        ;                 ->(A 2 (A 2 2)) -> (A 2 4) ->(A 1 16) 2**16
+        ;|  2**2**2**2      U = 2 **N
+
+        ; practice 1.11
+        ; 递归ways
+        (define (f n)
+                (if (< n 3)
+                        n
+                        (+ (+ (f (- n 1))
+                                (* (f (- n 2)) 2))
+                           (* (f (- n 3))
+                                3))))
+        ;f(3)+2*f(2)+3*f(1)=7+f(3) =7+ f(2) +2*f(1)+3*f(0) =14 ok
+        ;迭代ways
+        
+        (newline))        
