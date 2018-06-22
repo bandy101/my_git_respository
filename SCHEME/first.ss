@@ -207,7 +207,9 @@
                 (cond ((= n 0) 1)
                         ((eve? n) (* (expts b (/ n 2)) (expts b (/ n 2))))
                         (else (* b (exptsb (- n 1))))
-                        
                 ))
-
+        ;; (expts 2 2) ->
+        ;               (expts 2 1)**2 
+        ;                        ->(2*(expts 2 0))**2 ->
+        ;|空间O(n) 步阶 O(LGN+O(n**2)) //有待考虑
         (newline))        
