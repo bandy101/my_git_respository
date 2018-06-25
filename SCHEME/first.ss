@@ -202,7 +202,7 @@
         ;对于sine(p) p 执行了多少次？
         ;求幂 ;exponentiation
         (define (eve? n)
-                (= (remainder 2 0) 0))
+                (= (remainder n 2) 0))
         (define (expts b n)
                 (cond ((= n 0) 1)
                         ((eve? n) (* (expts b (/ n 2)) (expts b (/ n 2))))
@@ -212,4 +212,64 @@
         ;               (expts 2 1)**2 
         ;                        ->(2*(expts 2 0))**2 ->
         ;|空间O(n) 步阶 O(LGN+O(n**2)) //有待考虑
+        
+
+
+        ;;practice 1.16 (n**2)**（n/2）
+        (define (expt_dd b n a)
+                (cond ((= 0 n) a)
+                        ((eve? n)  (expt_dd (* b b) (/ n 2) a) )
+                        (else (expt_dd b (- n 1) (* b a)))))
+        ;; (3 2 1)->(9 1 1)*(9 1 1)->(9 0 9)*(9 0 9) = 9 * 9 = 81
+
+; 8/2 16/2 4/2 14/2 28/2 56/2 112
+
+        ;; practice 1.17
+
+        (define (mul a b)
+                ( cond ((= b 0) 0)
+                        ((eve? b) (double (mul a (halve b))))
+                        ((not(eve? b)) (+ a (mul a (- b 1)))
+                        )))
+        ;mul (3 2)-> (3 1)*2->(3+(3,0))*2-> ;1.17的正解
+
+
+        ;;practice 1.18
+        (define (double a) (* a 2))
+        (define (halve a) (/ a 2))
+        ; (define (expt_2? n)
+        ;         (cond ((eve? n) ))
+        (define (log_+ a b) (log_* a b 0))
+        (define (log_* a b c)
+                (cond ((= b 0) c)
+                (else (if (eve? b) 
+                        (log_*  (double a) (halve b) c)
+                        (log_* a (- b 1) (+ c a))))))        
+        ;log ( 3 6 3 0)-> (3 3 6 0)->(3 2 6 3) ->(3 1 12 3)
+        ;log (3 5 3 0)->(3 4 3 3) ->(3 2 6 3) -> (3 1 12 3)                
+        
+        ;practice 1.19  (1 0 0 1)
+        ;---# 0 1 1 2 3 5 8 13 ...   -> a=a+b b =a   b= 0 a= 1   (0 1)
+        ;(1 0 0 1 1)->(1,1,0,1,0)->b = 1
+        ;(1 0 0 1 2)->(1,0,p-,q-,1)(a*q+ap+b*q,b*p+a*q) ->(q+p,q)
+        ;q+p = a    q =b  Tpq = (a*q+ap+b*q)  a = (a*q+ap+b*q) b =b*p +a*q
+        ;-----> a*q+ap+b*q = a+b ->(a+b)*(q-1)+ap =a
+        ;-----> b =b*p +a*q  b(1-p)=a*q 
+        (define (fib n)
+                (fib-iter 1 0 0 1 n))
+        (define (fib-iter a b p q count)
+                (cond ((= count 0) b)
+                    ((eve? count) (fib-iter 
+                        a
+                        b
+                        (+ (* p p) (* q q))
+                        (+ (* 2 p q) (* q q))
+                        (/ count 2)))
+                    (else (fib-iter 
+                        (+ (* b q) (* a p) (* a q))
+                        (+ (* b p) (* a q))
+                        p
+                        q 
+                        (- count 1)))
+                ))
         (newline))        
