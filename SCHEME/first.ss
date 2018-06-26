@@ -272,4 +272,113 @@
                         q 
                         (- count 1)))
                 ))
+        
+        ;practice 1.21
+        (define (smallest-divisor n) (divisors n 2))
+        (define (divisors n a)
+                (cond ((= (remainder n a) 0) a)
+                        ((> (* a a) n) n)
+                    (else (divisors n (next a)))))
+        (define (prime? n)
+                (= (smallest-divisor n) n)
+                ; (smallest-divisor n)
+                )
+        ;1.23
+        (define (next n)
+                (if (= n 2)
+                        3
+                        (+ n 2)))
+        ;1.27
+        (define (square x) (* x x))
+        (define (expmod b n m)
+                (cond ((= n 0) 1)
+                (else (if (eve? n)
+                        (remainder (square (expmod b (/ n 2) m)) m)
+                        (remainder (* b (expmod b (- n 1) m)) m)))))
+        (define (fm-test n)
+                (= (expmod a n n) a))
+
+        ;;1.28 ▲
+
+        ;;1.29 辛普森 积分法
+        ;sum 递归法
+        (define (sum term a nexts b)
+                (if (> a b)
+                        0
+                        (+ (term a) (sum term (nexts a) nexts b))
+                ))
+        (define (xps f a b n)
+                (define h (/ (- b a) n))
+                (define (inc z) (+ z 1))
+                (define (yk k) 
+                        (if (or (= k 0) (= k n))
+                                (f (+ a (* k h)))
+                                (if (eve? k)
+                                        (* 2 (f (+ a (* k h))))
+                                        (* 4 (f (+ a (* k h))))
+                                )))
+                (* (sum_dd yk 0 inc n) (/ h 3.0))
+        
+        )
+        ;;迭代法：
+        (define (sum_dd term a nexts b)
+                (define (iter a result)
+                        (if (> a b)
+                                result
+                                (iter (nexts a) (+ result (term a)))
+                ))
+                (iter a 0))
+        
+        ;1.31
+        ;迭代
+        (define (product__dd term a nexts b)
+                (define (iter a result)
+                (if (> a b)
+                        result
+                        (iter (nexts a) (* result (term a)))
+        ))
+        (iter a 1))
+        ;递归
+        (define (inc z) (+ z 1))
+        (define (self x) x)
+        (define (product term a nexts b)
+                (if (> a b)
+                        1
+                        (* (term a) (product term (nexts a) nexts b))
+                        ))
+        (define (pi b)
+                (define (test x)
+                        (+ x 2))
+                ; (product self a inc b))
+                (* (exact->inexact (/ (/ (product__dd square 2 test b) (* b 2)) (product__dd square 3 test b))) 4))
+        ;;
+        ;1.32
+        ;【累积概念】抽取相同点
+        (define (accumulate combiner null-value term a nexts b)
+                        (if (> a b)
+                                null-value
+                                (combiner a (accumulate combiner null-value term (nexts a) nexts b))
+                        ))
+        ;迭代版
+        (define (accumulate_dd combiner null-value term a nexts b)
+                (define (iter a result)
+                        (if (> a b)
+                                result
+                                (iter (nexts a) (combiner result (term a)))
+                        ))
+                        (iter a null-value))
+
+        ;practice 1.33
+        (define (fileter-ace combiner null-value term a nexts b valid?)
+                        (if (> a b)
+                                null-value
+                                (let ((re (fileter-ace combiner null-value term (nexts a) nexts b valid?)))
+                                (if (valid? a)
+                                        (combiner (term a) re)
+                                        re
+                                )
+                        )))
+        (define (ss)
+                (fileter-ace + 0 self 1 inc 10 prime?)
+                )
         (newline))        
