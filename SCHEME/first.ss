@@ -300,7 +300,7 @@
 
         ;;1.28 ▲
 
-        ;;1.29 辛普森 积分法
+        ;;1.29 辛普森 积分法(3/h*(y0+4y1+2y2+..2y2n-2 +4y2n-1+y2n)) 
         ;sum 递归法
         (define (sum term a nexts b)
                 (if (> a b)
@@ -381,4 +381,63 @@
         (define (ss)
                 (fileter-ace + 0 self 1 inc 10 prime?)
                 )
-        (newline))        
+        
+        ;practice 1.35 
+        
+        
+        ;practice 1.36 
+        ;1.37      1.618032
+        ;递归
+        (define (cf k) (/ 1 (cont-frac_dd 1 (/ (N k) (D k) k) k)))
+        (define (cont-frac n d k)
+                (define (N n) 1.0)
+                (define (D d) 1.0)
+                (if (= k n)
+                     (/ (N n) (D k))
+                     (/ (N n) (+ (D d) (cont-frac (+ n 1) (+ d 1) k)))
+                )
+        )       
+                ; (1 1 2)-> (n1/(d1+(2 2 2)))->(n1/(d1+(n2/d2)))
+                ;(1 1 3) ->(n1/(d1+(2 2 3)))->(n1/(d1+(n2/(d2+(3 3 3)))))
+        ;迭代
+        (define (N n) 1.0)
+        ; (define (D d) 1.0)
+        
+        (define (cont-frac_dd n r k)
+                (if (= k 0)
+                        r
+                        (let ((dds 
+                                 (cont-frac_dd (+ n 1) 
+                                ;        (/ (N (- k 1)) (+ (/ (N (k) (D k))) (D (- k 1))))
+                                        (/ (N (- k 1)) (+ (D (- k 1)) r))       
+                                        (- k 1))))
+                                        dds)
+                                        )
+                                ; (cont-frac_dd (+ n 1) )(/r (+ (D n) ))
+                ; (+ (/ (N (k) (D k))) (D (- k 1)))
+                )
+        ; 1.38 ni =1 di =1 2 1 1 4 1 1 6 1 1 8 1 1 10 1...
+                        ;     2     5    8     11
+        ; (define (D i) 
+        ;         (cond   ((= i 1) 1)
+        ;                 ((= i 2) 2)
+        ;                 ((= i 3) 1)
+        ;             ((or (= 5 i) (= (remainder (- i 5) 3) 0)) (+ (D (- i 1)) (D (- i 2)) (D (- i 3))))
+        ;             (else 1))) 
+        (define (D i)
+                (cond ((= (remainder (+ i 1) 3) 0) (/ (* 2 (+ i 1)) 3))
+                        (else 1)))
+        (define (eee k) (+ 2 (cont-frac_dd 1 (/ (N k) (D k) k) k)) )
+
+        ;1.39 tanx  continue-fraction(分数)
+        (define (tan-cf x d)
+                (define (M i) (- (* 2 i) 1.0))
+                (define (t-cf i)
+                        (if (= i d) 
+                                (/ (square x) (M i))
+                                (cond   ((= i 1) (/ x (- (M i) (t-cf (+ i 1)))))
+                                       (else (/ (square x) (- (M i) (t-cf (+ i 1))))))))
+                ; (/ (t-cf 1) x)
+                (t-cf 1)
+        )
+        (newline))
