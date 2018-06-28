@@ -3,8 +3,9 @@ import functools
 import itertools
 class perceptron:
     '''
-        感知器 
-        y=  w*x + b------------------------y
+        输入-->隐藏-->输出
+        感知器规则
+        输入:x--->黑盒子过程--->输出:--->  y=  w*x + b------------------------y
         wi = wi + ▲wi
          b =  b + ▲b
        ▲wi = rate*(actual_value[label] - y)*x    --> y = activator(y) 这里需要对y激活
