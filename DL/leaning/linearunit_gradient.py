@@ -19,7 +19,7 @@ class linearUnit(perceptron):
                 函数y=f(x)的极值点，就是它的导数f'(x)=0的那个点。因此我们可以通过解方程，求得函数的极值点，每次修改x值
                 使函数朝着最小值那个方向迭代（取函数梯度相反方向） 
         
-        ▲ 推导公式！
+        ▲ 推导公式！ 微分导数
     '''
     def __init__(self,input_num):
         perceptron.__init__(self,input_num)
