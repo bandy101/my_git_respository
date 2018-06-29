@@ -218,7 +218,7 @@
         ;;practice 1.16 (n**2)**（n/2）
         (define (expt_dd b n a)
                 (cond ((= 0 n) a)
-                        ((eve? n)  (expt_dd (* b b) (/ n 2) a) )
+                        ((eve? n)  (expt_dd (* b b) (/ n 2) a))
                         (else (expt_dd b (- n 1) (* b a)))))
         ;; (3 2 1)->(9 1 1)*(9 1 1)->(9 0 9)*(9 0 9) = 9 * 9 = 81
 
