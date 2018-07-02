@@ -29,7 +29,7 @@ class linearUnit(perceptron):
 if __name__=='__main__':
     data = [5, 3, 8, 1.4, 10.1]
     label = [5500, 2300, 7600, 1800, 11400]
-    test = [[3.4],15,[1.5],6.3]
+    test = [[3.4],15,[1.5],6.3] 
     h = linearUnit(1)
     h.train(data,label,0.01,10)
     h.tests(test)

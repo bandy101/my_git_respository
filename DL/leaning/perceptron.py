@@ -56,7 +56,7 @@ class perceptron:
     def pretect(self,data):
         return self.step_fun(
             np.dot(self.wights,data)+self.b
-        )
+        )   
         
 
     def _upwight(self,data,label,rate):
