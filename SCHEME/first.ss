@@ -220,6 +220,21 @@
                 (cond ((= 0 n) a)
                         ((eve? n)  (expt_dd (* b b) (/ n 2) a) )
                         (else (expt_dd b (- n 1) (* b a)))))
+
+        ;1.16 迭代  exponentiation 
+        (define (dd b n)
+        (if (= n 1)
+                b
+                (if (eve? n)
+                        (expts_dd b n b (/ n 2))
+                        (* (expts_dd b n b (/ (- n 1) 2)) b))
+                ))
+
+        (define (expts_dd b n a k)
+                (if (= k 1)
+                        (* a a)
+                        (expts_dd b n (* a a) (/ k 2))
+                        ))
         ;; (3 2 1)->(9 1 1)*(9 1 1)->(9 0 9)*(9 0 9) = 9 * 9 = 81
 
 ; 8/2 16/2 4/2 14/2 28/2 56/2 112
@@ -255,7 +270,7 @@
         ;q+p = a    q =b  Tpq = (a*q+ap+b*q)  a = (a*q+ap+b*q) b =b*p +a*q
         ;-----> a*q+ap+b*q = a+b ->(a+b)*(q-1)+ap =a
         ;-----> b =b*p +a*q  b(1-p)=a*q 
-        (define (fib n)
+        (define (fib n)   
                 (fib-iter 1 0 0 1 n))
         (define (fib-iter a b p q count)
                 (cond ((= count 0) b)
@@ -268,7 +283,7 @@
                     (else (fib-iter 
                         (+ (* b q) (* a p) (* a q))
                         (+ (* b p) (* a q))
-                        p
+                        p 
                         q 
                         (- count 1)))
                 ))
