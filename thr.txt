@@ -1,0 +1,823 @@
+
+// RainBow-LEFEDlg.cpp : 实现文件
+//
+
+#include "stdafx.h"
+//#include <opencv2/opencv.hpp>
+#include "RainBow-LEFE.h"
+#include "RainBow-LEFEDlg.h"
+#include "afxdialogex.h"
+#include <thread>
+#include <string>
+#include <opencv2/opencv.hpp>
+//#include "opencv2/features2d/features2d.hpp"
+#include <sstream>
+#include "CvvImage.h"
+
+#include "easypr.h"
+//#include "easypr/util/switch.hpp"
+//#include "../test/accuracy.hpp"
+//#include "../test/chars.hpp"
+//#include "../test/plate.hpp"
+
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+
+
+
+// 用于应用程序“关于”菜单项的 CAboutDlg 对话框
+using namespace std;
+using namespace cv;
+
+class CAboutDlg : public CDialogEx
+{
+public:
+	CAboutDlg();
+
+// 对话框数据
+#ifdef AFX_DESIGN_TIME
+	enum { IDD = IDD_ABOUTBOX };
+#endif
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+
+// 实现
+protected:
+	DECLARE_MESSAGE_MAP()
+};
+
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
+{
+}
+
+void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+}
+
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+END_MESSAGE_MAP()
+
+
+// CRainBowLEFEDlg 对话框
+
+
+
+
+CRainBowLEFEDlg::CRainBowLEFEDlg(CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_RAINBOWLEFE_DIALOG, pParent)
+	, m_recognize(_T(""))
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CRainBowLEFEDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_LBString(pDX, IDC_RECOGNIZE, m_recognize);
+	DDX_Control(pDX, IDC_RECOGNIZE, m_RECOGNIZE);
+}
+
+BEGIN_MESSAGE_MAP(CRainBowLEFEDlg, CDialogEx)
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	//ON_LBN_SELCHANGE(IDC_LIST1, &CRainBowLEFEDlg::OnLbnSelchangeList1)
+	//ON_BN_CLICKED(IDC_BUTTON2, &CRainBowLEFEDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_OP_VIDEO, &CRainBowLEFEDlg::OnBnClickedOpVideo)
+	ON_BN_CLICKED(IDC_PAUSE, &CRainBowLEFEDlg::OnBnClickedPause)
+END_MESSAGE_MAP()
+
+
+// CRainBowLEFEDlg 消息处理程序
+
+BOOL CRainBowLEFEDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// 将“关于...”菜单项添加到系统菜单中。
+
+	// IDM_ABOUTBOX 必须在系统命令范围内。
+	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+	ASSERT(IDM_ABOUTBOX < 0xF000);
+
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != NULL)
+	{
+		BOOL bNameValid;
+		CString strAboutMenu;
+		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+		ASSERT(bNameValid);
+		if (!strAboutMenu.IsEmpty())
+		{
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		}
+	}
+
+	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
+	//  执行此操作
+	SetIcon(m_hIcon, TRUE);			// 设置大图标
+	SetIcon(m_hIcon, FALSE);		// 设置小图标
+
+	// TODO: 在此添加额外的初始化代码
+	CRainBowLEFEDlg a;
+	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+
+}
+
+void CRainBowLEFEDlg::OnSysCommand(UINT nID, LPARAM lParam)
+{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+	{
+		CAboutDlg dlgAbout;
+		dlgAbout.DoModal();
+	}
+	else
+	{
+		CDialogEx::OnSysCommand(nID, lParam);
+	}
+}
+
+// 如果向对话框添加最小化按钮，则需要下面的代码
+//  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
+//  这将由框架自动完成。
+
+
+
+//namespace easypr {
+//
+//namespace demo {
+//
+// interactions
+//
+//int accuracyTestMain() {
+//  std::shared_ptr<easypr::Kv> kv(new easypr::Kv);
+//  kv->load("resources/text/chinese_mapping");
+//
+//  bool isExit = false;
+//  while (!isExit) {
+//    easypr::Utils::print_file_lines("resources/text/batch_test_menu");
+//    std::cout << kv->get("make_a_choice") << ":";
+//
+//    int select = -1;
+//    bool isRepeat = true;
+//    Result result;
+//
+//    while (isRepeat) {
+//      std::cin >> select;
+//      isRepeat = false;
+//      switch (select) {
+//      case 1:
+//        accuracyTest("resources/image/general_test", result);
+//        break;
+//      case 2:
+//        accuracyTest("resources/image/native_test", result);
+//        break;
+//      case 3:
+//        gridSearchTest("resources/image/general_test");
+//        break;
+//      case 4:
+//        isExit = true;
+//        break;
+//      default:
+//        std::cout << kv->get("input_error") << ":";
+//        isRepeat = true;
+//        break;
+//      }
+//    }
+//  }
+//  return 0;
+//}
+//
+//int trainChineseMain() {
+//  std::shared_ptr<easypr::Kv> kv(new easypr::Kv);
+//  kv->load("resources/text/chinese_mapping");
+//
+//  bool isExit = false;
+//  while (!isExit) {
+//    easypr::Utils::print_file_lines("resources/text/train_menu");
+//    std::cout << kv->get("make_a_choice") << ":";
+//
+//    int select = -1;
+//    bool isRepeat = true;
+//    while (isRepeat) {
+//      std::cin >> select;
+//      isRepeat = false;
+//      switch (select) {
+//      case 1:
+//          {
+//            easypr::AnnChTrain ann("tmp/annCh", "tmp/annCh.xml");
+//            ann.setNumberForCount(100);
+//            ann.train();
+//          }
+//        break;
+//      case 2:
+//          {
+//            easypr::AnnChTrain ann("tmp/annCh", "tmp/annCh.xml");
+//            ann.setNumberForCount(350);
+//            ann.train();
+//          }
+//        break;
+//      case 3:
+//          {
+//            easypr::AnnChTrain ann("tmp/annCh", "tmp/annCh.xml");
+//            ann.setNumberForCount(700);
+//            ann.train();
+//          }
+//        break;
+//      case 4:
+//          {
+//            easypr::AnnChTrain ann("tmp/annCh", "tmp/annCh.xml");
+//            ann.setNumberForCount(1000);
+//            ann.train();
+//          }
+//        break;
+//      case 5:
+//          {
+//            easypr::AnnChTrain ann("tmp/annCh", "tmp/annCh.xml");
+//            ann.setNumberForCount(1500);
+//            ann.train();
+//          }
+//        break;
+//      case 6:
+//        isExit = true;
+//        break;
+//      default:
+//        std::cout << kv->get("input_error") << ":";
+//        isRepeat = true;
+//        break;
+//      }
+//    }
+//  }
+//  return 0;
+//}
+//
+//int testMain() {
+//  std::shared_ptr<easypr::Kv> kv(new easypr::Kv);
+//  kv->load("resources/text/chinese_mapping");
+//
+//  bool isExit = false;
+//  while (!isExit) {
+//    Utils::print_file_lines("resources/text/test_menu");
+//    std::cout << kv->get("make_a_choice") << ":";
+//
+//    int select = -1;
+//    bool isRepeat = true;
+//    while (isRepeat) {
+//      std::cin >> select;
+//      isRepeat = false;
+//      switch (select) {
+//        case 1:
+//          assert(test_plate_locate() == 0);
+//          break;
+//        case 2:
+//          assert(test_plate_judge() == 0);
+//          break;
+//        case 3:
+//          assert(test_plate_detect() == 0);
+//          break;
+//        case 4:
+//          assert(test_chars_segment() == 0);
+//          break;
+//        case 5:
+//          assert(test_chars_identify() == 0);
+//          break;
+//        case 6:
+//          assert(test_chars_recognise() == 0);
+//          break;
+//        case 7:
+//          assert(test_plate_recognize() == 0);
+//          break;
+//        case 8:
+//          assert(test_plate_locate() == 0);
+//          assert(test_plate_judge() == 0);
+//          assert(test_plate_detect() == 0);
+//
+//          assert(test_chars_segment() == 0);
+//          assert(test_chars_identify() == 0);
+//          assert(test_chars_recognise() == 0);
+//
+//          assert(test_plate_recognize() == 0);
+//          break;
+//        case 9:
+//          isExit = true;
+//          break;
+//        default:
+//          std::cout << kv->get("input_error") << ":";
+//          isRepeat = true;
+//          break;
+//      }
+//    }
+//  }
+//
+//  return 0;
+//}
+//
+//}  // namespace demo
+//
+//}  // namespace easypr
+//
+//void command_line_handler(int argc, const char* argv[]) {
+//  program_options::Generator options;
+//
+//  options.add_subroutine("svm", "svm operations").make_usage("Usage:");
+//  {
+//    /* ------------------------------------------
+//     | SVM Training operations
+//     | ------------------------------------------
+//     |
+//     | $ demo svm --plates=path/to/plates/ [--test] --svm=save/to/svm.xml
+//     |
+//     | ------------------------------------------
+//     */
+//    options("h,help", "show help information");
+//    options(",plates", "",
+//            "a folder contains both forward data and inverse data in the "
+//                "separated subfolders");
+//    options(",svm", easypr::kDefaultSvmPath, "the svm model file");
+//    options("t,test", "run tests in --plates");
+//  }
+//
+//  options.add_subroutine("ann", "ann operation").make_usage("Usages:");
+//  {
+//    /* ------------------------------------------
+//    | ANN_MLP Training operations
+//    | ------------------------------------------
+//    |
+//    | $ demo ann --zh-chars=zhchars/ --en-chars=enchars/ --ann=save/to/ann.xml
+//    |
+//    | ------------------------------------------
+//    */
+//    options("h,help", "show help information");
+//    options(",chars", "",
+//            "the folder contains character sub-folders, with each folder"
+//                "named by label defined in include/easypr/config.h");
+//    options(",ann", easypr::kDefaultAnnPath,
+//            "the ann model file you want to save");
+//    options("t,test", "run test in --chars");
+//  }
+//
+//  options.add_subroutine("locate", "locate plates in an image")
+//      .make_usage("Usage:");
+//  {
+//    /* ------------------------------------------
+//    | Plate locating operations
+//    | ------------------------------------------
+//    |
+//    | $ demo locate -f file
+//    |
+//    | ------------------------------------------
+//    */
+//    options("h,help", "show help information");
+//    options("f,file", "",
+//            "the target picture which contains one or more plates");
+//  }
+//
+//  options.add_subroutine(
+//          "judge", "determine whether an image block is the license plate")
+//      .make_usage("Usage:");
+//  {
+//    /* ------------------------------------------
+//    | Plate judge operations
+//    | ------------------------------------------
+//    |
+//    | $ demo judge -f file --svm model/svm.xml
+//    |
+//    | ------------------------------------------
+//    */
+//    options("h,help", "show help information");
+//    options("f,file", "the target image block");
+//    options(",svm", easypr::kDefaultSvmPath, "the svm model file");
+//  }
+//
+//  options.add_subroutine("recognize", "plate recognition").make_usage("Usage:");
+//  {
+//    /* ------------------------------------------
+//    | Plate recognize operations
+//    | ------------------------------------------
+//    |
+//    | $ demo recognize -p file --svm model/svm.xml
+//    |                          --ann model/ann.xml
+//    | $ demo recognize -pb dir/ --svm model/svm.xml
+//    |                           --ann model/ann.xml
+//    |
+//    | ------------------------------------------
+//    */
+//    options("h,help", "show help information");
+//    options("p,path", "", "where is the target picture or target folder");
+//    options("b,batch", "do batch recognition, if set, --path means a folder");
+//    options("c,color", "returns the plate color, blue or yellow");
+//    options(",svm", easypr::kDefaultSvmPath, "the svm model file");
+//    options(",ann", easypr::kDefaultAnnPath, "the ann model file");
+//  }
+//
+//  auto parser = options.make_parser();
+//
+//  try {
+//    parser->parse(argc, argv);
+//  } catch (const std::exception &err) {
+//    std::cout << err.what() << std::endl;
+//    return;
+//  }
+//
+//  auto subname = parser->get_subroutine_name();
+//
+//  program_options::select(subname)
+//      .found("svm",
+//             [&]() {
+//               if (parser->has("help") || argc <= 2) {
+//                 std::cout << options("svm");
+//                 return;
+//               }
+//
+//               easypr::SvmTrain svm(parser->get("plates")->c_str(),
+//                                    parser->get("svm")->c_str());
+//
+//               if (parser->has("test")) {
+//                 svm.test();
+//               } else {
+//                 svm.train();
+//               }
+//             })
+//      .found("ann",
+//             [&]() {
+//               if (parser->has("help") || argc <= 2) {
+//                 std::cout << options("ann");
+//                 return;
+//               }
+//
+//               assert(parser->has("chars"));
+//               assert(parser->has("ann"));
+//
+//               easypr::AnnTrain ann(parser->get("chars")->c_str(),
+//                                    parser->get("ann")->c_str());
+//
+//               if (parser->has("test")) {
+//                 ann.test();
+//               } else {
+//                 ann.train();
+//               }
+//             })
+//      .found("locate",
+//             [&]() {
+//               if (parser->has("help") || argc <= 2) {
+//                 std::cout << options("locate");
+//                 return;
+//               }
+//
+//               if (parser->has("file")) {
+//                 easypr::api::plate_locate(parser->get("file")->val().c_str());
+//                 std::cout << "finished, results can be found in tmp/"
+//                     << std::endl;
+//               }
+//             })
+//      .found("judge",
+//             [&]() {
+//               if (parser->has("help") || argc <= 2) {
+//                 std::cout << options("judge");
+//                 std::cout << "Note that the input image's size should "
+//                     << "be the same as the one you gived to svm train."
+//                     << std::endl;
+//                 return;
+//               }
+//
+//               if (parser->has("file")) {
+//                 assert(parser->has("file"));
+//                 assert(parser->has("svm"));
+//
+//                 auto image = parser->get("file")->val();
+//                 auto svm = parser->get("svm")->val();
+//
+//                 const char* true_or_false[2] = {"false", "true"};
+//
+//                 std::cout << true_or_false[easypr::api::plate_judge(
+//                     image.c_str(), svm.c_str())]
+//                     << std::endl;
+//               }
+//             })
+//      .found("recognize",
+//             [&]() {
+//               if (parser->has("help") || argc <= 2) {
+//                 std::cout << options("recognize");
+//                 return;
+//               }
+//
+//               if (parser->has("path")) {
+//                 if (parser->has("batch")) {
+//                    batch testing
+//                   auto folder = parser->get("path")->val();
+//                   easypr::demo::Result result;
+//                   easypr::demo::accuracyTest(folder.c_str(), result);
+//                 } else {
+//                    single testing
+//                   auto image = parser->get("path")->val();
+//
+//                   if (parser->has("color")) {
+//                      return plate color
+//                     const char* colors[2] = {"blue", "yellow"};
+//                     std::cout
+//                         << colors[easypr::api::get_plate_color(image.c_str())]
+//                         << std::endl;
+//                   } else {
+//                      return strings
+//                     auto svm = parser->get("svm")->val();
+//                     auto ann = parser->get("ann")->val();
+//
+//                     auto results = easypr::api::plate_recognize(
+//                         image.c_str(), svm.c_str(), ann.c_str());
+//                     for (auto s : results) {
+//                       std::cout << s << std::endl;
+//                     }
+//                   }
+//                 }
+//               } else {
+//                 std::cout << "option 'file' cannot be empty." << std::endl;
+//               }
+//             })
+//      .others([&]() {
+//         no case matched, print all commands.
+//        std::cout << "There are several sub commands listed below, "
+//            << "choose one by typing:\n\n"
+//            << "    " << easypr::utils::getFileName(argv[0])
+//            << " command [options]\n\n"
+//            << "The commands are:\n" << std::endl;
+//        auto subs = options.get_subroutine_list();
+//        for (auto sub : subs) {
+//          fprintf(stdout, "%s    %s\n", sub.first.c_str(), sub.second.c_str());
+//        }
+//        std::cout << std::endl;
+//      });
+//}
+
+namespace easypr {
+	int recognize(string* rg,Mat m) {
+		cout << "test_plate_recognize" << endl;
+
+		Mat src = m;
+		*rg = "";
+		CPlateRecognize pr;
+		pr.setLifemode(true);
+		pr.setDebug(false);
+		pr.setMaxPlates(1);
+		//pr.setDetectType(PR_DETECT_COLOR | PR_DETECT_SOBEL);
+		pr.setDetectType(easypr::PR_DETECT_CMSER);
+
+		//vector<string> plateVec;
+		vector<CPlate> plateVec;
+
+		int result = pr.plateRecognize(src, plateVec);
+		//int result = pr.plateRecognizeAsText(src, plateVec);
+		if (result == 0) {
+			size_t num = plateVec.size();
+			for (size_t j = 0; j < num; j++) {
+				//cout << "plateRecognize: " << plateVec[j].getPlateStr() << endl;
+				*rg += plateVec[j].getPlateStr();
+				*rg += "\r\n";
+			}
+		}
+
+		if (result != 0) cout << "result:" << result << endl;
+
+		return result;
+	}
+}
+
+
+string& trim(string &s)
+{
+	if (s.empty())
+	{
+		return s;
+	}
+	s.erase(0, s.find_first_not_of(" "));
+	s.erase(s.find_last_not_of(" ") + 1);
+	return s;
+}
+
+void CRainBowLEFEDlg::ShowMat(Mat image, int IDC)
+{
+	//CDC* pDC = GetDlgItem(IDC)->GetDC();           //根据ID获得窗口指针再获取与该窗口关联的上下文指针  
+	//HDC hDC = pDC->GetSafeHdc();                    // 获取设备上下文句柄  
+	CStatic* pStc = (CStatic*)GetDlgItem(IDC);
+	CRect rect;
+	pStc->GetClientRect(rect);
+	CDC* pDC = pStc->GetDC();
+	HDC hDC = pDC->GetSafeHdc();
+
+	//GetDlgItem(IDC)->GetClientRect(rect);        //获取显示区  
+	//GetDlgItem(IDC_IMAGE)->GetClientRect(rect);
+	Mat im;
+	resize(image, im, Size(rect.Width(), rect.Height()));
+	//imshow("s", im);
+	//cvResize(&(image.operator IplImage()), &(cimage.operator IplImage()), CV_INTER_LINEAR);
+	IplImage imgTmp = im;
+	IplImage *img = cvCloneImage(&imgTmp);
+	IplImage *src = cvLoadImage("09.png", 1);
+	CvvImage iimg;                              //创建一个CvvImage对象  
+	iimg.CopyOf(img);
+	iimg.DrawToHDC(hDC, &rect);
+	cvReleaseImage(&img);
+	ReleaseDC(pDC);
+	iimg.Destroy();
+}
+
+
+
+UINT CRainBowLEFEDlg::ThreadProc(LPVOID pParam) {
+	Mat frame; //当前帧
+	Mat fgMaskMOG2; //通过MOG2方法得到的掩码图像fgmask
+	Mat segm;      //frame的副本
+	vector<vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+	Ptr<BackgroundSubtractor> pMOG2; //MOG2 Background subtractor
+	pMOG2 = createBackgroundSubtractorMOG2();
+	//string* path = (string*)pParam;
+	CRainBowLEFEDlg* pThis = (CRainBowLEFEDlg*)pParam;
+
+	//VideoCapture capture(*path); //参数为0，默认从摄像头读取视频  =------ LPVOID  ---> String
+	VideoCapture capture(pThis->path_name);
+	if (!capture.isOpened()) {
+		cout << "Unable to open the camera! " << endl;
+		exit(EXIT_FAILURE); //EXIT_FAILURE 可以作为exit()的参数来使用，表示没有成功地执行一个程序,其值为1
+	}
+	int nums = 1;
+	while (nums) {
+
+		if (!capture.read(frame)) {
+			cout << "Unable to read next frame." << endl;
+			exit(0);
+		}
+		cout << frame.size() << endl;
+		resize(frame, frame, Size(1280, 720));
+		//对画面进行一定的缩放，方便处理
+		double scale = 1.3;         //缩放比例
+		Mat smallImg(frame.rows / scale, frame.cols / scale, CV_8SC1);
+		resize(frame, frame, smallImg.size(), 0, 0, INTER_LINEAR);
+		frame.copyTo(segm);
+		cvtColor(frame, frame, CV_RGB2GRAY);
+		//threshold(frame, frame, 244, 255, THRESH_BINARY);
+		morphologyEx(frame, frame, MORPH_CLOSE, -1, Point(-1, -1), 3);
+		pMOG2->apply(frame, fgMaskMOG2);    //更新背景模型
+											//morphologyEx(fgMaskMOG2, fgMaskMOG2, MORPH_CLOSE, 3, Point(-1, -1), 3);
+											//建立一个当前frame的副本
+		findContours(fgMaskMOG2, contours, hierarchy,
+			CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0)); //检测轮廓
+
+		CvSeq* contour;
+		vector <vector<Point> > contours_poly(contours.size());
+		vector <Point2f> center(contours.size());
+		vector <float> radius(contours.size());
+		//for (int i = 0; i < contours.size(); i++) {
+		//	//findContours后的轮廓信息contours可能过于复杂不平滑，可以用approxPolyDP函数对该多边形曲线做适当近似
+		//	approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
+		//	//得到轮廓的外包络圆
+		//	minEnclosingCircle(contours_poly[i], center[i], radius[i]);
+		//}
+		//对所得到的轮廓进行一定的筛选
+		for (int i = 0; i < contours.size(); i++) {
+			//bndRect = cvBoundingRect(contours, 0);
+			Rect rect = boundingRect(contours[i]);
+			//contour = contour->h_next
+			if (contourArea(contours[i]) > 250) {
+				//circle(segm, center[i], (int)radius[i], Scalar(100, 100, 0), 2, 8, 0);
+				rectangle(segm, rect, Scalar(0, 255, 0), 2, 8, 0);
+				//rectangle(segm,)
+				break;
+			}
+		}
+		pThis->ShowMat(segm, IDC_IMAGE);
+		pThis->frame = segm;
+		//if (easypr::recognize(&pThis->rg,segm) == 0)
+		//{
+		//	CString names(pThis->rg.c_str());
+		//	pThis->m_RECOGNIZE.InsertString(nums, names);
+		//}
+		//else
+		//{
+		//	pThis->m_RECOGNIZE.InsertString(nums, (CString)"nonono");
+		//}
+
+	//写字
+		//stringstream ss;
+		//ss << capture.get(CAP_PROP_POS_FRAMES);
+		//string frameNumberString = ss.str();
+		//putText(frame, frameNumberString.c_str(), Point(15, 15),
+		//	FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0));
+
+		//显示
+		//imshow("frame", frame);
+		//imshow("Segm", segm);
+		//imshow("FG Mask MOG 2", fgMaskMOG2);
+
+
+		//int key;
+		//key = waitKey(5);
+		//if (key == 'q' || key == 'Q' || key == 27)
+		//	break;
+	}
+
+	capture.release();
+}
+
+UINT CRainBowLEFEDlg::rgcz(LPVOID pParam) {
+
+
+	CRainBowLEFEDlg* pThis = (CRainBowLEFEDlg*)pParam;
+	int nums = 0;
+	while (nums) {
+		pThis->rg = "";
+		if (pThis->frame.empty())continue;
+		else
+		{
+			if (easypr::recognize(&pThis->rg, pThis->frame) == 0)
+			{
+				CString names(pThis->rg.c_str());
+				if (names == "") continue;
+				else
+				pThis->m_RECOGNIZE.InsertString(nums, names);
+			}
+			else
+			{
+				pThis->m_RECOGNIZE.InsertString(nums, (CString)"nonono");
+			}
+		}
+	}
+	return 0;
+}
+	
+
+void CRainBowLEFEDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // 用于绘制的设备上下文
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// 使图标在工作区矩形中居中
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// 绘制图标
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialogEx::OnPaint();
+	}
+}
+
+//当用户拖动最小化窗口时系统调用此函数取得光标
+//显示。
+HCURSOR CRainBowLEFEDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+
+void CRainBowLEFEDlg::OnBnClickedOpVideo()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	BOOL isOpen = TRUE;     //是否打开(否则为保存)  
+	CString defaultDir = L"E:\\";   //默认打开的文件路径  
+	CString fileName = L"";         //默认打开的文件名  
+	CString filter = L"视频文件 (*.mp4; *.mov; *.avi;*.rm)|*.mp4;*.mov;*.avi;*.rm||";   //文件过虑的类型  
+	CFileDialog openFileDlg(isOpen, NULL, fileName, OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
+	openFileDlg.DoModal();
+	CString filePath = openFileDlg.GetPathName();
+	if (filePath != "")
+	{
+		string filePath_ = (LPCSTR)(CStringA)(filePath);
+		filePath_ = trim(filePath_);
+		path_name = filePath_;
+		//string* c = new string;
+		//*c = filePath_;
+		
+		AfxBeginThread((AFX_THREADPROC)ThreadProc, (LPVOID)this, 1);
+		m_RECOGNIZE.AddString((CString)(char*)"                start");
+		AfxBeginThread((AFX_THREADPROC)rgcz, (LPVOID)this, 2);
+		///----------------------------------------------------////
+
+	}
+}
+
+
+void CRainBowLEFEDlg::OnBnClickedPause()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_RECOGNIZE.AddString((CString)(char*)"KKKKK中国");
+	for (int i = 1; i < 20; i++)
+		m_RECOGNIZE.InsertString(i, (CString)("第dd"));
+}
