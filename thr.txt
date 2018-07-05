@@ -13,7 +13,7 @@
 //#include "opencv2/features2d/features2d.hpp"
 #include <sstream>
 #include "CvvImage.h"
-
+#include "time.h"
 #include "easypr.h"
 //#include "easypr/util/switch.hpp"
 //#include "../test/accuracy.hpp"
@@ -72,6 +72,7 @@ END_MESSAGE_MAP()
 CRainBowLEFEDlg::CRainBowLEFEDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_RAINBOWLEFE_DIALOG, pParent)
 	, m_recognize(_T(""))
+	, m_list_name(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -81,6 +82,8 @@ void CRainBowLEFEDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_LBString(pDX, IDC_RECOGNIZE, m_recognize);
 	DDX_Control(pDX, IDC_RECOGNIZE, m_RECOGNIZE);
+	DDX_Control(pDX, IDC_VIDEO_NAME, m_RECORD_NAME);
+	DDX_LBString(pDX, IDC_VIDEO_NAME, m_list_name);
 }
 
 BEGIN_MESSAGE_MAP(CRainBowLEFEDlg, CDialogEx)
@@ -91,6 +94,8 @@ BEGIN_MESSAGE_MAP(CRainBowLEFEDlg, CDialogEx)
 	//ON_BN_CLICKED(IDC_BUTTON2, &CRainBowLEFEDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_OP_VIDEO, &CRainBowLEFEDlg::OnBnClickedOpVideo)
 	ON_BN_CLICKED(IDC_PAUSE, &CRainBowLEFEDlg::OnBnClickedPause)
+	ON_LBN_SELCHANGE(IDC_VIDEO_NAME, &CRainBowLEFEDlg::OnLbnSelchangeVideoName)
+	ON_LBN_DBLCLK(IDC_VIDEO_NAME, &CRainBowLEFEDlg::LISTDBCLK)
 END_MESSAGE_MAP()
 
 
@@ -646,6 +651,15 @@ UINT CRainBowLEFEDlg::ThreadProc(LPVOID pParam) {
 		cout << "Unable to open the camera! " << endl;
 		exit(EXIT_FAILURE); //EXIT_FAILURE 可以作为exit()的参数来使用，表示没有成功地执行一个程序,其值为1
 	}
+
+	time_t timep;
+	tm tm;
+	char tmp[100];
+	timep = time(0);
+	localtime_s(&tm, &timep);
+	strftime(tmp, sizeof(tmp), "%Y-%m-%d-%H-%M-%S.avi", &tm);
+	VideoWriter Record = VideoWriter(tmp, CV_FOURCC('D', 'I', 'V', 'X'), 16, Size(1280, 720), 1);
+	pThis->m_RECORD_NAME.InsertString(0, (CString)tmp);
 	int nums = 1;
 	while (nums) {
 
@@ -655,11 +669,13 @@ UINT CRainBowLEFEDlg::ThreadProc(LPVOID pParam) {
 		}
 		cout << frame.size() << endl;
 		resize(frame, frame, Size(1280, 720));
+		frame.copyTo(segm);
 		//对画面进行一定的缩放，方便处理
 		double scale = 1.3;         //缩放比例
 		Mat smallImg(frame.rows / scale, frame.cols / scale, CV_8SC1);
 		resize(frame, frame, smallImg.size(), 0, 0, INTER_LINEAR);
-		frame.copyTo(segm);
+		Record << segm;
+		
 		cvtColor(frame, frame, CV_RGB2GRAY);
 		//threshold(frame, frame, 244, 255, THRESH_BINARY);
 		morphologyEx(frame, frame, MORPH_CLOSE, -1, Point(-1, -1), 3);
@@ -691,8 +707,10 @@ UINT CRainBowLEFEDlg::ThreadProc(LPVOID pParam) {
 				break;
 			}
 		}
+
 		pThis->ShowMat(segm, IDC_IMAGE);
 		pThis->frame = segm;
+		nums += 1;
 		//if (easypr::recognize(&pThis->rg,segm) == 0)
 		//{
 		//	CString names(pThis->rg.c_str());
@@ -723,13 +741,14 @@ UINT CRainBowLEFEDlg::ThreadProc(LPVOID pParam) {
 	}
 
 	capture.release();
+	
 }
 
 UINT CRainBowLEFEDlg::rgcz(LPVOID pParam) {
 
 
 	CRainBowLEFEDlg* pThis = (CRainBowLEFEDlg*)pParam;
-	int nums = 0;
+	int nums = 1;
 	while (nums) {
 		pThis->rg = "";
 		if (pThis->frame.empty())continue;
@@ -738,7 +757,8 @@ UINT CRainBowLEFEDlg::rgcz(LPVOID pParam) {
 			if (easypr::recognize(&pThis->rg, pThis->frame) == 0)
 			{
 				CString names(pThis->rg.c_str());
-				if (names == "") continue;
+				if (names == "")
+					continue;
 				else
 				pThis->m_RECOGNIZE.InsertString(nums, names);
 			}
@@ -805,9 +825,9 @@ void CRainBowLEFEDlg::OnBnClickedOpVideo()
 		//string* c = new string;
 		//*c = filePath_;
 		
-		AfxBeginThread((AFX_THREADPROC)ThreadProc, (LPVOID)this, 1);
+		 th1=AfxBeginThread((AFX_THREADPROC)ThreadProc, (LPVOID)this, 1);
 		m_RECOGNIZE.AddString((CString)(char*)"                start");
-		AfxBeginThread((AFX_THREADPROC)rgcz, (LPVOID)this, 2);
+		 th2=AfxBeginThread((AFX_THREADPROC)rgcz, (LPVOID)this, 2);
 		///----------------------------------------------------////
 
 	}
@@ -820,4 +840,90 @@ void CRainBowLEFEDlg::OnBnClickedPause()
 	m_RECOGNIZE.AddString((CString)(char*)"KKKKK中国");
 	for (int i = 1; i < 20; i++)
 		m_RECOGNIZE.InsertString(i, (CString)("第dd"));
+	time_t timep;
+	tm tm;
+	char tmp[100];
+	timep = time(0);
+	localtime_s(&tm, &timep);
+	strftime(tmp, sizeof(tmp), "%Y-%m-%d-%H-%M-%S.avi", &tm);
+	for (int i = 1; i < 20; i++)
+		m_RECORD_NAME.InsertString(0, (CString)tmp+(CString)"111111");
+}
+
+
+void CRainBowLEFEDlg::OnLbnSelchangeVideoName()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+void CRainBowLEFEDlg::LISTDBCLK()
+{
+	int nIndex;
+	nIndex = m_RECORD_NAME.GetCurSel();
+	if (nIndex >= 0) {
+		CString cs;
+		m_RECORD_NAME.GetText(nIndex, cs);
+		// 在这里操作
+		//AfxBeginThread(ThreadProc, 0);
+		//AfxBeginThread(rgcz, 0);
+		th1->SuspendThread();
+		th2->SuspendThread();
+		string filePath_ = (LPCSTR)(CStringA)(cs);
+		filePath_ = trim(filePath_);
+
+		VideoCapture capture(filePath_);
+		if (!capture.isOpened()) {
+			cout << "Unable to open the camera! " << endl;
+			exit(EXIT_FAILURE); //EXIT_FAILURE 可以作为exit()的参数来使用，表示没有成功地执行一个程序,其值为1
+		}
+		Mat im;
+		Mat fgMaskMOG2; //通过MOG2方法得到的掩码图像fgmask
+		Mat segm;      //frame的副本
+		vector<vector<Point> > contours;
+		vector<Vec4i> hierarchy;
+		Ptr<BackgroundSubtractor> pMOG2; //MOG2 Background subtractor
+		pMOG2 = createBackgroundSubtractorMOG2();
+		int nums = 1;
+		while (nums) {
+
+			if (!capture.read(im)) {
+				cout << "Unable to read next frame." << endl;
+				exit(0);
+			}
+			cout << im.size() << endl;
+			resize(im, im, Size(1280, 720));
+			//对画面进行一定的缩放，方便处理
+			double scale = 1.3;         //缩放比例
+			Mat smallImg(im.rows / scale, im.cols / scale, CV_8SC1);
+			resize(im, im, smallImg.size(), 0, 0, INTER_LINEAR);
+			im.copyTo(segm);
+			cvtColor(im, im, CV_RGB2GRAY);
+			//threshold(frame, frame, 244, 255, THRESH_BINARY);
+			morphologyEx(im, im, MORPH_CLOSE, -1, Point(-1, -1), 3);
+			pMOG2->apply(im, fgMaskMOG2);    //更新背景模型
+												//morphologyEx(fgMaskMOG2, fgMaskMOG2, MORPH_CLOSE, 3, Point(-1, -1), 3);
+												//建立一个当前frame的副本
+			findContours(fgMaskMOG2, contours, hierarchy,
+				CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0)); //检测轮廓
+
+			CvSeq* contour;
+			vector <vector<Point> > contours_poly(contours.size());
+			vector <Point2f> center(contours.size());
+			vector <float> radius(contours.size());
+			for (int i = 0; i < contours.size(); i++) {
+				//bndRect = cvBoundingRect(contours, 0);
+				Rect rect = boundingRect(contours[i]);
+				//contour = contour->h_next
+				if (contourArea(contours[i]) > 250) {
+					//circle(segm, center[i], (int)radius[i], Scalar(100, 100, 0), 2, 8, 0);
+					rectangle(segm, rect, Scalar(0, 255, 0), 2, 8, 0);
+					//rectangle(segm,)
+					break;
+				}
+			}
+
+			ShowMat(segm, IDC_IMAGE);
+		}
+		capture.release();
+	}
+	Sleep(60000);
 }
