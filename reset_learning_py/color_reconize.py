@@ -20,13 +20,13 @@ def rgb_to_hsv():
     lower_blue = np.array([100,43,46])
     upper_blue = np.array([130,255,255])  
 
-    #---红色3
+    #---红色2
     lower_red = np.array([0,43,46])
     upper_red = np.array([10,255,255])
-    ##灰白色----4
+    ##灰白色----3
     lower_white =np.array([0,0,200])
     upper_white =np.array([180,43,255])
-    #--黄色5
+    #--黄色4
     lower_yellow = np.array([26,43,46])
     upper_yellow = np.array([34,255,255])
     #--绿色1
@@ -45,6 +45,7 @@ def rgb_to_hsv():
     res_yellow = cv2.bitwise_and(im,im,mask=mask_yellow)
     res_green = cv2.bitwise_and(im,im,mask=mask_green)
 
+
     result =res_blue.copy()
     giff = res_white > res_blue 
     result[giff] = res_white[giff]
@@ -62,30 +63,37 @@ def rgb_to_hsv():
     cv2.imshow('green',res_green)
     cv2.imshow('result',result)
     cv2.waitKey()
-    pre = np.zeros((5,),int)
-    yes =False
     lists_low ,lists_up= [], []
     lists_low.extend((lower_blue,lower_green,lower_red,lower_white,lower_yellow))
     lists_up.extend((upper_blue,upper_green,upper_red,upper_white,upper_yellow))
-    # lists_low.sort()
-    # lists_up.sort()
-    
-    print('low:',lists_low[1])
-    print('up:',lists_up[1])
-    
-    color_nums = len(lists_up)
-    for i in range(result.shape[0]):
-        for j in range(result.shape[1]):
-            for color in range(color_nums):
-                yes =False
-                for (a,b,c) in zip(lists_low[color],lists_up[color],result[i,j]): 
-                    if (color==1):
-                        print(a,b,c)
-                    if c<a or c >b:
-                        yes = True
-                if yes!=True:
-                    pre[color] +=1
-    print('a:',pre)
+
+    #//测试输出
+    pre = np.zeros((5,),int)
+    for index,(a,b) in enumerate(zip(lists_low,lists_up)):
+        mask = cv2.inRange(imgHSV,a,b)
+        result = cv2.bitwise_and(im,im,mask=mask)
+        for i in range(result.shape[0]):
+            for j in range(result.shape[1]):
+               if any(list(result(i,j))>np.array(0,0,0)):
+                   pre[index] +=1
+    print(pre)
+    # pre = np.zeros((5,),int)
+    # yes =False
+    # print('low:',lists_low[1])
+    # print('up:',lists_up[1])
+    # color_nums = len(lists_up)
+    # for i in range(result.shape[0]):
+    #     for j in range(result.shape[1]):
+    #         for color in range(color_nums):
+    #             yes =False
+    #             for (a,b,c) in zip(lists_low[color],lists_up[color],result[i,j]): 
+    #                 if (color==1):
+    #                     print(a,b,c)
+    #                 if c<a or c >b:
+    #                     yes = True
+    #             if yes!=True:
+    #                 pre[color] +=1
+    # print('a:',pre)
 if __name__ == '__main__':
     # a =[1,2,3]
     # b =[0,4,2]
