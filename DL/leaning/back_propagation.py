@@ -13,12 +13,12 @@ class bp(perceptron):
 
         -----W_ji <- W_ji + rate*delta_j*x_ji
         其中,W_ji是i节点到j节点的权重，rate是一个成为学习速率的常数，delta_j是节点j的误差项，x_ji是节点i传递给节点j的输入。
+
+
         [输出层误差项]向量表达形式->: delta = y*(1-y)*(t-y)
         [隐藏层误差项]向量表达形式->: delta_l = yl*(1-yl)*W.T(transpose)*delta_(l+1)
             W <- W + rate*delta*x^T(x的向量化)
             b <- b + rate*delta
-         
-        
     '''
 class sigmoidactivator:
     def forward(self,inputs):
@@ -45,18 +45,30 @@ class FullConnectLayer:
         self.output = self.activator.forward(np.dot(self.W,input_array)+self.b)
     
     def backward(self,input_array,delta_array,rate):
-        self.delta = self.activator.backward(input_array)*(np.dot(self.W.T,delta_array))
+        self.delta = self.activator.backward(input_array)*(np.dot(self.W.T,delta_array)) ##sigmoid 导数
         self.w_grad= np.dot(self.input.T,delta_array)
         self.b_grad= delta_array #??
         '''W <- W + rate*delta*x^T(x的向量化)
-        b <- b + rate*delta'''
+            b <- b + rate*delta'''
     def update(self,rate):
         self.W += rate*self.w_grad
-        self.b += rate *self.b_grad
+        self.b += rate *self.b_grad 
+    
+    def train(self,datas,labels,rate,echos):
+        self.one_iter(datas,labels,rate)
+        if echos:
+            self.train(datas,labels,rate,echos-1)
+
+    def one_iter(self,datas,labels,rate):
+        delta = self.activator.backward(self.output)*(label-self.output)
+        for d,l in zip(datas,labels):
+            
+            self.update(rate)
 
 class NeuralNet:
     '''
         构建网络api接口
     '''
-    def __init__(self):
+    def __init__(self,input_size,output_size):
+        FullConnectLayer(input_size,output_size,sigmoidactivator)
         

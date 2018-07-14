@@ -6,11 +6,10 @@ import itertools
 class perceptron:
     '''
         输入-->隐藏-->输出
-
         感知器规则:
         输入:x--->黑盒子过程--->输出:--->  y=  w*x + b------------------------y(output-value)
         wi(0) = wi + ▲wi
-         b(0) =  b + ▲b
+        b(0) =  b + ▲b
        ▲wi = rate*(actual_value[label] - y)*x    --> y = activator(y) 这里需要对y激活--[使用阶跃函数 step_fun]
         ▲b = rate*(actual_value[label] - y)   【y 同上
     '''
@@ -57,7 +56,6 @@ class perceptron:
         return self.step_fun(
             np.dot(self.wights,data)+self.b
         )   
-        
 
     def _upwight(self,data,label,rate):
         # output = (label - self.step_fun(np.matmul(self.wights,data)+self.b))
