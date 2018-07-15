@@ -38,7 +38,7 @@ class FullConnectLayer(object):
         print(self.W.shape)
         print('delta_array:',delta_array.shape)          #(10,10)
         print('bcakward-value:',self.activator.backward(self.input).shape)
-        self.delta = self.activator.backward(self.input) * np.dot(self.W.T,delta_array)
+        self.delta = self.activator.backward(self.input).reshape(delta_array.shape[0],-1) * np.dot(self.W.T,delta_array)
         self.W_bard = np.dot(delta_array,self.input.T)  
         self.b_bard = self.delta_array
     

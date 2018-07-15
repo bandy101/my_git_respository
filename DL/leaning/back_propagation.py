@@ -21,8 +21,9 @@ class bp(perceptron):
             b <- b + rate*delta
     '''
 class sigmoidactivator:
-    def forward(self,inputs):
-        return 1/(1+np.exp(-inputs))
+
+    def forward(self,inputs):  ##激活函数
+        return 1.0/(1+np.exp(-inputs))
 
     def backward(self,out):
         return out*(1-out)
@@ -42,9 +43,10 @@ class FullConnectLayer:
         # BP需要用到   forward---->backward(更新参数)---->forward---->backward -----ok？---break
         self.input = input_array 
         #y = f(W^T*X)
+        print(input_array)
         self.output = self.activator.forward(np.dot(self.W,input_array)+self.b)
     
-    def backward(self,input_array,delta_array,rate):
+    def backward(self,input_array,delta_array):
         self.delta = self.activator.backward(input_array)*(np.dot(self.W.T,delta_array)) ##sigmoid 导数
         self.w_grad= np.dot(self.input.T,delta_array)
         self.b_grad= delta_array #??
@@ -65,10 +67,49 @@ class FullConnectLayer:
             
             self.update(rate)
 
+    def dump(self):
+        print ('W: %s\nb:%s'%(self.W, self.b))
+
 class NeuralNet:
     '''
         构建网络api接口
     '''
-    def __init__(self,input_size,output_size):
-        FullConnectLayer(input_size,output_size,sigmoidactivator)
+    def __init__(self,layers):
+        self.layers =[]
+        for _ in range(len(layers)-1):
+            self.layers.append(FullConnectLayer \
+                (layers[_],layers[_+1],sigmoidactivator()))
         
+    def train(self,datas,labels,rate,epoch):
+        if epoch:
+            self.train_on_sample(datas,labels,rate)
+            train(datas,labels,rate,epoch-1)
+
+    def train_on_sample(self,datas,labels,rate):
+        for d in range(len(datas)):
+            output = datas[d]
+            for layer in self.layers:
+                    layer.forward(output)
+                    output = layer.output
+            delta = self.layers[-1].activator.backward(self.layers[-1].output) \
+                *(labels[d]-self.layers[-1].output)
+            #从后面往前算出误差项 delta
+            for layer in self.layers[::-1]:
+                layer.backward(layer.input,delta)
+                delta = layer.delta
+
+    def update_weight(self,rate):
+        for layer in self.layer:
+            layer.update(rate)
+
+
+if __name__ == '__main__':
+    from tensorflow.examples.tutorials.mnist import input_data
+    mnist = input_data.read_data_sets('MNIST_data',one_hot=True)
+    samples = mnist.train.images
+    labels = mnist.train.labels
+    net = NeuralNet([784, 784, 10])
+    # train(net)
+    net.train(samples, labels, 0.3, 10)
+    net.dump()
+    correct_ratio(net)

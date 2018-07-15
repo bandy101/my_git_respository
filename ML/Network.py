@@ -14,7 +14,7 @@ class Network(object):
     def __init__(self,layers):
         self.layers = []
         for i in range(len(layers)-1):
-            self.layers.append(FullConnectLayer(layers[i],layers[i+1],SigmoidActivator()))#[784,8,10]
+            self.layers.append(FullConnectLayer(layers[i],layers[i+1],SigmoidActivator()))#[784,8,10]   
                                                                                             #[784,8][8,10]
 
     def predict(self,samples):
