@@ -14,7 +14,6 @@ def train_data_set():
     labels = []
     for i in range(0, 256):
         n = normalizer.norm(i)
-        print('n',n)
         data_set.append(n)
         labels.append(n)
     return labels, data_set
@@ -46,11 +45,11 @@ def correct_ratio(network):
 
 def train(network):
     labels, data_set = train_data_set()
-    network.train(labels, data_set, 0.3, 50)
+    network.train(data_set,labels, 0.3, 5)
 # network = Network([784,300,10])
 # network.train(samples,labels,0.5,10)
-net = Network([784, 784, 10])
-# train(net)
-net.train(samples, labels, 0.3, 50)
+net = Network([8, 3, 8])
+train(net)
+# net.train(samples, labels, 0.3, 50)
 net.dump()
-correct_ratio(net)
+# correct_ratio(net)

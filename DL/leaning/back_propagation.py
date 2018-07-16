@@ -43,12 +43,13 @@ class FullConnectLayer:
         # BP需要用到   forward---->backward(更新参数)---->forward---->backward -----ok？---break
         self.input = input_array 
         #y = f(W^T*X)
-        print(input_array)
+        # print(input_array)
         self.output = self.activator.forward(np.dot(self.W,input_array)+self.b)
-    
     def backward(self,input_array,delta_array):
-        self.delta = self.activator.backward(input_array)*(np.dot(self.W.T,delta_array)) ##sigmoid 导数
-        self.w_grad= np.dot(self.input.T,delta_array)
+        print('W.T',self.W.T.shape)
+        print('delta_array:',delta_array.shape)
+        self.delta = self.activator.backward(self.input)*np.dot(self.W.T,delta_array) ##sigmoid 导数
+        self.w_grad= np.dot(delta_array,self.input.T)
         self.b_grad= delta_array #??
         '''W <- W + rate*delta*x^T(x的向量化)
             b <- b + rate*delta'''
@@ -62,7 +63,7 @@ class FullConnectLayer:
             self.train(datas,labels,rate,echos-1)
 
     def one_iter(self,datas,labels,rate):
-        delta = self.activator.backward(self.output)*(label-self.output)
+        delta = self.activator.backward(self.output)*(labels-self.output)
         for d,l in zip(datas,labels):
             
             self.update(rate)
@@ -83,33 +84,41 @@ class NeuralNet:
     def train(self,datas,labels,rate,epoch):
         if epoch:
             self.train_on_sample(datas,labels,rate)
-            train(datas,labels,rate,epoch-1)
+            self.train(datas,labels,rate,epoch-1)
 
     def train_on_sample(self,datas,labels,rate):
         for d in range(len(datas)):
             output = datas[d]
             for layer in self.layers:
-                    layer.forward(output)
-                    output = layer.output
+                layer.forward(output)
+                output = layer.output
+                # layer.dump()
+
+            print(labels[d][0].shape)
             delta = self.layers[-1].activator.backward(self.layers[-1].output) \
-                *(labels[d]-self.layers[-1].output)
+                *(np.expand_dims(labels[d],1)-self.layers[-1].output)
             #从后面往前算出误差项 delta
             for layer in self.layers[::-1]:
                 layer.backward(layer.input,delta)
                 delta = layer.delta
-
+            self.update_weight(rate)
     def update_weight(self,rate):
-        for layer in self.layer:
+        for layer in self.layers:
             layer.update(rate)
 
+    def dump(self):
+        for layer in self.layers:
+            layer.dump()
 
 if __name__ == '__main__':
     from tensorflow.examples.tutorials.mnist import input_data
     mnist = input_data.read_data_sets('MNIST_data',one_hot=True)
     samples = mnist.train.images
+    print('samples:',samples[0].shape)
     labels = mnist.train.labels
+    print('lables:',labels.shape)
     net = NeuralNet([784, 784, 10])
     # train(net)
     net.train(samples, labels, 0.3, 10)
     net.dump()
-    correct_ratio(net)
+    # correct_ratio(net)

@@ -19,11 +19,11 @@ class FullConnectLayer(object):
         
         self.input = input_array    #(784,)->()
         print(self.W.T.shape)       #W:(784,784) (10,784)
-        y =np.dot((self.W),list(input_array))
-        print(y.shape)
+        print("")
         self.output = self.activator.forward(       #(784,1)---[10,784]*[784,1] -->[10,1]
             np.dot(self.W ,input_array)+self.b
         )
+        
         ##W:(784,784) (10,784)
     def backward(self,delta_array):
         '''
@@ -38,15 +38,18 @@ class FullConnectLayer(object):
         print(self.W.shape)
         print('delta_array:',delta_array.shape)          #(10,10)
         print('bcakward-value:',self.activator.backward(self.input).shape)
-        self.delta = self.activator.backward(self.input).reshape(delta_array.shape[0],-1) * np.dot(self.W.T,delta_array)
+        self.delta = self.activator.backward(self.input)* np.dot(self.W.T,delta_array)
         self.W_bard = np.dot(delta_array,self.input.T)  
-        self.b_bard = self.delta_array
+        self.b_bard = delta_array
     
     def update(self,rate):
         '''
         使用梯度下降更新
         '''
         self.W +=rate*self.W_bard
+        print('rate',rate)
+        print('self.b_bard:',self.b_bard.shape)
+        print('self.b',self.b.shape)
         self.b += rate*self.b_bard
 
     def dump(self):

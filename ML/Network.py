@@ -25,7 +25,7 @@ class Network(object):
         return output
     def train(self,data_set,labels,rate,epoch):
         for _ in range(epoch):
-            print('labels:',labels.shape)
+            # print('labels:',labels.shape)
             for d in range(len(data_set)):
                 self.train_one_sample(data_set[d],labels[d],rate)
     def train_one_sample(self,sample,lable,rate):
