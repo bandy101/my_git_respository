@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.AreaDao">
+    <resultMap id="AreaBaseMap" type="com.sfe.ssm.model.Area">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="AreaListMap" type="com.sfe.ssm.model.Area">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="AreaEquipmentListMap" type="com.sfe.ssm.model.Area">
+        <id column="a_id" property="id" jdbcType="INTEGER"/>
+        <result column="a_name" property="name" jdbcType="VARCHAR"/>
+        <collection property="equipmentList" ofType="com.sfe.ssm.model.Equipment">
+            <id column="e_id" property="id" jdbcType="INTEGER"/>
+            <result column="e_name" property="name" jdbcType="VARCHAR"/>
+            <result column="e_code" property="code" jdbcType="VARCHAR"/>
+            <result column="air_code" property="airCode" jdbcType="VARCHAR"/>
+            <result column="location" property="location" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAreaById" parameterType="int" resultMap="AreaBaseMap">
+        SELECT * FROM em_area
+        WHERE id = #{id}
+    </select>
+
+    <insert id="createArea" parameterType="com.sfe.ssm.model.Area" useGeneratedKeys="true" keyProperty="id">
+        insert into em_area (name,createtime) VALUE (#{name},#{createtime});
+    </insert>
+
+    <update id="updateArea" parameterType="com.sfe.ssm.model.Area">
+        update em_area SET name=#{name},createtime=#{createtime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteArea" parameterType="int">
+        delete from em_area
+        where id=#{id}
+    </delete>
+
+    <select id="selectByPageList" resultMap="AreaBaseMap">
+        SELECT * FROM em_area
+        <where>
+            <if test="areaIds != null and areaIds !=''">
+                id in (${areaIds})
+            </if>
+        </where>
+        order by id DESC
+    </select>
+
+    <select id="getAreaList" resultMap="AreaListMap">
+        SELECT id,name FROM em_area
+        <where>
+            <if test="areaIds != null and areaIds !=''">
+                id in (${areaIds})
+            </if>
+        </where>
+        order by id DESC
+    </select>
+
+    <select id="getAreaEquipmentList" resultMap="AreaEquipmentListMap">
+        SELECT a.id as a_id,a.name as a_name,e.id as e_id,e.name as e_name,e.code as e_code,e.location FROM em_area a
+        JOIN em_equipment e ON a.id = e.area_id
+        <where>
+            <if test="areaIds != null and areaIds !=''">
+                a.id in (${areaIds})
+            </if>
+        </where>
+        order by a.id DESC
+    </select>
+    <select id="getAreaAirEquipmentList" resultMap="AreaEquipmentListMap">
+        SELECT a.id as a_id,a.name as a_name,e.id as e_id,e.name as e_name,e.air_code FROM em_area a
+        JOIN em_equipment e ON a.id = e.area_id
+        <where>
+            <if test="areaIds != null and areaIds !=''">
+                a.id in (${areaIds}) AND e.air_code!=''
+            </if>
+        </where>
+        order by a.id DESC
+    </select>
+</mapper>

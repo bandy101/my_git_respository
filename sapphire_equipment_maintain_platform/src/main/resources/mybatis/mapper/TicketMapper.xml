@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.TicketDao">
+
+    <resultMap id="TicketMap" type="com.sfe.ssm.model.Ticket">
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getTicket" resultMap="TicketMap">
+        SELECT * FROM em_ticket
+        WHERE name=#{name}
+    </select>
+
+    <update id="updateTicket" parameterType="com.sfe.ssm.model.Ticket">
+        update em_ticket SET value=#{value}
+        where name=#{name}
+    </update>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.ItemDao">
+    <resultMap id="ItemBaseMap" type="com.sfe.ssm.model.Item">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="pid" property="pid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="ItemClassMap" type="com.sfe.ssm.model.Item">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="pid" property="pid" jdbcType="INTEGER"/>
+        <collection column="id" property="child" ofType="com.sfe.ssm.model.Item" select="selectItemChild"/>
+    </resultMap>
+
+    <select id="getAllItem" resultMap="ItemClassMap">
+        SELECT * FROM em_items WHERE pid=0
+    </select>
+
+    <select id="selectItemChild" resultMap="ItemBaseMap">
+        SELECT * FROM em_items
+        where pid=#{id}
+    </select>
+
+    <insert id="createItem" parameterType="com.sfe.ssm.model.Item" useGeneratedKeys="true">
+        insert into em_items (name,sort,pid) VALUE (#{name},#{sort},#{pid});
+    </insert>
+
+    <update id="updateItem" parameterType="com.sfe.ssm.model.Item">
+        update em_items SET name=#{name},sort=#{sort}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteItem" parameterType="int">
+        delete from em_items
+        where id=#{id}
+    </delete>
+
+    <select id="selectByPageList" resultMap="ItemBaseMap">
+        SELECT * FROM em_items
+        order by id ASC
+    </select>
+
+    <select id="getExceptionItem" resultType="String">
+        SELECT name FROM em_items
+        <where>
+            <if test="exceptions != null and exceptions !=''">
+                id in (${exceptions})
+            </if>
+        </where>
+    </select>
+</mapper>

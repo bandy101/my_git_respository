@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfe.ssm.dao.AboutDao">
+
+
+
+    <resultMap id="BaseMap" type="com.sfe.ssm.model.About">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+        <result column="versions" property="versions" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="technical_support" property="technicalSupport" jdbcType="VARCHAR"/>
+        <result column="link" property="link" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseMap">
+       SELECT * FROM sys_about
+        WHERE id = #{id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfe.ssm.dao.LogDao">
+
+    <resultMap id="LogBaseMap" type="com.sfe.ssm.model.Log">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="module" property="module" jdbcType="VARCHAR"/>
+        <result column="method" property="method" jdbcType="VARCHAR"/>
+        <result column="response_time" property="responseData" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="create_time" property="data" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectLogById" parameterType="java.lang.Long" resultMap="LogBaseMap">
+       SELECT * FROM sys_client_log
+        WHERE id = #{userId}
+    </select>
+
+    <select id="selectAllLog" resultMap="LogBaseMap">
+        SELECT * FROM sys_client_log
+    </select>
+
+    <insert id="insert" parameterType="com.sfe.ssm.model.Log" useGeneratedKeys="true" keyProperty="id">
+    insert into sys_client_log (user_id,module,method,response_time,ip,create_time,description)
+    values (#{userId},#{module},#{method}, #{responseData},#{ip},#{data},#{description})
+    </insert>
+
+    <update id="update"  parameterType="com.sfe.ssm.model.Log">
+        update sys_client_log SET user_id=#{userId},module=#{module},method=#{method}
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from sys_client_log where id=#{id}
+    </delete>
+</mapper>

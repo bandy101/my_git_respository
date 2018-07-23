@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.NodeDao">
+
+    <resultMap id="NodeBaseMap" type="com.sfe.ssm.model.Node">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="parties" property="parties" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
+        <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+</mapper>

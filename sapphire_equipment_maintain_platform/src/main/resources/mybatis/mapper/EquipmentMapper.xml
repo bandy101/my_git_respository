@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.EquipmentDao">
+
+    <resultMap id="EquipmentBaseMap" type="com.sfe.ssm.model.Equipment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="AirEquipmentMap" type="com.sfe.ssm.model.Equipment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="air_code" property="airCode" jdbcType="VARCHAR"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="EquipmentPageMap" type="com.sfe.ssm.model.Equipment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="EquipmentAssignMap" type="com.sfe.ssm.model.Equipment">
+        <id column="e_id" property="id" jdbcType="INTEGER"/>
+        <result column="e_name" property="name" jdbcType="VARCHAR"/>
+        <result column="e_code" property="code" jdbcType="VARCHAR"/>
+        <result column="e_address" property="address" jdbcType="VARCHAR"/>
+        <result column="e_areaid" property="areaId" jdbcType="INTEGER"/>
+        <result column="a_name" property="areaName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getEquipmentById" parameterType="int" resultMap="EquipmentBaseMap">
+        SELECT * FROM em_equipment
+        WHERE id = #{id}
+    </select>
+
+    <select id="getEquipmentByCode" resultMap="EquipmentBaseMap">
+        SELECT id,name,code,location FROM em_equipment
+        WHERE code = #{code}
+    </select>
+
+    <select id="selectEquipmentLocation" resultMap="EquipmentBaseMap">
+        SELECT id,name,code,location,area_id FROM em_equipment
+    </select>
+
+    <select id="selectAreaEquipmentLocation" resultMap="EquipmentBaseMap">
+        SELECT id,name,code,location FROM em_equipment WHERE area_id in (${areaIds})
+    </select>
+
+    <select id="selectAirEquipmentLocation" resultMap="AirEquipmentMap">
+        SELECT id,name,air_code,location FROM em_equipment WHERE area_id in (${areaIds}) AND air_code!=''
+    </select>
+
+    <select id="getEquipmentAssign" parameterType="int" resultMap="EquipmentAssignMap">
+        SELECT e.id as e_id,e.name as e_name,e.code as e_code,e.address as e_address,e.area_id as e_areaid,a.name as a_name
+        FROM em_equipment e
+        LEFT JOIN em_area a
+        ON e.area_id = a.id
+        WHERE e.id = #{id}
+    </select>
+
+    <insert id="createEquipment" parameterType="com.sfe.ssm.model.Equipment" useGeneratedKeys="true">
+        insert into em_equipment (name,code,area_id,location,createtime) VALUE (#{name},#{code},#{areaId},#{location},#{createtime});
+    </insert>
+
+    <update id="updateEquipment" parameterType="com.sfe.ssm.model.Equipment">
+        update em_equipment SET name=#{name},code=#{code},area_id=#{areaId},location=#{location},createtime=#{createtime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteEquipment" parameterType="int">
+        delete from em_equipment
+        where id=#{id}
+    </delete>
+
+    <select id="isExistEquipment" parameterType="com.sfe.ssm.model.Equipment" resultType="int">
+        SELECT count(code) FROM em_equipment
+        WHERE code = #{code} and id != #{id}
+    </select>
+
+    <select id="selectNameList" resultType="String">
+        SELECT name FROM em_equipment
+        <where>
+            <if test="eids != null and eids !=''">
+                id in (${eids})
+            </if>
+        </where>
+        order by id DESC
+    </select>
+
+    <select id="selectByPageList" resultMap="EquipmentPageMap">
+        SELECT id,name,code FROM em_equipment
+        <where>
+            <if test="areaIds != null and areaIds !=''">
+                area_id in (${areaIds})
+            </if>
+        </where>
+        order by id DESC
+    </select>
+
+    <select id="selectByAreaid" resultMap="EquipmentPageMap">
+        SELECT id,name,code FROM em_equipment
+        <where>
+                area_id = #{aid}
+        </where>
+        order by id DESC
+    </select>
+
+    <select id="getCountInArea" resultType="int">
+        SELECT count(*) FROM em_equipment
+        WHERE area_id in (${areaIds})
+    </select>
+</mapper>

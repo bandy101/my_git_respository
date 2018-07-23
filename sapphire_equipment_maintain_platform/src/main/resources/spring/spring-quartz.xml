@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- spring自动任务调度器配置 -->
+    <!--CronTrigger基于日历和时间，SimpleTrigger基于时间-->
+
+    <!-- 要调用的工作类 -->
+    <bean id="firstQuartzTask" class="com.sfe.ssm.quartz.config.FirstQuartzTask"></bean>
+    <bean id="secondQuartzTask" class="com.sfe.ssm.quartz.config.SecondQuartzTask"></bean>
+
+    <bean name="myOneTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.sfe.ssm.quartz.config.TaskOneDemo"/>
+    </bean>
+
+
+    <!--任务配置列表-->
+    <bean id="jobtask1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+            <ref bean="firstQuartzTask" />
+        </property>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>test</value>
+        </property>
+        <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+        <!--<property name="concurrent" value="false"/>-->
+    </bean>
+
+    <bean id="jobtask2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+            <ref bean="secondQuartzTask" />
+        </property>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>test</value>
+        </property>
+    </bean>
+
+    <!--SimpleTrigger-->
+    <bean name="myTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.sfe.ssm.quartz.config.TaskDemo" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="timeout" value="36000" />
+            </map>
+        </property>
+    </bean>
+
+    <!--任务配置列表 end-->
+
+    <!-- 触发器配置  时间指定 -->
+    <bean id="cronTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobtask1"></property>
+        <!-- cron表达式 -->
+        <property name="cronExpression">
+            <!-- 每隔10秒执行一次 <value>0/10 * * * * ?</value> -->
+            <!-- 每天每隔5分钟执行一次 <value>0 0/5 * * * ?</value> -->
+            <value>0/1 * * * * ?</value>
+            <!-- 每天上午8点执行一次 <value>0 0 8 * * ?</value>-->
+            <!-- 在每天下午16点到下午16:59期间的每1分钟触发 <value>0 * 16 * * ?</value> -->
+        </property>
+    </bean>
+    <bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobtask2"></property>
+        <!-- cron表达式 -->
+        <property name="cronExpression">
+            <!-- 每隔10秒执行一次 <value>0/10 * * * * ?</value> -->
+            <!-- 每天每隔10分钟执行一次 <value>0 0/10 * * * ?</value> -->
+            <!-- <value>0 0/10 * * * ?</value> -->
+            <!-- 每天上午8点执行一次 <value>0 0 8 * * ?</value>-->
+            <!-- 在每天下午16点到下午16:59期间的每1分钟触发 <value>0 * 16 * * ?</value> -->
+             <!--每天凌晨1点执行一次 -->
+            <!--<value>0 0 1 * * ?</value>-->
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="cronTrigger3" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="myOneTaskJob"/>
+        <!-- 每个10秒触发 -->
+        <property name="cronExpression" value="0/10 * * * * ?"/>
+    </bean>
+
+
+
+
+
+    <bean id="quartzTestTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="myTaskJob" />
+        <!-- 10秒后运行 -->
+        <property name="startDelay" value="10000" />
+        <!-- 每隔十毫秒重复 -->
+        <property name="repeatInterval" value="10" /><!-- 每600秒调度一次 -->
+    </bean>
+
+
+
+
+
+    <!-- 触发器配置  时间指定 end-->
+
+    <bean id="jobFactory" class="com.sfe.ssm.quartz.ResetJobFactory"></bean>
+
+
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+    <bean id="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobFactory" ref="jobFactory"></property>
+        <property name="triggers">
+            <list>
+                <!-- 触发器列表    -->
+                <!--<ref bean="cronTrigger1" />-->
+                <!--<ref bean="cronTrigger2" />-->
+                <!--<ref bean="cronTrigger3" />-->
+                <!--<ref bean="quartzTestTrigger"/>-->
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <!--执行任务代码的线程池的大小-->
+                <prop key="org.quartz.threadPool.threadCount">20</prop>
+                <!--执行任务代码的线程的优先级-->
+                <prop key="org.quartz.threadPool.threadPriority">3</prop>
+            </props>
+        </property>
+    </bean>
+
+
+
+
+</beans>
+
+
+

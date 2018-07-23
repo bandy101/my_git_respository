@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.DetectionDao">
+    <resultMap id="DetectionBaseMap" type="com.sfe.ssm.model.Detection">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="e_id" property="equipmentId" jdbcType="INTEGER"/>
+        <result column="o_id" property="operatorId" jdbcType="INTEGER"/>
+        <result column="w_id" property="workerId" jdbcType="INTEGER"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="worktime" property="worktime" jdbcType="TIMESTAMP"/>
+        <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP"/>
+        <result column="exception" property="exception" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="oname" property="operatorName" jdbcType="VARCHAR"/>
+        <result column="wname" property="workerName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="DetectionPageMap" type="com.sfe.ssm.model.Detection">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="e_id" property="equipmentId" jdbcType="INTEGER"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="worktime" property="worktime" jdbcType="TIMESTAMP"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="name" property="equipmentName" jdbcType="VARCHAR"/>
+        <result column="code" property="equipmentCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="DetectionInfoMap" type="com.sfe.ssm.model.Detection">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="e_id" property="equipmentId" jdbcType="INTEGER"/>
+        <result column="w_id" property="workerId" jdbcType="INTEGER"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="worktime" property="worktime" jdbcType="TIMESTAMP"/>
+        <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP"/>
+        <result column="exception" property="exception" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="name" property="equipmentName" jdbcType="VARCHAR"/>
+        <result column="code" property="equipmentCode" jdbcType="VARCHAR"/>
+        <result column="location" property="equipmentLocation" jdbcType="VARCHAR"/>
+        <result column="oname" property="operatorName" jdbcType="VARCHAR"/>
+        <result column="wname" property="workerName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 根据外勤人员ID查询未巡检条数 -->
+    <select id="getCountForWorker" parameterType="int" resultType="int">
+        SELECT count(*) FROM em_detection
+        WHERE w_id = #{wid} AND state = 1
+    </select>
+
+    <!-- 根据外勤人员ID查询未巡检记录 -->
+    <select id="getDetectionPageList" parameterType="int" resultMap="DetectionPageMap">
+        SELECT d.id,d.createtime,d.worktime,e.name,e.code FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        <where>
+            <if test="wid != null and wid !=''">
+                d.w_id = #{wid}
+            </if>
+            <if test="already == true">
+                AND d.state > 1
+            </if>
+            <if test="already != true">
+                AND d.state = 1
+            </if>
+        </where>
+    </select>
+
+    <!-- 月区域巡检列表 -->
+    <select id="getAreaMonthDetectionList" parameterType="int" resultMap="DetectionPageMap">
+        SELECT d.id,d.e_id,d.state,e.name,e.code FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        WHERE e.area_id = #{aid} AND date_format(d.createtime,'%Y-%m')=date_format(now(),'%Y-%m')
+    </select>
+
+    <!-- 周区域巡检列表 -->
+    <select id="getAreaWeekDetectionList" resultMap="DetectionPageMap">
+        SELECT d.id,d.e_id,d.state,d.createtime,e.name,e.code FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        WHERE e.area_id = #{aid} AND date_format(d.createtime,'%Y-%u')=#{date}
+    </select>
+
+    <!-- 月巡检状态统计 -->
+    <select id="getMonthDetectionNums" resultType="int">
+        SELECT d.state FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        WHERE e.area_id in (${areaIds}) AND date_format(d.createtime,'%Y-%m')=date_format(now(),'%Y-%m')
+    </select>
+
+    <!-- 周巡检状态统计 -->
+    <select id="getWeekDetectionNums" resultType="int">
+        SELECT d.state FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        WHERE e.area_id in (${areaIds}) AND date_format(d.createtime,'%Y-%u')=date_format(now(),'%Y-%u')
+    </select>
+
+    <!-- 本周已巡检设备 -->
+    <select id="getWeekAssigneEqu" resultType="int">
+        SELECT e.id FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        WHERE e.area_id in (${areaIds}) AND date_format(d.createtime,'%Y-%u')=date_format(now(),'%Y-%u')
+    </select>
+
+    <!-- 获取巡检信息 -->
+    <select id="getDetectionById" parameterType="int" resultMap="DetectionInfoMap">
+        SELECT d.id,d.e_id,d.w_id,d.createtime,d.worktime,d.finishtime,d.exception,d.remark,d.imgurl,d.state,e.name,e.code,e.location,u1.name as oname,u2.name as wname FROM em_detection d
+        LEFT JOIN em_equipment e ON d.e_id = e.id
+        LEFT JOIN em_user u1 ON d.o_id = u1.id
+        LEFT JOIN em_user u2 ON d.w_id = u2.id
+        WHERE d.id = #{id}
+    </select>
+
+    <!-- 根据设备ID查询周巡检信息表 -->
+    <select id="getWeekDetectionById"  parameterType="int" resultMap="DetectionBaseMap">
+        SELECT d.*,u1.name as oname,u2.name as wname FROM em_detection d
+        LEFT JOIN em_user u1 ON d.o_id = u1.id
+        LEFT JOIN em_user u2 ON d.w_id = u2.id
+        WHERE d.e_id = #{eid} AND date_format(d.createtime,'%Y-%u')=date_format(now(),'%Y-%u');
+    </select>
+
+    <!-- 根据设备ID查询月巡检信息表 -->
+    <select id="getMonthDetectionById"  parameterType="int" resultMap="DetectionBaseMap">
+        SELECT d.*,u.name FROM em_detection d
+        LEFT JOIN em_user u ON d.w_id = u.id
+        WHERE d.e_id = #{eid} AND date_format(d.createtime,'%Y-%m')=date_format(now(),'%Y-%m');
+    </select>
+
+    <!-- 巡检派单 -->
+    <insert id="createDetection" parameterType="com.sfe.ssm.model.Detection" useGeneratedKeys="true">
+        insert into em_detection (e_id,o_id,w_id,createtime,state) VALUE (#{equipmentId},#{operatorId},#{workerId},#{createtime},#{state});
+    </insert>
+
+    <!-- 巡检填单 -->
+    <update id="fillinDetection" parameterType="com.sfe.ssm.model.Detection">
+        update em_detection SET worktime=#{worktime},finishtime=#{finishtime},exception=#{exception},remark=#{remark},imgurl=#{imgurl},state=#{state}
+        where id=#{id}
+    </update>
+
+    <!-- 巡检撤单 -->
+    <delete id="deleteDetection" parameterType="int">
+        delete from em_detection
+        where id=#{id}
+    </delete>
+
+    <!-- 巡检结单 -->
+    <update id="finishDetection" parameterType="com.sfe.ssm.model.Detection">
+        update em_detection SET finishtime=#{finishtime},state=#{state}
+        where id=#{id}
+    </update>
+
+</mapper>

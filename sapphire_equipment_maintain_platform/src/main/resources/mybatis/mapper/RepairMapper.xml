@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.RepairDao">
+    <resultMap id="RepairBaseMap" type="com.sfe.ssm.model.Repair">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="e_id" property="eid" jdbcType="VARCHAR"/>
+        <result column="o_id" property="oid" jdbcType="INTEGER"/>
+        <result column="w_id" property="wid" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="eventid" property="eventid" jdbcType="INTEGER"/>
+        <result column="exception" property="exception" jdbcType="VARCHAR"/>
+        <result column="result" property="result" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="checktime" property="checktime" jdbcType="TIMESTAMP"/>
+        <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP"/>
+        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="name" property="workerName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="RepairInfoMap" type="com.sfe.ssm.model.Repair">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="e_id" property="eid" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="eventid" property="eventid" jdbcType="INTEGER"/>
+        <result column="exception" property="exception" jdbcType="VARCHAR"/>
+        <result column="result" property="result" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="checktime" property="checktime" jdbcType="TIMESTAMP"/>
+        <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="name" property="equipmentName" jdbcType="VARCHAR"/>
+        <result column="code" property="equipmentCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="RepairPageMap" type="com.sfe.ssm.model.Repair">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="e_code" property="code" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="name" property="equipmentName" jdbcType="VARCHAR"/>
+        <result column="code" property="equipmentCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getRepairById" parameterType="int" resultMap="RepairBaseMap">
+        SELECT r.*,u.name FROM em_repair r
+        LEFT JOIN em_user u ON r.w_id = u.id
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="getRepairInfoById" parameterType="int" resultMap="RepairInfoMap">
+        SELECT r.*,e.name,e.code FROM em_repair r
+        LEFT JOIN em_equipment e ON r.e_id = e.id
+        WHERE r.id = #{id}
+    </select>
+
+    <insert id="createRepair" parameterType="com.sfe.ssm.model.Repair" useGeneratedKeys="true" keyProperty="id">
+        insert into em_repair (e_id,o_id,w_id,type,eventid,exception,result,createtime,checktime,finishtime,imgurl,state)
+        VALUE (#{eid},#{oid},#{wid},#{type},#{eventid},#{exception},#{result},#{createtime},#{checktime},#{finishtime},#{imgurl},#{state});
+    </insert>
+
+    <update id="updateRepair" parameterType="com.sfe.ssm.model.Repair">
+        update em_repair
+        SET e_id=#{eid},o_id=#{oid},w_id=#{wid},type=#{type},eventid=#{eventid},result=#{result},createtime=#{createtime},checktime=#{checktime},finishtime=#{finishtime},state=#{state}
+        where id=#{id}
+    </update>
+
+    <update id="fillinRepair"  parameterType="com.sfe.ssm.model.Repair">
+        update em_repair
+        SET result=#{result},checktime=#{checktime},state=#{state}
+        <if test="oid != 0">
+            ,o_id=#{oid}
+        </if>
+        where id=#{id}
+    </update>
+
+    <update id="finishRepair"  parameterType="com.sfe.ssm.model.Repair">
+        update em_repair
+        SET result=#{result},finishtime=#{finishtime},state=#{state}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteRepair" parameterType="int">
+        delete from em_repair
+        where id=#{id}
+    </delete>
+
+    <select id="selectByPageList" parameterType="int" resultMap="RepairPageMap">
+        SELECT r.id,r.e_id,r.createtime,r.state,e.name,e.code FROM em_repair r
+        LEFT JOIN em_equipment e ON r.e_id = e.id
+        <where>
+            <if test="type != null and type !=''">
+                r.type = #{type}
+            </if>
+            <if test="areaIds != null and areaIds !=''">
+                AND e.area_id in (${areaIds})
+            </if>
+            <if test="workerId != null and workerId !=''">
+                AND r.w_id = #{workerId}
+            </if>
+        </where>
+        order by id DESC
+    </select>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <!--&lt;!&ndash; 配置注解驱动 可以将request参数与绑定到controller参数上  要放在最前面&ndash;&gt;-->
+    <!--屏蔽掉，使用webconfig-->
+    <!--<mvc:annotation-driven/>-->
+
+    <!-- 注解一定要配置，不然不起作用 配置缓存-->
+    <cache:annotation-driven />
+
+    <!--启用spring的一些annotation -->
+    <context:annotation-config/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+    <!--aop执行操作的类-->
+    <bean id="logAopAction" class="com.sfe.ssm.common.log.LogAopAction"/>
+
+    <!--Spring容器将所有的Bean都初始化完成之后，做一些操作-->
+    <bean class="com.sfe.ssm.initialization.InstantiationTracingBeanPostProcessor"/>
+
+    <!-- 自动扫描  @Controller-->
+    <context:component-scan base-package="com.sfe.ssm.controller"/>
+
+    <!--使用fastjson作为json解析器-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig" ref="fastJsonConfig" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+        <property name="charset" value="UTF-8" />
+    </bean>
+
+
+    <!-- -->
+    <!--
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <mvc:exclude-mapping path="/api/**/oauth/**"/>
+            <bean class="com.sfe.ssm.interceptor.TokenInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    -->
+
+    <!--普通类调用service-->
+    <bean id="SpringContextUtil" class="com.sfe.ssm.common.SpringContextUtil" scope="singleton"></bean>
+
+    <!--静态资源映射-->
+    <!--本项目把静态资源放在了WEB-INF的statics目录下，资源映射如下-->
+    <!--但是项目部署到linux下发现WEB-INF的静态资源会出现无法解析的情况，但是本地tomcat访问正常，因此建议还是直接把静态资源放在webapp的statics下，映射配置如下-->
+    <!--<mvc:resources mapping="/font/**" location="/statics/font/"/>-->
+    <!--<mvc:resources mapping="/js/**" location="/statics/js/"/>-->
+    <mvc:resources mapping="/css/**" location="/statics/skin/css/"/>
+    <mvc:resources mapping="/img/**" location="/statics/skin/img/"/>
+
+    <!--上传图片存放目录-->
+    <mvc:resources mapping="/picture/**" location="/picture/"/>
+    <mvc:resources mapping="/upload/img/**" location="/upload/img/"/>
+    <mvc:resources mapping="/upload/video/**" location="/upload/video/"/>
+
+
+    <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 文件上传配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- 上传文件大小限制为31M，31*1024*1024 -->
+        <property name="maxUploadSize" value="32505856"/>
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="4096"/>
+    </bean>
+
+    <aop:config proxy-target-class="true"></aop:config>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+</beans>

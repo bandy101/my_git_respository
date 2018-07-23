@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfe.ssm.dao.TaskDao">
+    <!--<cache type="com.sfe.ssm.common.cache.MyBatisToRedisCache"/>-->
+
+    <resultMap id="TaskBaseMap" type="com.sfe.ssm.model.Task">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="job_group_name" property="jobGroupName" jdbcType="VARCHAR"/>
+        <result column="trigger_name" property="triggerName" jdbcType="VARCHAR"/>
+        <result column="trigger_group_name" property="triggerGroupName" jdbcType="VARCHAR"/>
+        <!--完整类名 com.sfe.ssm.quartz.achieve.xxx-->
+        <result column="job_class" property="jobClass" jdbcType="VARCHAR"/>
+        <!--时间设置，参考quartz说明文档-->
+        <result column="cron" property="cron" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectTaskById" parameterType="java.lang.Long" resultMap="TaskBaseMap">
+       SELECT * FROM sys_task
+        WHERE id = #{taskId}
+    </select>
+
+    <select id="selectAllTask" resultMap="TaskBaseMap">
+        SELECT * FROM sys_task
+    </select>
+
+    <select id="selectTaskByName" resultMap="TaskBaseMap">
+        SELECT * FROM sys_task
+        WHERE job_name = #{jobName}
+    </select>
+
+    <insert id="insert" parameterType="com.sfe.ssm.model.Task" useGeneratedKeys="true" keyProperty="id">
+    insert into sys_task (job_name,job_group_name,trigger_name,trigger_group_name,job_class,cron,remark)
+    values (#{jobName},#{jobGroupName},#{triggerName}, #{triggerGroupName},#{jobClass},#{cron},#{remark})
+    </insert>
+
+    <update id="update"  parameterType="com.sfe.ssm.model.Task">
+        update sys_task SET job_name=#{jobName},job_group_name=#{jobGroupName},trigger_name=#{triggerName},trigger_group_name=#{triggerGroupName}
+        ,job_class=#{jobClass},cron=#{cron},remark=#{remark}
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from sys_task where id=#{id}
+    </delete>
+</mapper>

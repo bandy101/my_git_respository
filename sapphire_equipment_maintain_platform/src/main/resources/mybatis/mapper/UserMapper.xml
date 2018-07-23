@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfe.ssm.dao.UserDao">
+
+    <resultMap id="UserBaseMap" type="com.sfe.ssm.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="telphone" property="telphone" jdbcType="VARCHAR"/>
+        <result column="auth" property="authcode" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="touimg" property="touimg" jdbcType="VARCHAR"/>
+        <result column="area_id" property="area" jdbcType="INTEGER"/>
+        <result column="jointime" property="jointime" jdbcType="TIMESTAMP"/>
+        <result column="lastlogintime" property="logintime" jdbcType="TIMESTAMP"/>
+        <result column="role" property="role" jdbcType="INTEGER"/>
+        <result column="unmark1" property="unmark1" jdbcType="INTEGER"/>
+        <result column="unmark2" property="unmark2" jdbcType="INTEGER"/>
+        <result column="unmark3" property="unmark3" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="UserPageMap" type="com.sfe.ssm.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="telphone" property="telphone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="PermissionMap" type="com.sfe.ssm.model.Permission">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="permission_name" property="permissionName" jdbcType="VARCHAR"/>
+        <result column="permission_sign" property="permissionSign" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="UserInfoMap" type="com.sfe.ssm.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="telphone" property="telphone" jdbcType="VARCHAR"/>
+        <result column="auth" property="authcode" jdbcType="VARCHAR"/>
+        <result column="area_id" property="area" jdbcType="INTEGER"/>
+        <association property="roleModel" javaType="com.sfe.ssm.model.Role">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="role_sign" property="roleSign" jdbcType="VARCHAR"/>
+            <result column="permissions" property="permissions" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="AreaWorkerMap" type="com.sfe.ssm.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getUserById" parameterType="int" resultMap="UserBaseMap">
+        SELECT * FROM em_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectUserByName" resultMap="UserBaseMap">
+        SELECT * FROM em_user
+        WHERE name = #{name}
+    </select>
+
+    <select id="getUserByTel" resultMap="UserInfoMap">
+        SELECT u.id,u.telphone,u.auth,u.area_id,r.role_sign,r.permissions
+        FROM em_user u
+        LEFT JOIN em_role r ON u.role = r.id
+        WHERE u.telphone = #{telphone}
+    </select>
+
+    <select id="getPermissions" resultMap="PermissionMap">
+        SELECT * FROM em_permission WHERE id in (${permissions})
+    </select>
+
+    <select id="getUserByAuth" resultMap="UserInfoMap">
+        SELECT u.id,u.telphone,u.auth,u.area_id,r.role_sign FROM em_user u
+        LEFT JOIN em_role r ON u.role = r.id
+        WHERE u.auth = #{auth}
+    </select>
+
+    <select id="getAreaWorker" resultMap="AreaWorkerMap">
+        SELECT id,name FROM em_user
+        WHERE find_in_set(#{areaid},area_id) AND role = 3
+    </select>
+
+    <select id="getAuthcode" parameterType="string" resultType="string">
+        SELECT auth FROM em_user
+        WHERE telphone = #{telphone}
+    </select>
+
+    <insert id="createUser" parameterType="com.sfe.ssm.model.User" useGeneratedKeys="true">
+        insert into em_user (name,telphone,address,auth,area_id,jointime,role) VALUE (#{name},#{telphone}, #{address},#{authcode},#{area},#{jointime},#{role});
+    </insert>
+
+    <update id="updateUser" parameterType="com.sfe.ssm.model.User">
+        update em_user SET name=#{name},telphone=#{telphone},address=#{address},area_id=#{area},jointime=#{jointime},role=#{role}
+        where id=#{id}
+    </update>
+
+    <update id="bindUser" parameterType="com.sfe.ssm.model.User">
+        update em_user SET auth=#{authcode}
+        where id=#{id}
+    </update>
+
+    <update id="logintimeUser" parameterType="com.sfe.ssm.model.User">
+        update em_user SET lastlogintime=#{logintime}
+        where id=#{id}
+    </update>
+    
+    <update id="addArea">
+        update em_user SET area_id=CONCAT_WS(',',#{aid},area_id)
+        where id=#{id}
+    </update>
+
+    <update id="addUnmark1">
+        update em_user SET unmark1 = unmark1 + ${count}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateUnmark1">
+        update em_user SET unmark1 = ${count}
+        WHERE id=#{id}
+    </update>
+
+    <update id="addUnmark2">
+        update em_user SET unmark2 = unmark2 + 1
+        WHERE id=#{id}
+    </update>
+
+    <update id="addUnmark3">
+        update em_user SET unmark3 = unmark3 + 1
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from em_user
+        where id=#{id}
+    </delete>
+
+    <select id="isExistPhoneNumber" parameterType="com.sfe.ssm.model.User" resultType="int">
+        SELECT count(telphone) FROM em_user
+        WHERE telphone = #{telphone} and id != #{id}
+    </select>
+
+    <select id="selectByPageList" resultMap="UserPageMap">
+        SELECT id,name,telphone FROM em_user
+        <where>
+            <if test="null != areaIds and '' != areaIds">
+                area_id in (${areaIds})
+            </if>
+        </where>
+        order by id DESC
+    </select>
+
+    <select id="getUsersByIntersectionArea" resultMap="UserPageMap">
+        SELECT id,name,telphone FROM em_user
+        <where>
+            <if test="null != areaIds and '' != areaIds">
+                area_id REGEXP REPLACE ( #{areaIds}, ',', '|' )
+            </if>
+            <if test="null != pickRoles and '' != pickRoles">
+                and role in (${pickRoles})
+            </if>
+        </where>
+        order by id DESC
+    </select>
+
+</mapper>
