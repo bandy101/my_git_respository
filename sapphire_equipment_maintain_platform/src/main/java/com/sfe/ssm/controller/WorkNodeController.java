@@ -77,7 +77,7 @@ public class WorkNodeController {
      *
      * @return
      */
-    @RequestMapping(value = "datalist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "nodelist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultMsg> getNodeList() {
         ResultMsg resultMsg;
         List<Node> lstData = nodeService.getAllNode();
