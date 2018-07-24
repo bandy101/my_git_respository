@@ -10,6 +10,36 @@
         <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="NodeClassMap" type="com.sfe.ssm.model.Node">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="parties" property="parties" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
+        <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--<select id="getAllNode" resultMap="NodeClassMap">-->
+        <!--SELECT  * FROM em_work_node WHERE -->
+    <!--</select>-->
+
+
+    <select id="getAllNode" resultMap="NodeClassMap">
+        SELECT * FROM em_work_node
+    </select>
+
+    <insert id="createNode" parameterType="com.sfe.ssm.model.Node" useGeneratedKeys="true">
+          insert into em_work_node(parties,content,ordernum,nodetime) VALUE (#{parties},#{content},#{ordernum},#{nodetime});
+    </insert>
+
+    <update id="updateNode" parameterType="com.sfe.ssm.model.Node">
+        update em_work_node SET parties=#{parties},ordernum=#{ordernum},nodetime={nodetime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteNode" parameterType="int">
+        delete from em_work_node
+        where id=#{id}
+    </delete>
 
 
 </mapper>
