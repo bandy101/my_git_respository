@@ -13,6 +13,8 @@ public interface NodeDao {
 
     List<Node> getAllNode();
 
+    Node getNode(@Param("id") int id);
+
     int createNode (Node node);
 
     int updateNode(Node node);

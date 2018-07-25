@@ -50,10 +50,10 @@ public class WorkNodeController {
     @RequestMapping(value = "nodeinfo", method = RequestMethod.POST, consumes = "application/json",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultMsg> editNode(@RequestBody Node node) throws ParseException {
-        node.setContent("content");
-        node.setId(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        node.setNodetime(sdf.parse("2018-07-24 14:31:46"));
+//        node.setContent("content");
+//        node.setId(0);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        node.setNodetime(sdf.parse("2018-07-24 14:31:46"));
         ResultMsg resultMsg;
         int result = 0;
         if (node.getId() > 0) {
@@ -86,9 +86,22 @@ public class WorkNodeController {
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
     }
 
+    /**
+     * 获取节点
+     *
+     * @return
+     */
+    @RequestMapping(value = "nodedata/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResultMsg> getNode(@PathVariable("id") int id) {
+        ResultMsg resultMsg;
+        Node lstData = nodeService.getNode(id);
+        resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
+                ResultStatusCode.OK.getErrmsg(), lstData);
+        return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
+    }
 
     /**
-     * 删除事项
+     * 删除节点
      *
      * @param id
      * @return

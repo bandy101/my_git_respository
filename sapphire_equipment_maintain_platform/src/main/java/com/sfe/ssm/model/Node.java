@@ -19,4 +19,7 @@ public class Node {
 
     private String ordernum;
 
+    private String imgurl;
+
+
 }

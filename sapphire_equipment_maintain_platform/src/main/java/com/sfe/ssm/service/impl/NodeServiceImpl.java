@@ -30,6 +30,11 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
+    public Node getNode(int id) {
+        return nodeDao.getNode(id);
+    }
+
+    @Override
     public List<Node> getAllNode() {
         return nodeDao.getAllNode();
     }

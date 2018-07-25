@@ -8,6 +8,7 @@
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
         <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
+        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="NodeClassMap" type="com.sfe.ssm.model.Node">
@@ -16,6 +17,7 @@
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
         <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
+        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--<select id="getAllNode" resultMap="NodeClassMap">-->
@@ -24,7 +26,12 @@
 
 
     <select id="getAllNode" resultMap="NodeClassMap">
+    SELECT * FROM em_work_node
+    </select>
+
+    <select id="getNode" resultMap="NodeClassMap">
         SELECT * FROM em_work_node
+        where  id=#{id}
     </select>
 
     <insert id="createNode" parameterType="com.sfe.ssm.model.Node" useGeneratedKeys="true">

@@ -13,6 +13,8 @@ public interface NodeService {
 
     int deleteNode(int id);
 
+    Node getNode(@Param("id") int id);
+
     List<Node>getAllNode();
 
 
