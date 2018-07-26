@@ -80,7 +80,7 @@ public class WorkNodeController {
     @RequestMapping(value = "nodelist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultMsg> getNodeList() {
         ResultMsg resultMsg;
-        List<Node> lstData = nodeService.getAllNode();
+        List<Detection> lstData = nodeService.getAllNode();
         resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
                 ResultStatusCode.OK.getErrmsg(), lstData);
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
@@ -91,10 +91,10 @@ public class WorkNodeController {
      *
      * @return
      */
-    @RequestMapping(value = "nodedata/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResultMsg> getNode(@PathVariable("id") int id) {
+    @RequestMapping(value = "nodedata/{ordernum}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResultMsg> getNode(@PathVariable("ordernum") String ordernum) {
         ResultMsg resultMsg;
-        Node lstData = nodeService.getNode(id);
+        Node lstData = nodeService.getNode(ordernum);
         resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
                 ResultStatusCode.OK.getErrmsg(), lstData);
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);

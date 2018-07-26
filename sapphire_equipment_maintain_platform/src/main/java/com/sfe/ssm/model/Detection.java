@@ -32,6 +32,8 @@ public class Detection {
     private String location;
     //审核状态
     private int state;
+    //记录单号
+    private  String ordernum;
     /** 表关联 **/
     //外勤员名字
     private String workerName;

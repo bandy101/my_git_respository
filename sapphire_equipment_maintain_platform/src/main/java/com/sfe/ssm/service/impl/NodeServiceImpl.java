@@ -30,8 +30,8 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public Node getNode(int id) {
-        return nodeDao.getNode(id);
+    public Node getNode(String ordernum) {
+        return nodeDao.getNode(ordernum);
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface NodeService {
 
     int deleteNode(int id);
 
-    Node getNode(@Param("id") int id);
+    Node getNode(@Param("ordernum") String ordernum);
 
     List<Node>getAllNode();
 

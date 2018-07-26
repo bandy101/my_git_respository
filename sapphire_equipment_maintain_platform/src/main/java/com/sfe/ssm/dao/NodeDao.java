@@ -13,7 +13,7 @@ public interface NodeDao {
 
     List<Node> getAllNode();
 
-    Node getNode(@Param("id") int id);
+    Node getNode(@Param("ordernum") String ordernum);
 
     int createNode (Node node);
 
