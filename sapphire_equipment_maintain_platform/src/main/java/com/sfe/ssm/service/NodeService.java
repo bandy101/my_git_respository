@@ -13,7 +13,9 @@ public interface NodeService {
 
     int deleteNode(int id);
 
-    Node getNode(@Param("ordernum") String ordernum);
+    Node getNode(String ordernum);
+
+    Node getNodeid(int id );
 
     List<Node>getAllNode();
 

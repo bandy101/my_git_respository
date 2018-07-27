@@ -3,6 +3,7 @@ package com.sfe.ssm.service.impl;
 import com.sfe.ssm.dao.NodeDao;
 import com.sfe.ssm.model.Node;
 import com.sfe.ssm.service.NodeService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,6 +33,11 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public Node getNode(String ordernum) {
         return nodeDao.getNode(ordernum);
+    }
+
+    @Override
+    public Node getNodeid(int id){
+        return nodeDao.getNodeid(id);
     }
 
     @Override

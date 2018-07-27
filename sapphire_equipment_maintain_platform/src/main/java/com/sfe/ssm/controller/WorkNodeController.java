@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,13 +53,18 @@ public class WorkNodeController {
     public ResponseEntity<ResultMsg> editNode(@RequestBody Node node) throws ParseException {
 //        node.setContent("content");
 //        node.setId(0);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        node.setNodetime(sdf.parse("2018-07-24 14:31:46"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         ResultMsg resultMsg;
         int result = 0;
         if (node.getId() > 0) {
             result = nodeService.updateNode(node);
         } else {
+            int uid = Integer.parseInt(SecurityUtils.getSubject().getSession().getAttribute("USERID").toString());
+            node.setNodetime(new Date());
+            node.setPartiesid(uid);
+            String  name = userService.getUserById(uid).getName();
+            node.setParties(name);
             result = nodeService.createNode(node);
         }
         if (result > 0) {
@@ -80,7 +86,21 @@ public class WorkNodeController {
     @RequestMapping(value = "nodelist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultMsg> getNodeList() {
         ResultMsg resultMsg;
-        List<Detection> lstData = nodeService.getAllNode();
+        List<Node> lstData = nodeService.getAllNode();
+        resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
+                ResultStatusCode.OK.getErrmsg(), lstData);
+        return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
+    }
+
+    /**
+     * 获取关联节点
+     *
+     * @return
+     */
+    @RequestMapping(value = "nodedata/{ordernum}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResultMsg> getNode(@PathVariable("ordernum") String ordernum) {
+        ResultMsg resultMsg;
+        Node lstData = nodeService.getNode(ordernum);
         resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
                 ResultStatusCode.OK.getErrmsg(), lstData);
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
@@ -91,10 +111,10 @@ public class WorkNodeController {
      *
      * @return
      */
-    @RequestMapping(value = "nodedata/{ordernum}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResultMsg> getNode(@PathVariable("ordernum") String ordernum) {
+    @RequestMapping(value = "nodedataNode/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResultMsg> getNodeid(@PathVariable("id") int id) {
         ResultMsg resultMsg;
-        Node lstData = nodeService.getNode(ordernum);
+        Node lstData = nodeService.getNodeid(id);
         resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
                 ResultStatusCode.OK.getErrmsg(), lstData);
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);

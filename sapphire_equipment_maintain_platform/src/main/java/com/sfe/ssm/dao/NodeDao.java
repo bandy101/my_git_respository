@@ -15,6 +15,8 @@ public interface NodeDao {
 
     Node getNode(@Param("ordernum") String ordernum);
 
+    Node getNodeid(@Param("id") int id );
+
     int createNode (Node node);
 
     int updateNode(Node node);
