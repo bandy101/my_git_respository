@@ -571,6 +571,7 @@ public class ManageController {
         int result = 0;
         detection.setOperatorId(Integer.parseInt(SecurityUtils.getSubject().getSession().getAttribute("USERID").toString()));
         Date date = new Date();
+        detection.setOrderNum((date.getTime()+detection.getEquipmentId())+"7");
         detection.setCreatetime(date);
         detection.setState(1);
         result = detectionService.createDetection(detection);
@@ -583,7 +584,6 @@ public class ManageController {
             Equipment equipment = equipmentService.getEquipmentById(detection.getEquipmentId());
             DateFormat bf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
-
             URL url = new URL("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+accessToken);
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setDoOutput(true);
@@ -658,6 +658,7 @@ public class ManageController {
         List<Integer> equipmentIds = detection.getEquipmentIds();
         for (int eid:equipmentIds) {
             detection.setEquipmentId(eid);
+            detection.setOrderNum((date.getTime()+eid)+"6");
             result = detectionService.createDetection(detection);
             count++;
         }

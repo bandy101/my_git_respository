@@ -7,6 +7,7 @@ import com.sfe.ssm.model.Item;
 import com.sfe.ssm.model.Node;
 import com.sfe.ssm.service.*;
 import com.sfe.ssm.util.BaseToolUtil;
+import com.sfe.ssm.util.ImageUtil;
 import com.sfe.ssm.util.WxUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -18,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +42,8 @@ public class WorkNodeController {
     private UserService userService;
     @Autowired
     private NodeService nodeService;
-
+    @Autowired
+    private ImageUtil imageUtil;
 
     /**
      * 编辑节点信息
@@ -50,7 +53,7 @@ public class WorkNodeController {
      */
     @RequestMapping(value = "nodeinfo", method = RequestMethod.POST, consumes = "application/json",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResultMsg> editNode(@RequestBody Node node) throws ParseException {
+    public ResponseEntity<ResultMsg> editNode(@RequestBody Node node,HttpServletRequest request) throws ParseException {
 //        node.setContent("content");
 //        node.setId(0);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -63,6 +66,13 @@ public class WorkNodeController {
             int uid = Integer.parseInt(SecurityUtils.getSubject().getSession().getAttribute("USERID").toString());
             node.setNodetime(new Date());
             node.setPartiesid(uid);
+            if(node.getImgurl()!=null) {
+                List<String> imgarr = node.getImgurl();
+                if (!imgarr.isEmpty()) {
+                    String imgurls = imageUtil.SaveIMGbyBASE64(imgarr, request);
+                    node.setImgurls(imgurls);
+                }
+            }
             String  name = userService.getUserById(uid).getName();
             node.setParties(name);
             result = nodeService.createNode(node);
@@ -100,7 +110,7 @@ public class WorkNodeController {
     @RequestMapping(value = "nodedata/{ordernum}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultMsg> getNode(@PathVariable("ordernum") String ordernum) {
         ResultMsg resultMsg;
-        Node lstData = nodeService.getNode(ordernum);
+        List<Node> lstData =  nodeService.getNode(ordernum);
         resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
                 ResultStatusCode.OK.getErrmsg(), lstData);
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
@@ -140,5 +150,4 @@ public class WorkNodeController {
             return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.NO_CONTENT);
         }
     }
-
 }

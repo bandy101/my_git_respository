@@ -31,7 +31,7 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public Node getNode(String ordernum) {
+    public List<Node> getNode(String ordernum) {
         return nodeDao.getNode(ordernum);
     }
 

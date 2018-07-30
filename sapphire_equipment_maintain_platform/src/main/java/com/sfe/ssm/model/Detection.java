@@ -10,6 +10,8 @@ import java.util.List;
 public class Detection {
     //巡检表主键ID
     private int id;
+    //巡检表单号
+    private String orderNum;
     //设备ID
     private int equipmentId;
     //操作员ID
@@ -32,8 +34,6 @@ public class Detection {
     private String location;
     //审核状态
     private int state;
-    //记录单号
-    private  String ordernum;
     /** 表关联 **/
     //外勤员名字
     private String workerName;

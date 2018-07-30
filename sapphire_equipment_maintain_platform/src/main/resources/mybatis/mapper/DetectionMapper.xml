@@ -130,7 +130,7 @@
 
     <!-- 巡检派单 -->
     <insert id="createDetection" parameterType="com.sfe.ssm.model.Detection" useGeneratedKeys="true">
-        insert into em_detection (e_id,o_id,w_id,createtime,state) VALUE (#{equipmentId},#{operatorId},#{workerId},#{createtime},#{state});
+        insert into em_detection (ordernum,e_id,o_id,w_id,createtime,state) VALUE (#{orderNum},#{equipmentId},#{operatorId},#{workerId},#{createtime},#{state});
     </insert>
 
     <!-- 巡检填单 -->

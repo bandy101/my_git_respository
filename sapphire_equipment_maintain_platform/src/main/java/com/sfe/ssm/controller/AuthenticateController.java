@@ -43,7 +43,7 @@ public class AuthenticateController {
     @Autowired
     private UserService userService;
     //微信绑定授权开关
-    private boolean CLOSE_WX = false;
+    private boolean CLOSE_WX = true;
 
     /**
      * 微信平台手机邀请码登入

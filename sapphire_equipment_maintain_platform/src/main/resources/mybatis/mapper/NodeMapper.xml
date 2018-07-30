@@ -8,7 +8,8 @@
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
         <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
-        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
+        <result column="imgurl" property="imgurls" jdbcType="VARCHAR"/>
+        <result column="eid" property="e_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="NodeClassMap" type="com.sfe.ssm.model.Node">
@@ -17,7 +18,7 @@
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
         <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
-        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
+        <result column="imgurl" property="imgurls" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="NodeinfoMap" type="com.sfe.ssm.model.Node">
@@ -37,21 +38,16 @@
 
     <resultMap id="NodeinfosMap" type="com.sfe.ssm.model.Node">
         <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="eid" property="e_id" jdbcType="INTEGER"/>
+        <result column="partiesid" property="partiesid" jdbcType="VARCHAR"/>
         <result column="parties" property="parties" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="nodetime" property="nodetime" jdbcType="TIMESTAMP"/>
         <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
-        <!--<collection column="ordernum" property="child" ofType="com.sfe.ssm.model.Detection" select="selectDetection" />-->
-        <collection property="child" ofType="com.sfe.ssm.model.Detection">
-            <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
-            <result column="worktime" property="worktime" jdbcType="TIMESTAMP"/>
-            <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
-            <result column="finishtime" property="finishtime" jdbcType="TIMESTAMP"/>
-        </collection>
+        <result column="imgurl" property="imgurls" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="getAllNode" resultMap="NodeBaseMap">
---     SELECT * FROM em_work_node
         SELECT  * FROM  em_work_node
     </select>
 
@@ -62,25 +58,20 @@
 
     <select id="getNodeid" resultMap="NodeBaseMap">
         SELECT * FROM em_work_node
-        where id =#{id} AND e.ordernum=d.ordernum
+        where id =#{id}
     </select>
 
     <select id="getNode" resultMap="NodeinfosMap"  parameterType="String">
-        SELECT  * FROM  em_detection d,em_work_node e
-        where e.ordernum=#{id}
-        <!--<where>-->
-        <!--<if test='ordernum != null and ordernum !="" and ordernum !="0" '>-->
-        <!--AND ordernum = #{ordernum}-->
-        <!--</if>-->
-        <!--</where>-->
+        SELECT e.id,e.eid,e.content,e.nodetime,e.ordernum,e.parties,e.imgurl FROM em_detection d,em_work_node e
+        where e.ordernum=#{ordernum} AND e.ordernum=d.ordernum
     </select>
 
     <insert id="createNode" parameterType="com.sfe.ssm.model.Node" useGeneratedKeys="true">
-          insert into em_work_node(eid,partiesid,parties,content,ordernum,nodetime) VALUE (#{eid},#{partiesid},#{parties},#{content},#{ordernum},#{nodetime});
+          insert into em_work_node(eid,partiesid,parties,content,ordernum,nodetime,imgurl) VALUE (#{e_id},#{partiesid},#{parties},#{content},#{ordernum},#{nodetime},#{imgurls});
     </insert>
 
     <update id="updateNode" parameterType="com.sfe.ssm.model.Node">
-        update em_work_node SET parties=#{parties},ordernum=#{ordernum},nodetime={nodetime}
+        update em_work_node SET ordernum=#{ordernum},imgurl=#{imgurls},eid=#{e_id},content=#{content}
         where id=#{id}
     </update>
 
