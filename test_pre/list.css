@@ -1,0 +1,92 @@
+/*公共样式*/
+
+html{ font-size: 62.5%}
+body,div,p,span,font,ul,li,table,tr,td,a,header,menu{ margin:0; padding:0; color:#666; font-size:14px; font-family:"Hiragino Sans GB","Microsoft Yahei UI","Microsoft Yahei","微软雅黑",'Segoe UI',Tahoma,"宋体b8b\4f53",SimSun,sans-serif}
+a,div,p,img,button,input,textarea{-webkit-tap-highlight-color:rgba(255,255,255,0)}
+input,textarea{border: 0; padding: 0}
+body{ background: #fff}
+ul,li{ list-style-type: none}
+img{ border: 0}
+a{ color:#666; font-size:14px; text-decoration:none}
+a:hover{ color:#666; text-decoration:none}
+
+/*文本溢出，截字符长度*/
+.ellipsis{ text-overflow: ellipsis; -o-text-overflow: ellipsis; overflow: hidden; white-space: nowrap}
+
+/*SVG字体样式*/
+.icon { width: 1em; height: 1em; vertical-align: -0.15em; fill: currentColor; overflow: hidden}
+
+/*清除浮动*/
+.clear-both{ clear: both; display: block}
+
+
+.header{ height: 40px; background: #0a8e5b;border-bottom: 1px solid #f1f1f1;width:100%;z-index:10;position: fixed;top: 0;}
+.header_map{ height: 40px; background: #0a8e5b;border-bottom: 1px solid #666;width:100%;z-index:10;position: fixed;top: 0;}
+.header__back{ float: left; width: 40px; height: 40px; line-height: 40px; text-align: center; font-size: 1.8rem; color: #fff;}
+.header__right{ float: right; width: 40px; height: 40px; margin-top:-40px; line-height: 40px; text-align: center; font-size: 1.8rem; color: #fff;}
+.header__menu__air{ float: left; width: 40px; height: 30px; text-align: center; font-size: 1.8rem; color: #666}
+.title__header{line-height: 42px;color: #fff;font-size: 15px;text-align: center;margin-right: 40px;}
+
+.header__back__info{ float: left; width: 40px; height: 40px; line-height: 40px; text-align: center; font-size: 1.8rem; color: #fff;}
+.add__user{ width: 40px; height: 40px; line-height: 40px; font-size: 2.8rem; }
+.title__header__info{line-height: 42px;color: #fff;font-size: 15px;text-align: center;margin-right: 40px;}
+
+.main{ border-top: 1px solid #e9ebea}
+.list{ padding: 5px;background: #f5f5f5; margin: 10px 0 0 0; border-bottom: 1px solid #e9ebea; display: block}
+.list__item__title{ padding: 5px;background: #f5f5f5; border-bottom: 1px solid #e9ebea; display: block}
+.list__item{ padding: 5px; background: #fff; margin: 10px 0 0 0; border-bottom: 1px solid #e9ebea; display: block}
+.list__title{ line-height: 30px; font-size: 14px;color:#666; font-weight: bold;display: block}
+.list__title__item{ line-height: 30px; font-size: 14px;color:#888;}
+.list__equipment{ float: left; width: 100%; line-height: 22px;font-size: 13px; color: #999; display: block}
+.list__date{ float: left; width: 50%; line-height: 22px;font-size: 13px; color: #999; display: block}
+.list__date__time{ float: left; width: 60%; line-height: 22px;font-size: 12px; color: #999; display: block}
+.list__state{ float: right; width: 50%; text-align: right; line-height: 22px; font-size: 1.4rem; display: block}
+.list__delete{ float: right; line-height: 22px; width: 22px; text-align: center; color: #ad0a0a; font-size: 1.6rem; margin: 0 0 0 10px; display: block}
+.list__edit{ float: right; line-height: 22px; width: 22px; text-align: center; color: #0aad6e; font-size: 1.6rem; margin: 0 0 0 10px; display: block}
+.list__title__name{ line-height: 30px;color:#666;float: left; width:60%;font-size: 1.4rem; font-weight: bold; display: block}
+.list__title__num{ line-height: 30px; color:#666;float: right;font-size: 1.3rem; display: block}
+.list__equipment__info{color: #666;font-weight: normal;font-size: 13px;}
+
+.not{ color: #ff0000;}
+.finish{ color: #0aad6e;}
+.stay{ color: #fe9372;}
+
+.loading{ line-height: 60px; text-align: center;  color: #969696; background: #ebebeb; margin: 20px 0 0 0;}
+.chart_air{ height: 191px;  border-top: 1px solid #ececec;  padding-top: 10px;}
+
+.sort{ border-top: 1px solid #e9ebea; height: 40px;}
+.sort__href{ float: left; width: 50%; line-height: 40px; text-align: center; background: #ebebeb; display: block;}
+.sort--on{ background: #0aad6e; color: #fff; font-weight: bold;}
+
+.font_12{font-size: 12px;}
+.font_13{font-size: 13px;}
+.font_14{font-size: 14px;}
+.font_15{font-size: 15px;}
+.font_16{font-size: 16px;}
+.bold{font-weight: bold;}
+.color__333 {color: #333;}
+.color__666 {color: #666;}
+.color__888 {color: #888;}
+.color__999 {color: #999;}
+.color__fff {color: #fff;}
+.color__000 {color: #000;}
+.margin_10{margin: 10px;}
+
+/*设备点弹窗*/
+.btn_primary{margin: 5px;}
+.dialog__bd{max-height: 540px;overflow-y: auto;}
+.dialog{width: 90%;max-width:500px;}
+.close-dialog{position: absolute;top: 4px;right: 4px;border:1px solid #fff;background:#0aad6e;min-width: 22px;border-radius: 18px;font-size: 14px;color: #fff;z-index: 9999;}
+.close-dialog__map{text-align:center;position: absolute;top: 4px;right: 4px;border:1px solid #fff;background:#cccccc;min-width: 22px;border-radius: 18px;font-size: 14px;color: #fff;z-index: 9999;}
+
+/*空气站头部*/
+.air__station_title{background-color: #fff;height: 20px;line-height: 20px;padding: 10px;}
+.left__float{float: left;}
+.right__float{float: right;}
+
+
+
+
+
+
+
