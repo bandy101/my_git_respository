@@ -54,8 +54,7 @@ public class WorkNodeController {
     @RequestMapping(value = "nodeinfo", method = RequestMethod.POST, consumes = "application/json",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultMsg> editNode(@RequestBody Node node,HttpServletRequest request) throws ParseException {
-//        node.setContent("content");
-//        node.setId(0);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         ResultMsg resultMsg;

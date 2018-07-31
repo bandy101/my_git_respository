@@ -16,6 +16,8 @@
         <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="name" property="workerName" jdbcType="VARCHAR"/>
+        <result column="ordernum" property="ordernum" jdbcType="VARCHAR"/>
+
     </resultMap>
     <resultMap id="RepairInfoMap" type="com.sfe.ssm.model.Repair">
         <id column="id" property="id" jdbcType="INTEGER"/>
@@ -53,13 +55,13 @@
     </select>
 
     <insert id="createRepair" parameterType="com.sfe.ssm.model.Repair" useGeneratedKeys="true" keyProperty="id">
-        insert into em_repair (e_id,o_id,w_id,type,eventid,exception,result,createtime,checktime,finishtime,imgurl,state)
-        VALUE (#{eid},#{oid},#{wid},#{type},#{eventid},#{exception},#{result},#{createtime},#{checktime},#{finishtime},#{imgurl},#{state});
+        insert into em_repair (e_id,o_id,w_id,type,eventid,exception,result,createtime,checktime,finishtime,imgurl,state,ordernum)
+        VALUE (#{eid},#{oid},#{wid},#{type},#{eventid},#{exception},#{result},#{createtime},#{checktime},#{finishtime},#{imgurl},#{state},#{ordernum});
     </insert>
 
     <update id="updateRepair" parameterType="com.sfe.ssm.model.Repair">
         update em_repair
-        SET e_id=#{eid},o_id=#{oid},w_id=#{wid},type=#{type},eventid=#{eventid},result=#{result},createtime=#{createtime},checktime=#{checktime},finishtime=#{finishtime},state=#{state}
+        SET e_id=#{eid},o_id=#{oid},w_id=#{wid},type=#{type},eventid=#{eventid},result=#{result},createtime=#{createtime},ordernum=#{ordernum},checktime=#{checktime},finishtime=#{finishtime},state=#{state}
         where id=#{id}
     </update>
 

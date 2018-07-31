@@ -44,4 +44,6 @@ public class Repair {
     private String equipmentName;
     //设备编号
     private String equipmentCode;
+    //关联单号
+    private  String ordernum;
 }
