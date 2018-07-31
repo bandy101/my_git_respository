@@ -486,7 +486,7 @@ void Merge_s(string filename)
 	static const long size = flen / 3;   // 这里限定了文件的分割大小；
 	char *databuf = new char[size];
 	pf.close();
-	pf1.open(tempstr.c_str(), ios::out | ios::binary | ios::app);
+	pf1.open(tempstr.c_str(), ios::out | ios::binary);
 	int n = 3;
 	databuf = new char[size];
 
@@ -537,6 +537,12 @@ void Merge_s(string filename)
 
 void en_des(string file, string k)
 {
+	//获取长度
+	fstream pf;
+	pf.open(file.c_str(), ios::in | ios::binary);
+	pf.seekg(0, ios_base::end);
+	long total_flen = pf.tellg();
+	pf.close();
 	char buffer[8];
 	key = charToBitset(k.c_str());
 	// 生成16个子密钥
@@ -546,15 +552,33 @@ void en_des(string file, string k)
 	fstream file1, files;
 	files.open(file, ios::binary | ios::in);
 	file1.open(file + "encrypt", ios::binary | ios::out);
+	long flen;
+
 	while (!files.eof())
 	{
 		memset(&buffer, 0, sizeof(buffer));
-		files.read(buffer, 8);
-		cout << buffer << endl;
+		flen = total_flen - file1.tellg();
+		if (flen == 0) break;
+		if (flen < 8)
+		files.read(buffer, flen+1);
+		else
+		{
+			files.read(buffer, 8);
+
+		}
+		//cout << flen << endl;
 		bitset<64> plain = charToBitset(buffer);
 		bitset<64> cipher = encrypt(plain);
+		//if (flen < 8&& flen!=0)
+		//{
+		//	file1.write((char*)&cipher, flen);
+		//	break;
+		//}
+		//else
+		//{
+		//	file1.write((char*)&cipher, sizeof(cipher));
+		//}
 		file1.write((char*)&cipher, sizeof(cipher));
-
 	}
 	file1.close();
 	files.close();
@@ -562,19 +586,52 @@ void en_des(string file, string k)
 
 void de_des(string file, string k)
 {
+
+	//长度
+	fstream pf;
+	pf.open(file.c_str(), ios::in | ios::binary);
+	pf.seekg(0, ios_base::end);
+	long total_flen = pf.tellg();
+
 	fstream file1, files;
 	bitset<64> temp;
 	key = charToBitset(k.c_str());
 	generateKeys();
 	file1.open(file, ios::binary | ios::in);
 	files.open(file + "to_decrypt", ios::binary | ios::out);
+	long flen;
 	while (!file1.eof()) {
 		memset(&temp, 0, sizeof(temp));
-		file1.read((char*)&temp, sizeof(temp));
-		if (temp != 0) {
-			bitset<64> temp_plain = decrypt(temp);
-			files.write((char*)&temp_plain, sizeof(temp_plain));
+		flen = total_flen - file1.tellg();
+		if (flen == 0) break;
+		if (flen < 8)
+			file1.read((char*)&temp, flen);
+		else
+		{
+			file1.read((char*)&temp, sizeof(temp));
+			//cout << sizeof(temp) << endl;
 		}
+		
+
+
+		//if (temp != 0) {
+		//
+		//	bitset<64> temp_plain = decrypt(temp);
+		//	files.write((char*)&temp_plain, sizeof(temp_plain));
+		//}
+		//if (flen < 8)
+		//{
+		//	bitset<64> temp_plain = decrypt(temp);
+		//	files.write((char*)&temp_plain, flen);
+		//}
+		//else
+		//{
+		//	bitset<64> temp_plain = decrypt(temp);
+		//	files.write((char*)&temp_plain, sizeof(temp_plain));
+		//}
+		bitset<64> temp_plain = decrypt(temp);
+		files.write((char*)&temp_plain, sizeof(temp_plain));
+
 	}
 	file1.close();
 	files.close();
@@ -604,6 +661,6 @@ int main()
 	//Merge_s(files);
 	//Split_s(files);
 	//Merge_s(files);
-	//getchar();
+	getchar();
 	return 0;
 }
