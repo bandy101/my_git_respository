@@ -313,7 +313,7 @@ void Merge()
 	string str2 = "F:/数据/2.jpg";
 	string strBlock = "F:/数据/BLOCK.dat";
 	FILE* f1,*f2,*f3;
-	fopen_s(&f1,str1.c_str(), "rb+");
+	f1 = fopen(str1.c_str(), "rb+");
 	fopen_s(&f2,str2.c_str(), "rb+");
 	fopen_s(&f3,strBlock.c_str(), "rb+");
 
@@ -471,6 +471,8 @@ void Split_s(string filename)
 	delete[] databuf;
 }
 
+
+long need_nul;
 void Merge_s(string filename)
 {
 	fstream pf, pf1;
@@ -498,9 +500,7 @@ void Merge_s(string filename)
 
 		pf.read(databuf, size * sizeof(char));
 		pf1.write(databuf, size * sizeof(char));
-
 		pf.close();
-
 		cout << "file :" << &tempstr << endl;
 	}
 
@@ -523,7 +523,7 @@ void Merge_s(string filename)
 	databuf = new char[flen];
 
 	pf.read(databuf, flen * sizeof(char));
-	pf1.write(databuf, flen * sizeof(char));
+	pf1.write(databuf, (flen- need_nul) * sizeof(char));
 
 	pf.close();
 	pf1.close();
@@ -535,6 +535,9 @@ void Merge_s(string filename)
 	cout << "file :" << &tempstr << endl;
 }
 
+//long has(char *x) {
+//	for(i)
+//}
 void en_des(string file, string k)
 {
 	//获取长度
@@ -543,7 +546,23 @@ void en_des(string file, string k)
 	pf.seekg(0, ios_base::end);
 	long total_flen = pf.tellg();
 	pf.close();
-	char buffer[8];
+	char buffer1[1] = { 0 };
+	char buffer2[2] = { 0 };
+	char buffer3[3] = { 0 };
+	char buffer4[4] = { 0 };
+	char buffer5[5] = { 0 };
+	char buffer6[6] = { 0 };
+	char buffer7[7] = { 0 };
+	char buffer[8] = { 0 };
+	memset(&buffer1, 0, sizeof(buffer1));
+	memset(&buffer2, 0, sizeof(buffer2));
+	memset(&buffer3, 0, sizeof(buffer3));
+	memset(&buffer4, 0, sizeof(buffer4));
+	memset(&buffer5, 0, sizeof(buffer5));
+	memset(&buffer6, 0, sizeof(buffer6));
+	memset(&buffer7, 0, sizeof(buffer7));
+
+	//extern char buffer[];
 	key = charToBitset(k.c_str());
 	// 生成16个子密钥
 	generateKeys();
@@ -553,32 +572,75 @@ void en_des(string file, string k)
 	files.open(file, ios::binary | ios::in);
 	file1.open(file + "encrypt", ios::binary | ios::out);
 	long flen;
-
+	int del = 0;
 	while (!files.eof())
 	{
 		memset(&buffer, 0, sizeof(buffer));
-		flen = total_flen - file1.tellg();
-		if (flen == 0) break;
-		if (flen < 8)
-		files.read(buffer, flen+1);
-		else
-		{
+		del = 0;
+		//cout << "flen:" << flen << endl;
+
+			//switch (flen)
+			//{
+			//case 1: {files.read(buffer1, sizeof(buffer1));			plain = charToBitset(buffer1);	
+			//	cipher = encrypt(plain); cout <<"1:" <<(char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//case 2: {files.read(buffer2, sizeof(buffer2));			 plain = charToBitset(buffer2);
+			//	cipher = encrypt(plain); cout << "2#:"<<(char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//case 3: {files.read(buffer3, sizeof(buffer3)); 			 plain = charToBitset(buffer3);
+			//	cipher = encrypt(plain); cout <<"3#:"<< (char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//case 4: {files.read(buffer4, sizeof(buffer4)); 			plain = charToBitset(buffer4);
+			//	cipher = encrypt(plain); cout << "4#:"<<(char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//case 5: {files.read(buffer5, sizeof(buffer5));			 plain = charToBitset(buffer5);
+			//	cipher = encrypt(plain); cout <<"5#:"<< (char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//case 6: {files.read(buffer6, sizeof(buffer6)); 			 plain = charToBitset(buffer6);
+			//	cipher = encrypt(plain); cout <<"6#:"<< (char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//case 7: {files.read(buffer7, sizeof(buffer7)); 			plain = charToBitset(buffer7);
+			//	cipher = encrypt(plain); cout << "7#:"<<(char*)&cipher << endl;
+			//	file1.write((char*)&cipher, sizeof(cipher)); break; }
+			//default:
+			//	break;
+			//}
+
+			//cout << buffer << endl;
+			//flen = files.gcount();
 			files.read(buffer, 8);
 
-		}
+			flen = total_flen - file1.tellg();
+			if (flen < 8) need_nul = 8-flen;
+			cout << "flens:" << flen << endl;
+
+			bitset<64> plain = charToBitset(buffer);
+			bitset<64> cipher = encrypt(plain);
+			file1.write((char*)&cipher, sizeof(cipher));
+			cout << "nums:" << files.gcount() << endl;
 		//cout << flen << endl;
-		bitset<64> plain = charToBitset(buffer);
-		bitset<64> cipher = encrypt(plain);
-		//if (flen < 8&& flen!=0)
+		//if (flen < 8)
 		//{
-		//	file1.write((char*)&cipher, flen);
-		//	break;
+			//bitset<64> plain = charToBitset(buffer);
+			//bitset<64> cipher = encrypt(plain);
+			//file1.write((char*)&cipher, sizeof(cipher));
 		//}
 		//else
 		//{
+
+
+		//if (flen < 8)
+		//{
+		//	bitset<64> plain = charToBitset(buffer);
+		//	bitset<64> cipher = encrypt(plain);
+		//	file1.write((char*)&cipher, flen);
+		//}
+		//else
+		//{
+		//	bitset<64> plain = charToBitset(buffer);
+		//	bitset<64> cipher = encrypt(plain);
 		//	file1.write((char*)&cipher, sizeof(cipher));
 		//}
-		file1.write((char*)&cipher, sizeof(cipher));
 	}
 	file1.close();
 	files.close();
@@ -589,7 +651,7 @@ void de_des(string file, string k)
 
 	//长度
 	fstream pf;
-	pf.open(file.c_str(), ios::in | ios::binary);
+	pf.open(file, ios::in | ios::binary);
 	pf.seekg(0, ios_base::end);
 	long total_flen = pf.tellg();
 
@@ -603,9 +665,12 @@ void de_des(string file, string k)
 	while (!file1.eof()) {
 		memset(&temp, 0, sizeof(temp));
 		flen = total_flen - file1.tellg();
-		if (flen == 0) break;
+		//if (flen == 0) break;
 		if (flen < 8)
-			file1.read((char*)&temp, flen);
+		{
+			file1.read((char*)&temp, sizeof(temp));
+
+		}
 		else
 		{
 			file1.read((char*)&temp, sizeof(temp));
@@ -630,11 +695,24 @@ void de_des(string file, string k)
 		//	files.write((char*)&temp_plain, sizeof(temp_plain));
 		//}
 		bitset<64> temp_plain = decrypt(temp);
-		files.write((char*)&temp_plain, sizeof(temp_plain));
+		files.write((char*)&temp_plain, file1.gcount());
+		//cout << "flen:"<<flen<< endl;
+		//cout << "nums:" << file1.gcount() << endl;
 
 	}
 	file1.close();
 	files.close();
+	//char x[4396];
+	//memset(x, 0, sizeof(x));
+	//files.open(file + "to_decrypt", ios::binary | ios::in);
+	//files.read(x, sizeof(x)); 
+	//files.seekg(0, ios_base::end);
+	//files.write("####", 4);
+	//files.close();
+
+	//files.open(file + "_to_decrypt", ios::binary | ios::out);
+	//files.write(x, sizeof(x)); files.close();
+
 }
 
 void des_final(string files,string key1,string key2,string key3)
