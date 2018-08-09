@@ -34,6 +34,11 @@
         <result column="a_name" property="areaName" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="codeMap" type="Hashmap">
+        <result column="telemetering" property="telemetering" javaType="INTEGER"/>
+        <result column="air" property="air" javaType="INTEGER"/>
+    </resultMap>
+
     <select id="getEquipmentById" parameterType="int" resultMap="EquipmentBaseMap">
         SELECT * FROM em_equipment
         WHERE id = #{id}
@@ -115,4 +120,10 @@
         SELECT count(*) FROM em_equipment
         WHERE area_id in (${areaIds})
     </select>
+
+    <select id="getAirInArea" resultMap="codeMap">
+        SELECT COUNT(code) telemetering,COUNT(air_code) air FROM em_equipment
+        WHERE area_id in (${areaIds})
+    </select>
+
 </mapper>

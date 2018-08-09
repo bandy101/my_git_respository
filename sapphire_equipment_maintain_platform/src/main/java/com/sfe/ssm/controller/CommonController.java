@@ -122,6 +122,29 @@ public class CommonController {
     }
 
     /**
+     * 新版首页展示（增加职位、负责的设备数目，合并待办事项）
+     * @return
+     */
+    @RequestMapping(value = "newWelcome",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResultMsg> newWelcome(){
+        ResultMsg resultMsg;
+        User user = userService.getUserById(Integer.parseInt(SecurityUtils.getSubject().getSession().getAttribute("USERID").toString()));
+        Map info = new HashMap();
+        Map codeMap = equipmentService.getAirInArea(user.getArea());
+        info.put("name",user.getName());
+        info.put("role",user.getRole());
+        info.put("logintime",user.getLogintime());
+        int unmark = user.getUnmark1() + user.getUnmark2() + user.getUnmark3();
+        info.put("unmark",unmark);
+        info.put("title",user.getTitle());
+        info.put("telemetering",codeMap.get("telemetering"));
+        info.put("air",codeMap.get("air"));
+        resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
+                ResultStatusCode.OK.getErrmsg(), info);
+        return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
+    }
+
+    /**
      * 根据角色授权相应功能模块
      * @return
      */
@@ -446,7 +469,7 @@ public class CommonController {
         float[] pm25Hr = new float[24];
         float[] coHr = new float[24];
         Map airqualityday = dataTransfer.getAirQualityDay(code,date);
-        for (int i = 0;i < 23;i++){
+        for (int i = 0;i < 24;i++){
             so2Hr[i] = Float.parseFloat(airqualityday.get("so2Hr"+i).toString());
             no2Hr[i] = Float.parseFloat(airqualityday.get("no2Hr"+i).toString());
             o3Hr[i] = Float.parseFloat(airqualityday.get("o3Hr"+i).toString());

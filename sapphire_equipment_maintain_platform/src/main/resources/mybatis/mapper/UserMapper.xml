@@ -16,6 +16,7 @@
         <result column="unmark1" property="unmark1" jdbcType="INTEGER"/>
         <result column="unmark2" property="unmark2" jdbcType="INTEGER"/>
         <result column="unmark3" property="unmark3" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="UserPageMap" type="com.sfe.ssm.model.User">

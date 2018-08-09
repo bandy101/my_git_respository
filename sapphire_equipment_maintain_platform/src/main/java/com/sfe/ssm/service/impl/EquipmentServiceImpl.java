@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service("equipmentService")
 public class EquipmentServiceImpl implements EquipmentService {
@@ -95,6 +96,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public int getCountInArea(String areaIds) {
         return equipmentDao.getCountInArea(areaIds);
+    }
+
+    @Override
+    public Map getAirInArea(String areaIds) {
+        return equipmentDao.getAirInArea(areaIds);
     }
 
 }

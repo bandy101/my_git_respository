@@ -37,6 +37,8 @@ public class User implements Serializable {
 
     private int unmark3;
 
+    private String title;
+
     private Role roleModel;
 
     private List<Permission> permissionModel;

@@ -81,7 +81,7 @@ public class WorkController {
         resultMsg = new ResultMsg(ResultStatusCode.OK.getErrcode(),
                 ResultStatusCode.OK.getErrmsg(), info);
         return new ResponseEntity<ResultMsg>(resultMsg, HttpStatus.OK);
-}
+    }
 
     /**
      * 巡检信息表-填单

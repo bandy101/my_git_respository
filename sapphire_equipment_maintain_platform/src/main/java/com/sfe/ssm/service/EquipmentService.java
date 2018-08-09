@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.sfe.ssm.model.Equipment;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface EquipmentService {
@@ -35,4 +36,6 @@ public interface EquipmentService {
     List<Equipment> selectEquipmentLocation();
 
     int getCountInArea(String areaIds);
+
+    Map getAirInArea(String areaIds);
 }
