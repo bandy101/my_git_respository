@@ -83,8 +83,7 @@ if __name__=='__main__':
     #T.get_all_item2(5)[0] 用户 
     # for x in T.get_all_item2(5):
     #     print(x['name'])
-    requests = T.get_all_item2(5)[0]['item']['request']
-    method = requests['method']
-    interface = requests['path'][2]
-    url = X.prex+interface
-    print(T.get_all_item2(5)[0]['item'])
+    requests = T.get_all_item2(5)[0]['item'][5]['request']
+    raw = requests['body']['raw']
+    d_raw = json.loads(raw)
+    print(d_raw.values())
