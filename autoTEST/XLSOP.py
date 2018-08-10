@@ -28,11 +28,10 @@ def commit(url,param,METHOD):
         # print(param)
         res = requests.post(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
         # print('resurl:',res.url)
-        print(res.status_code==200)
         # res = requests.put(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
     r = res.json()
     # return r,r['errmsg']=='OK',res.headers['Date']
-    return r,res.status_code==200,res.headers['Date']
+    return r,(res.status_code==200 or r['errmsg']=='OK'),res.headers['Date']
 
 def auto(param,METHOD):
     #获取令牌
