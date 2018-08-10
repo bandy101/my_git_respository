@@ -20,14 +20,23 @@ def get_token():
     res = requests.post(url_login,json=js_pwd)
     token = res.json()['content']['token']
     return token
+def commit(url,param,METHOD):
+    token = get_token()
+    if METHOD=='get' or METHOD=='GET':
+        res = requests.get(url,params=param,headers={'Authorization':'bearer  '+token})
+        #res = requests.post(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+        # res = requests.put(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+    r = res.json()
+    return r,r['errmsg']=='OK',res.headers['Date']
+
 def auto(param,METHOD):
     #获取令牌
     token = get_token()
     interface = 'userInfoPageQuery'
     url = prex +interface
     print(url)
-    _ = {'pageNum':1,'pageSize':30}
-    param.update(_)
+    # _ = {'pageNum':1,'pageSize':30}
+    # param.update(_)
     
     #-----------------------各种提交------------------------#
     print(METHOD)
@@ -42,6 +51,25 @@ def auto(param,METHOD):
 def start(index=1,names='text',paramer=None):
     # print(paramer)
     xls(paramer,index,names=names)
+
+wbk = xlwt.Workbook()
+sheet = wbk.add_sheet('sheet 1')
+def xls_add_head(heads,sheet,index=0):
+    for i,d in enumerate(heads):
+        sheet.write(index,i,d)
+    sheet.write(index,len(heads),'结果')
+    sheet.write(index,len(heads)+1,'响应时间')
+
+def xls_add_data(datas,sheet,is_ok,date,index=1):
+    for i,d in enumerate(datas):
+        sheet.write(index,i,d)
+
+    sheet.write(index,len(datas)+1,date)
+    if is_ok:   
+            sheet.write(index,len(datas),'成功')
+    else: 
+        sheet.write(index,len(datas),'失败')
+
 def xls(param,index=1,names ='text'):
     re_json,is_ok,date = auto(param,'GET')
     keys = list(param.keys())

@@ -85,4 +85,6 @@ if __name__=='__main__':
     #     print(x['name'])
     requests = T.get_all_item2(5)[0]['item']['request']
     method = requests['method']
+    interface = requests['path'][2]
+    url = X.prex+interface
     print(T.get_all_item2(5)[0]['item'])
