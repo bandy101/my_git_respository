@@ -24,16 +24,20 @@ def commit(url,param,METHOD):
     token = get_token()
     if METHOD=='get' or METHOD=='GET':
         res = requests.get(url,params=param,headers={'Authorization':'bearer  '+token})
-        #res = requests.post(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+    if METHOD=='POST' or METHOD=='post':
+        # print(param)
+        res = requests.post(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+        # print('resurl:',res.url)
         # res = requests.put(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
     r = res.json()
-    return r,r['errmsg']=='OK',res.headers['Date']
+    # return r,r['errmsg']=='OK',res.headers['Date']
+    return r,(res.status_code==200 or r['errmsg']=='OK'),res.headers['Date']
 
 def auto(param,METHOD):
     #获取令牌
     token = get_token()
     interface = 'userInfoPageQuery'
-    url = prex +interface
+    url = prex + interface
     print(url)
     # _ = {'pageNum':1,'pageSize':30}
     # param.update(_)
@@ -44,7 +48,6 @@ def auto(param,METHOD):
         res = requests.get(url,params=param,headers={'Authorization':'bearer  '+token})
     #res = requests.post(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
     # res = requests.put(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
-    print(res.url)
     r = res.json()
     return r,r['errmsg']=='OK',res.headers['Date']
 #写录 xls
@@ -60,10 +63,9 @@ def xls_add_head(heads,sheet,index=0):
     sheet.write(index,len(heads),'结果')
     sheet.write(index,len(heads)+1,'响应时间')
 
-def xls_add_data(datas,sheet,is_ok,date,index=1):
+def xls_add_data(datas,sheet,is_ok,date,index=0):
     for i,d in enumerate(datas):
         sheet.write(index,i,d)
-
     sheet.write(index,len(datas)+1,date)
     if is_ok:   
             sheet.write(index,len(datas),'成功')
