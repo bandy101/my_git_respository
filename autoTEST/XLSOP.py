@@ -26,7 +26,7 @@ def commit(url,param,METHOD):
         res = requests.get(url,params=param,headers={'Authorization':'bearer  '+token})
     if METHOD=='POST' or METHOD=='post':
         # print(param)
-        res = requests.post(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+        res = requests.post(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token},timeout=2)
         # print('resurl:',res.url)
         # res = requests.put(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
     r = res.json()
