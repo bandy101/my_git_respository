@@ -1,5 +1,4 @@
 import requests
-from selenium import webdriver
 from bs4 import BeautifulSoup
 import json
 import time
@@ -79,18 +78,34 @@ def is_max(url):
     except :
         k = False
     return red,purple,k
+def get_strength(url):
+    red,purple=None,None
+    try:
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=3)
+        vs = res.content
+        vs = str(vs,'utf-8')
+        vs = json.loads(vs)
+        # print('vs:',vs)
+        red = vs['content']['irIntenPower']
+        purple = vs['content']['uvIntenIntegral']
+        k = True
+    except :
+        k = False
+    return red,purple,k
 if __name__=='__main__':
 
     # r_m,v_m = 0,0
 
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
+    p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
     alls.append(lanzs),alls.append(sichuans),alls.append(henans)
     for it in alls:
         for i in it:
             url = list(i.values())[0]
             print('url:',url)
             r_m,v_m,is_ok= 0,0,False
+            red_power,uv_power,is_p=get_strength(url+p_status)
             for t in range(50):
                 time.sleep(0.1)
                 red,uv,is_ok= is_max(url+ps)
@@ -104,7 +119,7 @@ if __name__=='__main__':
                         ff.writelines('\n')
                 else:
                     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-                        ff.writelines(list(i.keys())[0]+'  红外功率:'+'光强:'+str(int(r_m))+' 紫外积分:'+'光强:'+str(int(v_m)))
+                        ff.writelines(list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m)))
                         ff.writelines('\n')
             else:
                 with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
