@@ -20,6 +20,24 @@ sichuans=[ #----四川----#
         {'四川-03':'http://182.150.48.220:11000/'},
         {'四川-04':'http://110.185.174.145:11000/'}
 ]
+
+guangzhous=[ #----广州----#
+        {'广州-东华南路':'http://14.23.53.82:35032/'},
+        {'广州-人民路':'http://14.23.122.74:33551/'},
+        {'广州-八旗二马路':'https://14.23.88.106:10646/'},
+        {'广州-寺右新马路':'http://183.6.186.242:12209/'},
+        {'广州-水荫二横路':'http://183.6.130.130:20909/'},
+        {'广州-环市东路(动物园东往西)':'http://14.23.71.18:11955/'},
+        {'广州-环市东路(动物园西往东)':'http://61.140.17.210:44886/'},
+        {'广州-解放北路(大北立交)':'http://14.23.86.10:26270/'},
+        {'广州-陵园西路(由南向北方向)':'http://14.23.93.18:15291/'}
+]
+qingyuans=[#----清远----#
+        {'清远-三颗竹(源潭)':'http://202.105.10.86:11000/'},
+        {'清远-广清大道(龙潭)':'http://202.105.10.78:11000/'},
+        {'清远-治超出口':'http://119.135.185.238:11000/'},
+        {'清远-清远大道(党校)':'http://202.105.10.18:11000/'}
+]
 class Devices:
     '''
         检测设备
@@ -67,7 +85,7 @@ def get_token():
 def is_max(url):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=3)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -100,7 +118,12 @@ if __name__=='__main__':
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
     alls.append(lanzs),alls.append(sichuans),alls.append(henans)
+    # ,alls.append(guangzhous),alls.append(qingyuans)
+    # alls.append(henans)
     for it in alls:
+        with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+            ff.writelines('\n')
+        ok_num =0
         for i in it:
             url = list(i.values())[0]
             print('url:',url)
@@ -114,9 +137,10 @@ if __name__=='__main__':
                 if uv >v_m:v_m=uv
             if(is_ok):
                 if (r_m>=500 and v_m>=2000):
-                    with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-                        ff.writelines(list(i.keys())[0]+'  正常')
-                        ff.writelines('\n')
+                    # with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+                    #     ff.writelines(list(i.keys())[0]+'  正常')
+                    #     ff.writelines('\n')
+                    ok_num +=1
                 else:
                     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                         ff.writelines(list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m)))
@@ -124,6 +148,17 @@ if __name__=='__main__':
             else:
                 with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                     ff.writelines(list(i.keys())[0]+',页面无法打开')
+                    ff.writelines('\n')
+        if (ok_num==len(it)):
+            with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+                ff.writelines(list(i.keys())[0][0:2]+'  正常')
+                ff.writelines('\n')
+        else:
+            if ok_num==0:
+                pass
+            else:
+                with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+                    ff.writelines(list(i.keys())[0][:2]+',其他正常')
                     ff.writelines('\n')
 
         # print (r_m,v_m)

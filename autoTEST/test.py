@@ -13,7 +13,7 @@ if __name__ =='__main__':
     #T.get_all_item2(5)[0] 用户
     for i  in T.get_all_item2(5)[0]['item']:
         test_num +=1
-        if test_num>6:break
+        # if test_num>6:break
         print(i['name'])
         sheet.write(index-1,0,i['name'])
         requests = i['request']
@@ -110,19 +110,40 @@ if __name__ =='__main__':
             raw = requests['body']['raw']
             d_raw = json.loads(raw)
             key_v = list(d_raw.keys())[0]
-            url = X.prex+interface
-            for _ in range(3):
-                d_raw[key_v]='Test-'+str(_)
-                res,is_ok,date = X.commit(url,d_raw,method)
-                if need_head:
-                    X.xls_add_head(d_raw.keys(),sheet,index)
+            urls = X.prex+interface
+            if method =='POST':
+                for _ in range(3):
+                    d_raw[key_v]='Test-'+str(_)
+                    res,is_ok,date = X.commit(urls,d_raw,method)
+                    if need_head:
+                        X.xls_add_head(d_raw.keys(),sheet,index)
+                        index +=1
+                        need_head =False
+                    X.xls_add_data(d_raw.values(),sheet,is_ok,date,index)
                     index +=1
-                    need_head =False
-                X.xls_add_data(parms.values(),sheet,is_ok,date,index)
-                index +=1
-            index +=3
-            need_head =True
-            
+                index +=3
+                need_head =True
+            if method =='PUT':
+                ids =[]
+                for d in fdata:
+                    d = dict(d)
+                    if (int(d['ID']!=1) and  int(d['ID']!=3)):
+                        print('d[id]',str(d['ID']),str())
+                        ids.append(d['ID'])
+                print('ids:',ids)
+                # for _ in range(3):
+                #     d_raw['name']='Test-'+str(_)
+                #     url = urls+'/'+ids[_]
+                #     res,is_ok,date = X.commit(url,d_raw,method)
+                #     if need_head:
+                #         X.xls_add_head(d_raw.keys(),sheet,index)
+                #         index +=1
+                #         need_head =False
+                #     X.xls_add_data(d_raw.values(),sheet,is_ok,date,index)
+                #     index +=1
+                # index +=3
+                # need_head =True
+
     wbk.save('test.xls')
 
                     

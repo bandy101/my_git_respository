@@ -25,10 +25,11 @@ def commit(url,param,METHOD):
     if METHOD=='get' or METHOD=='GET':
         res = requests.get(url,params=param,headers={'Authorization':'bearer  '+token})
     if METHOD=='POST' or METHOD=='post':
-        # print(param)
         res = requests.post(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token},timeout=2)
         # print('resurl:',res.url)
-        # res = requests.put(url,json=paramer,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+    if METHOD=='PUT':
+        res = requests.put(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
+        print('url:',res.url)
     r = res.json()
     # return r,r['errmsg']=='OK',res.headers['Date']
     return r,(res.status_code==200 or r['errmsg']=='OK'),res.headers['Date']
