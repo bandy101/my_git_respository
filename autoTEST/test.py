@@ -127,8 +127,8 @@ if __name__ =='__main__':
                 ids =[]
                 for d in fdata:
                     d = dict(d)
-                    if (int(d['ID']!=1) and  int(d['ID']!=3)):
-                        print('d[id]',str(d['ID']),str())
+                    if (d['ID']!=1 and  d['ID']!=3):
+                        print(type(d['ID']))
                         ids.append(d['ID'])
                 print('ids:',ids)
                 # for _ in range(3):

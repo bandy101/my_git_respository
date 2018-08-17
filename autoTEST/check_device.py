@@ -12,7 +12,7 @@ lanzs=[ #----兰州----#
     {'兰州-黄羊头':'http://61.178.12.58:11000/'}
 ]
 henans=[ #----河南----#
-    {'河南-金橞大道':'http://218.29.47.202:11000/'}
+    {'河南-金穗大道':'http://218.29.47.202:11000/'}
 ]
 sichuans=[ #----四川----#
         {'四川-01':'http://182.150.48.217:11000/'},
@@ -85,7 +85,7 @@ def get_token():
 def is_max(url):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -99,7 +99,7 @@ def is_max(url):
 def get_strength(url):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=3)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -130,13 +130,14 @@ if __name__=='__main__':
             r_m,v_m,is_ok= 0,0,False
             red_power,uv_power,is_p=get_strength(url+p_status)
             for t in range(50):
-                time.sleep(0.1)
-                red,uv,is_ok= is_max(url+ps)
-                if not is_ok:break
-                if red>r_m:r_m=red
-                if uv >v_m:v_m=uv
-            if(is_ok):
-                if (r_m>=500 and v_m>=2000):
+                if is_p:
+                    time.sleep(0.1)
+                    red,uv,is_ok= is_max(url+ps)
+                    if not is_ok:continue
+                    if red>r_m:r_m=red
+                    if uv >v_m:v_m=uv
+            if(is_p):
+                if (r_m>=500 and v_m>=2000): 
                     # with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                     #     ff.writelines(list(i.keys())[0]+'  正常')
                     #     ff.writelines('\n')
