@@ -23,10 +23,10 @@ def get_token():
 def commit(url,param,METHOD):
     token = get_token()
     if METHOD=='get' or METHOD=='GET':
+        print('resurl:',url)
         res = requests.get(url,params=param,headers={'Authorization':'bearer  '+token})
     if METHOD=='POST' or METHOD=='post':
         res = requests.post(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token},timeout=2)
-        # print('resurl:',res.url)
     if METHOD=='PUT':
         res = requests.put(url,json=param,headers={'Content-Type':'application/json','Authorization':'bearer  '+token})
         print('url:',res.url)

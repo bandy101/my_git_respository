@@ -85,7 +85,7 @@ def get_token():
 def is_max(url):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -99,7 +99,7 @@ def is_max(url):
 def get_strength(url):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -117,7 +117,7 @@ if __name__=='__main__':
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
-    alls.append(lanzs),alls.append(sichuans),alls.append(henans)
+    alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
     # ,alls.append(guangzhous),alls.append(qingyuans)
     # alls.append(henans)
     for it in alls:
@@ -138,9 +138,6 @@ if __name__=='__main__':
                     if uv >v_m:v_m=uv
             if(is_p):
                 if (r_m>=500 and v_m>=2000): 
-                    # with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-                    #     ff.writelines(list(i.keys())[0]+'  正常')
-                    #     ff.writelines('\n')
                     ok_num +=1
                 else:
                     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:

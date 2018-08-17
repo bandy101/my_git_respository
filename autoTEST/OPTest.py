@@ -13,8 +13,8 @@ class optest:
     def __init__(self,js_path='cast.json'):
         self.js_path = js_path
         self.conn =self.conn_sql()
-        self.jsons = self.get_json()
-        self.itmes1 = self.get_all_item1()
+        # self.jsons = self.get_json()
+        # self.itmes1 = self.get_all_item1()
     def get_json(self):
         '''
             处理需要测试的json数据
