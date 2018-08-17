@@ -117,7 +117,7 @@ if __name__=='__main__':
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
-    alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
+    alls.append(lanzs),alls.append(sichuans),alls.append(henans)
     # ,alls.append(guangzhous),alls.append(qingyuans)
     # alls.append(henans)
     for it in alls:
@@ -129,14 +129,16 @@ if __name__=='__main__':
             print('url:',url)
             r_m,v_m,is_ok= 0,0,False
             red_power,uv_power,is_p=get_strength(url+p_status)
-            for t in range(50):
+            is_open =False
+            for t in range(200):
                 if is_p:
-                    time.sleep(0.1)
+                    time.sleep(0.05)
                     red,uv,is_ok= is_max(url+ps)
+                    if is_ok:is_open =True
                     if not is_ok:continue
                     if red>r_m:r_m=red
                     if uv >v_m:v_m=uv
-            if(is_p):
+            if(is_open):
                 if (r_m>=500 and v_m>=2000): 
                     ok_num +=1
                 else:

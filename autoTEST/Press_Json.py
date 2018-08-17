@@ -30,14 +30,15 @@ def get_interface(user):
     return users
 
 
-def auto_test(name_i,sql,index=1):
+def auto_test(name_i,sql,index=0):
     T= optest()
     wbk = xlwt.Workbook()
     sheet = wbk.add_sheet('sheet 1')
 
     values = get_interface(name_i)
     for i in values:
-        sheet.write(index-1,0,i['name'])
+        sheet.write(index,0,i['name'])
+        index +=1
         url,method,rawModeData= i['url'],i['method'],i['rawModeData']
         if rawModeData:rawModeData = json.loads(i['rawModeData'])
         queryParams ,urls=[] ,url.split('?')[0].split('/')
@@ -72,11 +73,11 @@ def auto_test(name_i,sql,index=1):
                     num -=1
                     if not num:break
                     head=[]
-                    for q in dict(queryParams).keys():
+                    for q in queryParams.keys():
                         head.append(q)
                     for hd in head:
                         if hd.upper() in d.keys():
-                            queryParams[hd] = d[hd.upper]
+                            queryParams[hd] = d[hd.upper()]
                         ##queryParams对应的key不存在于数据库字段中
                         else:
                             pass
@@ -87,7 +88,8 @@ def auto_test(name_i,sql,index=1):
              #不存在queryParams           
             else:
                 ##两种情况不存在queryParams（1：通过id的操作，2：获取全部的操作)
-                if len(urls)>3:##1
+                if len(urls)>4:##1
+                    # print('urls',urls)
                     X.xls_add_head(['id'],sheet,index)
                     index +=1
                     num =3#查询次数
@@ -96,6 +98,7 @@ def auto_test(name_i,sql,index=1):
                         num -=1
                         if not num:break
                         url = purl +'/'+d['ID']
+                        # print('url:',url)
                         res,is_ok,date = X.commit(url,queryParams,method)
                         values = []
                         values.append(d['ID'])
@@ -122,18 +125,23 @@ def auto_test(name_i,sql,index=1):
                 index +=1
             index +=3
         if method =='PUT':
-            num = 3 #测试次数
+            num = 5 #测试次数
+            X.xls_add_head(rawModeData.keys(),sheet,index)
+            index +=1   
             for d in fdata:
+                # print('123456')
                 num -=1
                 if not num:break
                 d = dict(d)
+                # print(dict(d)['ID'], dict(d)['ID']!='1')
                 if dict(d)['ID'] !='1' and dict(d)['ID'] !='3' :
                     ids = dict(d)['ID']
                 else:continue
                 url =purl+'/'+ids
-                X.xls_add_head(rawModeData.keys(),sheet,index)
-                index +=1
+                print(url)
                 res,is_ok,date = X.commit(url,rawModeData,method)
+                ###----加入ID----##
+                X.xls_add_data(rawModeData.values(),sheet,is_ok,date,index)
                 index +=1
             index +=3
     wbk.save('test.xls')
