@@ -3,6 +3,7 @@ import XLSOP as X
 from openpyxl.writer.excel import ExcelWriter 
 from OPTest import optest
 import xlwt
+
 with open('cast.json',encoding='utf-8') as files:
     alls = json.load(files)
     req = alls['requests']
@@ -43,7 +44,7 @@ def auto_test(name_i,sql,index=0):
         if rawModeData:rawModeData = json.loads(i['rawModeData'])
         queryParams ,urls=[] ,url.split('?')[0].split('/')
         purl = X.prex +urls[3]
-        fdata =sql.sql_data_map_col()
+        fdata =sql.sql_data_map_col()   
         for _ in i['queryParams']:
             queryParams.append((_['key'],_['value']))
         queryParams =dict(queryParams)

@@ -139,7 +139,7 @@ if __name__=='__main__':
                     if red>r_m:r_m=red
                     if uv >v_m:v_m=uv
             if(is_open):
-                if (r_m>=500 and v_m>=2000): 
+                if (r_m>=500 and v_m>=2000):
                     ok_num +=1
                 else:
                     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
