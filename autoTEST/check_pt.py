@@ -233,6 +233,10 @@ def air_quality_statistics_year():
 
 
 #--遥测--#
+#遥测数据管理
+def telemetry_data_manerger():
+    pass
+
 #遥测日统计
 def telemetry_data_day():
     param = {
