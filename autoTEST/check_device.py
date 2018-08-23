@@ -117,7 +117,7 @@ if __name__=='__main__':
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
-    alls.append(lanzs),alls.append(sichuans),alls.append(henans)
+    alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
     # ,alls.append(guangzhous),alls.append(qingyuans)
     # alls.append(henans)
     for it in alls:

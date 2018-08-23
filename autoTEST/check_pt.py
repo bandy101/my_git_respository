@@ -25,10 +25,14 @@ qys = {
     '三棵竹一桥(源潭)':'AQM65-G22W2772',
     '清远大道(党校)':'AQM65-G22W2798',
 }
+
+gzs = {
+    
+}
 params ={
     'cityId' :441800,
-    'collectionBeginDate':	'2018-08-22 00:00:00',
-    'collectionEndDate'	:'2018-08-22 23:59:59',
+    'collectionBeginDate':	'2018-08-23 00:00:00',
+    'collectionEndDate'	:'2018-08-23 23:59:59',
     'countyId':	441801,
     'maxCo':'',
     'maxHumidity':'',	
@@ -277,4 +281,4 @@ def telemetry_data_month():
 
 if __name__=='__main__':
     #遥测-Test#
-    air_quality_statistics_year()
+    air_quality_data_manger()
