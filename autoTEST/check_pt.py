@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import time
+import calendar
 global lanzs,henans,sichuans
 
 
@@ -25,7 +26,12 @@ qys = {
     '三棵竹一桥(源潭)':'AQM65-G22W2772',
     '清远大道(党校)':'AQM65-G22W2798',
 }
-
+qy_yc = {
+    '广清大道(龙塘)':'SFE-R600-G22W2807',
+    '治超站出口':'SFE-R600-G22W2714',
+    '三棵竹一桥(源潭)':'SFE-R600-G22W2807',
+    '清远大道(党校)':'SFE-R600-G22W2798',
+}
 gzs = {
     
 }
@@ -238,8 +244,94 @@ def air_quality_statistics_year():
 
 #--遥测--#
 #遥测数据管理
+def params_yc(m,d):
+    st = time.localtime()
+    if len(str(m))<2:m='0'+str(m)
+    if len(str(d))<2:d='0'+str(d)
+    st1 =str(list(st)[0])+'-'+str(m)+'-'+str(d)+' 00:00:00'
+    st2 =str(list(st)[0])+'-'+str(m)+'-'+str(d)+' 23:59:59'
+    params={
+        'cityId' :441800,
+        'monitorBeginTimeStr':st1,
+        'monitorEndTimeStr'	:st2,
+        'countyId':	441801,
+        'pageNum':1,
+        'pageSize':10,
+        'provinceId':440000,
+        'tsNo':'',
+        'isNotZero':0,
+
+        'license':'',
+        'maxCO':'',
+        'maxCO2':'',	
+        'maxConfidence':'',	
+        'maxHC':'',	
+        'maxNO':'',	
+        'maxSmoke':'',	
+        'maxVSP':'',	
+        'minCO':'',	
+        'minCO2':'',	
+        'minConfidence':'',	
+        'minHC':'',	
+        'minNO':'',	
+        'minSmoke':'',	
+        'minVSP':'',	
+        'result':'',
+        'validity':''
+    }
+    # print (params)
+    return params
+def test_p(url,tsno):
+    ps =params_yc(8,23)
+    ps['tsNo'] = tsno
+    res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
+    values = json.loads(res.content)['content']
+    lists = values['list']
+    if(lists):
+        print(lists)
+def have_lists(url,year,month,day,tsno,lists):
+    if lists:
+        return lists
+    ps =params_yc(month,day)
+    ps['tsNo'] = tsno
+    res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
+    values = json.loads(res.content)['content']
+    lv = values['list']
+    
+    if not lists:
+        if day==1:
+            if month==1:
+                _,days = calendar.monthrange(year,12) ##一个月含有多少天
+                lists = (have_lists(url,year,12,days,tsno,lv))
+            else: 
+                _,days = calendar.monthrange(year,month-1)
+                lists= (have_lists(url,year,month-1,days,tsno,lv))
+        else:lists =(have_lists(url,year,month,day-1,tsno,lv))
+    return lists
+    '''?isNotZero=0&validity=&provinceId=440000&cityId=441800&countyId=441801&tsNo=SFE-R600-G22W2798'
+    '&minCO=&maxCO=&minCO2=&maxCO2=&minNO=&maxNO=&minHC=&maxHC=&minSmoke=&maxSmoke=&license='
+    '&minConfidence=&maxConfidence=&minVSP=&maxVSP=&result=&monitorBeginTimeStr=2018-08-24 00:00:00
+    '&monitorEndTimeStr=2018-08-24 23:59:59&pageNum=1&pageSize=30'''
 def telemetry_data_manerger():
-    pass
+    url = 'http://202.105.10.126:8055/api/v1/remoteSensingPageQuery'
+
+    keys = qy_yc.keys()
+    year = list(time.localtime())[0]
+    month = list(time.localtime())[1]
+    day = list(time.localtime())[2]
+    strs =''
+    ps =params_yc(month,day)
+    for k in keys:
+        print(k)
+        lists = have_lists(url,year,month,day,qy_yc[k],[])
+        print(lists)
+        interval = -int(str(lists[0]['monitorTime'])[0:10]) +int(time.time())
+
+        # print(interval//60)
+        if (interval//60>18):
+            strs +=k + '站点 数据异常 '+lists[0]['monitorTimeStr']+' 后无遥测数据\n'
+    print(strs)
+
 
 #遥测日统计
 def telemetry_data_day():
@@ -281,4 +373,4 @@ def telemetry_data_month():
 
 if __name__=='__main__':
     #遥测-Test#
-    air_quality_data_manger()
+    telemetry_data_manerger()

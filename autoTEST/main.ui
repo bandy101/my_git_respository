@@ -31,15 +31,14 @@
    <property name="title">
     <string>查询的结果</string>
    </property>
-   <zorder>gas_value</zorder>
   </widget>
   <widget class="QGroupBox" name="select_need_test">
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>120</y>
+     <y>160</y>
      <width>171</width>
-     <height>231</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="title">
@@ -49,7 +48,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>40</y>
+      <y>60</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -62,7 +61,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>70</y>
+      <y>90</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -75,7 +74,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>100</y>
+      <y>120</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -108,6 +107,32 @@
     </property>
     <property name="text">
      <string>遥测月统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="yaoce_data">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>220</y>
+      <width>89</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>遥测数据</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="air_data">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>空气质量数据</string>
     </property>
    </widget>
   </widget>
@@ -304,6 +329,19 @@
    </property>
    <property name="flat">
     <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>120</y>
+     <width>71</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>查询</string>
    </property>
   </widget>
  </widget>

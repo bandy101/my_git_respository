@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,16 +18,16 @@ class Ui_Form(object):
         self.data_test.setGeometry(QtCore.QRect(20, 80, 511, 451))
         self.data_test.setObjectName("data_test")
         self.select_need_test = QtWidgets.QGroupBox(Form)
-        self.select_need_test.setGeometry(QtCore.QRect(540, 120, 171, 231))
+        self.select_need_test.setGeometry(QtCore.QRect(540, 160, 171, 251))
         self.select_need_test.setObjectName("select_need_test")
         self.airday = QtWidgets.QRadioButton(self.select_need_test)
-        self.airday.setGeometry(QtCore.QRect(30, 40, 131, 16))
+        self.airday.setGeometry(QtCore.QRect(30, 60, 131, 16))
         self.airday.setObjectName("airday")
         self.airmonth = QtWidgets.QRadioButton(self.select_need_test)
-        self.airmonth.setGeometry(QtCore.QRect(30, 70, 111, 16))
+        self.airmonth.setGeometry(QtCore.QRect(30, 90, 111, 16))
         self.airmonth.setObjectName("airmonth")
         self.airyear = QtWidgets.QRadioButton(self.select_need_test)
-        self.airyear.setGeometry(QtCore.QRect(30, 100, 101, 16))
+        self.airyear.setGeometry(QtCore.QRect(30, 120, 101, 16))
         self.airyear.setObjectName("airyear")
         self.telemetryday = QtWidgets.QRadioButton(self.select_need_test)
         self.telemetryday.setGeometry(QtCore.QRect(30, 160, 91, 20))
@@ -35,6 +35,12 @@ class Ui_Form(object):
         self.telemetrymonth = QtWidgets.QRadioButton(self.select_need_test)
         self.telemetrymonth.setGeometry(QtCore.QRect(30, 190, 89, 16))
         self.telemetrymonth.setObjectName("telemetrymonth")
+        self.yaoce_data = QtWidgets.QRadioButton(self.select_need_test)
+        self.yaoce_data.setGeometry(QtCore.QRect(30, 220, 89, 16))
+        self.yaoce_data.setObjectName("yaoce_data")
+        self.air_data = QtWidgets.QRadioButton(self.select_need_test)
+        self.air_data.setGeometry(QtCore.QRect(30, 30, 101, 16))
+        self.air_data.setObjectName("air_data")
         self.gas_value = QtWidgets.QGroupBox(Form)
         self.gas_value.setGeometry(QtCore.QRect(280, 10, 251, 71))
         self.gas_value.setObjectName("gas_value")
@@ -111,6 +117,9 @@ class Ui_Form(object):
         self.jigui.setDefault(False)
         self.jigui.setFlat(False)
         self.jigui.setObjectName("jigui")
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setGeometry(QtCore.QRect(590, 120, 71, 23))
+        self.pushButton.setObjectName("pushButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -125,6 +134,8 @@ class Ui_Form(object):
         self.airyear.setText(_translate("Form", "空气质量年统计"))
         self.telemetryday.setText(_translate("Form", "遥测日统计"))
         self.telemetrymonth.setText(_translate("Form", "遥测月统计"))
+        self.yaoce_data.setText(_translate("Form", "遥测数据"))
+        self.air_data.setText(_translate("Form", "空气质量数据"))
         self.gas_value.setTitle(_translate("Form", "检测气体值"))
         self.co.setText(_translate("Form", "CO"))
         self.hc.setText(_translate("Form", "HC"))
@@ -138,4 +149,5 @@ class Ui_Form(object):
         self.wenzi.setText(_translate("Form", "文字"))
         self.tuxiang.setText(_translate("Form", "图像"))
         self.jigui.setText(_translate("Form", "查看机柜"))
+        self.pushButton.setText(_translate("Form", "查询"))
 
