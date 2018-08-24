@@ -20,7 +20,6 @@ class another(Gui_):
         super(another,self).__init__()
         
 class Video(Gui):
-
     def __init__(self,parent=None):
         super(Video,self).__init__()
         

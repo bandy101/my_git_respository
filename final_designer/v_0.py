@@ -17,6 +17,8 @@ from threading import Thread
 from videothread import video_op as T_sings
 from videothread import thred
 app = QApplication(sys.argv)
+
+
 class GUI(QMainWindow,Ui_MainWindow):
     '''
         继承video_ui UI

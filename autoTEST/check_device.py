@@ -82,6 +82,7 @@ def get_token():
     print(res)
     token = res.json()['content']['token']
     return token
+    
 def is_max(url):
     red,purple=None,None
     try:
