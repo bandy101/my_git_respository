@@ -1,8 +1,10 @@
-import requests
-from bs4 import BeautifulSoup
+import calendar
 import json
 import time
-import calendar
+
+import requests
+from bs4 import BeautifulSoup
+
 global lanzs,henans,sichuans
 
 
@@ -38,25 +40,26 @@ def have_lists(url,year,month,day,tsno,lists):
 
 
 
-def have_lists_air(url,year,month,day,tsno,lists):
-    if lists:
-        return lists
-    ps =params_air(month,day)
+def have_lists_air_telemtry(param,url,year,month,day,tsno,lists):
+    # if lists:
+    #     return lists
+    ps =params_air_telemetry(month,day,param)
     ps['tsNo'] = tsno
     res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
-    values = json.loads(res.content)['content']
-    lv = values['list']
     
-    if not lists:
+    values = json.loads(res.content)['content']
+    # print('res,',res)
+    lv = values['list']
+    if not lv:
         if day==1:
             if month==1:
                 _,days = calendar.monthrange(year,12) ##一个月含有多少天
-                lists = (have_lists(url,year,12,days,tsno,lv))
+                lv = (have_lists(url,year,12,days,tsno,lv))
             else: 
                 _,days = calendar.monthrange(year,month-1)
-                lists= (have_lists(url,year,month-1,days,tsno,lv))
-        else:lists =(have_lists(url,year,month,day-1,tsno,lv))
-    return lists
+                lv= (have_lists(url,year,month-1,days,tsno,lv))
+        else:lv =(have_lists(url,year,month,day-1,tsno,lv))
+    return lv
 
 
 token = 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmlxdWVfbmFtZSI6ImRlbW8iLCJwd2QiOiI3MTcyZGE4ZWY1Zjk1NDcwYjQxNWRiZDEwNDg1NjFlYiIsInVzZXJfaWQiOiIzIiwiaXNzIjoicmVzdGFwaXVzZXIiLCJhdWQiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImV4cCI6MTUzNjE5OTY1OCwibmJmIjoxNTM0OTAzNjU4fQ.HdhVhyMJ8ORq1ingSNL4FW_NS17pXx1FVPqlHGwRC_o'
@@ -100,89 +103,96 @@ params ={
     'provinceId':440000,
     'tsNo':''
 }
-def params_air(m,d):
+def params_air_telemetry(m,d,params):
     st = time.localtime()
     if len(str(m))<2:m='0'+str(m)
     if len(str(d))<2:d='0'+str(d)
     st1 =str(list(st)[0])+'-'+str(m)+'-'+str(d)+' 00:00:00'
     st2 =str(list(st)[0])+'-'+str(m)+'-'+str(d)+' 23:59:59'
-    params ={
-    'cityId' :441800,
-    'collectionBeginDate':st1,
-    'collectionEndDate'	:st2,
-    'countyId':	441801,
-    'maxCo':'',
-    'maxHumidity':'',	
-    'maxNo2':'',	
-    'maxO3':'',
-    'maxPm10':'',	
-    'maxPm25':'',	
-    'maxSo2':'',	
-    'maxTemperature':'',	
-    'minCo':'',	
-    'minHumidity':'',	
-    'minNo2':'',	
-    'minO3':'',	
-    'minPm10':'',	
-    'minPm25':'',	
-    'minSo2':'',	
-    'minTemperature':'',
-    'pageNum':1,
-    'pageSize':12,
-    'provinceId':440000,
-    'tsNo':''
-    }
-    return params
+    x = params
+    for _ in params.keys():
+        if 'Begin' in _:
+            x[_]=st1
+        if 'End' in _:
+            x[_] = st2
+    # params ={
+    # 'cityId' :441800,
+    # 'collectionBeginDate':st1,
+    # 'collectionEndDate'	:st2,
+    # 'countyId':	441801,
+    # 'maxCo':'',
+    # 'maxHumidity':'',	
+    # 'maxNo2':'',	
+    # 'maxO3':'',
+    # 'maxPm10':'',	
+    # 'maxPm25':'',	
+    # 'maxSo2':'',	
+    # 'maxTemperature':'',	
+    # 'minCo':'',	
+    # 'minHumidity':'',	
+    # 'minNo2':'',	
+    # 'minO3':'',	
+    # 'minPm10':'',	
+    # 'minPm25':'',	
+    # 'minSo2':'',	
+    # 'minTemperature':'',
+    # 'pageNum':1,
+    # 'pageSize':12,
+    # 'provinceId':440000,
+    # 'tsNo':''
+    # }
+    return x
 #--空气质量--#
-def air_quality():
+def air_quality(url,params,tsno):
     ##--清远--#
-    url ='http://202.105.10.126:8055/api/v1/monitorAirQualityInfo?provinceId=440000&cityId=441800'
-    res = requests.get(url,params={},headers={'Authorization':token},timeout=6000,verify= False)
+    # url ='http://202.105.10.126:8055/api/v1/monitorAirQualityInfo?provinceId=440000&cityId=441800'
+    
+    res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
     values = json.loads(res.content)['content']
+    if type(tsno)==str:values = [_ for _ in values if _['tsNo']==tsno]
     #异常列表
     exe = []
     # print(values)
-    strs =''
+    strss =''
     for v in values:
+        strs =''
         if v['pm25']>PM25:
-            strs +=v['name']+' PM2.5:'+str(v['pm25'])+'  数据异常'+'\n'
+            strs +=v['name']+' PM2.5:'+str(v['pm25'])+'  数据异常'+'\n<br>'
         if v['pm10']>PM10:
-            strs +=v['name']+' PM10:'+str(v['pm10'])+'  数据异常'+'\n'    
+            strs +=v['name']+' PM10:'+str(v['pm10'])+'  数据异常'+'\n<br>'    
         if v['o3']>O3:
-            strs +=v['name']+' O3:'+str(v['o3'])+'  数据异常'+'\n'
+            strs +=v['name']+' O3:'+str(v['o3'])+'  数据异常'+'\n<br>'
         if v['so2']>SO2:
-            strs +=v['name']+' SO2:'+str(v['so2'])+'  数据异常'+'\n'
+            strs +=v['name']+' SO2:'+str(v['so2'])+'  数据异常'+'\n<br>'
         if v['co']>CO:
-            strs +=v['name']+' CO:'+str(v['co'])+'  数据异常'+'\n'
+            strs +=v['name']+' CO:'+str(v['co'])+'  数据异常'+'\n<br>'
         if v['no2']>NO2:
-            strs +=v['name']+' NO2:'+str(v['no2'])+'  数据异常'+'\n'
-    print(strs)
-
+            strs +=v['name']+' NO2:'+str(v['no2'])+'  数据异常'+'\n<br>'
+        if not strs:strss +=v['name'] +'  所有气体数据正常\n<br>'
+        else:strss +=strs
+    # print(strs)
+    return strss
 #--空气质量数据管理--#
-def air_quality_data_manger():
+def air_quality_data_manger(url,params,tsno):
     strss =''
     ps = params
+    # print('pp',params)
     keys = qys.keys()
-    url = 'http://202.105.10.126:8055/api/v1/airQualityPageQuery'
+    # url = 'http://202.105.10.126:8055/api/v1/airQualityPageQuery'
     year = list(time.localtime())[0]
     month = list(time.localtime())[1]
     day = list(time.localtime())[2]
-    for k in keys:
+    if type(tsno)==str:tsno =[tsno]
+    else: tsno=[_ for _ in tsno]
+    for k in tsno:
+        print('k--type',type(k))
         strs =''
-        ps['tsNo'] = qys[k]
-        # print(k)
-        lists=have_lists_air(url,year,month,day,qys[k],[])
-        # res = requests.get(url,params=ps,headers={'Authorization':token},timeout=300,verify= False)
-        # print(res)
-        # values = json.loads(res.content)['content']
-        # lists = values['list']
+        lists=have_lists_air_telemtry(params,url,year,month,day,k,[])
+        print('str:',strs)
+        # time.sleep(1)
         interval = -int(str(lists[0]['collectionDate'])[0:10]) +int(time.time())
-        # print(interval//60)
-
         if (interval//60>18):
             strs +=k + '站点 数据异常 '+lists[0]['collectionDateStr']+' 后无空气质量数据\n'
-            strss +=strs
-            strs =''
         o3,no2,co,so2=False,False,False,False
         for l in lists:
             if  not o3:
@@ -196,31 +206,34 @@ def air_quality_data_manger():
         if  not all([o3,so2,co,so2]):
             strs +=k + '站点 数据值异常'+'\n'
         if strs=='':strss +='<b>'+k +'</b>'+ '站点 数据正常'+'<br>'
+        print (strss)
     print(strss)
     return strss
 
 #--空气质量统计--#
 #日统计
-def air_quality_statistics_day():
-    param = {
-       'provinceId':440000,'cityId':441800,'countyId':441801,'tsNo':'','date':str(time.strftime("%Y-%m-%d", time.localtime()))
-   
-    }
-    keys = qys.keys()
+def air_quality_statistics_day(url,params,tsno):
     strs =''
-    for k in keys:
-        date = time.strftime("%Y-%m-%d", time.localtime())
-        url = 'http://202.105.10.126:8055/api/v1/airReportDay'
-        res = requests.get(url,params=param,headers={'Authorization':token},timeout=6000,verify= False)
+    keys = qys.keys()
+    date = str(time.strftime("%Y-%m-%d", time.localtime()))
+    params['date'] = date
+    resent_hour = list(time.localtime())[3]
+    if type(tsno)==str:tsno =[tsno]
+    k =None
+    for _ in tsno:
+        for key in keys:
+            if qys[key] ==_:
+                k=key
+                break
+        params['tsNo'] = _
+        res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
         values = json.loads(res.content)['content']
-        # print(values)
-        ##检测当前时间前几个小时是否有数据
-        resent_hour = list(time.localtime())[3]
         have_air = False
         if not values:
-            strs +=k +'站点 空气质量日统计报表数据异常'+'\n'
+            strs +=k +' 空气质量日统计报表数据异常'+'\n<br>'
         else:
             o3,no2,co,so2=False,False,False,False
+            ##检测当前时间前几个小时是否有数据
             for _ in range(1,5):
                 l = values[(24+resent_hour-_)]
                 if  not o3:
@@ -238,29 +251,32 @@ def air_quality_statistics_day():
                 have_air=all([o3,so2,co,so2])
                 print([o3,so2,co,so2])
             if have_air:
-                strs +=k +'站点 空气质量日统计报表数据正常'+'\n'
-            else:strs +=k +'站点 空气质量日统计报表数据异常'+'\n'
+                strs +=k +' 空气质量日统计报表数据正常'+'\n<br>'
+            else:strs +=k +' 空气质量日统计报表数据异常'+'\n<br>'
     return strs
 #月统计
-def air_quality_statistics_month(): 
-    param = {
-       'provinceId':440000,'cityId':441800,'countyId':441801,'tsNo':'','date':str(time.strftime("%Y-%m-%d", time.localtime()))
-    }
-    keys = qys.keys()
+def air_quality_statistics_month(url,params,tsno): 
     strs =''
-    for k in keys:
-        date = time.strftime("%Y-%m-%d", time.localtime())
-        url = 'http://202.105.10.126:8055/api/v1/airReportMonth'
-        res = requests.get(url,params=param,headers={'Authorization':token},timeout=6000,verify= False)
+    date = str(time.strftime("%Y-%m-%d", time.localtime()))
+    params['date'] = date
+    keys =qys.keys()
+    resent_day = list(time.localtime())[2]
+    if type(tsno)==str:tsno =[tsno]
+    k =None
+    for _ in tsno:
+        for key in keys:
+            if qys[key] ==_:
+                k=key
+                break
+        params['tsNo'] = _
+        res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
         values = json.loads(res.content)['content']
-        # print(values)
-        ##检测当前时间前几个小时是否有数据
-        resent_day = list(time.localtime())[2]
         have_air = False
         if not values:
-            strs +=k +'站点 空气质量月统计报表数据异常'+'\n'
+            strs +=k +' 空气质量月统计报表数据异常'+'\n<br>'
         else:
             o3,no2,co,so2=False,False,False,False
+            ##检测当前时间前几天是否有数据
             for _ in range(1,3):
                 l = values[(resent_day-_-1)]
                 if  not o3:
@@ -278,28 +294,35 @@ def air_quality_statistics_month():
                 have_air=all([o3,so2,co,so2])
                 print([o3,so2,co,so2])
             if have_air:
-                strs +=k +'站点 空气质量月统计报表数据正常'+'\n'
-            else:strs +=k +'站点 空气质量月统计报表数据异常'+'\n'
-    print(strs)
+                strs +=k +' 空气质量月统计报表数据正常'+'\n<br>'
+            else:strs +=k +' 空气质量月统计报表数据异常'+'\n<br>'
     return strs
 #年统计
-def air_quality_statistics_year():
-    param = {
-       'provinceId':440000,'cityId':441800,'countyId':441801,'tsNo':'','date':str(time.strftime("%Y-%m-%d", time.localtime()))
-    }
+def air_quality_statistics_year(url,params,tsno):
+    # param = {
+    #    'provinceId':440000,'cityId':441800,'countyId':441801,'tsNo':'','date':str(time.strftime("%Y-%m-%d", time.localtime()))
+    # }
     keys = qys.keys()
     strs =''
-    for k in keys:
-        date = time.strftime("%Y-%m-%d", time.localtime())
-        url = 'http://202.105.10.126:8055/api/v1/airReportYear'
-        res = requests.get(url,params=param,headers={'Authorization':token},timeout=6000,verify= False)
+    date = str(time.strftime("%Y-%m-%d", time.localtime()))
+    url = 'http://202.105.10.126:8055/api/v1/airReportYear'
+    params['date']=date
+    resent_month = list(time.localtime())[1]
+    if type(tsno)==str:tsno =[tsno]
+    k =None ##site--name
+    for _ in tsno:
+        for key in keys:
+            if qys[key] ==_:
+                k=key
+                break
+        params['tsNo'] = _
+        res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
         values = json.loads(res.content)['content']
         # print(values)
         ##检测当前时间前几个小时是否有数据
-        resent_month = list(time.localtime())[1]
         have_air = False
         if not values:
-            strs +=k +'站点 空气质量年统计报表数据异常'+'\n'
+            strs +=k +'站点 空气质量年统计报表数据异常'+'\n<br>'
         else:
             o3,no2,co,so2=False,False,False,False
             for _ in range(1,2):
@@ -319,9 +342,8 @@ def air_quality_statistics_year():
                 have_air=all([o3,so2,co,so2])
                 print([o3,so2,co,so2])
             if have_air:
-                strs +=k +'站点 空气质量年统计报表数据正常'+'\n'
-            else:strs +=k +'站点 空气质量年统计报表数据异常'+'\n'
-    print(strs)
+                strs +=k +'站点 空气质量年统计报表数据正常'+'\n<br>'
+            else:strs +=k +'站点 空气质量年统计报表数据异常'+'\n<br>'
     return strs
 
 #--遥测--#
@@ -376,76 +398,102 @@ def test_p(url,tsno):
     '&minCO=&maxCO=&minCO2=&maxCO2=&minNO=&maxNO=&minHC=&maxHC=&minSmoke=&maxSmoke=&license='
     '&minConfidence=&maxConfidence=&minVSP=&maxVSP=&result=&monitorBeginTimeStr=2018-08-24 00:00:00
     '&monitorEndTimeStr=2018-08-24 23:59:59&pageNum=1&pageSize=30'''
-def telemetry_data_manerger():
-    url = 'http://202.105.10.126:8055/api/v1/remoteSensingPageQuery'
+def telemetry_data_manerger(url,params,tsno):
+    # url = 'http://202.105.10.126:8055/api/v1/remoteSensingPageQuery'
 
     keys = qy_yc.keys()
     year = list(time.localtime())[0]
     month = list(time.localtime())[1]
     day = list(time.localtime())[2]
     strss =''
-    ps =params_yc(month,day)
-    for k in keys:
-        # print(k)
+    if type(tsno)==str:tsno=[tsno]
+    k =None
+    for _ in tsno:
         strs =''
-        lists = have_lists(url,year,month,day,qy_yc[k],[])
-        # print(lists)
+        lists = have_lists_air_telemtry(params,url,year,month,day,_,[])
         interval = -int(str(lists[0]['monitorTime'])[0:10]) +int(time.time())
-
+        for key in keys:
+            if qy_yc[key] ==_:
+                k=key
+                break
         # print(interval//60)
         if (interval//60>18):
-            strs +=k + '站点 数据异常 '+lists[0]['monitorTimeStr']+' 后无遥测数据\n'
+            strs +=k + '站点 数据异常 '+lists[0]['monitorTimeStr']+' 后无遥测数据\n<br>'
             strss +=strs
-        if strs=='':strss +='<b>'+k+'</b>'+ '站点 数据正常\n'
-    print(strss)
+        if strs=='':strss +='<b>'+k+'</b>'+ '站点 数据正常\n<br>'
 
     return(strss)
 
 
 #遥测日统计
-def telemetry_data_day():
-    param = {
-        'tsNo':'SFE-R600-G22W2807','date':'2018-08-22','smoke':'25','no':'','hc':600,'co':''
-    }
-    strs =''
-    url = 'http://202.105.10.126:8055/api/v1/rsCarReportDay'
-    res = requests.get(url,params=param,headers={'Authorization':token},verify= False)
-    values = json.loads(res.content)['content']
-    yctj = values['licenseType']['total']
-    date = values['licenseType']['recordDateStr']
-    cxyz = any([values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['limitCount'],values['exceed']['noCount'],values['exceed']['smokeCount']])
-    v = values['overrunCar']
-    _car =[v['bigBusCount'],v['bigTruckCount'],v['busCount'],v['carCount'],v['truckCount'],v['suvCount'],v['pickUpCount'],v['unknownCount'],v['minibusCount']]
-    cxcllx = any(_car)
-    cxclbl = v['nativeCount']+v['inProvinceCount']+v['nonLocalCount']
-
-    is_ok = all([yctj,cxyz,cxcllx,cxclbl])
-    if (is_ok):strs +='该站点遥测数据正常'
-    else:strs +='该站点遥测数据异常常'
-    print(strs)
-    return strs
+def telemetry_data_day(url,params,tsno):
+    # param = {
+    #     'tsNo':'SFE-R600-G22W2807','date':'2018-08-22','smoke':'25','no':'','hc':600,'co':''
+    # }
+    strss =''
+    keys = qy_yc.keys()
+    date = str(time.strftime("%Y-%m-%d", time.localtime()))
+    params['date'] = date
+    if type(tsno)==str:tsno =[tsno]
+    site_name=''
+    for _ in tsno:
+        # strs =''
+        for k in keys:
+            print(qy_yc[k],_)
+            if qy_yc[k]==_:
+                site_name =k
+                break
+        params['tsNo']=_
+        res = requests.get(url,params=params,headers={'Authorization':token},verify= False)
+        values = json.loads(res.content)['content']
+        try:
+            yctj = values['licenseType']['total']
+            date = values['licenseType']['recordDateStr']
+            cxyz = any([values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['limitCount'],values['exceed']['noCount'],values['exceed']['smokeCount']])
+            v = values['overrunCar']
+            _car =[v['bigBusCount'],v['bigTruckCount'],v['busCount'],v['carCount'],v['truckCount'],v['suvCount'],v['pickUpCount'],v['unknownCount'],v['minibusCount']]
+            cxcllx = any(_car)
+            cxclbl = v['nativeCount']+v['inProvinceCount']+v['nonLocalCount']
+            is_ok = all([yctj,cxyz,cxcllx,cxclbl])
+        except:is_ok=False
+        if (is_ok):strss +=site_name+' 该站点遥测日统计数据正常<br>'
+        else:strss +=site_name+' 该站点遥测日统计数据异常<br>'
+    return strss
 #遥测月统计
-def telemetry_data_month():
-    
-    param = {
-        'tsNo':'SFE-R600-G22W2807','date':'2018-08-22','smoke':'25','no':'','hc':600,'co':''
-    }
-    url = 'http://202.105.10.126:8055/api/v1/rsCarReportMonth'
-    res = requests.get(url,params=param,headers={'Authorization':token},verify= False)
-    values = json.loads(res.content)['content']
-    yctj = values['licenseType']['total']
-    date = values['licenseType']['recordDateStr']
-    cxyz = any([values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['limitCount'],values['exceed']['noCount'],values['exceed']['smokeCount']])
-    v = values['overrunCar']
-    _car =[v['bigBusCount'],v['bigTruckCount'],v['busCount'],v['carCount'],v['truckCount'],v['suvCount'],v['pickUpCount'],v['unknownCount'],v['minibusCount']]
-    cxcllx = any(_car)
-    cxclbl = v['nativeCount']+v['inProvinceCount']+v['nonLocalCount']
-
-    is_ok = all([yctj,cxyz,cxcllx,cxclbl])
-    print(is_ok)
-
+def telemetry_data_month(url,params,tsno):
+    strss =''
+    keys = qy_yc.keys()
+    date = str(time.strftime("%Y-%m-%d", time.localtime()))
+    params['date'] = date
+    if type(tsno)==str:tsno =[tsno]
+    site_name=''
+    for _ in tsno:
+        # strs =''
+        for k in keys:
+            if qy_yc[k]==_:
+                site_name =k
+                break
+        params['tsNo']=_
+        print(params)
+        res = requests.get(url,params=params,headers={'Authorization':token},verify= False)
+        values = json.loads(res.content)['content']
+        try:
+            yctj = values['licenseType']['total']
+            date = values['licenseType']['recordDateStr']
+            cxyz = any([values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['limitCount'],values['exceed']['noCount'],values['exceed']['smokeCount']])
+            v = values['overrunCar']
+            _car =[v['bigBusCount'],v['bigTruckCount'],v['busCount'],v['carCount'],v['truckCount'],v['suvCount'],v['pickUpCount'],v['unknownCount'],v['minibusCount']]
+            cxcllx = any(_car)
+            cxclbl = v['nativeCount']+v['inProvinceCount']+v['nonLocalCount']
+            is_ok = all([yctj,cxyz,cxcllx,cxclbl])
+            print([yctj,cxyz,cxcllx,cxclbl])
+        except:is_ok=False
+        if (is_ok):strss +=site_name+' 该站点遥测月统计数据正常<br>'
+        else:strss +=site_name+' 该站点遥测月统计数据异常<br>'
+    return strss
 if __name__=='__main__':
     #遥测-Test#
     # strs = air_quality_data_manger()
-    telemetry_data_manerger()
+    # air_quality_statistics_year()
     # print('1232131:',strs)
+    pass
