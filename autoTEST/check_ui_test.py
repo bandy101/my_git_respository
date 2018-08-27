@@ -7,28 +7,28 @@ from threading import Thread
 # from main import Ui_Form
 import check_pt as C
 import json
+import time
 app = QApplication(sys.argv)
 
 class myThread(QThread):
     pre_search =pyqtSignal()
-    def __init__(self,parent=None):  
+    def __init__(self,ui,parent=None):  
         super(myThread,self).__init__(parent)  
-    
+        self.ui =ui
+        self.pre_search.connect(self.ui.search_one)
     def run(self):
-        # self.pre_search.emit()
-        pass
+        # self.ui.search_one()
+        self.ui.search.setEnabled(False)
+        self.ui.search_one()
+        self.pre_search.emit()
 
 class Gui(QWidget,Ui_Form):
     def __init__(self):
-
         super(Gui,self).__init__()
         self.setupUi(self)
         with open('config.json',encoding='utf-8') as f:
             alls = json.load(f)
             self.json = alls
-        self.pre = myThread()
-        self.pre.pre_search.connect(lambda :self.result_text.setText('正在查询···'))
-        self.pre.start()
         ##平台{01:qingyuan,02:guangzhou}
         self.flats = '01'
         self.qingyuan.toggled.connect(self.flat)
@@ -38,7 +38,7 @@ class Gui(QWidget,Ui_Form):
         #空质量和遥测方法ID
         self.air_mthod_id = None
         self.telemetru_mthod_id = None
-
+        self.click =False #是否查询
         #测量选项 (radiobutton 控件objectname)
         self.airs =[self.air_quality,self.air_quality_data,self.air_quality_day,self.air_quality_mon,self.air_quality_year]
         self.telemetrys =[self.telemetry_data,self.telemetry_day,self.telemetry_mon]
@@ -46,12 +46,35 @@ class Gui(QWidget,Ui_Form):
         self.all_radio =self.airs+self.telemetrys+self.cars
         for _ in self.all_radio:
             _.toggled.connect(self.radiobutton)
-    
+
         #单点查询
-        self.search.clicked.connect(self.search_one)
+
+        self.search.clicked.connect(self.clicks)
+
+        ##线程查询
+        # self.timer=QTimer()
+        # self.timer.timeout.connect(self.seach_t)
+        # self.timer.start(200)
+        # self.search.clicked.connect(self.search_one)
+        self.search_t =myThread(self)
+        # self.search_t.pre_search.connect(self.search_one) ##绑定需要执行的函数
         ##初始化平台
         self.flat(None)
         self.qingyuan.toggled.emit(True)
+    def clicks(self):
+        self.click= True
+        self.search.setEnabled(False)
+        # self.search_t.start()
+        self.search_one()
+
+    def seach_t(self):
+        pass
+        # QThread(self.search_one).start()
+        # Thread(target=self.search_one).start()
+        # if self.click:
+        #     self.search.setDisabled(True)
+        #     self.click =False
+        #     self.search_one()
 
     def get_site_info(self):
             for _ in self.json['platform']:
@@ -72,6 +95,7 @@ class Gui(QWidget,Ui_Form):
         except:
             space = ['&nbsp;' for _ in range(7)]
             self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>请选择查询的数据</b></font>')
+            self.search.setEnabled(True)
             return
         space = ['&nbsp;' for _ in range(12)]
         for _ in self.fun:
@@ -98,8 +122,7 @@ class Gui(QWidget,Ui_Form):
                 # print('tsno-----ui,',self.tsno)
                 url,param = None,None
                 for _ in self.json['request']:
-                    print(_['id'],mthod_id)
-                    if _['id']==mthod_id:
+                    if _['id']==mthod_id and _['platid']==self.flats:
                         url = _['url']
                         param =_['param']
                         break
@@ -109,6 +132,8 @@ class Gui(QWidget,Ui_Form):
                 # strs = f()
                 self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'
                     +strs+'<br>')
+                # self.search.setDisabled(False)
+                self.search.setEnabled(True)
                 break
 
     def flat(self,value):
@@ -174,7 +199,6 @@ class Gui(QWidget,Ui_Form):
         alls_metho_id = self.air_mthod_id+self.telemetru_mthod_id+self.car_mthod_id
         print(alls_metho_id)
         return zip(key,values,alls_metho_id)
-
     def search_data(self):
         for _ in self.json['platform']:
             if _['id']==self.flats:
@@ -201,19 +225,20 @@ class Gui(QWidget,Ui_Form):
         else:
             for _ in self.cars:
                 _.setEnabled(False)
-class opI:
+class opI(Gui):
     '''
         界面操作接口
     '''
-    def __init__(self):
-        self.ui = Gui()
-        self.ui.show()
+    def __init__(self,parent=None):
+        super(opI,self).__init__()
+        t1 =QThread()
         # Thread(target=lambda:self.ui.show()).start()
 
     def search_waittime(self):
         self.ui.result_text.setText('正在查询···')
 if __name__=='__main__':
-    # ui = Gui()
+    ui = Gui()
+    ui.show()
     # ui.pre.pre_search.emit()
-    opI()
+    # opI()
     sys.exit(app.exec_())

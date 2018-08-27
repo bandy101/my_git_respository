@@ -502,6 +502,7 @@ def car_flow(url,params,tsno,dict_tsnos,token):
         date = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     else:date = str(time.strftime("%Y-%m-%d", time.localtime()))
     params['date']=date
+    print(tsno)
     for _ in tsno:
         site_name = None
         #查找对应键值
@@ -514,7 +515,6 @@ def car_flow(url,params,tsno,dict_tsnos,token):
         res = requests.get(url,params=params,headers={'Authorization':token},verify= False)
         print('url:',res.url)
         res = json.loads(res.content)
-        print(res)
         licenseType_total = res['content']['licenseType']['total']
         licenseBelonging_total = res['content']['licenseBelonging']['total']
         vehicalType_total = res['content']['vehicalType']['total']
@@ -522,7 +522,7 @@ def car_flow(url,params,tsno,dict_tsnos,token):
         is_normal = all([licenseType_total,licenseBelonging_total,vehicalType_total])
         if is_normal:strs +='<font color="red"><b>'+site_name +'</b></font>车流量统计数据正常<br>'
         else:strs +='<font color="red"><b>'+site_name +'</b></font>车流量统计数据<b>异常</b><br>'
-        return strs
+    return strs
 ###---广州---###
 def telemetry_data_manerger_gz(url,params,tsno):
     pass
