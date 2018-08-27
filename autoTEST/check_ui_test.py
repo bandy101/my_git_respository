@@ -60,7 +60,7 @@ class Gui(QWidget,Ui_Form):
                     self.sitename=_['site']
                     self.air_mthod_id = _['air']
                     self.telemetru_mthod_id = _['telemetry']
-                return
+                    return
     def search_one(self):
         try:
             self.fun = self.map_fun()
@@ -103,11 +103,13 @@ class Gui(QWidget,Ui_Form):
             self.site.addItem('全部')
             self.get_site_info()
             self.site.addItems(self.sitename)
-            # print(self.site.currentIndex())
             self.search_data()
         if self.guangzhou.isChecked():
             self.flats='02'
             self.site.clear()
+            self.site.addItem('全部')
+            self.get_site_info()
+            self.site.addItems(self.sitename)
             self.search_data()
     def radiobutton(self,value):
         self.air_day =False
