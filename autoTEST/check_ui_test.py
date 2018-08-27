@@ -39,10 +39,11 @@ class Gui(QWidget,Ui_Form):
         self.air_mthod_id = None
         self.telemetru_mthod_id = None
 
-        #测量选项
+        #测量选项 (radiobutton 控件objectname)
         self.airs =[self.air_quality,self.air_quality_data,self.air_quality_day,self.air_quality_mon,self.air_quality_year]
         self.telemetrys =[self.telemetry_data,self.telemetry_day,self.telemetry_mon]
-        self.all_radio =self.airs+self.telemetrys
+        self.cars = [self.car_flow_hour,self.car_flow_day,self.car_flow_mon,self.car_flow_year]
+        self.all_radio =self.airs+self.telemetrys+self.cars
         for _ in self.all_radio:
             _.toggled.connect(self.radiobutton)
     
@@ -55,11 +56,14 @@ class Gui(QWidget,Ui_Form):
     def get_site_info(self):
             for _ in self.json['platform']:
                 if _['id']==self.flats:
+                    self.token = _['token']
                     self.air_tsno =_['airTSNO']
                     self.telemetry_tsno = _['telemetryTSNO']
+                    self.car_tsno = _['carTSNO']
                     self.sitename=_['site']
                     self.air_mthod_id = _['air']
                     self.telemetru_mthod_id = _['telemetry']
+                    self.car_mthod_id = _['carflow']
                     return
     def search_one(self):
         try:
@@ -73,24 +77,35 @@ class Gui(QWidget,Ui_Form):
         for _ in self.fun:
             key,f,mthod_id = list(_)
             #key 查看需要测试的是哪个数据
+            print(key,f.__name__)
             test_site = self.site.currentIndex()
             if key:
                 print('开始···')
                 if 'air' in f.__name__:
-                    if test_site in [0,-1]:self.tsno = self.air_tsno.values()
+                    if test_site in [0,-1]:
+                        self.tsno = self.air_tsno.values()
                     else:self.tsno = self.air_tsno[self.site.currentText()]
+                    self.TSNO = self.air_tsno
+                        
                 if 'telemetry' in f.__name__:
                     if test_site in [0,-1]:self.tsno = list(self.telemetry_tsno.values())
                     else:self.tsno = self.telemetry_tsno[self.site.currentText()]
+                    self.TSNO = self.telemetry_tsno
+                if 'car' in f.__name__:
+                    if test_site in [0,-1]:self.tsno =list(self.car_tsno.values())
+                    else:self.tsno = self.car_tsno[self.site.currentText()]
+                    self.TSNO = self.car_tsno
                 # print('tsno-----ui,',self.tsno)
                 url,param = None,None
                 for _ in self.json['request']:
+                    print(_['id'],mthod_id)
                     if _['id']==mthod_id:
                         url = _['url']
                         param =_['param']
                         break
-
-                strs = f(url,param,self.tsno)
+                print('start--#')
+                print(f.__name__)
+                strs = f(url,param,self.tsno,self.TSNO,self.token)
                 # strs = f()
                 self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'
                     +strs+'<br>')
@@ -120,6 +135,18 @@ class Gui(QWidget,Ui_Form):
         self.telem_day = False
         self.telem_mon = False
         self.telem_data = False
+        self.car_hour =False
+        self.car_day = False
+        self.car_mon =False
+        self.car_year=False
+        if self.car_flow_hour.isChecked():
+            self.car_hour =True
+        if self.car_flow_day.isChecked():
+            self.car_day =True
+        if self.car_flow_mon.isChecked():
+            self.car_mon = True
+        if self.car_flow_year.isChecked():
+            self.car_year =True
         if self.air_quality_data.isChecked():
             self.air_data =True
         if self.air_quality_day.isChecked():
@@ -138,10 +165,13 @@ class Gui(QWidget,Ui_Form):
             self.air_quality_s =True
     def map_fun(self):
         key = [self.air_quality_s,self.air_data,self.air_day,self.air_mon,self.air_year,
-        self.telem_data,self.telem_day,self.telem_mon]
+        self.telem_data,self.telem_day,self.telem_mon,
+        self.car_hour,self.car_day,self.car_mon,self.car_year]
         values =[C.air_quality,C.air_quality_data_manger,C.air_quality_statistics_day,C.air_quality_statistics_month,C.air_quality_statistics_year,
-        C.telemetry_data_manerger,C.telemetry_data_day,C.telemetry_data_month]
-        alls_metho_id = self.air_mthod_id+self.telemetru_mthod_id
+        C.telemetry_data_manerger,C.telemetry_data_day,C.telemetry_data_month]+[C.car_flow]*4
+        if self.flats=='02':
+            self.air_mthod_id=[0,0,0,0,0] # 广州平台没有空气质量
+        alls_metho_id = self.air_mthod_id+self.telemetru_mthod_id+self.car_mthod_id
         print(alls_metho_id)
         return zip(key,values,alls_metho_id)
 
@@ -150,6 +180,7 @@ class Gui(QWidget,Ui_Form):
             if _['id']==self.flats:
                 have_air = _['air']
                 have_telemetr = _['telemetry']
+                have_car = _['carflow']
                 # print(have_air)
         if have_air:
             for _ in self.airs:
@@ -163,6 +194,12 @@ class Gui(QWidget,Ui_Form):
                 _.setEnabled(True)
         else:
             for _ in self.telemetrys:
+                _.setEnabled(False)
+        if have_car:
+            for _ in self.cars:
+                _.setEnabled(True)
+        else:
+            for _ in self.cars:
                 _.setEnabled(False)
 class opI:
     '''

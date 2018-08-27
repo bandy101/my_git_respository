@@ -40,11 +40,12 @@ def have_lists(url,year,month,day,tsno,lists):
 
 
 
-def have_lists_air_telemtry(param,url,year,month,day,tsno,lists):
+def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     # if lists:
     #     return lists
     ps =params_air_telemetry(month,day,param)
     ps['tsNo'] = tsno
+    print('parama:',ps)
     res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
     
     values = json.loads(res.content)['content']
@@ -54,55 +55,55 @@ def have_lists_air_telemtry(param,url,year,month,day,tsno,lists):
         if day==1:
             if month==1:
                 _,days = calendar.monthrange(year,12) ##一个月含有多少天
-                lv = (have_lists(url,year,12,days,tsno,lv))
+                lv = (have_lists_air_telemtry(token,param,url,year,12,days,tsno,lv))
             else: 
                 _,days = calendar.monthrange(year,month-1)
-                lv= (have_lists(url,year,month-1,days,tsno,lv))
-        else:lv =(have_lists(url,year,month,day-1,tsno,lv))
+                lv= (have_lists_air_telemtry(token,param,url,year,month-1,days,tsno,lv))
+        else:lv =(have_lists_air_telemtry(token,param,url,year,month,day-1,tsno,lv))
     return lv
 
 
-token = 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmlxdWVfbmFtZSI6ImRlbW8iLCJwd2QiOiI3MTcyZGE4ZWY1Zjk1NDcwYjQxNWRiZDEwNDg1NjFlYiIsInVzZXJfaWQiOiIzIiwiaXNzIjoicmVzdGFwaXVzZXIiLCJhdWQiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImV4cCI6MTUzNjE5OTY1OCwibmJmIjoxNTM0OTAzNjU4fQ.HdhVhyMJ8ORq1ingSNL4FW_NS17pXx1FVPqlHGwRC_o'
-qys = {
-    '广清大道(龙塘)':'AQM65-G22W2807',
-    '治超站出口':'AQM65-G22W2714',
-    '三棵竹一桥(源潭)':'AQM65-G22W2772',
-    '清远大道(党校)':'AQM65-G22W2798',
-}
-qy_yc = {
-    '广清大道(龙塘)':'SFE-R600-G22W2807',
-    '治超站出口':'SFE-R600-G22W2714',
-    '三棵竹一桥(源潭)':'SFE-R600-G22W2807',
-    '清远大道(党校)':'SFE-R600-G22W2798',
-}
+# token = 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmlxdWVfbmFtZSI6ImRlbW8iLCJwd2QiOiI3MTcyZGE4ZWY1Zjk1NDcwYjQxNWRiZDEwNDg1NjFlYiIsInVzZXJfaWQiOiIzIiwiaXNzIjoicmVzdGFwaXVzZXIiLCJhdWQiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImV4cCI6MTUzNjE5OTY1OCwibmJmIjoxNTM0OTAzNjU4fQ.HdhVhyMJ8ORq1ingSNL4FW_NS17pXx1FVPqlHGwRC_o'
+# dict_tsnos = {
+#     '广清大道(龙塘)':'AQM65-G22W2807',
+#     '治超站出口':'AQM65-G22W2714',
+#     '三棵竹一桥(源潭)':'AQM65-G22W2772',
+#     '清远大道(党校)':'AQM65-G22W2798',
+# }
+# dict_tsnos = {
+#     '广清大道(龙塘)':'SFE-R600-G22W2807',
+#     '治超站出口':'SFE-R600-G22W2714',
+#     '三棵竹一桥(源潭)':'SFE-R600-G22W2807',
+#     '清远大道(党校)':'SFE-R600-G22W2798',
+# }
 gzs = {
 }
-params ={
-    'cityId' :441800,
-    'collectionBeginDate':	'2018-08-24 00:00:00',
-    'collectionEndDate'	:'2018-08-24 23:59:59',
-    'countyId':	441801,
-    'maxCo':'',
-    'maxHumidity':'',	
-    'maxNo2':'',	
-    'maxO3':'',
-    'maxPm10':'',	
-    'maxPm25':'',	
-    'maxSo2':'',	
-    'maxTemperature':'',	
-    'minCo':'',	
-    'minHumidity':'',	
-    'minNo2':'',	
-    'minO3':'',	
-    'minPm10':'',	
-    'minPm25':'',	
-    'minSo2':'',	
-    'minTemperature':'',
-    'pageNum':1,
-    'pageSize':12,
-    'provinceId':440000,
-    'tsNo':''
-}
+# params ={
+#     'cityId' :441800,
+#     'collectionBeginDate':	'2018-08-24 00:00:00',
+#     'collectionEndDate'	:'2018-08-24 23:59:59',
+#     'countyId':	441801,
+#     'maxCo':'',
+#     'maxHumidity':'',	
+#     'maxNo2':'',	
+#     'maxO3':'',
+#     'maxPm10':'',	
+#     'maxPm25':'',	
+#     'maxSo2':'',	
+#     'maxTemperature':'',	
+#     'minCo':'',	
+#     'minHumidity':'',	
+#     'minNo2':'',	
+#     'minO3':'',	
+#     'minPm10':'',	
+#     'minPm25':'',	
+#     'minSo2':'',	
+#     'minTemperature':'',
+#     'pageNum':1,
+#     'pageSize':12,
+#     'provinceId':440000,
+#     'tsNo':''
+# }
 def params_air_telemetry(m,d,params):
     st = time.localtime()
     if len(str(m))<2:m='0'+str(m)
@@ -143,7 +144,7 @@ def params_air_telemetry(m,d,params):
     # }
     return x
 #--空气质量--#
-def air_quality(url,params,tsno):
+def air_quality(url,params,tsno,dict_tsnos,token):
     ##--清远--#
     # url ='http://202.105.10.126:8055/api/v1/monitorAirQualityInfo?provinceId=440000&cityId=441800'
     
@@ -173,21 +174,29 @@ def air_quality(url,params,tsno):
     # print(strs)
     return strss
 #--空气质量数据管理--#
-def air_quality_data_manger(url,params,tsno):
+def air_quality_data_manger(url,params,tsno,dict_tsnos,token):
     strss =''
     ps = params
     # print('pp',params)
-    keys = qys.keys()
+    keys = dict_tsnos.keys()
     # url = 'http://202.105.10.126:8055/api/v1/airQualityPageQuery'
     year = list(time.localtime())[0]
     month = list(time.localtime())[1]
     day = list(time.localtime())[2]
     if type(tsno)==str:tsno =[tsno]
     else: tsno=[_ for _ in tsno]
-    for k in tsno:
-        print('k--type',type(k))
+    k = None
+    for _ in tsno:
+        print('TSNO-',_)
         strs =''
-        lists=have_lists_air_telemtry(params,url,year,month,day,k,[])
+        for key in keys:
+            # print(dict_tsnos[key],_)
+            # print(dict_tsnos[key]==_)
+            if dict_tsnos[key] ==_:
+                k=key
+                break
+        params['tsNo'] = _
+        lists=have_lists_air_telemtry(token,params,url,year,month,day,_,[])
         print('str:',strs)
         # time.sleep(1)
         interval = -int(str(lists[0]['collectionDate'])[0:10]) +int(time.time())
@@ -212,9 +221,9 @@ def air_quality_data_manger(url,params,tsno):
 
 #--空气质量统计--#
 #日统计
-def air_quality_statistics_day(url,params,tsno):
+def air_quality_statistics_day(url,params,tsno,dict_tsnos,token):
     strs =''
-    keys = qys.keys()
+    keys = dict_tsnos.keys()
     date = str(time.strftime("%Y-%m-%d", time.localtime()))
     params['date'] = date
     resent_hour = list(time.localtime())[3]
@@ -222,12 +231,15 @@ def air_quality_statistics_day(url,params,tsno):
     k =None
     for _ in tsno:
         for key in keys:
-            if qys[key] ==_:
+            print(dict_tsnos[key],_)
+            if dict_tsnos[key] ==_:
                 k=key
                 break
         params['tsNo'] = _
         res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
+        print(res)
         values = json.loads(res.content)['content']
+        # print(values)
         have_air = False
         if not values:
             strs +=k +' 空气质量日统计报表数据异常'+'\n<br>'
@@ -250,22 +262,23 @@ def air_quality_statistics_day(url,params,tsno):
             else:
                 have_air=all([o3,so2,co,so2])
                 print([o3,so2,co,so2])
+            print(have_air)
             if have_air:
                 strs +=k +' 空气质量日统计报表数据正常'+'\n<br>'
             else:strs +=k +' 空气质量日统计报表数据异常'+'\n<br>'
     return strs
 #月统计
-def air_quality_statistics_month(url,params,tsno): 
+def air_quality_statistics_month(url,params,tsno,dict_tsnos,token): 
     strs =''
     date = str(time.strftime("%Y-%m-%d", time.localtime()))
     params['date'] = date
-    keys =qys.keys()
+    keys =dict_tsnos.keys()
     resent_day = list(time.localtime())[2]
     if type(tsno)==str:tsno =[tsno]
     k =None
     for _ in tsno:
         for key in keys:
-            if qys[key] ==_:
+            if dict_tsnos[key] ==_:
                 k=key
                 break
         params['tsNo'] = _
@@ -298,11 +311,11 @@ def air_quality_statistics_month(url,params,tsno):
             else:strs +=k +' 空气质量月统计报表数据异常'+'\n<br>'
     return strs
 #年统计
-def air_quality_statistics_year(url,params,tsno):
+def air_quality_statistics_year(url,params,tsno,dict_tsnos,token):
     # param = {
     #    'provinceId':440000,'cityId':441800,'countyId':441801,'tsNo':'','date':str(time.strftime("%Y-%m-%d", time.localtime()))
     # }
-    keys = qys.keys()
+    keys = dict_tsnos.keys()
     strs =''
     date = str(time.strftime("%Y-%m-%d", time.localtime()))
     url = 'http://202.105.10.126:8055/api/v1/airReportYear'
@@ -312,7 +325,7 @@ def air_quality_statistics_year(url,params,tsno):
     k =None ##site--name
     for _ in tsno:
         for key in keys:
-            if qys[key] ==_:
+            if dict_tsnos[key] ==_:
                 k=key
                 break
         params['tsNo'] = _
@@ -385,23 +398,11 @@ def params_yc(m,d):
     }
     # print (params)
     return params
-def test_p(url,tsno):
-    ps =params_yc(8,23)
-    ps['tsNo'] = tsno
-    res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
-    values = json.loads(res.content)['content']
-    lists = values['list']
-    if(lists):
-        print(lists)
 
-    '''?isNotZero=0&validity=&provinceId=440000&cityId=441800&countyId=441801&tsNo=SFE-R600-G22W2798'
-    '&minCO=&maxCO=&minCO2=&maxCO2=&minNO=&maxNO=&minHC=&maxHC=&minSmoke=&maxSmoke=&license='
-    '&minConfidence=&maxConfidence=&minVSP=&maxVSP=&result=&monitorBeginTimeStr=2018-08-24 00:00:00
-    '&monitorEndTimeStr=2018-08-24 23:59:59&pageNum=1&pageSize=30'''
-def telemetry_data_manerger(url,params,tsno):
+def telemetry_data_manerger(url,params,tsno,dict_tsnos,token):
     # url = 'http://202.105.10.126:8055/api/v1/remoteSensingPageQuery'
 
-    keys = qy_yc.keys()
+    keys = dict_tsnos.keys()
     year = list(time.localtime())[0]
     month = list(time.localtime())[1]
     day = list(time.localtime())[2]
@@ -410,10 +411,10 @@ def telemetry_data_manerger(url,params,tsno):
     k =None
     for _ in tsno:
         strs =''
-        lists = have_lists_air_telemtry(params,url,year,month,day,_,[])
+        lists = have_lists_air_telemtry(token,params,url,year,month,day,_,[])
         interval = -int(str(lists[0]['monitorTime'])[0:10]) +int(time.time())
         for key in keys:
-            if qy_yc[key] ==_:
+            if dict_tsnos[key] ==_:
                 k=key
                 break
         # print(interval//60)
@@ -426,12 +427,12 @@ def telemetry_data_manerger(url,params,tsno):
 
 
 #遥测日统计
-def telemetry_data_day(url,params,tsno):
+def telemetry_data_day(url,params,tsno,dict_tsnos,token):
     # param = {
     #     'tsNo':'SFE-R600-G22W2807','date':'2018-08-22','smoke':'25','no':'','hc':600,'co':''
     # }
     strss =''
-    keys = qy_yc.keys()
+    keys = dict_tsnos.keys()
     date = str(time.strftime("%Y-%m-%d", time.localtime()))
     params['date'] = date
     if type(tsno)==str:tsno =[tsno]
@@ -439,8 +440,8 @@ def telemetry_data_day(url,params,tsno):
     for _ in tsno:
         # strs =''
         for k in keys:
-            print(qy_yc[k],_)
-            if qy_yc[k]==_:
+            print(dict_tsnos[k],_)
+            if dict_tsnos[k]==_:
                 site_name =k
                 break
         params['tsNo']=_
@@ -456,13 +457,13 @@ def telemetry_data_day(url,params,tsno):
             cxclbl = v['nativeCount']+v['inProvinceCount']+v['nonLocalCount']
             is_ok = all([yctj,cxyz,cxcllx,cxclbl])
         except:is_ok=False
-        if (is_ok):strss +=site_name+' 该站点遥测日统计数据正常<br>'
-        else:strss +=site_name+' 该站点遥测日统计数据异常<br>'
+        if (is_ok):strss +=site_name+' 该站点遥测日统计数据<font  color="black"><b>正常</b></font><br>'
+        else:strss +=site_name+' 该站点遥测日统计数据<font  color="red"><b>异常</b></font><br>'
     return strss
 #遥测月统计
-def telemetry_data_month(url,params,tsno):
+def telemetry_data_month(url,params,tsno,dict_tsnos,token):
     strss =''
-    keys = qy_yc.keys()
+    keys = dict_tsnos.keys()
     date = str(time.strftime("%Y-%m-%d", time.localtime()))
     params['date'] = date
     if type(tsno)==str:tsno =[tsno]
@@ -470,7 +471,7 @@ def telemetry_data_month(url,params,tsno):
     for _ in tsno:
         # strs =''
         for k in keys:
-            if qy_yc[k]==_:
+            if dict_tsnos[k]==_:
                 site_name =k
                 break
         params['tsNo']=_
@@ -488,9 +489,43 @@ def telemetry_data_month(url,params,tsno):
             is_ok = all([yctj,cxyz,cxcllx,cxclbl])
             print([yctj,cxyz,cxcllx,cxclbl])
         except:is_ok=False
-        if (is_ok):strss +=site_name+' 该站点遥测月统计数据正常<br>'
-        else:strss +=site_name+' 该站点遥测月统计数据异常<br>'
+        if (is_ok):strss +=site_name+' 该站点遥测月统计数据<font  color="black"><b>正常</b></font><br>'
+        else:strss +=site_name+' 该站点遥测月统计数据<font  color="red"><b>异常</b></font><br>'
     return strss
+
+
+#车流量统计(时日月年)
+def car_flow(url,params,tsno,dict_tsnos,token):
+    strs = ''
+    if type(tsno)==str:tsno = [tsno]
+    if 'Hour' in url:
+        date = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+    else:date = str(time.strftime("%Y-%m-%d", time.localtime()))
+    params['date']=date
+    for _ in tsno:
+        site_name = None
+        #查找对应键值
+        for key in dict_tsnos.keys():
+            if dict_tsnos[key]==_:
+                site_name = key
+                break
+        params['tsNo']=_
+        print('params:',params)
+        res = requests.get(url,params=params,headers={'Authorization':token},verify= False)
+        print('url:',res.url)
+        res = json.loads(res.content)
+        print(res)
+        licenseType_total = res['content']['licenseType']['total']
+        licenseBelonging_total = res['content']['licenseBelonging']['total']
+        vehicalType_total = res['content']['vehicalType']['total']
+        print(licenseType_total,licenseBelonging_total,vehicalType_total)
+        is_normal = all([licenseType_total,licenseBelonging_total,vehicalType_total])
+        if is_normal:strs +='<font color="red"><b>'+site_name +'</b></font>车流量统计数据正常<br>'
+        else:strs +='<font color="red"><b>'+site_name +'</b></font>车流量统计数据<b>异常</b><br>'
+        return strs
+###---广州---###
+def telemetry_data_manerger_gz(url,params,tsno):
+    pass
 if __name__=='__main__':
     #遥测-Test#
     # strs = air_quality_data_manger()

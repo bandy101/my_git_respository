@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>717</width>
+    <width>792</width>
     <height>598</height>
    </rect>
   </property>
@@ -54,8 +54,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>540</x>
      <y>160</y>
-     <width>171</width>
-     <height>321</height>
+     <width>228</width>
+     <height>376</height>
     </rect>
    </property>
    <property name="title">
@@ -64,9 +64,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="air_quality_day">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>90</y>
-      <width>131</width>
+      <x>10</x>
+      <y>120</y>
+      <width>107</width>
       <height>16</height>
      </rect>
     </property>
@@ -77,9 +77,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="air_quality_mon">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>120</y>
-      <width>111</width>
+      <x>10</x>
+      <y>160</y>
+      <width>107</width>
       <height>16</height>
      </rect>
     </property>
@@ -90,9 +90,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="air_quality_year">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>150</y>
-      <width>101</width>
+      <x>10</x>
+      <y>200</y>
+      <width>107</width>
       <height>16</height>
      </rect>
     </property>
@@ -103,10 +103,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="telemetry_day">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>190</y>
-      <width>91</width>
-      <height>20</height>
+      <x>10</x>
+      <y>240</y>
+      <width>83</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -116,9 +116,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="telemetry_mon">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>220</y>
-      <width>89</width>
+      <x>10</x>
+      <y>280</y>
+      <width>83</width>
       <height>16</height>
      </rect>
     </property>
@@ -129,9 +129,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="telemetry_data">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>250</y>
-      <width>89</width>
+      <x>10</x>
+      <y>320</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -142,9 +142,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="air_quality_data">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>60</y>
-      <width>101</width>
+      <x>10</x>
+      <y>80</y>
+      <width>95</width>
       <height>16</height>
      </rect>
     </property>
@@ -155,14 +155,66 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="air_quality">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>30</y>
-      <width>89</width>
+      <x>10</x>
+      <y>40</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>空气质量</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_hour">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>160</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量时统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_day">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>120</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量日统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_mon">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>80</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量月统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_year">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>40</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量年统计</string>
     </property>
    </widget>
   </widget>
@@ -252,9 +304,9 @@ p, li { white-space: pre-wrap; }
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>560</x>
      <y>10</y>
-     <width>171</width>
+     <width>211</width>
      <height>101</height>
     </rect>
    </property>
@@ -264,9 +316,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QComboBox" name="site">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>40</x>
       <y>60</y>
-      <width>111</width>
+      <width>141</width>
       <height>22</height>
      </rect>
     </property>
@@ -286,7 +338,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>20</y>
       <width>94</width>
       <height>16</height>
@@ -398,7 +450,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="search">
    <property name="geometry">
     <rect>
-     <x>590</x>
+     <x>630</x>
      <y>120</y>
      <width>71</width>
      <height>23</height>

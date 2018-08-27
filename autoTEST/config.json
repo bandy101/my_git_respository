@@ -16,6 +16,18 @@
                 "三棵竹一桥(源潭)",
                 "清远大道(党校)"
             ],
+            "carTSNO":{
+                "广清大道(龙塘)":"SFE-R600-G22W2807",
+                "治超站出口":"SFE-R600-G22W2714",
+                "三棵竹一桥(源潭)":"SFE-R600-G22W2807",
+                "清远大道(党校)":"SFE-R600-G22W2798"
+            },
+            "carflow":[
+                "030001",
+                "030002",
+                "030003",
+                "030004"
+            ],
             "telemetryTSNO":{
                 "广清大道(龙塘)":"SFE-R600-G22W2807",
                 "治超站出口":"SFE-R600-G22W2714",
@@ -56,6 +68,23 @@
                 "环市东路(动物园东往西)",
                 "八旗二马路(汉庭酒店)"
             ],
+            "carTSNO":{
+                "水荫二横路":"SFE-R600-G22W2869",
+                "环市东路(动物园西往东)":"SFE-R600-G23W0388",
+                "人民路(流花中心门口)":"SFE-R600-G23W0360",
+                "东华南路(过合群一马路)":"SFE-R600-G23W0304",
+                "解放北路(大北立交)":"SFE-R600-G23W0411",
+                "陵园西路(由南向北方向)":"SFE-R600-G23W0326",
+                "寺右新马路(五羊新城广场)":"SFE-R600-G22W2843",
+                "环市东路(动物园东往西)":"SFE-R600-G23W0342",
+                "八旗二马路(汉庭酒店)":"SFE-R600-G22W2821"
+            },
+            "carflow":[
+                "030001",
+                "030002",
+                "030003",
+                "030004"
+            ],
             "telemetryTSNO":{
                 "水荫二横路":"SFE-R600-G22W2869",
                 "环市东路(动物园西往东)":"SFE-R600-G23W0388",
@@ -70,13 +99,7 @@
             "telemetry":[
                 "020001",
                 "020002",
-                "020003",
-                "020004",
-                "020005",
-                "020006",
-                "020007",
-                "020008",
-                "020009"
+                "020003"
             ],
             "airTSNO":{},
             "air":[],
@@ -271,7 +294,122 @@
             }
         },
         {
-            
+            "id":"020002",
+            "type":"",
+            "platid":"02",
+            "url":"https://gz.etc-cn.com/api/v1/rsCarReportDay",
+            "annotation":"遥测日统计",
+            "param":{
+                "tsNo":"",
+                "date":"",
+                "smoke":"25",
+                "no":"",
+                "hc":"600", 
+                "co":"2.0"
+            }
+        },
+        {
+            "id":"020003",
+            "type":"",
+            "platid":"02",
+            "url":"https://gz.etc-cn.com/api/v1/rsCarReportMonth",
+            "annotation":"遥测月统计",
+            "param":{
+                "tsNo":"",
+                "date":"",
+                "smoke":"25",
+                "no":"",
+                "hc":"600", 
+                "co":"2.0"
+            }
+        },
+        {
+            "id":"030001",
+            "type":"",
+            "platid":"02",
+            "url":"https://gz.etc-cn.com/api/v1/vehicalTypeHour",
+            "annotation":"车流量时统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030002",
+            "type":"",
+            "platid":"02",
+            "url":"https://gz.etc-cn.com/api/v1/vehicalTypeDay",
+            "annotation":"车流量日统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030003",
+            "type":"",
+            "platid":"02",
+            "url":"https://gz.etc-cn.com/api/v1/vehicalTypeMonth",
+            "annotation":"车流量月统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030004",
+            "type":"",
+            "platid":"02",
+            "url":"https://gz.etc-cn.com/api/v1/vehicalTypeYear",
+            "annotation":"车流量年统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030001",
+            "type":"",
+            "platid":"01",
+            "url":"http://202.105.10.126:8055/api/v1/vehicalTypeHour",
+            "annotation":"车流量时统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030002",
+            "type":"",
+            "platid":"01",
+            "url":"http://202.105.10.126:8055/api/v1/vehicalTypeDay",
+            "annotation":"车流量日统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030003",
+            "type":"",
+            "platid":"01",
+            "url":"http://202.105.10.126:8055/api/v1/vehicalTypeMonth",
+            "annotation":"车流量月统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
+        },
+        {
+            "id":"030004",
+            "type":"",
+            "platid":"01",
+            "url":"http://202.105.10.126:8055/api/v1/vehicalTypeYear",
+            "annotation":"车流量年统计",
+            "param":{
+                "tsNo":"",
+                "date":""
+            }
         }
     ]
 }
