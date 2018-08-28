@@ -6,6 +6,7 @@ from main_ui import Ui_Form
 from threading import Thread
 # from main import Ui_Form
 import check_pt as C
+import check_device as D
 import json
 import time
 app = QApplication(sys.argv)
@@ -19,7 +20,7 @@ class myThread(QThread):
     def run(self):
         # self.ui.search_one()
         self.ui.search.setEnabled(False)
-        self.ui.search_one()
+        # self.ui.search_one()
         self.pre_search.emit()
 
 class Gui(QWidget,Ui_Form):
@@ -48,7 +49,7 @@ class Gui(QWidget,Ui_Form):
             _.toggled.connect(self.radiobutton)
 
         #单点查询
-
+        self.light_intensity.clicked.connect(self.lights)
         self.search.clicked.connect(self.clicks)
 
         ##线程查询
@@ -64,9 +65,14 @@ class Gui(QWidget,Ui_Form):
     def clicks(self):
         self.click= True
         self.search.setEnabled(False)
-        # self.search_t.start()
-        self.search_one()
-
+        self.search_t.start()
+        # self.search_one()
+    def lights(self):
+        space = ['&nbsp;' for _ in range(12)]
+        self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font>')
+        strs = D.check_(10)
+        self.result_text.append('<br>'+strs)
+        
     def seach_t(self):
         pass
         # QThread(self.search_one).start()

@@ -17,7 +17,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>SFE巡检</string>
   </property>
   <widget class="QGroupBox" name="data_test">
    <property name="geometry">
@@ -362,9 +362,9 @@ p, li { white-space: pre-wrap; }
     </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="light">
+  <widget class="QPushButton" name="light_intensity">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -403,6 +403,9 @@ p, li { white-space: pre-wrap; }
     </item>
     <item>
      <widget class="QRadioButton" name="tuxiang">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>图像</string>
       </property>

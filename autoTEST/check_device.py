@@ -111,27 +111,30 @@ def get_strength(url):
     except :
         k = False
     return red,purple,k
-if __name__=='__main__':
 
-    # r_m,v_m = 0,0
 
+def check_(times=200):
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
     alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
     # ,alls.append(guangzhous),alls.append(qingyuans)
-    # alls.append(henans)
+    strs =''
+    with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+        ff.writelines(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))
+        strs+=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())+'<br>'
     for it in alls:
         with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
             ff.writelines('\n')
-        ok_num =0
+            strs +='\n'
+        ok_num =0   
         for i in it:
             url = list(i.values())[0]
             print('url:',url)
             r_m,v_m,is_ok= 0,0,False
             red_power,uv_power,is_p=get_strength(url+p_status)
             is_open =False
-            for t in range(200):
+            for t in range(times):
                 if is_p:
                     time.sleep(0.05)
                     red,uv,is_ok= is_max(url+ps)
@@ -145,14 +148,17 @@ if __name__=='__main__':
                 else:
                     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                         ff.writelines(list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m)))
+                        strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m))+'\n<br>'
                         ff.writelines('\n')
             else:
                 with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                     ff.writelines(list(i.keys())[0]+',页面无法打开')
+                    strs +=list(i.keys())[0]+',页面无法打开\n<br>'
                     ff.writelines('\n')
         if (ok_num==len(it)):
             with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                 ff.writelines(list(i.keys())[0][0:2]+'  正常')
+                strs +=list(i.keys())[0][0:2]+'  正常\n<br>'
                 ff.writelines('\n')
         else:
             if ok_num==0:
@@ -160,8 +166,65 @@ if __name__=='__main__':
             else:
                 with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
                     ff.writelines(list(i.keys())[0][:2]+',其他正常')
+                    strs +=list(i.keys())[0][:2]+',其他正常\n<br>'
                     ff.writelines('\n')
+    return strs
+if __name__=='__main__':
 
+    # r_m,v_m = 0,0
+
+    # alls = []
+    # ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
+    # p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
+    # alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
+    # # ,alls.append(guangzhous),alls.append(qingyuans)
+    # strs =''
+    # for it in alls:
+    #     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+    #         ff.writelines('\n')
+    #         strs +='\n'
+    #     ok_num =0
+    #     for i in it:
+    #         url = list(i.values())[0]
+    #         print('url:',url)
+    #         r_m,v_m,is_ok= 0,0,False
+    #         red_power,uv_power,is_p=get_strength(url+p_status)
+    #         is_open =False
+    #         for t in range(200):
+    #             if is_p:
+    #                 time.sleep(0.05)
+    #                 red,uv,is_ok= is_max(url+ps)
+    #                 if is_ok:is_open =True
+    #                 if not is_ok:continue
+    #                 if red>r_m:r_m=red
+    #                 if uv >v_m:v_m=uv
+    #         if(is_open):
+    #             if (r_m>=500 and v_m>=2000):
+    #                 ok_num +=1
+    #             else:
+    #                 with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+    #                     ff.writelines(list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m)))
+    #                     strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m))+'\n'
+    #                     ff.writelines('\n')
+    #         else:
+    #             with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+    #                 ff.writelines(list(i.keys())[0]+',页面无法打开')
+    #                 strs +=list(i.keys())[0]+',页面无法打开\n'
+    #                 ff.writelines('\n')
+    #     if (ok_num==len(it)):
+    #         with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+    #             ff.writelines(list(i.keys())[0][0:2]+'  正常')
+    #             strs +=list(i.keys())[0][0:2]+'  正常\n'
+    #             ff.writelines('\n')
+    #     else:
+    #         if ok_num==0:
+    #             pass
+    #         else:
+    #             with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
+    #                 ff.writelines(list(i.keys())[0][:2]+',其他正常')
+    #                 strs +=list(i.keys())[0][:2]+',其他正常\n'
+    #                 ff.writelines('\n')
+    # return strs
         # print (r_m,v_m)
 
     # # print (res.headers)
@@ -179,3 +242,5 @@ if __name__=='__main__':
     # attrs=html.title.attrs
     # print(html.select('#infrared__column')[0].attrs)
     # print(attrs['class']) 
+    check_(200)
+    # print(strs)
