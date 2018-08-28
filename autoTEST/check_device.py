@@ -242,5 +242,5 @@ if __name__=='__main__':
     # attrs=html.title.attrs
     # print(html.select('#infrared__column')[0].attrs)
     # print(attrs['class']) 
-    check_(200)
+    check_(20)
     # print(strs)

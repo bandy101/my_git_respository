@@ -11,6 +11,7 @@ import json
 import time
 app = QApplication(sys.argv)
 
+
 class myThread(QThread):
     pre_search =pyqtSignal()
     def __init__(self,ui,parent=None):  
@@ -63,16 +64,17 @@ class Gui(QWidget,Ui_Form):
         self.flat(None)
         self.qingyuan.toggled.emit(True)
     def clicks(self):
-        self.click= True
-        self.search.setEnabled(False)
-        self.search_t.start()
+        # self.click= True
+        # self.search.setEnabled(False)
+        # self.search_t.start()
         # self.search_one()
+        Thread(target=self.search_one).start()
     def lights(self):
         space = ['&nbsp;' for _ in range(12)]
         self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font>')
         strs = D.check_(10)
         self.result_text.append('<br>'+strs)
-        
+
     def seach_t(self):
         pass
         # QThread(self.search_one).start()
