@@ -45,7 +45,7 @@ def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     #     return lists
     ps =params_air_telemetry(month,day,param)
     ps['tsNo'] = tsno
-    print('parama:',ps)
+    # print('parama:',ps)
     res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
     
     values = json.loads(res.content)['content']
@@ -426,9 +426,11 @@ def telemetry_data_manerger(url,params,tsno,dict_tsnos,token):
                 break
         # print(interval//60)
         if (interval//60>18):
-            strs +='<b>'+k+'</b>'+'站点 数据<b>异常</b> '+lists[0]['monitorTimeStr']+' 后无遥测数据\n<br>'
+            strs +='<b>'+k+'</b>'+'站点 数据<b>异常</b> '+lists[0]['monitorTimeStr']+' 后无遥测数据\n<br>'+\
+            '最新数据时间:'+str(lists[0]['monitorTimeStr'])+'  车牌号:'+str(lists[0]['license'])+'<br>'
             strss +=strs
-        if strs=='':strss +='<b>'+k+'</b>'+ '站点 数据<b>正常</b>\n<br>'+str(lists[0])+'<br>'
+        if strs=='':strss +='<b>'+k+'</b>'+ '站点 数据<b>正常</b>\n<br>'+\
+            '最新数据时间:'+str(lists[0]['monitorTimeStr'])+'  车牌号:'+str(lists[0]['license'])+'<br>'
 
     return(strss)
 
@@ -478,6 +480,7 @@ def telemetry_data_day(url,params,tsno,dict_tsnos,token):
             '遥测统计总数:'+str(yctj)+' 超限车辆类型数目依次为:'+','.join(_car)+' 超限车辆比例总数:'+str(cxclbl)+\
             ' 超限因子数目依次为:'+','.join(cxyzs)+'<br>'
     return strss
+
 
 #遥测月统计
 def telemetry_data_month(url,params,tsno,dict_tsnos,token):
@@ -558,6 +561,137 @@ def car_flow(url,params,tsno,dict_tsnos,token):
             '三种车牌的颜色总数:'+str(licenseType_total)+'<br>'+'车辆归属地总数:'+str(licenseBelonging_total)+'<br>'+\
             '车辆总数:'+str(vehicalType_total)+'<br>'
     return strs
+
+#查看光强
+lanzs=[ #----兰州----#
+    {'兰州-南出口':'http://60.165.50.66:11000/'},
+    {'兰州-和平点':'http://61.178.104.30:11000/'},
+    {'兰州-大沙坪':'http://61.178.58.121:11000/'},
+    {'兰州-天水路':'http://61.178.20.71:11000/'},
+    {'兰州-岸门口':'http://61.178.114.101:11000/'},
+    {'兰州-黄羊头':'http://61.178.12.58:11000/'}
+]
+henans=[ #----河南----#
+    {'河南-金穗大道':'http://218.29.47.202:11000/'}
+]
+sichuans=[ #----四川----#
+        {'四川-01':'http://182.150.48.217:11000/'},
+        {'四川-02':'http://182.150.48.218:11000/'},
+        {'四川-03':'http://182.150.48.220:11000/'},
+        {'四川-04':'http://110.185.174.145:11000/'}
+]
+
+guangzhous=[ #----广州----#
+        {'广州-东华南路':'http://14.23.53.82:35032/'},
+        {'广州-人民路':'http://14.23.122.74:33551/'},
+        {'广州-八旗二马路':'https://14.23.88.106:10646/'},
+        {'广州-寺右新马路':'http://183.6.186.242:12209/'},
+        {'广州-水荫二横路':'http://183.6.130.130:20909/'},
+        {'广州-环市东路(动物园东往西)':'http://14.23.71.18:11955/'},
+        {'广州-环市东路(动物园西往东)':'http://61.140.17.210:44886/'},
+        {'广州-解放北路(大北立交)':'http://14.23.86.10:26270/'},
+        {'广州-陵园西路(由南向北方向)':'http://14.23.93.18:15291/'}
+]
+qingyuans=[#----清远----#
+        {'清远-三颗竹(源潭)':'http://202.105.10.86:11000/'},
+        {'清远-广清大道(龙潭)':'http://202.105.10.78:11000/'},
+        {'清远-治超出口':'http://119.135.185.238:11000/'},
+        {'清远-清远大道(党校)':'http://202.105.10.18:11000/'}
+]
+
+def get_token(url):
+    url_login = 'http://60.165.50.66:11000/api/login/'
+    # url_login = 'http://110.185.174.145:11000'
+    js_pwd ={
+    "clientId":"098f6bcd4621d373cade4e832627b4f6",
+    'userName':'operator',
+    'password':'123456'
+    }
+    token ,k=None,None
+    try:
+        res = requests.post(url_login,json=js_pwd)
+        res =json.loads(res.content)
+        token = res['content']['token']
+        k =True
+    except:
+        k =False
+    return token,k
+
+#判断是否最优值
+def is_max(url,token):
+    red,purple=None,None
+    try:
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
+        vs = res.content
+        vs = str(vs,'utf-8')
+        vs = json.loads(vs)
+        # print('vs:',vs)
+        red = vs['content']['coStrength']
+        purple = vs['content']['uvStrength']
+        k = True
+    except :
+        k = False
+    return red,purple,k
+#获取光强度
+def get_strength(url,token):
+    red,purple=None,None
+    try:
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
+        vs = res.content
+        vs = str(vs,'utf-8')
+        vs = json.loads(vs)
+        # print('vs:',vs)
+        red = vs['content']['irIntenPower']
+        purple = vs['content']['uvIntenIntegral']
+        k = True
+    except :
+        k = False
+    return red,purple,k
+
+def check_(times=200):
+    token = get_token
+    alls = []
+    ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
+    p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
+    alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
+    # ,alls.append(guangzhous),alls.append(qingyuans)
+    strs =''
+    strs+='<br>'+time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())+'<br>'
+    for it in alls:
+        strs +='\n'
+        ok_num =0   
+        for i in it:
+            url = list(i.values())[0]
+            token,is_oppage= get_token(url+'api/login/')##令牌
+            r_m,v_m,is_ok= 0,0,False
+            if not token:token ='false'
+            print(token)
+            red_power,uv_power,is_p=get_strength(url+p_status,token)
+            is_open = False
+            for t in range(times):
+                if is_p:
+                    time.sleep(0.05)
+                    red,uv,is_ok= is_max(url+ps,token)
+                    if is_ok:is_open =True
+                    if not is_ok:continue
+                    if red>r_m:r_m=red
+                    if uv >v_m:v_m=uv
+            if(is_open):
+                if (r_m>=500 and v_m>=2000):
+                    ok_num +=1
+                else:
+                    strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m))+'\n<br>'
+            else:
+                strs +=list(i.keys())[0]+',页面无法打开\n<br>'
+        if (ok_num==len(it)):
+            strs +=list(i.keys())[0][0:2]+'  正常\n<br>'
+        else:
+            if ok_num==0:
+                pass
+            else:
+                strs +=list(i.keys())[0][:2]+',其他正常\n<br>'
+    return strs
+
 ###---广州---###
 def telemetry_data_manerger_gz(url,params,tsno):
     pass
@@ -566,4 +700,4 @@ if __name__=='__main__':
     # strs = air_quality_data_manger()
     # air_quality_statistics_year()
     # print('1232131:',strs)
-    pass
+    print(check_(1))

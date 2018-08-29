@@ -5,6 +5,7 @@ import sys
 from main_ui import Ui_Form
 from threading import Thread
 # from main import Ui_Form
+
 import check_pt as C
 import check_device as D
 import json
@@ -12,22 +13,17 @@ import time
 app = QApplication(sys.argv)
 
 
-class myThread(QThread):
-    pre_search =pyqtSignal()
-    def __init__(self,ui,parent=None):  
-        super(myThread,self).__init__(parent)  
-        self.ui =ui
-        self.pre_search.connect(self.ui.search_one)
-    def run(self):
-        # self.ui.search_one()
-        self.ui.search.setEnabled(False)
-        # self.ui.search_one()
-        self.pre_search.emit()
+
 
 class Gui(QWidget,Ui_Form):
+
+    signal_search =pyqtSignal() #控制查询按钮
+    signal_settext = pyqtSignal(str) #显示查询结果
     def __init__(self):
         super(Gui,self).__init__()
         self.setupUi(self)
+        print('provinceID:',int(QThread.currentThreadId()))
+        
         with open('config.json',encoding='utf-8') as f:
             alls = json.load(f)
             self.json = alls
@@ -50,30 +46,53 @@ class Gui(QWidget,Ui_Form):
             _.toggled.connect(self.radiobutton)
 
         #单点查询
-        self.light_intensity.clicked.connect(self.lights)
-        self.search.clicked.connect(self.clicks)
+        self.signal_search.connect(self.clicks)
+        # self.light_intensity.clicked.connect(self.lights)
+        self.signal_settext.connect(self.set_text)
+        # self.search.clicked.connect(self.bt)
 
         ##线程查询
         # self.timer=QTimer()
         # self.timer.timeout.connect(self.seach_t)
         # self.timer.start(200)
         # self.search.clicked.connect(self.search_one)
-        self.search_t =myThread(self)
+        # self.search_t =myThread()
         # self.search_t.pre_search.connect(self.search_one) ##绑定需要执行的函数
+
         ##初始化平台
         self.flat(None)
         self.qingyuan.toggled.emit(True)
-    def clicks(self):
-        # self.click= True
-        # self.search.setEnabled(False)
-        # self.search_t.start()
+    def bt(self):
+        self.signal_search.emit()
+    @pyqtSlot()
+    def on_light_intensity_clicked(self):
+        self.light_intensity.setEnabled(False)
+        self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
+        Thread(target=self.lights).start()
+    @pyqtSlot()
+    def on_search_clicked(self):
         # self.search_one()
+        self.search.setEnabled(False)
+        self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
+        Thread(target=self.search_one).start()
+        # Thread(target=self.search_one).start()
+        # self.search_t.start()
+
+
+    def clicks(self):
+        self.click= True
+        self.search.setEnabled(False)
+        # self.search_t.start()
+        # thread_bt = QThread(self)
+        # thread_bt.run = self.search_one
+        # thread_bt.start()
+        # self.search_one()m
         Thread(target=self.search_one).start()
     def lights(self):
         space = ['&nbsp;' for _ in range(12)]
-        self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font>')
-        strs = D.check_(10)
-        self.result_text.append('<br>'+strs)
+        strs = C.check_(20)
+        strs =''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font>'+strs
+        self.signal_settext.emit(strs)
 
     def seach_t(self):
         pass
@@ -96,20 +115,27 @@ class Gui(QWidget,Ui_Form):
                     self.telemetru_mthod_id = _['telemetry']
                     self.car_mthod_id = _['carflow']
                     return
+    def set_text(self,str):
+        self.result_text.setText(str)
+        self.search.setEnabled(True)
+        self.light_intensity.setEnabled(True)
     def search_one(self):
+        print('provinceChildrenID:',int(QThread.currentThreadId()))
         try:
             self.fun = self.map_fun()
-            self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')   
+            # self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>') 
         except:
             space = ['&nbsp;' for _ in range(7)]
-            self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>请选择查询的数据</b></font>')
-            self.search.setEnabled(True)
-            return
+            # self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>请选择查询的数据</b></font>')
+            # self.search.setEnabled(True)
+            strs = ''.join(space)+'<font size="8" color="red"><b>请选择查询的数据</b></font>'
+            self.signal_settext.emit(strs)
+            # return (''.join(space)+'<font size="8" color="red"><b>请选择查询的数据</b></font>')
         space = ['&nbsp;' for _ in range(12)]
         for _ in self.fun:
             key,f,mthod_id = list(_)
             #key 查看需要测试的是哪个数据
-            print(key,f.__name__)
+            # print(key,f.__name__)
             test_site = self.site.currentIndex()
             if key:
                 print('开始···')
@@ -137,11 +163,17 @@ class Gui(QWidget,Ui_Form):
                 print('start--#')
                 print(f.__name__)
                 strs = f(url,param,self.tsno,self.TSNO,self.token)
+                strs =''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'+strs
+                self.signal_settext.emit(strs)
+                
+                # return (''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'+strs)
                 # strs = f()
-                self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'
-                    +strs+'<br>')
+
+
+                # self.result_text.setText(''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'
+                #     +strs+'<br>')
                 # self.search.setDisabled(False)
-                self.search.setEnabled(True)
+                # self.search.setEnabled(True)
                 break
 
     def flat(self,value):
@@ -160,7 +192,7 @@ class Gui(QWidget,Ui_Form):
             self.site.addItems(self.sitename)
             self.search_data()
     def radiobutton(self,value):
-        self.air_day =False
+        self.air_day = False
         self.air_mon = False
         self.air_year = False
         self.air_data = False   
@@ -233,13 +265,14 @@ class Gui(QWidget,Ui_Form):
         else:
             for _ in self.cars:
                 _.setEnabled(False)
-class opI(Gui):
+class opI:
     '''
         界面操作接口
     '''
     def __init__(self,parent=None):
-        super(opI,self).__init__()
-        t1 =QThread()
+        self.ui = Gui()
+        # self.ui.signal_search.connect(self.ui.bt)
+        self.ui.show()
         # Thread(target=lambda:self.ui.show()).start()
 
     def search_waittime(self):

@@ -75,12 +75,23 @@ js_pwd ={
     }
 global token,paramer
 token = \
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2ZlIiwidW5pcXVlX25hbWUiOiJvcGVyYXRvciIsInVzZXJfaWQiOiIzNiIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJleHAiOjE1MzU1MDkwNzAsIm5iZiI6MTUzNDIxMzA3MH0.GMJej2Kr70U2ShsdM9qYk_potZ1uvvbirt4qadDPP1g'
-def get_token():
-    url_login = 'http://110.185.174.145:11000'
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2ZlIiwidW5pcXVlX25hbWUiOiJvcGVyYXRvciIsInVzZXJfaWQiOiIzNiIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJleHAiOjE1MzY4MTc2OTAsIm5iZiI6MTUzNTUyMTY5MH0.kbzKl_HfFu331acmNWJBK4F2WnKG4vbKBm8z-R3jgBg'
+
+# bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2ZlIiwidW5pcXVlX25hbWUiOiJvcGVyYXRvciIsInVzZXJfaWQiOiIzNiIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJleHAiOjE1MzY4MTc2OTAsIm5iZiI6MTUzNTUyMTY5MH0.kbzKl_HfFu331acmNWJBK4F2WnKG4vbKBm8z-R3jgBg
+
+def get_token(url):
+    url_login = 'http://60.165.50.66:11000/api/login/'
+    # url_login = 'http://110.185.174.145:11000'
+    js_pwd ={
+    "clientId":"098f6bcd4621d373cade4e832627b4f6",
+    'userName':'operator',
+    'password':'123456'
+    }
     res = requests.post(url_login,json=js_pwd)
+    # print(res)
+    res =json.loads(res.content)
     print(res)
-    token = res.json()['content']['token']
+    token = res['content']['token']
     return token
     
 def is_max(url):
@@ -171,61 +182,6 @@ def check_(times=200):
     return strs
 if __name__=='__main__':
 
-    # r_m,v_m = 0,0
-
-    # alls = []
-    # ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
-    # p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
-    # alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
-    # # ,alls.append(guangzhous),alls.append(qingyuans)
-    # strs =''
-    # for it in alls:
-    #     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-    #         ff.writelines('\n')
-    #         strs +='\n'
-    #     ok_num =0
-    #     for i in it:
-    #         url = list(i.values())[0]
-    #         print('url:',url)
-    #         r_m,v_m,is_ok= 0,0,False
-    #         red_power,uv_power,is_p=get_strength(url+p_status)
-    #         is_open =False
-    #         for t in range(200):
-    #             if is_p:
-    #                 time.sleep(0.05)
-    #                 red,uv,is_ok= is_max(url+ps)
-    #                 if is_ok:is_open =True
-    #                 if not is_ok:continue
-    #                 if red>r_m:r_m=red
-    #                 if uv >v_m:v_m=uv
-    #         if(is_open):
-    #             if (r_m>=500 and v_m>=2000):
-    #                 ok_num +=1
-    #             else:
-    #                 with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-    #                     ff.writelines(list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m)))
-    #                     strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m))+'\n'
-    #                     ff.writelines('\n')
-    #         else:
-    #             with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-    #                 ff.writelines(list(i.keys())[0]+',页面无法打开')
-    #                 strs +=list(i.keys())[0]+',页面无法打开\n'
-    #                 ff.writelines('\n')
-    #     if (ok_num==len(it)):
-    #         with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-    #             ff.writelines(list(i.keys())[0][0:2]+'  正常')
-    #             strs +=list(i.keys())[0][0:2]+'  正常\n'
-    #             ff.writelines('\n')
-    #     else:
-    #         if ok_num==0:
-    #             pass
-    #         else:
-    #             with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
-    #                 ff.writelines(list(i.keys())[0][:2]+',其他正常')
-    #                 strs +=list(i.keys())[0][:2]+',其他正常\n'
-    #                 ff.writelines('\n')
-    # return strs
-        # print (r_m,v_m)
 
     # # print (res.headers)
     # # # r = res.json()
@@ -236,11 +192,12 @@ if __name__=='__main__':
     # html_doc=str(html,'utf-8')
     # # print(a.encode('UTF-8').decode('UTF-8'))
     # print(html_doc)
-
+    print(check_(1))
 
     # html=BeautifulSoup(html_doc,'html.parser')
     # attrs=html.title.attrs
     # print(html.select('#infrared__column')[0].attrs)
     # print(attrs['class']) 
-    check_(20)
+
+    # check_(10)
     # print(strs)
