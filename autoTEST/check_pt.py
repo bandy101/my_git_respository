@@ -50,6 +50,7 @@ def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     
     values = json.loads(res.content)['content']
     # print('res,',res)
+    print(values)
     lv = values['list']
     if not lv:
         if day==1:
@@ -600,16 +601,16 @@ qingyuans=[#----清远----#
 ]
 
 def get_token(url):
-    url_login = 'http://60.165.50.66:11000/api/login/'
+    # url_login = 'http://60.165.50.66:11000/api/login/'
     # url_login = 'http://110.185.174.145:11000'
     js_pwd ={
     "clientId":"098f6bcd4621d373cade4e832627b4f6",
     'userName':'operator',
     'password':'123456'
     }
-    token ,k=None,None
+    token,k=None,None
     try:
-        res = requests.post(url_login,json=js_pwd)
+        res = requests.post(url,json=js_pwd,verify=False)
         res =json.loads(res.content)
         token = res['content']['token']
         k =True
@@ -664,13 +665,11 @@ def check_(times=200):
             url = list(i.values())[0]
             token,is_oppage= get_token(url+'api/login/')##令牌
             r_m,v_m,is_ok= 0,0,False
-            if not token:token ='false'
-            print(token)
             red_power,uv_power,is_p=get_strength(url+p_status,token)
             is_open = False
             for t in range(times):
                 if is_p:
-                    time.sleep(0.05)
+                    time.sleep(0.1)
                     red,uv,is_ok= is_max(url+ps,token)
                     if is_ok:is_open =True
                     if not is_ok:continue
@@ -678,18 +677,18 @@ def check_(times=200):
                     if uv >v_m:v_m=uv
             if(is_open):
                 if (r_m>=500 and v_m>=2000):
-                    ok_num +=1
-                else:
                     strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m))+'\n<br>'
+                else:
+                    strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:<font color="red"><b>'+str(int(r_m))+'<b></font> 紫外积分:'+str(uv_power)+' 光强:<font color="red"><b>'+str(int(v_m))+'<b></font>\n<br>'
             else:
-                strs +=list(i.keys())[0]+',页面无法打开\n<br>'
-        if (ok_num==len(it)):
-            strs +=list(i.keys())[0][0:2]+'  正常\n<br>'
-        else:
-            if ok_num==0:
-                pass
-            else:
-                strs +=list(i.keys())[0][:2]+',其他正常\n<br>'
+                strs +=list(i.keys())[0]+',<font color="red"><b>页面无法打开<b></font>\n<br>'
+        # if (ok_num==len(it)):
+        #     strs +=list(i.keys())[0][0:2]+'  正常\n<br>'
+        # else:
+        #     if ok_num==0:
+        #         pass
+        #     else:
+        #         strs +=list(i.keys())[0][:2]+',<b>其他正常\n<br>'
     return strs
 
 ###---广州---###
@@ -700,4 +699,4 @@ if __name__=='__main__':
     # strs = air_quality_data_manger()
     # air_quality_statistics_year()
     # print('1232131:',strs)
-    print(check_(1))
+    print(check_(20))

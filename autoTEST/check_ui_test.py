@@ -10,6 +10,7 @@ import check_pt as C
 import check_device as D
 import json
 import time
+import requests
 app = QApplication(sys.argv)
 
 
@@ -19,14 +20,22 @@ class Gui(QWidget,Ui_Form):
 
     signal_search =pyqtSignal() #控制查询按钮
     signal_settext = pyqtSignal(str) #显示查询结果
+    signal_start_search = pyqtSignal(int) #最初的等待查询显示
     def __init__(self):
         super(Gui,self).__init__()
         self.setupUi(self)
         print('provinceID:',int(QThread.currentThreadId()))
-        
         with open('config.json',encoding='utf-8') as f:
             alls = json.load(f)
             self.json = alls
+        ##实时令牌
+        for _ in self.json['platform']:
+            url_qy= 'http://202.105.10.126:8055/api/v1/login/'
+            url_gz = 'https://gz.etc-cn.com/api/v1/login/'
+            if _['id']=='01':
+               self.json['platform'][0]['token']='bearer '+get_token(url_qy,'demo','demo&123')
+            if _['id']=='02':
+                self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
         ##平台{01:qingyuan,02:guangzhou}
         self.flats = '01'
         self.qingyuan.toggled.connect(self.flat)
@@ -49,11 +58,12 @@ class Gui(QWidget,Ui_Form):
         self.signal_search.connect(self.clicks)
         # self.light_intensity.clicked.connect(self.lights)
         self.signal_settext.connect(self.set_text)
-        # self.search.clicked.connect(self.bt)
+        self.signal_start_search.connect(self.cx)
+        # self.search.clicked.connect(self.bt)cx
 
         ##线程查询
         # self.timer=QTimer()
-        # self.timer.timeout.connect(self.seach_t)
+        # self.timer.timeout.connect(self.wait_search)
         # self.timer.start(200)
         # self.search.clicked.connect(self.search_one)
         # self.search_t =myThread()
@@ -62,19 +72,34 @@ class Gui(QWidget,Ui_Form):
         ##初始化平台
         self.flat(None)
         self.qingyuan.toggled.emit(True)
-    def bt(self):
-        self.signal_search.emit()
+    def wait_search(self):
+        i=9
+        while True:
+            if self.wait:
+                if i >3:i=i-1
+                else:i =9
+                self.signal_start_search.emit(i)
+                time.sleep(1.2)
+            else:break
+    def cx(self,i):
+        s ='<font size='+str(i)+' color="red"><b>正在查询···</b></font>'
+        self.result_text.clear()
+        self.result_text.setText(s)
     @pyqtSlot()
     def on_light_intensity_clicked(self):
+        self.wait =True
         self.light_intensity.setEnabled(False)
-        self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
+        # self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
         Thread(target=self.lights).start()
+        Thread(target=self.wait_search).start()
     @pyqtSlot()
     def on_search_clicked(self):
         # self.search_one()
+        self.wait =True
         self.search.setEnabled(False)
-        self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
+        # self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
         Thread(target=self.search_one).start()
+        Thread(target=self.wait_search).start()
         # Thread(target=self.search_one).start()
         # self.search_t.start()
 
@@ -92,6 +117,8 @@ class Gui(QWidget,Ui_Form):
         space = ['&nbsp;' for _ in range(12)]
         strs = C.check_(20)
         strs =''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font>'+strs
+        self.wait =False
+        time.sleep(0.05)
         self.signal_settext.emit(strs)
 
     def seach_t(self):
@@ -164,6 +191,8 @@ class Gui(QWidget,Ui_Form):
                 print(f.__name__)
                 strs = f(url,param,self.tsno,self.TSNO,self.token)
                 strs =''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'+strs
+                self.wait =False
+                time.sleep(0.05)
                 self.signal_settext.emit(strs)
                 
                 # return (''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'+strs)
@@ -265,6 +294,17 @@ class Gui(QWidget,Ui_Form):
         else:
             for _ in self.cars:
                 _.setEnabled(False)
+def get_token(url,name,pwd):
+    js_pwd ={
+    "clientId":"098f6bcd4621d373cade4e832627b4f6",
+    'userName':name,
+    'password':pwd
+    }
+    res = requests.post(url,json=js_pwd,verify=False)
+    res =json.loads(res.content)
+    token = res['content']['token']
+    return token
+
 class opI:
     '''
         界面操作接口
@@ -277,9 +317,12 @@ class opI:
 
     def search_waittime(self):
         self.ui.result_text.setText('正在查询···')
+
+
 if __name__=='__main__':
     ui = Gui()
     ui.show()
-    # ui.pre.pre_search.emit()
-    # opI()
     sys.exit(app.exec_())
+    # url_qy= 'http://202.105.10.126:8055/api/v1/login/'
+    # url_gz = 'https://gz.etc-cn.com/api/v1/login/'
+    # print('#',get_token(url,'demo','demo&123'))
