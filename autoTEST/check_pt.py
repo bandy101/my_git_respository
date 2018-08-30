@@ -650,7 +650,7 @@ def get_strength(url,token):
     return red,purple,k
 
 def check_(times=200):
-    token = get_token
+    # token = get_token
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
@@ -664,8 +664,18 @@ def check_(times=200):
         for i in it:
             url = list(i.values())[0]
             token,is_oppage= get_token(url+'api/login/')##令牌
+            nn =0
+            while not is_oppage:
+                nn +=1
+                if nn>5:break
+                token,is_oppage= get_token(url+'api/login/')##令牌
             r_m,v_m,is_ok= 0,0,False
             red_power,uv_power,is_p=get_strength(url+p_status,token)
+            nn =0
+            while not is_p:
+                nn +=1
+                if nn>5:break
+                red_power,uv_power,is_p=get_strength(url+p_status,token)
             is_open = False
             for t in range(times):
                 if is_p:

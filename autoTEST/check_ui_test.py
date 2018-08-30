@@ -7,7 +7,7 @@ from threading import Thread
 # from main import Ui_Form
 
 import check_pt as C
-import check_device as D
+# import check_device as D
 import json
 import time
 import requests
