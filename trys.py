@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import math
 from scipy import optimize  
-
+from mpl_toolkits.axisartist.axislines import SubplotZero
 def f_1(x, A, B):  
     return A*x + B  
   
@@ -47,7 +47,11 @@ def test():
 
     plt.show()  
 
+0.9942133890017211
+0.9942300991878248
 
+
+0.9240401368341544
 if __name__=='__main__':
     
     x_ = np.arange(90)
@@ -55,14 +59,32 @@ if __name__=='__main__':
     y1 = np.tan(45/180)
     y_ = y1*x
     y = np.sin(x*0.5)+10    
-    k=x-sin-
-    plt.figure(1)  
+    fg = plt.figure(1)  
+    # ax = SubplotZero(fg,1,1,1)
+    # fg.add_subplot(ax)
+    # ax.axis["xzero"].label.set_text("新建y=0坐标")
+    # ax.axis["xzero"].label.set_color('green')
+    # ax.axis["xzero"].set_visible(True)
+    # ax.axis["新建1"] = ax.new_floating_axis(nth_coord=0, value=2,axis_direction="bottom")
+    # ax.axis["新建1"].toggle(all=True)
+    # ax.axis["新建1"].label.set_text("y = 2横坐标")
+    # ax.axis["新建1"].label.set_color('blue')
+    # ax.axis["xzero"].set_axisline_style("-|>")
+    # ax.set_ylim(-3, 3)
+    # ax.set_yticks([-1,-0.5,0,0.5,1])
+    # ax.set_xlim([-5, 8])
+    # ax.grid(True, linestyle='-.')
+    # xx = np.arange(-4, 2*np.pi, 0.01)
+    # ax.plot(xx, np.sin(xx)) 
+    bc = np.linspace(0,1,100)
+    v = np.log(bc)
     plt.subplot(211)  
-    plt.plot(x, y_)  
+    plt.plot(bc, v)  
     plt.subplot(211)  
     # 设置x轴范围  
-    plt.xlim(0, 100)  
+    # plt.xlim(-100, 100)  
     # 设置y轴范围  
-    plt.ylim(0, 50)  
-    plt.plot(x, y)  
+    # plt.ylim(-50, 50)  
+
+    plt.plot(bc, -v)    
     plt.show()  

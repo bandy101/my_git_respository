@@ -192,7 +192,7 @@ if __name__=='__main__':
     # html_doc=str(html,'utf-8')
     # # print(a.encode('UTF-8').decode('UTF-8'))
     # print(html_doc)
-    print(check_(1))
+    print(check_(20))
 
     # html=BeautifulSoup(html_doc,'html.parser')
     # attrs=html.title.attrs
