@@ -28,7 +28,7 @@ if __name__ == '__main__':
     bx = hist1/len(t1.ravel())
     print('probility:',sum(np.sqrt(ax*bx)))
     # print('probility:', 1+np.log(sum(np.sqrt(ax*bx))))]
-    
+
     hist_0 = cv2.calcHist([t0],[0],None,[256],[0,256])
     hist_1 = cv2.calcHist([t1],[0],None,[256],[0,256])
     a = normlize(hist0)
