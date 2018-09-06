@@ -266,7 +266,6 @@ class Gui(QWidget,Ui_Form):
         if self.flats=='02':
             self.air_mthod_id=[0,0,0,0,0] # 广州平台没有空气质量
         alls_metho_id = self.air_mthod_id+self.telemetru_mthod_id+self.car_mthod_id
-        print(alls_metho_id)
         return zip(key,values,alls_metho_id)
     def search_data(self):
         for _ in self.json['platform']:

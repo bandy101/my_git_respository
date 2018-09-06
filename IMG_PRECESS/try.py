@@ -23,12 +23,14 @@ if __name__ == '__main__':
     # plt.hist(t0.ravel(),256,[0,256])
     hist0,_ = np.histogram(t0.ravel(),256,[0,256])
     ax = hist0/len(t0.ravel())
-    print('len(t0.ravel()):',len(t0.ravel()))
+    ax = hist0/sum(hist0)
+    print('len(t0.ravel()):',len(t0.ravel()),sum(hist0))
     hist1,_ = np.histogram(t1.ravel(),256,[0,256])
     bx = hist1/len(t1.ravel())
+    bx = hist1/sum(hist1)
     print('probility:',sum(np.sqrt(ax*bx)))
     # print('probility:', 1+np.log(sum(np.sqrt(ax*bx))))]
-
+    
     hist_0 = cv2.calcHist([t0],[0],None,[256],[0,256])
     hist_1 = cv2.calcHist([t1],[0],None,[256],[0,256])
     a = normlize(hist0)
@@ -37,10 +39,11 @@ if __name__ == '__main__':
 
     # print ('hist:',a,b)
     # print(a,b)
-    BC = sum(np.sqrt(a*b))  
+    BC = sum(np.sqrt(hist0*hist1))  
     print('bc:',BC,1-BC)
     print(-np.log(BC))
-    print(1-np.sqrt(1-(BC/np.sqrt(sum(a)*sum(b)))))
+    print(BC/np.sqrt(sum(hist0)*sum(hist1)))
+    print(1-np.sqrt(1-(BC/np.sqrt(sum(hist0)*sum(hist1)))))
     # print('hist',hist.shape)
     # print(hist)
     # bins=np.bincount(t1.ravel(),minlength=256)

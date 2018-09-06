@@ -50,7 +50,7 @@ def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     
     values = json.loads(res.content)['content']
     # print('res,',res)
-    print(values)
+    # print(values)
     lv = values['list']
     if not lv:
         if day==1:
@@ -172,7 +172,7 @@ def air_quality_data_manger(url,params,tsno,dict_tsnos,token):
                 break
         params['tsNo'] = _
         lists=have_lists_air_telemtry(token,params,url,year,month,day,_,[])
-        print('str:',strs)
+        print('lists:',lists)
         # time.sleep(1)
         interval = -int(str(lists[0]['collectionDate'])[0:10]) +int(time.time())
         if (interval//60>18):
@@ -193,7 +193,8 @@ def air_quality_data_manger(url,params,tsno,dict_tsnos,token):
             +' CO:'+str(l['co'])+' SO2:'+str(l['so2'])+'<br>'
         if strs=='':strss +='<b>'+k +'</b>'+ '站点 数据正常<br>O3:'+str(l['o3'])+' NO2:'+str(l['no2'])\
             +' CO:'+str(l['co'])+' SO2:'+str(l['so2'])+'<br>'
-        print (strss)
+        print ('##:',strss)
+        print('strs:',strs)
     print(strss)
     return strss
 
@@ -215,7 +216,7 @@ def air_quality_statistics_day(url,params,tsno,dict_tsnos,token):
                 break
         params['tsNo'] = _
         res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
-        print(res)
+        # print(res)
         values = json.loads(res.content)['content']
         # print(values)
         have_air = False
