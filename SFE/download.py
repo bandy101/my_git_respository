@@ -41,10 +41,6 @@ def get_token(url,name='demo',pwd='demo&123'):
 
 def get_mp4_info(url):
     url_qy = 'http://202.105.10.126:8055/api/v1/login/'
-    'http://202.105.10.126:8055/api/v1/smokeMessagePageQuery?\
-    provinceId=440000&cityId=441800&countyId=&tsNo=&license=\
-    &monitorBeginTime=2018-09-11 00:00:00&monitorEndTime=\
-    2018-09-11 23:59:59&pageNum=2&pageSize=30'
     begindate= time.strftime("%Y-%m-%d", time.localtime())+' 00:00:00'
     enddate = time.strftime("%Y-%m-%d", time.localtime())+' 23:59:59'
     params = {
@@ -58,7 +54,6 @@ def get_mp4_info(url):
         'pageNum':1
     }
     token = get_token(url_qy)
-
     res = requests.get(url,params=params,headers={'Authorization':'bearer  '\
         +token},timeout=6000,verify= False)
     print(res.url)
