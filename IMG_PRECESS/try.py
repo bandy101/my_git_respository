@@ -11,7 +11,7 @@ if __name__ == '__main__':
     t0 = cv2.imread('1.jpg',0)
     t1 = cv2.imread('2.jpg',0)
     hist = cv2.calcHist([t0],[0],None,[256],[0,256])
-    print('shape:',t0.shape)
+    print('shape:',t0.shape[-1],t1.shape[-1])
     print(len(hist))
     # print(hist)
     print(len(t0.ravel()))

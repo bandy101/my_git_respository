@@ -324,4 +324,4 @@ if __name__=='__main__':
     sys.exit(app.exec_())
     # url_qy= 'http://202.105.10.126:8055/api/v1/login/'
     # url_gz = 'https://gz.etc-cn.com/api/v1/login/'
-    # print('#',get_token(url,'demo','demo&123'))
+    # print('#',get_token(url_gz,'demo','demo&123'))
