@@ -94,16 +94,17 @@ def smoke_move(ID):
 
 def zips(startdir=None,file_news=None):
     startdir = "./target_smoke"  #要压缩的文件夹路径
+    if path.exists(startdir):
+        shutil.rmtree(startdir)
+    os.makedirs(path.abspath(startdir))
     file_news = '.'+startdir +'.zip' # 压缩后文件夹的名字
     print(file_news)
     z = zipfile.ZipFile(file_news,'w',zipfile.ZIP_DEFLATED) #参数一：文件夹名（路径）
     for dirpath, dirnames, filenames in os.walk(startdir):
-        fpath = dirpath.replace(startdir,'') #这一句很重要，不replace的话，就从根目录开始复制
-        print('fpath:',fpath)
-        fpath = fpath and fpath + os.sep or ''#这句话理解我也点郁闷，实现当前文件夹以及包含的所有文件的压缩
+        print('dirpath:',dirpath)
         for filename in filenames:
-            z.write(os.path.join(dirpath, filename),fpath+filename)
-            print ('压缩成功')
+            z.write(path.join(dirpath,filename))
+            print ('压缩成功,',path.join(dirpath,filename))
     z.close()
 
 
@@ -133,7 +134,7 @@ if __name__=='__main__':
     x =input('请输入ID号:')
     while True:
         Y =smoke_move(x)
-
+        print('退出输入q or quit!')
         if Y:
             print('目标ID移动成功')
             x =input('请输入新ID:')
@@ -142,3 +143,4 @@ if __name__=='__main__':
             x =input('找不到该ID,请输入正确ID:') 
         if x =='q' or x =='quit':
             break
+    zips()
