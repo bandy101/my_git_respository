@@ -52,6 +52,7 @@ def get_mp4_info(url):
     url_qy = 'http://202.105.10.126:8055/api/v1/login/'
     begindate= time.strftime("%Y-%m-%d", time.localtime())+' 00:00:00'
     enddate = time.strftime("%Y-%m-%d", time.localtime())+' 23:59:59'
+    print(f'date-->-:{begindate}<-->{enddate}')
     params = {
         'provinceId':440000,
         'cityId':441800,
@@ -80,9 +81,10 @@ def get_mp4_info(url):
 def smoke_move(ID):
     target ='./target_smoke/'
     Y  = False
+    # c_time =str(time.strftime('%Y-%m-%d',time.localtime()))
     for _,fdir,files in os.walk('./video'):
         for f in files:
-            if ID in f:
+            if (ID in f):
                 print('dicrection:',path.join(_,f))
                 dirs = target+path.split(_)[-1]
                 if not path.exists(dirs):os.makedirs(dirs)
@@ -94,17 +96,21 @@ def smoke_move(ID):
 
 def zips(startdir=None,file_news=None):
     startdir = "./target_smoke"  #要压缩的文件夹路径
-    if path.exists(startdir):
-        shutil.rmtree(startdir)
-    os.makedirs(path.abspath(startdir))
-    file_news = '.'+startdir +'.zip' # 压缩后文件夹的名字
+    # if path.exists(startdir):
+    #     shutil.rmtree(startdir)
+    # if not path.exists(startdir):os.makedirs(path.abspath(startdir))
+    times = time.strftime('%Y-%m-%d',time.localtime())
+    fpath = 'H:/分类任务/清远黑烟/清远平台/'+times
+    file_news = fpath +'.zip' # 压缩后文件夹的名字
     print(file_news)
     z = zipfile.ZipFile(file_news,'w',zipfile.ZIP_DEFLATED) #参数一：文件夹名（路径）
     for dirpath, dirnames, filenames in os.walk(startdir):
         print('dirpath:',dirpath)
         for filename in filenames:
-            z.write(path.join(dirpath,filename))
-            print ('压缩成功,',path.join(dirpath,filename))
+            ff = path.join(dirpath,filename)
+            if str(time.strftime('%Y-%m-%d',time.localtime())) in ff:
+                z.write(ff)
+                print ('压缩成功,',path.join(dirpath,filename))
     z.close()
 
 
@@ -133,6 +139,8 @@ if __name__=='__main__':
     print('total_video_num:',total_video_num)
     x =input('请输入ID号:')
     while True:
+        if x =='q' or x =='quit':
+            break
         Y =smoke_move(x)
         print('退出输入q or quit!')
         if Y:
@@ -141,6 +149,5 @@ if __name__=='__main__':
             # break
         else:
             x =input('找不到该ID,请输入正确ID:') 
-        if x =='q' or x =='quit':
-            break
+
     zips()

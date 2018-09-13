@@ -60,6 +60,7 @@ def get_mp4_info(url):
     res = json.loads(res.content)
     lists = res['content']['list']
     print(len(lists))
+    return lists
 from os import path
 def zips(startdir=None,file_news=None):
     startdir = "./video"  #要压缩的文件夹路径

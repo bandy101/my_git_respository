@@ -73,10 +73,7 @@ js_pwd ={
     'account':'operator',
     'password':'123456'
     }
-global token,paramer
-token = \
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2ZlIiwidW5pcXVlX25hbWUiOiJvcGVyYXRvciIsInVzZXJfaWQiOiIzNiIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJleHAiOjE1MzY4MTc2OTAsIm5iZiI6MTUzNTUyMTY5MH0.kbzKl_HfFu331acmNWJBK4F2WnKG4vbKBm8z-R3jgBg'
-
+global paramer
 # bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2ZlIiwidW5pcXVlX25hbWUiOiJvcGVyYXRvciIsInVzZXJfaWQiOiIzNiIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJleHAiOjE1MzY4MTc2OTAsIm5iZiI6MTUzNTUyMTY5MH0.kbzKl_HfFu331acmNWJBK4F2WnKG4vbKBm8z-R3jgBg
 
 def get_token(url):
@@ -87,14 +84,14 @@ def get_token(url):
     'userName':'operator',
     'password':'123456'
     }
-    res = requests.post(url_login,json=js_pwd)
+    res = requests.post(url,json=js_pwd)
     # print(res)
     res =json.loads(res.content)
     print(res)
     token = res['content']['token']
     return token
     
-def is_max(url):
+def is_max(url,token):
     red,purple=None,None
     try:
         res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
@@ -108,7 +105,7 @@ def is_max(url):
     except :
         k = False
     return red,purple,k
-def get_strength(url):
+def get_strength(url,token):
     red,purple=None,None
     try:
         res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
@@ -141,14 +138,15 @@ def check_(times=200):
         ok_num =0   
         for i in it:
             url = list(i.values())[0]
+            token = get_token(url+'api/login/')
             print('url:',url)
             r_m,v_m,is_ok= 0,0,False
-            red_power,uv_power,is_p=get_strength(url+p_status)
+            red_power,uv_power,is_p=get_strength(url+p_status,token)
             is_open =False
             for t in range(times):
                 if is_p:
                     time.sleep(0.05)
-                    red,uv,is_ok= is_max(url+ps)
+                    red,uv,is_ok= is_max(url+ps,token)
                     if is_ok:is_open =True
                     if not is_ok:continue
                     if red>r_m:r_m=red
