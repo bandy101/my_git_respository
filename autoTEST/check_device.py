@@ -77,19 +77,20 @@ global paramer
 # bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2ZlIiwidW5pcXVlX25hbWUiOiJvcGVyYXRvciIsInVzZXJfaWQiOiIzNiIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJleHAiOjE1MzY4MTc2OTAsIm5iZiI6MTUzNTUyMTY5MH0.kbzKl_HfFu331acmNWJBK4F2WnKG4vbKBm8z-R3jgBg
 
 def get_token(url):
-    url_login = 'http://60.165.50.66:11000/api/login/'
-    # url_login = 'http://110.185.174.145:11000'
     js_pwd ={
     "clientId":"098f6bcd4621d373cade4e832627b4f6",
     'userName':'operator',
     'password':'123456'
     }
-    res = requests.post(url,json=js_pwd)
-    # print(res)
-    res =json.loads(res.content)
-    print(res)
-    token = res['content']['token']
-    return token
+    token,k=None,None
+    try:
+        res = requests.post(url,json=js_pwd,verify=False)
+        res =json.loads(res.content)
+        token = res['content']['token']
+        k =True
+    except:
+        k =False
+    return token,k
     
 def is_max(url,token):
     red,purple=None,None
@@ -138,7 +139,12 @@ def check_(times=200):
         ok_num =0   
         for i in it:
             url = list(i.values())[0]
-            token = get_token(url+'api/login/')
+            token ,is_oppage= get_token(url+'api/login/')
+            nn =0
+            while not is_oppage:
+                nn +=1
+                if nn>5:break
+                token,is_oppage= get_token(url+'api/login/')##令牌
             print('url:',url)
             r_m,v_m,is_ok= 0,0,False
             red_power,uv_power,is_p=get_strength(url+p_status,token)
