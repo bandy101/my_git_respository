@@ -86,7 +86,7 @@ def smoke_move(ID):
     for _,fdir,files in os.walk('./video'):
         for f in files:
             if (ID in f) :
-                if path.split(_)[-1] in['广清大道','治超站出口','三棵竹一桥','清远大道']:
+                if path.split(_)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']:
                     continue
                 print('dicrection:',path.join(_,f)) 
                 dirs = target+path.split(_)[-1]
@@ -111,7 +111,7 @@ def zips(startdir=None,file_news=None):
         # print('dirpath:',dirpath)
         for filename in filenames:
             ff = path.join(dirpath,filename)
-            if str(time.strftime('%Y-%m-%d',time.localtime())) in ff and path.split(dirpath)[-1] not in['广清大道','治超站出口','三棵竹一桥','清远大道'] :
+            if str(time.strftime('%Y-%m-%d',time.localtime())) in ff and path.split(dirpath)[-1] not in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)'] :
                 print(dirpath)
                 z.write(ff)
                 print ('压缩成功,',path.join(dirpath,filename))
