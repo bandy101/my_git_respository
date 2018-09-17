@@ -20,8 +20,40 @@ TSNO={
     "SFE-R600-V23W2833":"G107好运饲料1号机",
     "SFE-R600-V23W2851":"G107好运饲料2号机",
     "SFE-R600-V23W2902":"G107铁道路桥1号机",
-    "SFE-R600-V23W2926":"G107铁道路桥2号机"
+    "SFE-R600-V23W2926":"G107铁道路桥2号机",
+    "SFE-R600-G22W2807":"广清大道(龙塘)",
+    "SFE-R600-G22W2714":"治超站出口",
+    "SFE-R600-G22W2772":"三棵竹一桥(源潭)",
+    "SFE-R600-G22W2798":"清远大道(党校)"
 }
+
+def params(flag,begindate,enddate,pagesize=1000):
+    if flag==0:
+        param = {
+            'provinceId':440000,
+            'cityId':441800,
+            'countyId':'',
+            'tsNo':'',
+            'monitorBeginTime':str(begindate),
+            'monitorEndTime':str(enddate),
+            'pageSize':pagesize,
+            'pageNum':1
+        }
+        return param
+    if flag==1:
+        param = {
+        'provinceId':410000,
+        'cityId':410700,
+        'countyID':410701,
+        'tsNo':'',
+        'monitorBeginTime':str(begindate),
+        'monitorEndTime':str(enddate),
+        'pageSize':pagesize,
+        'pageNum':1
+        }
+        return param
+    raise '参数错误！'
+    
 def down_video(url):
     assert isinstance(url,str)
     try:
@@ -42,7 +74,25 @@ def get_token(url,name='demo',pwd='demo&123'):
         return token
     except Exception as e:
         print(e)
-
+def zips(zip_name,startdir="./target_smoke",fpath = 'H:/分类任务/清远黑烟/清远平台/'):
+    '''
+        @paramer
+    '''
+    # if path.exists(startdir):
+    #     shutil.rmtree(startdir)
+    # if not path.exists(startdir):os.makedirs(path.abspath(startdir))
+    file_news = fpath+zip_name +'.zip' # 压缩后文件夹的名字
+    print(file_news)
+    z = zipfile.ZipFile(file_news,'w',zipfile.ZIP_DEFLATED) #参数一：文件夹名（路径）
+    for dirpath, dirnames, filenames in os.walk(startdir):
+        for filename in filenames:
+            ff = path.join(dirpath,filename)
+            if str(time.strftime('%Y-%m-%d',time.localtime())) in ff and path.split(dirpath)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']:
+            # if path.split(dirpath)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']:
+                print('ppp:',dirpath)
+                z.write(ff)
+                print ('压缩成功,',path.join(dirpath,filename))
+    z.close()
 #-------start------#
 def download(url,paths):
     #判断文件夹是否存在
@@ -55,50 +105,45 @@ def download(url,paths):
             if path.getsize(paths)==content_length:
                 print(res,res.url,'already exists!')
                 break
-            else:os.remove(paths)                
+            else:os.remove(paths)
+        begin_t = time.time()               
         with open(paths,'ab') as f:
             for _ in res.iter_content(chunk_size=Chunk_Size*Chunk_Size):
                 if _:f.write(_),f.flush()
-            print('download sucessly,receive data，file size : %d  total size:%d' % (os.path.getsize(paths), content_length))
+            print('download sucessly,receive data,file size : %d  total size:%d' % (os.path.getsize(paths), content_length))
             if path.getsize(paths) ==content_length:break
         res=down_video(url)
 
-def get_mp4_info_list(pre_url,check_date):
+def get_mp4_info_list(pre_url,check_date,flag,day_num=2):
     '''
         -paramer@check_date:['1','y','Y']->检测礼拜,其他->正常检测
     '''
     # url_qy = 'http://202.105.10.126:8055/api/v1/login/'
     assert isinstance(pre_url,str)
     if (pre_url[-1]!='/'):pre_url=pre_url+'/'
-
     print(pre_url,'##',pre_url[-1]!='/')
     login_url = pre_url+'api/v1/login/'
     if check_date in['1','y','Y']:
-        from datetime import datetime
+        # from datetime import datetime
+        import datetime
         import calendar
-        now_time = datetime.now()
-        isweekday = datetime.now().isoweekday()
-        begindate = now_time + datetime.timedelta(days = -2).strftime('%Y-%m-%d')
-        enddate = now_time + datetime.timedelta(days = -1).strftime('%Y-%m-%d')
+        now_time = datetime.datetime.now()
+        isweekday = now_time.isoweekday()
+        begindate = (now_time + datetime.timedelta(days = -day_num)).strftime('%Y-%m-%d')+ ' 00:00:00'
+        enddate = (now_time + datetime.timedelta(days = -1)).strftime('%Y-%m-%d')+' 23:59:59'
+        zip_name = '.'.join(str(begindate[:10]).split('-')).replace('.','-',1)+'-'+\
+            '.'.join((str(enddate[:10]).split('-')[-2],str(enddate[:10]).split('-')[-1]))
     else:    
-        begindate= time.strftime("%Y-%m-%d", time.localtime())
-        enddate = time.strftime("%Y-%m-%d", time.localtime())
+        begindate= time.strftime("%Y-%m-%d", time.localtime())+ ' 00:00:00'
+        enddate = time.strftime("%Y-%m-%d", time.localtime())+' 23:59:59'
+        zip_name =time.strftime('%Y-%m-%d',time.localtime())
     print(f'date-->-:{begindate}<-->{enddate}')
-    params = {
-        'provinceId':440000,
-        'cityId':441800,
-        'countyId':'',
-        'tsNo':'',
-        'monitorBeginTime':str(begindate)+' 00:00:00',
-        'monitorEndTime':str(enddate)+' 23:59:59',
-        'pageSize':1000,
-        'pageNum':1
-    }
+    param =params(flag,begindate,enddate,1)
     token = get_token(login_url)
     url = pre_url+'api/v1/smokeMessagePageQuery'
-    res = requests.get(url,params=params,headers={'Authorization':'bearer  '\
+    res = requests.get(url,params=param,headers={'Authorization':'bearer  '\
         +token},timeout=6000,verify= False)
-    print('res:',res)
+    print('res:',res,res.content)
     res = json.loads(res.content)
     lists = res['content']['list']
     info = []
@@ -112,9 +157,9 @@ def get_mp4_info_list(pre_url,check_date):
         re = json.loads(re.content)['content']
         info.append((re['url'],re['tsNo']))
     print(len(lists))
-    return lists,info,len(lists)    
+    return lists,info,len(lists),zip_name    
 
-def move_targtId_to_path(ID=None,area=None,target='./target_smoke/'):
+def move_targtId_to_path(ID=None,flag=None,target='./target_smoke/'):
     if ID in [None,'',' ']:
         print('ID错误!')
         return
@@ -125,9 +170,9 @@ def move_targtId_to_path(ID=None,area=None,target='./target_smoke/'):
             if (ID in f):
                 print(path.split(_))
                 belongFolder = None #判断文件夹名字属于的哪个地区
-                if area==0:#清远
+                if flag==0:#清远
                     belongFolder = path.split(_)[-1] not in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']
-                if area==1:#新乡
+                if flag==1:#新乡
                     belongFolder = path.split(_)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']
                 if belongFolder:
                     continue
@@ -142,17 +187,18 @@ def move_targtId_to_path(ID=None,area=None,target='./target_smoke/'):
 
 def pre_start(root_dir='./video/'):
     if root_dir[-1] not in['/','\\']:
-        root_dir+'/'
+        root_dir =root_dir+'/'
     global TSNO
     print('\n-----清远:0---新乡:1-----')
-    xxx = int(input('输入查询的地区(0 or 1)↑:'))
-    print("['1','y','Y']->检测礼拜,其他->检测工作日'")
-    xx  = input('是否检测(六,日)👆:')
+    flag = int(input('输入查询的地区(0 or 1)↑:'))
+    if flag not in [1,0]:raise '错误的输入！👆'
+    print("['1','y','Y']->检测礼拜,其他(0,a,b,c···)->检测工作日'")
+    check_date  = input('检测(需求))👆::')
     try:
-        prex_url = URL[xxx]
+        prex_url = URL[flag]
     except Exception as e:
         print(e)
-    lists,info,total_video_num = get_mp4_info_list(prex_url,xx)
+    lists,info,total_video_num ,zip_name= get_mp4_info_list(prex_url,check_date,flag,2)
     names = [] # video/mp4’name
     urls = [] # video/mp4’infomation
     for _,(url,tsno)in zip(lists,info):
@@ -160,10 +206,10 @@ def pre_start(root_dir='./video/'):
         site = TSNO[tsno]
         names.append((root_dir+site+'/'+time_name+'-'+_['id']+'.mp4'))
         urls.append(prex_url+'/video/'+url)
-    return names,urls,prex_url,total_video_num,xxx
+    return names,urls,prex_url,total_video_num,flag,zip_name
 
-def start():
-    names,urls,prex_url,total_video_num,area = pre_start('./video_test')
+def start(target_path='./target_test',down_video_path='./video_test'):
+    names,urls,prex_url,total_video_num,flag,zip_name = pre_start(down_video_path)
     pool = ThreadPoolExecutor(max_workers=4)
     all_task = [pool.submit(download,url,name) for name,url in zip(names,urls)]
     wait(all_task,return_when=ALL_COMPLETED)
@@ -171,15 +217,19 @@ def start():
     print('退出输入:q or n')
     ID = input('请输入ID:')
     while   True:
-        if ID =='q' or ID =='n':
+        if ID.lower() =='q' or ID.lower() =='n':
             break
-        Y =move_targtId_to_path(ID,area,'./target_test')
+        Y =move_targtId_to_path(ID,flag,target_path)
         print('退出输入q or quit!')
         if Y:
             print('目标ID移动成功')
             ID =input('请输入新ID:')
         else:
             ID =input('找不到该ID,请输入正确ID:')
+    zz = input('是否压缩(y or n):')
+    if zz.lower() =='y':
+        zips(zip_name)
+    else:print('操作完成🆗')
 if __name__=='__main__':
     print('start···')
     start()
