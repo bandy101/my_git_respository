@@ -96,4 +96,13 @@ def pre_start(pre_path='./video/'):
 
 
 if __name__ == '__main__':
-    pre_start('./video/')
+    # pre_start('./video/')
+    import re
+    x =input(':')
+    while True:
+        if x[0] in ['',' ']:
+            x = x[1:]
+        else:break
+    k = re.split('[\s]',x)
+    print(len(x),len(k),k)
+    print('xx:',x)
