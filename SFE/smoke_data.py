@@ -26,7 +26,9 @@ TSNO={
     "SFE-R600-G22W2772":"三棵竹一桥(源潭)",
     "SFE-R600-G22W2798":"清远大道(党校)"
 }
-
+'''
+    @@ flag ∈ (0,1)<->(清远,新乡)
+'''
 def params(flag,begindate,enddate,pagesize=1000):
     if flag==0:
         param = {
@@ -74,7 +76,7 @@ def get_token(url,name='demo',pwd='demo&123'):
         return token
     except Exception as e:
         print(e)
-def zips(zip_name,startdir="./target_smoke",fpath = 'H:/分类任务/清远黑烟/清远平台/'):
+def zips(flag,zip_name,startdir="./target_smoke",fpath = 'H:/分类任务/清远黑烟/清远平台/'):
     '''
         @paramer
     '''
@@ -82,13 +84,42 @@ def zips(zip_name,startdir="./target_smoke",fpath = 'H:/分类任务/清远黑�
     #     shutil.rmtree(startdir)
     # if not path.exists(startdir):os.makedirs(path.abspath(startdir))
     file_news = fpath+zip_name +'.zip' # 压缩后文件夹的名字
-    print(file_news)
+    print('zip-name:',file_news)
     z = zipfile.ZipFile(file_news,'w',zipfile.ZIP_DEFLATED) #参数一：文件夹名（路径）
     for dirpath, dirnames, filenames in os.walk(startdir):
         for filename in filenames:
             ff = path.join(dirpath,filename)
-            if str(time.strftime('%Y-%m-%d',time.localtime())) in ff and path.split(dirpath)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']:
-            # if path.split(dirpath)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']:
+            _,target_mon,target_day = list(map(lambda x:int(x),filename.split(' ')[0].split('-')))
+            print('ff:',ff)
+            if flag==0:
+                cond_0 = path.split(dirpath)[-1] in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']
+            if flag==1:
+                cond_0 = path.split(dirpath)[-1] not in['广清大道(龙塘)','治超站出口','三棵竹一桥(源潭)','清远大道(党校)']
+            #zip_name:xxxx-xx.xx-.xx.xx xxxx-xx-xx#
+            if '-.' in zip_name:#检测多天
+                x1,x2 = [_.split('.') for _ in zip_name.split('-.')]
+                x1 = [x1[0].split('-')[-1],x1[-1]] #第一部分
+                if x2[0]>=x1[0] and x2[-1]>=x1[-1]:
+                    if target_mon in [_ for _ in range(int(x1[0]),int(x2[0]+1))] and \
+                        target_day in [_ for _ in range(int(x1[-1]),int(x2[-1]+1))]:
+                        cond_1 =True
+                    else:cond_1 =False
+                else:
+                    '''
+                        处理特殊日期
+                    '''
+                    #8-31 9-2 12-31 1-2
+                    x = [_ for _ in range(x2[-1]+1)]
+                    x = x + [_ for _ in range(x1[-1],32)]
+                    if target_mon in [x2[0],x1[0]] and target_day in x:
+                        cond_1 = True
+                    else:cond_1 = False
+                    #---stop---#
+                    # print('该数据特殊请修改代码!date1-date2!',x1,x2)
+                    # raise ('查询日期特殊,请手动修改!')
+            #检测当天
+            else:cond_1 = str(time.strftime('%Y-%m-%d',time.localtime())) in ff
+            if cond_1 and cond_0:
                 print('ppp:',dirpath)
                 z.write(ff)
                 print ('压缩成功,',path.join(dirpath,filename))
@@ -192,7 +223,7 @@ def pre_start(root_dir='./video/'):
     print('\n-----清远:0---新乡:1-----')
     flag = int(input('输入查询的地区(0 or 1)↑:'))
     if flag not in [1,0]:raise '错误的输入！👆'
-    print("['1','y','Y']->检测礼拜,其他(0,a,b,c···)->检测工作日'")
+    print("['1','y','Y']->检测礼拜,其他(0,a,b,c···)->检测工作日(周一----周五)'")
     check_date  = input('检测(需求))👆::')
     try:
         prex_url = URL[flag]
@@ -228,7 +259,7 @@ def start(target_path='./target_test',down_video_path='./video_test'):
             ID =input('找不到该ID,请输入正确ID:')
     zz = input('是否压缩(y or n):')
     if zz.lower() =='y':
-        zips(zip_name)
+        zips(flag,zip_name)
     else:print('操作完成🆗')
 if __name__=='__main__':
     print('start···')
