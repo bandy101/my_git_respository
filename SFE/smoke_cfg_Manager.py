@@ -42,7 +42,7 @@ User-Agent	Mozilla/5.0 (Windows NT 10.0; WOW64; rv:62.0) Gecko/20100101 Firefox/
 '''
 def pre_start():
     k = 'http://218.28.71.220:1570/api/status'
-    res = requests.get(PRE_URL+'status',timeout=6000,verify= False)
+    res = requests.get(PRE_URL+'status',timeout=6000,verify= False,Ac)
     print(res.url)
     res  = json.loads(res.content)
     sites =res['content']
