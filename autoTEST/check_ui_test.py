@@ -32,10 +32,16 @@ class Gui(QWidget,Ui_Form):
         for _ in self.json['platform']:
             url_qy= 'http://202.105.10.126:8055/api/v1/login/'
             url_gz = 'https://gz.etc-cn.com/api/v1/login/'
-            if _['id']=='01':
-               self.json['platform'][0]['token']='bearer '+get_token(url_qy,'demo','demo&123')
-            if _['id']=='02':
-                self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
+            try:
+                if _['id']=='01':
+                    self.json['platform'][0]['token']='bearer '+get_token(url_qy,'demo','demo&123')
+            except:
+                pass
+            try:
+                if _['id']=='02':
+                    self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
+            except:
+                pass
         ##平台{01:qingyuan,02:guangzhou}
         self.flats = '01'
         self.qingyuan.toggled.connect(self.flat)
@@ -100,8 +106,6 @@ class Gui(QWidget,Ui_Form):
         # self.result_text.setText('<font size="8" color="red"><b>正在查询</b></font>')
         Thread(target=self.search_one).start()
         Thread(target=self.wait_search).start()
-        # Thread(target=self.search_one).start()
-        # self.search_t.start()
 
 
     def clicks(self):
@@ -121,14 +125,6 @@ class Gui(QWidget,Ui_Form):
         time.sleep(0.05)
         self.signal_settext.emit(strs)
 
-    def seach_t(self):
-        pass
-        # QThread(self.search_one).start()
-        # Thread(target=self.search_one).start()
-        # if self.click:
-        #     self.search.setDisabled(True)
-        #     self.click =False
-        #     self.search_one()
 
     def get_site_info(self):
             for _ in self.json['platform']:

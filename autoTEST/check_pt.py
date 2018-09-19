@@ -650,7 +650,7 @@ def get_strength(url,token):
         k = False
     return red,purple,k
 
-def check_(times=200):
+def check_(times=20):
     # token = get_token
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
@@ -680,12 +680,14 @@ def check_(times=200):
             is_open = False
             for t in range(times):
                 if is_p:
-                    time.sleep(0.1)
+                    time.sleep(0.05)
                     red,uv,is_ok= is_max(url+ps,token)
                     if is_ok:is_open =True
                     if not is_ok:continue
                     if red>r_m:r_m=red
                     if uv >v_m:v_m=uv
+                    if (r_m>=500 and v_m>=2000):
+                        break
             if(is_open):
                 if (r_m>=500 and v_m>=2000):
                     strs +=list(i.keys())[0]+'  红外功率:'+str(red_power)+' 光强:'+str(int(r_m))+' 紫外积分:'+str(uv_power)+' 光强:'+str(int(v_m))+'\n<br>'
