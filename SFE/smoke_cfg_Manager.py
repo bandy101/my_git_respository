@@ -5,9 +5,13 @@ import json,time
 import zipfile
 from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait
 
-global PRE_URL,Cookies,Chunk_Size
-PRE_URL = 'http://218.28.71.220:1570/api/'
-Cookies={'session_id': '508e3929c760f48a7f80c07a280d725009ee541f'}
+global PRE_URL,Cookies,Chunk_Size,qys,xxs
+qys ='http://202.105.10.126:1577'
+xxs ='http://218.28.71.220:1570'
+PRE_URL = qys
+#qy'719a110333e17b6f6e418a6cc207653af79ed185'
+#xx'2544e6160dc3a7aad6435cd7fadbaaecadffaae4'
+Cookies={'session_id': '2544e6160dc3a7aad6435cd7fadbaaecadffaae4'}
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",
@@ -54,6 +58,7 @@ def down_video(url):
         return res
     except Exception as e:
         print(e)
+
 def download(url,paths):
     #判断文件夹是否存在
     [dir_name,dir_basename] = path.split(paths)
@@ -81,8 +86,8 @@ pool = ThreadPoolExecutor(max_workers=4)
 def pre_start(pre_path='./video/'):
     if pre_path[-1] not in ['\\','/']:
         pre_path = pre_path +'/'
-    site_url = 'http://218.28.71.220:1570/api/status'
-    list_pre = 'http://218.28.71.220:1570/api/record/'
+    site_url = PRE_URL+'/api/status'
+    list_pre = PRE_URL+'/api/record/'
     sites = get_sites(site_url)
     for site in sites:
         lists =get_lists(list_pre+site)
@@ -91,40 +96,47 @@ def pre_start(pre_path='./video/'):
             # print(l['upload'],l['upload']=='未上传')
             if l['status']==False and l['upload']=='未上传':
                 names.append(l['name'])
-        print(names)
+        # print(names)
         mp4_url= []
         target_name = []
         for name in names:
-            mp4_url.append('http://218.28.71.220:1570/api/record/'+site+'/'+name+'/video')
+            mp4_url.append(PRE_URL+'/api/record/'+site+'/'+name+'/video')
             target_name.append(pre_path+TSNO[site]+'/'+name+'.mp4')
             # print(TSNO[site])
         all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
         wait(all_task,return_when=ALL_COMPLETED)
 #确认
 
-def confirm(ID,paths,current=time.time()):
-    if ID in ['',None]:
-        raise '请输入正常的ID!!'
-    if ID==['no']:
-        is_confirm =True
-    time_range = [time.mktime(time.strptime(i[:8],"%Y%m%d")) for i in ID]
+def confirm(ID,paths,flag=False):
+    if not flag:
+        have_is = [((i not in ['',None],len(i)==21)) for i in ID]
+        is_confirm = all([_ for _ in (have_is)])
+        if not is_confirm:    
+            raise '请输入正常的ID!!'
+        Y= False
+    else:
+        Y= True
     sites = dict(zip(TSNO.values(),TSNO.keys()))
     for p,fdirs,files in os.walk(paths):
-        for _ in files:
-            timestamp = _[:-4]
-            # timestamp  = timestamp[:8]
-            # dates = time.strptime(timestamp,"%Y%m%d%H%M%S")
-            # timestamp = time.mktime(dates)
-            print('timestamp,time_range:\n',timestamp,time_range)
-            # if timestamp <int(min(time_range)) or timestamp >int(max(time_range)) \
-            #     or timestamp < int(current):
-            #     continue
-            site = sites[path.split(p)[-1]]
-            # 如果all(IDS) not in 文件名中则确认
-            print('##',len([True for i in ID if i not in _])==len(ID))
-            if len([True for i in ID if i not in _])==len(ID) :
-                url = 'http://218.28.71.220:1570/api/record/'+site+\
-                  '/'+timestamp+'/status'
+        if not files:continue
+        alls_file_name = list(map(lambda x:x[:-4],files))
+        for f in alls_file_name:
+            if not Y:
+                ids = [_ for _ in ID]
+                if f not in ids:
+                    site = sites[path.split(p)[-1]]
+                    url = PRE_URL+'/api/record/'+site+\
+                    '/'+f+'/status'
+                    try:
+                        res = requests.get(url,cookies=Cookies)
+                        print(res.url,'确认成功！')
+                        # print('确认成功！')
+                    except Exception as e:
+                        print(e)
+            else:
+                site = sites[path.split(p)[-1]]
+                url = PRE_URL+'/api/record/'+site+\
+                '/'+f+'/status'
                 try:
                     res = requests.get(url,cookies=Cookies)
                     print(res.url,'确认成功！')
@@ -132,22 +144,40 @@ def confirm(ID,paths,current=time.time()):
                 except Exception as e:
                     print(e)
 
+def start(down_load_path='./video_qy/',times=''):
+    pre_start(down_load_path+times)
 if __name__ == '__main__':
     path_name = time.strftime('%Y-%m-%d',time.localtime())
-    
+    seach_site = input('#---q:退出---0:清远---1:新乡---#:')
+    if seach_site=='0':PRE_URL=qys
+    elif seach_site=='1':PRE_URL=xxs
+    else:raise '错误的站点输入！'
+    flag = input('#---q:退出---d:下载---c:确认---#:')
+
+    if flag.lower()=='d':
     #---download---#
-    path_name = time.strftime('%Y-%m-%d',time.localtime())
-    # pre_start('./video_new/'+path_name)
-
-
+        start(times=path_name)
+    elif flag.lower()=='c':
     #----confirm-----#
-    k = []
-    x = input('ID(q or n end!):')
-    while x.lower() not in ['q','n']:
-        k.append(x)
-        x = input('请继续输入ID:')
-    confirm(k,'./video_new/'+path_name)
-
+        print('#----y:推送ID---n:全部确认----#')
+        com =input('输入确认模式↑:')
+        if seach_site=='0':
+            p = './video_qy/'
+        else:
+            p = './video_new/'
+        if com.lower()=='y':
+            k = []
+            x = input('请输入黑烟ID(输入->(q or n) 退出!):')
+            while x.lower() not in ['q','n']:
+                k.append(x)
+                x = input('请继续输入黑烟ID:')
+            confirm(k,p+path_name)
+        if com.lower()=='n':
+            confirm(None,p+path_name,True)
+        if com.lower()=='q':
+            print('已退出')
+    elif flag.lower()=='q':print('已退出!')
+    else:raise '输入错误!'
     ##----stop----##
     # import re
     # x =input(':')

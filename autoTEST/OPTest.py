@@ -7,6 +7,7 @@ import json
 import pymssql
 import XLSOP as X
 class optest:
+    
     '''
         自动测试接口类
     '''
