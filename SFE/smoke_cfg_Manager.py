@@ -130,9 +130,14 @@ def confirm(ID,paths,flag=False):
                     try:
                         res = requests.get(url,cookies=Cookies)
                         print(res.url,'确认成功！')
+
                         # print('确认成功！')
                     except Exception as e:
                         print(e)
+                else:
+                    ps = path.join(paths,'smoke')
+                    if not path.exists(ps):os.makedirs(ps)
+                    shutil.move(path.join(ps,f)+'.mp4',path.join(p,f)+'.mp4')
             else:
                 site = sites[path.split(p)[-1]]
                 url = PRE_URL+'/api/record/'+site+\
