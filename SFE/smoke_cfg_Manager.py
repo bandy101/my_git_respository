@@ -136,6 +136,7 @@ def confirm(ID,paths,flag=False):
                         print(e)
                 else:
                     ps = path.join(paths,'smoke')
+                    ps =path.join(ps,paths.split(p)[-1])
                     if not path.exists(ps):os.makedirs(ps)
                     shutil.move(path.join(ps,f)+'.mp4',path.join(p,f)+'.mp4')
             else:
