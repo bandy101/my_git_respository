@@ -9,9 +9,9 @@ global PRE_URL,Cookies,Chunk_Size,qys,xxs
 qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
 PRE_URL = qys
-#qy'719a110333e17b6f6e418a6cc207653af79ed185'
-#xx'2544e6160dc3a7aad6435cd7fadbaaecadffaae4'
-Cookies={'session_id': '2544e6160dc3a7aad6435cd7fadbaaecadffaae4'}
+#qy'597fc46a9c489533a8d9374331e0f930e1dae800'
+#xx'7da470ee19369dfb3a12a9e2535e54120775f827'
+Cookies={'session_id': '7da470ee19369dfb3a12a9e2535e54120775f827'}
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",
@@ -136,9 +136,10 @@ def confirm(ID,paths,flag=False):
                         print(e)
                 else:
                     ps = path.join(paths,'smoke')
-                    ps =path.join(ps,paths.split(p)[-1])
+                    # print(path.split(p))
+                    ps =path.join(ps,path.split(p)[-1])
                     if not path.exists(ps):os.makedirs(ps)
-                    shutil.move(path.join(ps,f)+'.mp4',path.join(p,f)+'.mp4')
+                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'.mp4')
             else:
                 site = sites[path.split(p)[-1]]
                 url = PRE_URL+'/api/record/'+site+\
@@ -155,8 +156,8 @@ def start(down_load_path='./video_qy/',times=''):
 if __name__ == '__main__':
     path_name = time.strftime('%Y-%m-%d',time.localtime())
     seach_site = input('#---q:退出---0:清远---1:新乡---#:')
-    if seach_site=='0':PRE_URL=qys
-    elif seach_site=='1':PRE_URL=xxs
+    if seach_site=='0':PRE_URL,p=qys, './video_qy/'
+    elif seach_site=='1':PRE_URL,p=xxs ,'./video_new/'
     else:raise '错误的站点输入！'
     flag = input('#---q:退出---d:下载---c:确认---#:')
 
@@ -167,10 +168,10 @@ if __name__ == '__main__':
     #----confirm-----#
         print('#----y:推送ID---n:全部确认----#')
         com =input('输入确认模式↑:')
-        if seach_site=='0':
-            p = './video_qy/'
-        else:
-            p = './video_new/'
+        # if seach_site=='0':
+        #     p = './video_qy/'
+        # else:
+        #     p = './video_new/'
         if com.lower()=='y':
             k = []
             x = input('请输入黑烟ID(输入->(q or n) 退出!):')
