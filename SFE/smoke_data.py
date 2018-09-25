@@ -29,6 +29,7 @@ TSNO={
 '''
     @@ flag ∈ (0,1)<->(清远,新乡)
 '''
+
 def params(flag,begindate,enddate,pagesize=1000):
     if flag==0:
         param = {

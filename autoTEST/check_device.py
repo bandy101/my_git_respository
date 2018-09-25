@@ -55,7 +55,7 @@ class Devices:
     def is_max(self,url):
         red,purple=None,None
         try:
-            res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=3)
+            res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6)
             vs = res.content
             vs = str(vs,'utf-8')
             vs = json.loads(vs)
@@ -67,7 +67,7 @@ class Devices:
             k = False
         return red,purple,k
     def res_content(self,url):
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=3)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6)
         return res
 js_pwd ={
     'account':'operator',
@@ -95,7 +95,7 @@ def get_token(url):
 def is_max(url,token):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6,verify= False)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -109,7 +109,7 @@ def is_max(url,token):
 def get_strength(url,token):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6,verify= False)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)

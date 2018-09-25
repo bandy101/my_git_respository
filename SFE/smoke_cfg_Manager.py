@@ -9,9 +9,9 @@ global PRE_URL,Cookies,Chunk_Size,qys,xxs
 qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
 PRE_URL = qys
-#qy'597fc46a9c489533a8d9374331e0f930e1dae800'
-#xx'7da470ee19369dfb3a12a9e2535e54120775f827'
-Cookies={'session_id': '7da470ee19369dfb3a12a9e2535e54120775f827'}
+#qy'99340c9dd1a798ecca302fa543a5c9b8ff6a1268'
+#xx'a215457ad9752247f2bed4be5c21f4c173248f60'
+Cookies={'session_id': 'a215457ad9752247f2bed4be5c21f4c173248f60'}
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",
@@ -81,7 +81,7 @@ def download(url,paths):
         res=down_video(url)
 
 ###-------------start--------------#
-pool = ThreadPoolExecutor(max_workers=4)
+pool = ThreadPoolExecutor(max_workers=8)
 
 def pre_start(pre_path='./video/'):
     if pre_path[-1] not in ['\\','/']:
@@ -162,8 +162,9 @@ if __name__ == '__main__':
     flag = input('#---q:退出---d:下载---c:确认---#:')
 
     if flag.lower()=='d':
+    
     #---download---#
-        start(times=path_name)
+        start(p,times=path_name)
     elif flag.lower()=='c':
     #----confirm-----#
         print('#----y:推送ID---n:全部确认----#')
