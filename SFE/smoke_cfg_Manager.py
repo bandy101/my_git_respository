@@ -9,9 +9,9 @@ global PRE_URL,Cookies,Chunk_Size,qys,xxs
 qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
 PRE_URL = qys
-#qy'99340c9dd1a798ecca302fa543a5c9b8ff6a1268'
-#xx'a215457ad9752247f2bed4be5c21f4c173248f60'
-Cookies={'session_id': 'a215457ad9752247f2bed4be5c21f4c173248f60'}
+#qy'001b4504bfe5670c8807b12bf582290b8aafb71f'
+#xx'96359092dba8571e1517054483d50907a00019d7'
+Cookies={'session_id': '001b4504bfe5670c8807b12bf582290b8aafb71f'}
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",
@@ -119,7 +119,7 @@ def confirm(ID,paths,flag=False):
     sites = dict(zip(TSNO.values(),TSNO.keys()))
     for p,fdirs,files in os.walk(paths):
         if not files:continue
-        alls_file_name = list(map(lambda x:x[:-4],files))
+        alls_file_name = list(map(lambda x:x[:-4],files)) 
         for f in alls_file_name:
             if not Y:
                 ids = [_ for _ in ID]
@@ -130,31 +130,56 @@ def confirm(ID,paths,flag=False):
                     try:
                         res = requests.get(url,cookies=Cookies)
                         print(res.url,'确认成功！')
-
-                        # print('确认成功！')
                     except Exception as e:
                         print(e)
+                # 上传
                 else:
-                    ps = path.join(paths,'smoke')
-                    # print(path.split(p))
+                    url =PRE_URL[:7]+'json@'+PRE_URL[7:]+'/api/record/'+site+'/'+f+'/upload'
+                    res = requests.get(url,cookies=Cookies)
+                    print(res.url,'上传成功！')
+                    ps = path.join(paths,path.basename(paths)+'-smoke')
                     ps =path.join(ps,path.split(p)[-1])
                     if not path.exists(ps):os.makedirs(ps)
                     shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'.mp4')
+            #全部确认
             else:
                 site = sites[path.split(p)[-1]]
                 url = PRE_URL+'/api/record/'+site+\
                 '/'+f+'/status'
                 try:
-                    res = requests.get(url,cookies=Cookies)
-                    print(res.url,'确认成功！')
-                    # print('确认成功！')
+                    #---# 通过文本
+                    if ID:
+                        if f in ID:
+                            url =PRE_URL[:7]+'json@'+PRE_URL[7:]+'/api/record/'+site+'/'+f+'/upload'
+                            res = requests.get(url,cookies=Cookies)
+                            print(res.url,'上传成功！')
+                            ps = path.join(paths,path.basename(paths)+'-smoke')
+                            ps =path.join(ps,path.split(p)[-1])
+                            if not path.exists(ps):os.makedirs(ps)
+                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'.mp4')
+                        else:
+                            url = PRE_URL+'/api/record/'+site+\
+                            '/'+f+'/status'
+                            res = requests.get(url,cookies=Cookies) 
+                            print(res.url,'确认成功！')
+                    #---#
+                    else:
+                        res = requests.get(url,cookies=Cookies) 
+                        print(res.url,'确认成功！')
                 except Exception as e:
                     print(e)
 
 def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
-    path_name = time.strftime('%Y-%m-%d',time.localtime())
+    import datetime
+
+    day_num =0        #距离当前的日期的天数 （0表示当天）
+
+    now_time = datetime.datetime.now()
+    begindate = (now_time + datetime.timedelta(days = -day_num)).strftime('%Y-%m-%d')
+    # path_name = time.strftime('%Y-%m-%d',time.localtime())
+    path_name = begindate
     seach_site = input('#---q:退出---0:清远---1:新乡---#:')
     if seach_site=='0':PRE_URL,p=qys, './video_qy/'
     elif seach_site=='1':PRE_URL,p=xxs ,'./video_new/'
@@ -167,12 +192,8 @@ if __name__ == '__main__':
         start(p,times=path_name)
     elif flag.lower()=='c':
     #----confirm-----#
-        print('#----y:推送ID---n:全部确认----#')
+        print('#----y:推送ID---n:全部确认---f:读取文本ID---q:退出----#')
         com =input('输入确认模式↑:')
-        # if seach_site=='0':
-        #     p = './video_qy/'
-        # else:
-        #     p = './video_new/'
         if com.lower()=='y':
             k = []
             x = input('请输入黑烟ID(输入->(q or n) 退出!):')
@@ -184,6 +205,13 @@ if __name__ == '__main__':
             confirm(None,p+path_name,True)
         if com.lower()=='q':
             print('已退出')
+        if com.lower()=='f':
+            dirs = input('输入文本路径(默认./config.txt):')
+            if dirs in [None,'']:
+                k = []
+                with open('config.txt',encoding='utf-8',mode='r') as f:
+                    k = f.read().split()
+                confirm(k,p+path_name,True)
     elif flag.lower()=='q':print('已退出!')
     else:raise '输入错误!'
     ##----stop----##

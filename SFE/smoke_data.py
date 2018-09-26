@@ -159,6 +159,7 @@ def get_mp4_info_list(pre_url,check_date,flag,day_num=2):
         # from datetime import datetime
         import datetime
         import calendar
+        
         now_time = datetime.datetime.now()
         isweekday = now_time.isoweekday()
         begindate = (now_time + datetime.timedelta(days = -day_num)).strftime('%Y-%m-%d')+ ' 00:00:00'
