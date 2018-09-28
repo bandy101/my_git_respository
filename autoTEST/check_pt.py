@@ -122,7 +122,7 @@ def params_air_telemetry(m,d,params):
 def air_quality(url,params,tsno,dict_tsnos,token):
     ##--清远--#
     # url ='http://202.105.10.126:8055/api/v1/monitorAirQualityInfo?provinceId=440000&cityId=441800'
-    res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
+    res = requests.get(url,params=params,headers={'Authorization':token},timeout=5,verify= False)
     values = json.loads(res.content)['content']
     if type(tsno)==str:values = [_ for _ in values if _['tsNo']==tsno]
     #异常列表
@@ -215,7 +215,7 @@ def air_quality_statistics_day(url,params,tsno,dict_tsnos,token):
                 k=key
                 break
         params['tsNo'] = _
-        res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
+        res = requests.get(url,params=params,headers={'Authorization':token},timeout=5,verify= False)
         # print(res)
         values = json.loads(res.content)['content']
         # print(values)
@@ -271,7 +271,7 @@ def air_quality_statistics_month(url,params,tsno,dict_tsnos,token):
                 k=key
                 break
         params['tsNo'] = _
-        res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
+        res = requests.get(url,params=params,headers={'Authorization':token},timeout=5,verify= False)
         values = json.loads(res.content)['content']
         have_air = False
         if not values:
@@ -328,7 +328,7 @@ def air_quality_statistics_year(url,params,tsno,dict_tsnos,token):
                 k=key
                 break
         params['tsNo'] = _
-        res = requests.get(url,params=params,headers={'Authorization':token},timeout=6000,verify= False)
+        res = requests.get(url,params=params,headers={'Authorization':token},timeout=5,verify= False)
         values = json.loads(res.content)['content']
         # print(values)
         ##检测当前时间前几个小时是否有数据
@@ -611,7 +611,7 @@ def get_token(url):
     }
     token,k=None,None
     try:
-        res = requests.post(url,json=js_pwd,verify=False)
+        res = requests.post(url,json=js_pwd,verify=False,timeout=5)
         res =json.loads(res.content)
         token = res['content']['token']
         k =True
@@ -623,7 +623,7 @@ def get_token(url):
 def is_max(url,token):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=5,verify= False)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)
@@ -638,7 +638,7 @@ def is_max(url,token):
 def get_strength(url,token):
     red,purple=None,None
     try:
-        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=6000,verify= False)
+        res = requests.get(url,params={},headers={'Authorization':'bearer  '+token},timeout=5,verify= False)
         vs = res.content
         vs = str(vs,'utf-8')
         vs = json.loads(vs)

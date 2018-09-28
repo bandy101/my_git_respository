@@ -84,12 +84,14 @@ def get_token(url):
     }
     token,k=None,None
     try:
-        res = requests.post(url,json=js_pwd,verify=False)
+        res = requests.post(url,json=js_pwd,verify=False,timeout=5)
         res =json.loads(res.content)
         token = res['content']['token']
         k =True
+        print('token',token)
     except:
-        k =False
+        k ,token=False,None
+        print('token',token)
     return token,k
     
 def is_max(url,token):
@@ -127,7 +129,7 @@ def check_(times=200):
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
     alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
-    # ,alls.append(guangzhous),alls.append(qingyuans)
+    # alls.append(lanzs),,alls.append(guangzhous),alls.append(qingyuans)
     strs =''
     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
         ff.writelines(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))
@@ -137,11 +139,15 @@ def check_(times=200):
             ff.writelines('\n')
             strs +='\n'
         ok_num =0   
+        print('start****')
         for i in it:
             url = list(i.values())[0]
+            print(url)
             token ,is_oppage= get_token(url+'api/login/')
+            print('is_oppage',is_oppage)
             nn =0
             while not is_oppage:
+                print('is_oppage',is_oppage)
                 nn +=1
                 if nn>5:break
                 token,is_oppage= get_token(url+'api/login/')##令牌

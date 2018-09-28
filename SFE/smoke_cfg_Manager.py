@@ -8,10 +8,11 @@ from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait
 global PRE_URL,Cookies,Chunk_Size,qys,xxs
 qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
+select = [qys,xxs]
 PRE_URL = qys
-#qy'001b4504bfe5670c8807b12bf582290b8aafb71f'
-#xx'96359092dba8571e1517054483d50907a00019d7'
-Cookies={'session_id': '001b4504bfe5670c8807b12bf582290b8aafb71f'}
+#qy'1aab64a1d96c7b578ae66f8f5f47f2af82974b9d'
+#xx'3edea80a9a923706147b296d2571744452bd70f5'
+Cookies={'session_id': '1aab64a1d96c7b578ae66f8f5f47f2af82974b9d'}
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",

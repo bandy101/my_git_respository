@@ -24,27 +24,32 @@ def get_probility(im1,im2):
     return prob_1
 
 def start(paths):
-    save_img =[ path.join(paths,_) for _ in os.listdir(paths)]
+    save_img =[ path.join(paths,_) for _ in os.listdir(paths)] #地址
     new_img = save_img.copy()
     k = 0
     while True:
-        # print(save_img[k])
+        '''
+            相似定义:
+                @ONE:两张图片概率 >0.855(优化过的)
+                @TWO:
+        '''
+        #删除相似的图片
         for _ in save_img:
             if _ not in new_img:os.remove(_)
-        save_img = new_img.copy()
-        im1 = get_gray_img(save_img[k])
+        save_img = new_img.copy()   #深层复制
+        im1 = get_gray_img(save_img[k]) #冒泡递增比较
         for i in range(k+1,len(new_img)):
             print('i:',i)
             im2 = get_gray_img(save_img[i])
             # cv2.imshow('im2',im1)
             # cv2.waitKey()
             prob = get_probility(im1,im2)
-            print(prob)
-            if prob>0.855:
+            print(prob)#概率
+            if prob>0.855:             
                 new_img.remove(save_img[i])
                 # os.remove(save_img[i])
                 # print(save_img[i])
-        if k>=len(new_img)-1:
+        if k>=len(new_img)-1: 
             break
         k = k+1
                 
