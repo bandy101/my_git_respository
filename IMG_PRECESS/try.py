@@ -45,7 +45,7 @@ def start(paths):
             # cv2.waitKey()
             prob = get_probility(im1,im2)
             print(prob)#概率
-            if prob>0.855:             
+            if prob>0.865:             
                 new_img.remove(save_img[i])
                 # os.remove(save_img[i])
                 # print(save_img[i])
@@ -55,11 +55,11 @@ def start(paths):
                 
 if __name__ =='__main__':
     # kk = './G107好运饲料1号机_20180920131432_028672_1537495221835995_0.jpg'
-    im1 = get_gray_img('a1.jpg')
-    im2 = get_gray_img('./a2.jpg')
+    im1 = get_gray_img('k1.jpg')
+    im2 = get_gray_img('./k2.jpg')
     prob= get_probility(im1,im2)
     print(prob)
-    paths = 'H:/分类任务/result/三棵竹一桥(源潭)'
+    paths = 'H:\分类任务\8_多辆车'   
     start(paths)
 
 
