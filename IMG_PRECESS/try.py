@@ -38,9 +38,13 @@ def start(paths):
             if _ not in new_img:os.remove(_)
         save_img = new_img.copy()   #深层复制
         im1 = get_gray_img(save_img[k]) #冒泡递增比较
-        for i in range(k+1,len(new_img)):
+        # for i in range(k+1,len(new_img)):    
+        for i in range(k+1,k+7):    #改进 比较后6个
             print('i:',i)
-            im2 = get_gray_img(save_img[i])
+            try:
+                im2 = get_gray_img(save_img[i])
+            except:
+                continue
             # cv2.imshow('im2',im1)
             # cv2.waitKey()
             prob = get_probility(im1,im2)
@@ -59,7 +63,7 @@ if __name__ =='__main__':
     im2 = get_gray_img('./k2.jpg')
     prob= get_probility(im1,im2)
     print(prob)
-    paths = 'H:\分类任务\8_多辆车'   
+    paths = 'H:/分类任务/0_非车'
     start(paths)
 
 

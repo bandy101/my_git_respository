@@ -141,7 +141,7 @@ def confirm(ID,paths,flag=False):
                     ps = path.join(paths,path.basename(paths)+'-smoke')
                     ps =path.join(ps,path.split(p)[-1])
                     if not path.exists(ps):os.makedirs(ps)
-                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'.mp4')
+                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'_'+ps[-3:]+'.mp4')
             #全部确认
             else:
                 site = sites[path.split(p)[-1]]
@@ -157,7 +157,7 @@ def confirm(ID,paths,flag=False):
                             ps = path.join(paths,path.basename(paths)+'-smoke')
                             ps =path.join(ps,path.split(p)[-1])
                             if not path.exists(ps):os.makedirs(ps)
-                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'.mp4')
+                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'_'+ps[-3:]+'.mp4')
                         else:
                             url = PRE_URL+'/api/record/'+site+\
                             '/'+f+'/status'
