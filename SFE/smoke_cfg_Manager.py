@@ -10,9 +10,9 @@ qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
 select = [qys,xxs]
 PRE_URL = qys
-#qy'3a33ff5765c41f585a79338a5d5b2130aaabc762'
+#qy'f0c3672cc1e1d66eab02a9bdf0babf2ceef4c7f6'
 #xx'e6a187cdec0afdd50780f797dfd20afd17f3e426'
-Cookies={'session_id': '3a33ff5765c41f585a79338a5d5b2130aaabc762'}
+Cookies={'session_id': 'f0c3672cc1e1d66eab02a9bdf0babf2ceef4c7f6'}
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",
