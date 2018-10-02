@@ -9,10 +9,11 @@ global PRE_URL,Cookies,Chunk_Size,qys,xxs
 qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
 select = [qys,xxs]
-PRE_URL = qys
+# PRE_URL = qys
 #qy'f0c3672cc1e1d66eab02a9bdf0babf2ceef4c7f6'
 #xx'e6a187cdec0afdd50780f797dfd20afd17f3e426'
-Cookies={'session_id': 'f0c3672cc1e1d66eab02a9bdf0babf2ceef4c7f6'}
+# Cookies={'session_id': 'f0c3672cc1e1d66eab02a9bdf0babf2ceef4c7f6'}
+Cookies =None
 Chunk_Size =1024
 TSNO={
     "SFE-R600-B22W4419":"移动式",
@@ -73,12 +74,15 @@ def download(url,paths):
                 print(res,res.url,'already exists!')
                 break
             else:os.remove(paths)
-        begin_t = time.time()               
-        with open(paths,'ab') as f:
-            for _ in res.iter_content(chunk_size=Chunk_Size*Chunk_Size):
-                if _:f.write(_),f.flush()
-            print('download sucessly,receive data,file size : %d  total size:%d' % (os.path.getsize(paths), content_length))
-            if path.getsize(paths) ==content_length:break
+        begin_t = time.time()
+        try:
+            with open(paths,'ab') as f:
+                for _ in res.iter_content(chunk_size=Chunk_Size*Chunk_Size):
+                    if _:f.write(_),f.flush()
+                print('download sucessly,receive data,file size : %d  total size:%d' % (os.path.getsize(paths), content_length))
+                if path.getsize(paths) ==content_length:break
+        except Exception as e:
+            print(e)
         res=down_video(url)
 
 ###-------------start--------------#
@@ -174,7 +178,10 @@ def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
     import datetime
-
+    paramer ={
+        'password':'4f768021243118a2ac7f2d6e524346fc',
+        'user':'sfe'
+    }
     day_num =0        #距离当前的日期的天数 （0表示当天）
 
     now_time = datetime.datetime.now()
@@ -185,6 +192,9 @@ if __name__ == '__main__':
     if seach_site=='0':PRE_URL,p=qys, './video_qy/'
     elif seach_site=='1':PRE_URL,p=xxs ,'./video_new/'
     else:raise '错误的站点输入！'
+    print('######-',PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login')
+    r =requests.post(PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login',json=paramer,timeout=10)
+    Cookies=r.headers['Set-Cookie'].split(';')[0]
     flag = input('#---q:退出---d:下载---c:确认---#:')
 
     if flag.lower()=='d':
