@@ -194,7 +194,8 @@ if __name__ == '__main__':
     else:raise '错误的站点输入！'
     print('######-',PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login')
     r =requests.post(PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login',json=paramer,timeout=10)
-    Cookies=r.headers['Set-Cookie'].split(';')[0]
+    r =r.headers['Set-Cookie'].split(';')[0].split('=')
+    Cookies ={r[0]:r[1]}
     flag = input('#---q:退出---d:下载---c:确认---#:')
 
     if flag.lower()=='d':
