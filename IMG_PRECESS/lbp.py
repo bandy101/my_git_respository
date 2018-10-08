@@ -3,6 +3,13 @@ import numpy as np
 
 from thirdparty.PyEsegment import segment
 
+#设置灰度阈值 （
+# 
+# BP的基本思想是定义于像素的8邻域中,以中心像素的灰度值为阈值,
+# 将周围8个像素的值与其比较,如果周围的像素值小于中心像素的灰度值,
+# 该像素位置就被标记为0,否则标记为1.每个像素得到一个二进制组合,
+# 就像00010011.每个像素有8个相邻的像素点,即有2^8种可能性组合）
+#  ）
 def get_neighbor(mat,i,j):
     center = mat[i,j][-1]
     x1,y1= i+1,j+1
@@ -15,7 +22,7 @@ def get_neighbor(mat,i,j):
             x1,y1 = x1 -1,j+1
         if (x1,y1) in [(i,j)]:y1 = y1-1
     return result
-
+#描述图像局部纹理特征的算子,具有旋转不变性和灰度不变性等显著的优点。
 def LBP(img):
     dst = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     mat = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
