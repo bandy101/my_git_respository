@@ -228,7 +228,7 @@ if __name__ == '__main__':
     }
 
 
-    day_num =1      #距离当前的日期的天数 （0表示当天）
+    day_num =0      #距离当前的日期的天数 （0表示当天）
 
 
     now_time = datetime.datetime.now()
