@@ -72,15 +72,8 @@ def down_video(url):
     except Exception as e:
         print(e)
 
-def download(url,paths):
-    with open('xls_config.txt',mode='r+') as f:
-        try:
-            index = f.readline()
-            print('index',index,len(index))
-        except Exception as e:
-            print(e)
-    with open('xls_config.txt',mode='w') as f:
-        f.write(str(int(index)+1))
+def download(url,paths,num=1):
+   
     #判断文件夹是否存在
     [dir_name,dir_basename] = path.split(paths)
     # yield
@@ -256,8 +249,19 @@ if __name__ == '__main__':
     
     #---download---#
         start(p,times=path_name)
+        xls_cow_num = 1
+        if seach_site='1':xls_cow_num =0
+        with open('xls_config.txt',mode='r+') as f:
+            try:
+                index = f.readline()
+                print('index',index,len(index))
+            except Exception as e:
+                print(e)
+        with open('xls_config.txt',mode='w') as f:
+            f.write(str(int(index)+xls_cow_num))
     elif flag.lower()=='c':
     #----confirm-----#
+        print('确认前需要确保各个站点的视频已经下载下来!')
         print('#----y:推送ID---n:全部确认---f:读取文本ID---q:退出----#')
         com =input('输入确认模式↑:')
         if com.lower()=='y':
