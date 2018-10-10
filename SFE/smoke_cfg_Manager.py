@@ -250,7 +250,7 @@ if __name__ == '__main__':
     #---download---#
         start(p,times=path_name)
         xls_cow_num = 1
-        if seach_site='1':xls_cow_num =0
+        if seach_site=='1':xls_cow_num =0
         with open('xls_config.txt',mode='r+') as f:
             try:
                 index = f.readline()
