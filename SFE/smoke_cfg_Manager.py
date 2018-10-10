@@ -5,7 +5,7 @@ import json,time
 import zipfile
 from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait
 
-global PRE_URL,Cookies,Chunk_Size,qys,xxs
+global PRE_URL,Cookies,Chunk_Size,qys,xxs,INDEX
 qys ='http://202.105.10.126:1577'
 xxs ='http://218.28.71.220:1570'
 select = [qys,xxs]
@@ -31,6 +31,17 @@ TSNO={
     "SFE-R600-G22W2714":"治超站出口",
     "SFE-R600-G22W2772":"三棵竹一桥(源潭)",
     "SFE-R600-G22W2798":"清远大道(党校)"
+}
+XLS_NAME={
+    '广清大道(龙塘)':1,
+    '清远大道(党校)':2,
+    '三棵竹一桥(源潭)':3,
+    '治超站出口':4,
+    'G107好运饲料1号机':5,
+    'G107铁道路桥1号机':6,
+    'S229环宇立交桥治超站1号机':7,
+    'S308大召营镇1号机':8,
+    'S308新乡收费站1号机':9
 }
 ##---mp4---http://218.28.71.220:1570/api/+\
 #       record/SFE-R600-V23W1906/20180918144332.619583/video
@@ -62,6 +73,14 @@ def down_video(url):
         print(e)
 
 def download(url,paths):
+    with open('xls_config.txt',mode='r+') as f:
+        try:
+            index = f.readline()
+            print('index',index,len(index))
+        except Exception as e:
+            print(e)
+    with open('xls_config.txt',mode='w') as f:
+        f.write(str(int(index)+1))
     #判断文件夹是否存在
     [dir_name,dir_basename] = path.split(paths)
     # yield
@@ -85,6 +104,33 @@ def download(url,paths):
             print(e)
         res=down_video(url)
 
+#统计数量xls
+xls_names ='黑烟记录表' 
+import xlwt
+import xlrd,datetime
+from xlutils.copy import copy
+def get_xls_sheet():
+    with open('xls_config.txt',mode='r') as f:
+        index = f.read()
+        if index in ['',' ',None]:index =0
+    if index ==0:
+        workbook = xlwt.Workbook()
+        ws = workbook.add_sheet(xls_names)
+    else:
+        wbk = xlrd.open_workbook(xls_names+'.xls')
+        workbook = copy(wbk)
+        ws = workbook.get_sheet(0)
+    return ws,index,workbook
+def write_xls(resouce_path,index,ws,site_name,check_times=datetime.datetime.now().strftime('%Y-%m-%d')):
+    # ws ,index,wbk= get_xls_sheet()
+    all_smoke = len(os.listdir(path.join(resouce_path,site_name)))
+    try:
+        confirm_smoke = str(len(os.listdir(path.join(resouce_path+'/'+check_times+'-smoke',site_name))))
+    except:confirm_smoke = '0'
+    all_smoke =int(confirm_smoke)+all_smoke
+    print('all_smoke:',all_smoke,'confirm_smoke:',confirm_smoke)
+    text = confirm_smoke+':'+str(all_smoke)
+    ws.write(index,XLS_NAME[site_name],text)
 ###-------------start--------------#
 pool = ThreadPoolExecutor(max_workers=8)
 
@@ -177,12 +223,20 @@ def confirm(ID,paths,flag=False):
 def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
+    with open('xls_config.txt',mode='r+') as f:
+        try:
+            INDEX = f.readline()
+        except Exception as e:
+            print(e)
     import datetime
-    paramer ={
+    paramer ={ 
         'password':'4f768021243118a2ac7f2d6e524346fc',
         'user':'sfe'
     }
-    day_num =0        #距离当前的日期的天数 （0表示当天）
+
+
+    day_num =1      #距离当前的日期的天数 （0表示当天）
+
 
     now_time = datetime.datetime.now()
     begindate = (now_time + datetime.timedelta(days = -day_num)).strftime('%Y-%m-%d')
@@ -224,6 +278,15 @@ if __name__ == '__main__':
                 with open('config.txt',encoding='utf-8',mode='r') as f:
                     k = f.read().split()
                 confirm(k,p+path_name,True)
+        #统计记录(xls)
+        if com.lower() in ['n','y','f']:        
+            ws,index,wbk =get_xls_sheet()
+            resouce_path = p+path_name
+            for name in os.listdir(resouce_path):
+                if name[:2]=='20':continue
+                write_xls(resouce_path,int(index),ws,name,path_name)
+            ws.write(int(index),0,str(path_name))
+            wbk.save(xls_names+'.xls')
     elif flag.lower()=='q':print('已退出!')
     else:raise '输入错误!'
     ##----stop----##

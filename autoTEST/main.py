@@ -135,11 +135,10 @@ def xls(param,index=1,names ='text'):
         sheet.write(0,len(keys),'结果')
         sheet.write(0,len(keys)+1,'响应时间')
         sheet.write(index,len(keys)+1,date)
-        if is_ok:   
+        if is_ok:
             sheet.write(index,len(keys),'成功')
-        else: 
+        else:
             sheet.write(index,len(keys),'失败')
-
         wbk.save(names+'.xls')
     else:
         workbook = xlrd.open_workbook(names+'.xls')
@@ -154,7 +153,6 @@ def xls(param,index=1,names ='text'):
                     ws.write(index,i,re_json['content'][d])
                 except:
                     pass
-            
         ws.write(index,len(keys)+1,date)
         if is_ok:
             ws.write(index,len(keys),'成功')
