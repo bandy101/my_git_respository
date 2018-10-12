@@ -120,7 +120,7 @@ def write_xls(resouce_path,index,ws,site_name,check_times=datetime.datetime.now(
     try:
         confirm_smoke = str(len(os.listdir(path.join(resouce_path+'/'+check_times+'-smoke',site_name))))
     except:confirm_smoke = '0'
-    all_smoke =int(confirm_smoke)+all_smoke
+    all_smoke =str(int(confirm_smoke)+all_smoke)
     print('all_smoke:',all_smoke,'confirm_smoke:',confirm_smoke)
     text = confirm_smoke+':'+str(all_smoke)
     ws.write(index,XLS_NAME[site_name],text)
