@@ -51,21 +51,27 @@ def deltes(new_Path,root):
             if l<=0:
                 shutil.rmtree(path.join(ps,f))
 def others():
-    consider_smoke = os.listdir('H:\分类任务\黑烟序列分类\other1')
-    have_smoke = os.listdir('H:\分类任务\黑烟序列分类\yes1')
+    resouce ='G:\分类任务\YES'
+    smoke ='G:\分类任务\YES_S'
+    nosmoke = 'G:/分类任务/NO_N'
+
+    # consider_smoke = os.listdir('G:\分类任务\smoke')
+    consider_smoke =[]
+    have_smoke = os.listdir('G:\分类任务\smoke')
     consider_smoke = list(map(lambda x:x[:-7],consider_smoke))
     have_smoke = list(map(lambda x:x[:-7],have_smoke))
     consider_smoke,have_smoke = list(set(consider_smoke)),list(set(have_smoke))
-    for name in os.listdir('H:\分类任务\黑烟序列分类\无'): ##待分类
+    for name in os.listdir(resouce): ##待分类
         if name in have_smoke:
+        # if name[:-2] in have_smoke:
             print('移动成功！')
-            shutil.move(path.join('H:\分类任务\黑烟序列分类\无',name),'H:\分类任务\黑烟序列分类\有')
-        elif name in consider_smoke:
-            print('移动成功！')
-            shutil.move(path.join('H:\分类任务\黑烟序列分类\无',name),'H:\分类任务\黑烟序列分类\疑似')
+            shutil.move(path.join(resouce,name),smoke)
+        # elif name in consider_smoke:
+        #     print('移动成功！')
+        #     shutil.move(path.join('H:\分类任务\黑烟序列分类\无',name),'H:\分类任务\黑烟序列分类\疑似')
         else:
-            pass
-            # shutil.move(path.join('H:\分类任务\黑烟序列分类\无',name),'H:\分类任务\黑烟序列分类\无')
+            # pass
+            shutil.move(path.join(resouce,name),nosmoke)
 
 if __name__ =='__main__':
     print('\t请输入操作标识* [1,2] *\n1->create(ps,new_Path)[复制文件],2->deltes(new_Path,ps)[删除文件]\n\t\t\n\t\t3->other*********')
