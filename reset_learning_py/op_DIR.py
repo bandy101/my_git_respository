@@ -25,10 +25,12 @@ def create(new_Path,root):
     '''
     for r in os.listdir(root):
         ps = path.join(root,r)
+        print('r:',r,root)
+        print(ps)
         for fold in os.listdir(ps):
             # for x in os.listdir(path.join(ps,fold)):
                 # if x[-1:]== '4':
-                if fold[:2] in ['01','06','07','11']:
+                if fold[:2] in ['03','04','05','06','07','08']:
                     pp = path.join(ps,fold)
                     shutil.copy(path.join(ps,fold),new_Path)
                     os.rename(path.join(new_Path,fold),path.join(new_Path,r+"_"+fold))
@@ -51,16 +53,17 @@ def deltes(new_Path,root):
             if l<=0:
                 shutil.rmtree(path.join(ps,f))
 def others():
-    resouce ='G:\分类任务\YES'
-    smoke ='G:\分类任务\YES_S'
-    nosmoke = 'G:/分类任务/NO_N'
+    resouce ='H:\分类任务\黑烟序列分类\有'
+    smoke ='H:\分类任务\黑烟序列分类\have_s'
+    nosmoke = 'H:\分类任务\黑烟序列分类/have_other'
 
     # consider_smoke = os.listdir('G:\分类任务\smoke')
     consider_smoke =[]
-    have_smoke = os.listdir('G:\分类任务\smoke')
+    have_smoke = os.listdir('H:\分类任务\黑烟序列分类/sm_0')
     consider_smoke = list(map(lambda x:x[:-7],consider_smoke))
     have_smoke = list(map(lambda x:x[:-7],have_smoke))
     consider_smoke,have_smoke = list(set(consider_smoke)),list(set(have_smoke))
+    print(have_smoke)
     for name in os.listdir(resouce): ##待分类
         if name in have_smoke:
         # if name[:-2] in have_smoke:

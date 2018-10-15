@@ -14,6 +14,18 @@ lanzs=[ #----兰州----#
 henans=[ #----河南----#
     {'河南-金穗大道':'http://218.29.47.202:11000/'}
 ]
+hbxx=[#-----鹤壁----#
+    {'鹤壁-刘庄超限站1号机':'http://221.176.241.91:11001/'},
+    {'鹤壁-刘庄超限站2号机':'http://221.176.241.91:11002/'},
+    {'鹤壁-S305省道1号机':'http://120.194.140.174:11001/'},
+    {'鹤壁-S305省道2号机':'http://120.194.140.174:11002/'},
+    {'鹤壁-G107国道1号机':'http://120.194.138.243:11001/'},
+    {'鹤壁-G107国道2号机':'http://120.194.138.243:11002/'},
+    {'鹤壁-东海路1号机':'http://120.194.139.137:11001/'},
+    {'鹤壁-东海路2号机':'http://120.194.139.137:11002/'}
+    
+    
+]
 sichuans=[ #----四川----#
         {'四川-01':'http://182.150.48.217:11000/'},
         {'四川-02':'http://182.150.48.218:11000/'},
@@ -128,7 +140,7 @@ def check_(times=200):
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
     p_status ='api/light_source_settings/lightStatus/?t=0.38649866685018985?'
-    alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
+    alls.append(hbxx),alls.append(lanzs),alls.append(sichuans),alls.append(henans),alls.append(guangzhous),alls.append(qingyuans)
     # alls.append(lanzs),,alls.append(guangzhous),alls.append(qingyuans)
     strs =''
     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
@@ -141,6 +153,7 @@ def check_(times=200):
         ok_num =0   
         print('start****')
         for i in it:
+            print(i)
             url = list(i.values())[0]
             print(url)
             token ,is_oppage= get_token(url+'api/login/')
