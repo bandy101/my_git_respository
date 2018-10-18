@@ -2,7 +2,7 @@
 //#include "Resources/DISK.hpp"
 #include "register.h"
 #include <QMessageBox>
-
+#include "LiMit.hpp"
 #define _WIN32_DCOM
 
 #include <iostream>
@@ -212,7 +212,7 @@ void Register::ClickButton()
 	Award = ui.awd_code->text();
 	if (Is_limit(Award))
 	{	//授权
-		QMessageBox::about(this, "提示", "OK");
+		QMessageBox::about(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("<b>授权成功</b>"));
 		
 	}
 	else
@@ -226,7 +226,7 @@ void Register::ClickButton()
 //授权
 bool Register::Is_limit(QString str)
 {
-	if (str.toStdString() == "123abc")
+	if (str.toStdString() == disk_id)
 		return TRUE;
 	else
 	{
@@ -240,9 +240,12 @@ void Register::init()
 	is_limit = FALSE; //授权码是否合格
 	//
 	string str = get_disk_number();
-	str = str.substr(0, str.length() - 1);
-	Lisence = QString::fromStdString(str);
+	disk_id = str.substr(0, str.length() - 1); //disk_id
+	Lisence = QString::fromStdString(disk_id);
 	ui.reg_code->setText(Lisence);
+
+	privateConvert(const_cast<char*>(disk_id.c_str()));
+	//ui.awd_code->setText(QString::fromStdString(disk_id));   //show_award_code
 	ui.awd_code->setFocus();
 
 	//is_limit = Is_limit();
