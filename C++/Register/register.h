@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_register.h"
+//#include "../DataSearch/datasearch.cpp"
 using namespace std;
 
 class Register : public QMainWindow
@@ -22,6 +23,8 @@ private:
 	Ui::RegisterClass ui;
 	bool flag,is_limit;
 	QString Lisence,Award;
+	//DataSearch w;
+	
 };
 
 #endif // REGISTER_H

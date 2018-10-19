@@ -1,6 +1,7 @@
 #pragma once  
 //#include "Resources/DISK.hpp"
 #include "register.h"
+#pragma once
 #include <QMessageBox>
 #include "LiMit.hpp"
 #define _WIN32_DCOM
@@ -8,7 +9,9 @@
 #include <iostream>
 #include <comdef.h>
 #include <Wbemidl.h>
-
+//#include "../DataSearch/datasearch.cpp"
+#include "datasearch.h"
+#include "datasearch.cpp"
 # pragma comment(lib, "wbemuuid.lib")
 using namespace std;
 
@@ -213,7 +216,9 @@ void Register::ClickButton()
 	if (Is_limit(Award))
 	{	//授权
 		QMessageBox::about(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("<b>授权成功</b>"));
-		
+		DataSearch *w=new DataSearch(this);
+
+		//w->show();
 	}
 	else
 	{	//授权码错误

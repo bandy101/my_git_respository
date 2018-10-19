@@ -11,8 +11,10 @@ class AWard : public QMainWindow
 public:
 	AWard(QWidget *parent = 0);
 	~AWard();
-
+	public slots:
+	void ClickButton();
 private:
+	QString regst;
 	Ui::AWardClass ui;
 };
 

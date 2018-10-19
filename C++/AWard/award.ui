@@ -28,6 +28,9 @@
     <bool>false</bool>
    </property>
    <widget class="QTabWidget" name="tabWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -45,14 +48,14 @@ selection-color:rgb(0, 255, 0); </string>
     </property>
     <widget class="QWidget" name="tab">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <attribute name="title">
       <string>遥测软件授权</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -67,7 +70,7 @@ selection-color:rgb(0, 255, 0); </string>
       </property>
       <widget class="QLineEdit" name="regst_code">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
@@ -83,22 +86,45 @@ selection-color:rgb(0, 255, 0); </string>
         </font>
        </property>
        <property name="acceptDrops">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(78, 80, 242, 255), stop:1 rgba(255, 255, 255, 255))</string>
+        <string notr="true">background-color:qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(78, 80, 242, 255), stop:1 rgba(255, 255, 255, 255));
+color:rgb(0, 0, 0);</string>
        </property>
        <property name="text">
         <string/>
        </property>
        <property name="dragEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>21</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>注册码</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="wordWrap">
         <bool>true</bool>
        </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -109,11 +135,11 @@ selection-color:rgb(0, 255, 0); </string>
        </rect>
       </property>
       <property name="title">
-       <string>授权码</string>
+       <string>生成授权码</string>
       </property>
       <widget class="QLineEdit" name="award_code">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
@@ -129,17 +155,38 @@ selection-color:rgb(0, 255, 0); </string>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(78, 80, 242, 255), stop:1 rgba(255, 255, 255, 255))</string>
+        <string notr="true">background-color:qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(78, 80, 242, 255), stop:1 rgba(255, 255, 255, 255));
+color:rgb(0,0,0);</string>
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="generate">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>31</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>生
+成</string>
        </property>
       </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="font">
       <font>

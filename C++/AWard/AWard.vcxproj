@@ -213,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_award.h" />
+    <ClInclude Include="LiMit.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="award.qrc">

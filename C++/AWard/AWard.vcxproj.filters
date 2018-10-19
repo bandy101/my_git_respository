@@ -66,5 +66,8 @@
     <ClInclude Include="GeneratedFiles\ui_award.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="LiMit.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
