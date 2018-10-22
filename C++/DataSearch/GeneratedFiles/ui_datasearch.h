@@ -13,9 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QDateTimeEdit>
+#include <QtWidgets/QDial>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -25,9 +26,10 @@ QT_BEGIN_NAMESPACE
 class Ui_DataSearchClass
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QWidget *centralWidget;
+    QDateTimeEdit *dateTimeEdit;
+    QDial *dial;
+    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *DataSearchClass)
@@ -35,15 +37,18 @@ public:
         if (DataSearchClass->objectName().isEmpty())
             DataSearchClass->setObjectName(QStringLiteral("DataSearchClass"));
         DataSearchClass->resize(600, 400);
-        menuBar = new QMenuBar(DataSearchClass);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        DataSearchClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(DataSearchClass);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        DataSearchClass->addToolBar(mainToolBar);
         centralWidget = new QWidget(DataSearchClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        dateTimeEdit = new QDateTimeEdit(centralWidget);
+        dateTimeEdit->setObjectName(QStringLiteral("dateTimeEdit"));
+        dateTimeEdit->setGeometry(QRect(130, 100, 194, 22));
+        dial = new QDial(centralWidget);
+        dial->setObjectName(QStringLiteral("dial"));
+        dial->setGeometry(QRect(170, 180, 50, 64));
         DataSearchClass->setCentralWidget(centralWidget);
+        mainToolBar = new QToolBar(DataSearchClass);
+        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        DataSearchClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(DataSearchClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         DataSearchClass->setStatusBar(statusBar);

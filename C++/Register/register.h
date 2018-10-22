@@ -1,8 +1,12 @@
+#pragma once
 #ifndef REGISTER_H
 #define REGISTER_H
 
 #include <QtWidgets/QMainWindow>
 #include "ui_register.h"
+#include "datas.hpp"
+
+//#include "datasearch.cpp"
 //#include "../DataSearch/datasearch.cpp"
 using namespace std;
 
@@ -15,15 +19,16 @@ public:
 	~Register();
 	bool Is_limit(QString str);
 	void init();
+	//Register *w;
 public slots:
 	void ClickButton();
 
 private:
-	string disk_id;
+	DataS *k;
 	Ui::RegisterClass ui;
+	string disk_id;
 	bool flag,is_limit;
 	QString Lisence,Award;
-	//DataSearch w;
 	
 };
 

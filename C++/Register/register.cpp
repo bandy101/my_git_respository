@@ -10,8 +10,8 @@
 #include <comdef.h>
 #include <Wbemidl.h>
 //#include "../DataSearch/datasearch.cpp"
-#include "datasearch.h"
-#include "datasearch.cpp"
+//#include "../DataSearch/datasearch.cpp"
+
 # pragma comment(lib, "wbemuuid.lib")
 using namespace std;
 
@@ -216,13 +216,17 @@ void Register::ClickButton()
 	if (Is_limit(Award))
 	{	//授权
 		QMessageBox::about(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("<b>授权成功</b>"));
-		DataSearch *w=new DataSearch(this);
+		//w=new DataSearch(this);  ////将类指针实例化
 
 		//w->show();
 	}
 	else
 	{	//授权码错误
 		QMessageBox::about(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("<font color=""green"" >注册码</font><br><font color=""red"" ><b>&nbsp;错误</b></font>"));
+		k = new DataS(this);
+		k->show();
+		//K.setupUi(this);
+
 	}
 	//---------------#---------------//
 	
