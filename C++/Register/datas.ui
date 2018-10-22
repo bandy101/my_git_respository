@@ -6,32 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>284</height>
+    <width>1030</width>
+    <height>763</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>DataS</string>
+   <string>遥测数据查询</string>
   </property>
-  <widget class="QTimeEdit" name="timeEdit">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>100</y>
-     <width>118</width>
-     <height>22</height>
+     <x>20</x>
+     <y>20</y>
+     <width>671</width>
+     <height>201</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QDial" name="dial">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>160</y>
-     <width>50</width>
-     <height>64</height>
-    </rect>
+   <property name="title">
+    <string>查询条件</string>
    </property>
+   <widget class="QDateEdit" name="dateEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
