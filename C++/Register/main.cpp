@@ -6,6 +6,17 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	Register w;
+	DataS k;
 	w.show();
+	while (true)
+	{
+		if (w.data_ui)
+		{
+			k.show();
+			delete &w;
+			break;
+		}
+
+	}
 	return a.exec();
 }

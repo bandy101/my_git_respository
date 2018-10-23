@@ -19,12 +19,13 @@ public:
 	~Register();
 	bool Is_limit(QString str);
 	void init();
+	bool data_ui;
 	//Register *w;
 public slots:
 	void ClickButton();
 
 private:
-	DataS *k;
+	//DataS *k;
 	Ui::RegisterClass ui;
 	string disk_id;
 	bool flag,is_limit;

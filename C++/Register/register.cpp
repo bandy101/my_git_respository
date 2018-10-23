@@ -223,8 +223,12 @@ void Register::ClickButton()
 	else
 	{	//授权码错误
 		QMessageBox::about(this, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("<font color=""green"" >注册码</font><br><font color=""red"" ><b>&nbsp;错误</b></font>"));
-		k = new DataS(this);
-		k->show();
+		//this->hide();
+		//DataS *ks = new DataS(this);
+		//ks->show();
+		//this->deleteLater();
+		data_ui = TRUE;
+		//delete &ui;
 		//K.setupUi(this);
 
 	}
@@ -247,6 +251,7 @@ void Register::init()
 	//--标志--//
 	flag = TRUE;       //保留
 	is_limit = FALSE; //授权码是否合格
+	data_ui = FALSE; //另外一个窗口是否授权打开
 	//
 	string str = get_disk_number();
 	disk_id = str.substr(0, str.length() - 1); //disk_id
