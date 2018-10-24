@@ -122,7 +122,7 @@ def write_xls(resouce_path,index,ws,site_name,check_times=datetime.datetime.now(
     except:confirm_smoke = '0'
     all_smoke =str(int(confirm_smoke)+all_smoke)
     print('all_smoke:',all_smoke,'confirm_smoke:',confirm_smoke)
-    text = confirm_smoke+':'+str(all_smoke)
+    text = confirm_smoke+'-'+str(all_smoke)
     ws.write(index,XLS_NAME[site_name],text)
 ###-------------start--------------#
 pool = ThreadPoolExecutor(max_workers=8)
