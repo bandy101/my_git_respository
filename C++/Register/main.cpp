@@ -8,15 +8,16 @@ int main(int argc, char *argv[])
 	Register w;
 	DataS k;
 	w.show();
-	while (true)
-	{
-		if (w.data_ui)
-		{
-			k.show();
-			delete &w;
-			break;
-		}
+	k.show();
+	//while (true)
+	//{
+	//	if (w.data_ui)
+	//	{
+	//		k.show();
+	//		delete &w;
+	//		break;
+	//	}
 
-	}
+	//}
 	return a.exec();
 }
