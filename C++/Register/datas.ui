@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1030</width>
+    <width>1049</width>
     <height>763</height>
    </rect>
   </property>
@@ -18,8 +18,8 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>671</width>
-     <height>201</height>
+     <width>1021</width>
+     <height>101</height>
     </rect>
    </property>
    <property name="title">
@@ -28,8 +28,8 @@
    <widget class="QLabel" name="search_date_label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
+      <x>630</x>
+      <y>10</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -55,11 +55,11 @@
      <set>Qt::LinksAccessibleByMouse</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="search_date_0">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>30</y>
+      <x>720</x>
+      <y>10</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -68,11 +68,11 @@
      <string/>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton">
+   <widget class="QToolButton" name="select_date_btn">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>30</y>
+      <x>810</x>
+      <y>10</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -81,32 +81,74 @@
      <string/>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_2">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>60</y>
-      <width>37</width>
-      <height>18</height>
+      <x>850</x>
+      <y>10</y>
+      <width>21</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>-&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="search_date_1">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>10</y>
+      <width>121</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>...</string>
+     <string/>
     </property>
    </widget>
-   <widget class="QCommandLinkButton" name="commandLinkButton">
+   <widget class="QToolButton" name="select_date_btn_2">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>130</y>
+      <x>970</x>
+      <y>10</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QFontComboBox" name="fontComboBox">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>40</y>
       <width>81</width>
-      <height>41</height>
+      <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>start</string>
+    <property name="currentText">
+     <string>2018</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QCalendarWidget" name="calendarWidget">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>290</y>
+     <width>248</width>
+     <height>197</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
