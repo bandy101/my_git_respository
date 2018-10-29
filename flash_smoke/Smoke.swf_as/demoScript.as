@@ -47,7 +47,7 @@
 			var loc4:* = null;
 			//BGraund = new flash.display.Sprite();
 			todSprite = new flash.display.Sprite();
-			smoke = new smokeScript(350,-100,16711935,50,0.003);
+			smoke = new smokeScript(350,0,16711935,100,0);
 			plz0 = new toddlerScript(80,30);
 			plz1 = new toddlerScript(100,30);
 			plz2 = new toddlerScript(255,50);//烟雾数值

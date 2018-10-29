@@ -16,10 +16,10 @@
             PozY = 300;
             point0 = new flash.geom.Point(0, 0);
             arrayPach = new Array();
-            lengthArr = 60;
+            lengthArr = 160;
 			// 烟雾初始显示比例 原0.1
-            scaleMin = 0.3;
-            Tm = 175;
+            scaleMin = 0.1;
+            Tm = 275;
             flagVector = 1;
             jug = new JUG();
             gene = new GENEL();
@@ -72,15 +72,15 @@
             while (loc1 < arrayPach.length) 
             {
                 arrayPach[loc1].alpha = arrayPach[loc1].alpha - AlphaV;
-                arrayPach[loc1].scaleX = arrayPach[loc1].scaleX + (0.005 + arrayPach[0].sc);
-                arrayPach[loc1].scaleY = arrayPach[loc1].scaleY + (0.005 + arrayPach[0].sc);
-                arrayPach[loc1].y = arrayPach[loc1].y + (0.5 + 0.5 * arrayPach[loc1].vy);// +向下
-                arrayPach[loc1].x = arrayPach[loc1].x + 0.05 * arrayPach[loc1].vx;
+                arrayPach[loc1].scaleX = arrayPach[loc1].scaleX + (0.005 + arrayPach[0].sc);//src =0.005//
+                arrayPach[loc1].scaleY = arrayPach[loc1].scaleY + (0.005 + arrayPach[0].sc);//速度
+                arrayPach[loc1].y = arrayPach[loc1].y + (0.5 + 5 * arrayPach[loc1].vy);// +向下/0.5
+                arrayPach[loc1].x = arrayPach[loc1].x + 0.5 * arrayPach[loc1].vx;//0.05 //扩散
 				// arrayPach[loc1].x = arrayPach[loc1].x - (0.2 + 0.1 * arrayPach[loc1].vx);
                 // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vy;
 				
 				
-                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.7 * arrayPach[loc1].rot;
+                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.7 * arrayPach[loc1].rot;//0.7
                 ++loc1;
             }
             return;
@@ -139,10 +139,11 @@
             colorPc.blueOffset = ColorB;
             arrayPach[0].transform.colorTransform = colorPc;
             arrayPach[0].rot = -3 + Math.floor(7 * Math.random());
+			//arrayPach[0].rot = 10;
             arrayPach[0].vx = flagVector * Math.floor(5 * Math.random());
             arrayPach[0].vy = Math.floor(2 * Math.random());
-            arrayPach[0].alf = 0.2 + 0.3 * Math.random();
-            arrayPach[0].sc = 0.001 * Math.random();
+            arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
+            arrayPach[0].sc = 0.01 * Math.random();//0.001//速度
             arrayPach[0].x = point0.x;
             arrayPach[0].y = point0.y;
             arrayPach[0].scaleX = scaleMin;
