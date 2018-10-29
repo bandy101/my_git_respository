@@ -1,0 +1,16 @@
+<flash_project name="Smoke.swf.flp" version="1">
+    <project_file path=".\Smoke.swf_as\BZl.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\BZl1.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\GENEL.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\JUG.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\PACH1.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\PACH2.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\PACH3.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\PACH4.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\PZl.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\PZl1.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\demoScript.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\smokeScript.as" filetype="as" />
+    <project_file path=".\Smoke.swf_as\toddlerScript.as" filetype="as" />
+    <project_file path="./Smoke.swf.fla" filetype="fla" profile="" def_file="true" />
+</flash_project>
