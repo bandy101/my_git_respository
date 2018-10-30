@@ -30,24 +30,52 @@
 		private var fileRef:FileReference= new FileReference();
 		private var loader:Loader = new Loader();
 		private var buttonShape:Shape = new Shape();
+		var myText0:TextField = new TextField  ;
+		var myText1:TextField = new TextField  ;
+		var myTextC:TextField = new TextField  ;
 		//var loader.loader=new Loader();
 		public function demoScript()
 		{			
-		   var textBox:TextField = new TextField(); 
-			textBox.background=true;
-		   textBox.text = "hello everd达式"; 
-		   textBox.autoSize = TextFieldAutoSize.CENTER; 
-		   textBox.embedFonts=true; 
-		  // textBox.backgroundColor=0xff0000;
-		   addChild(textBox); 
-			
+			myTextC.border = true;
+			myTextC.type = TextFieldType.INPUT;
+			myTextC.restrict = "0-9";
+			myTextC.maxChars = 3;
+			addChild(myTextC);
+			myTextC.width = 40;
+			myTextC.height = 20;
+			myTextC.x=40;
+			myTextC.y=330;
+			myTextC.addEventListener(Event.CHANGE,degree);
+		
+		
+			//0:Y 1:X
+			myText0.border = true;
+			myText0.type = TextFieldType.INPUT;
+			myText0.restrict = "0-9";
+			myText0.maxChars = 4;
+			addChild(myText0);
+			myText0.width = 60;
+			myText0.height = 20;
+			myText0.x=40;
+			myText0.y=370;
+			myText1.border = true;
+			myText1.type = TextFieldType.INPUT;
+			myText1.restrict = "0-9";
+			myText1.maxChars = 4;
+			addChild(myText1);
+			myText1.width = 60;
+			myText1.height = 20;
+			myText1.x=40;
+			myText1.y=350;
+			myText1.addEventListener(Event.CHANGE,pd);
+			myText0.addEventListener(Event.CHANGE,pd);
 			var loc1:* = null;
 			var loc2:* = null;
 			var loc3:* = null;
 			var loc4:* = null;
 			//BGraund = new flash.display.Sprite();
 			todSprite = new flash.display.Sprite();
-			smoke = new smokeScript(350,0,16711935,100,0);
+			smoke = new smokeScript(350,200,16711935,100,0);
 			plz0 = new toddlerScript(80,30);
 			plz1 = new toddlerScript(100,30);
 			plz2 = new toddlerScript(255,50);//烟雾数值
@@ -104,7 +132,7 @@
 			ColorPcFi.x = 15;
 			ColorPcFi.y = 60;
 			ColorPcFi.setTextFormat(ColorPcFo);
-			todSprite.addChild(plz2.toddlerShow(20, 100));
+			todSprite.addChild(plz2.toddlerShow(20, 100));	
 			ColorPcRFo.bold = true;
 			ColorPcRFo.size = 14;
 			ColorPcRFo.color = 5592439;
@@ -145,8 +173,46 @@
 			//bt1.onButtonClick();
 			return;
 		}
-			// buttonShapee = new Shape();
 
+		public function pd(e:Event):void{
+		//trace(myText0.text.length,myText1.text.length);
+			if (myText0.text.length!=0 && myText1.text.length!=0)
+			{
+				//trace("已单击鼠标");
+				smoke.smokeSprite.x =myText1.text;
+				smoke.smokeSprite.y = myText0.text;
+				
+			}
+
+			return;
+			
+		
+		}
+
+		public function degree(e:Event):void
+		{
+		trace(Math.tan(Math.PI/180*45))
+			if (myTextC.text.length!=0){
+			
+				//smoke.XS = 1
+				//smoke.YS = -1
+				trace('OK');
+				smoke.v_YS = Math.floor(2 * Math.random());
+				smoke.arrayPach[0].vy =smoke.v_YS;
+				smoke.v_XS = int((0.5+0.5*smoke.v_YS)/(Math.tan(myTextC*(Math.PI/180))*0.05));
+				smoke.arrayPach[0].vx = smoke.v_XS ;
+				trace(smoke.v_YS,smoke.v_XS);
+			}
+			// if (myTextC >90&&myTextC<=180)
+			// {	smoke.XS = -1
+				// smoke.YS = -1
+				// smoke.v_YS = Math.floor(2 * Math.random());
+				// smoke.arrayPach[0].vx = (0.5+0.5*smoke.v_YS)/(Math.tan(myTextC)*0.05);
+				// smoke.
+			// }
+			
+			return;
+		}
 
 		//切换背景
 		internal function Kn():void
@@ -181,7 +247,8 @@
 			{
 				fileRef.browse([new FileFilter("Images", "*.jpg;*.gif;*.png")]);
 				fileRef.addEventListener(Event.SELECT, onFileSelected);
-				
+				//smoke.smokeSprite.x =100;
+				//smoke.smokeSprite.y =0
 
 			}
 

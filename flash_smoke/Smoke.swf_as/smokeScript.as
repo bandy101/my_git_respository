@@ -19,7 +19,7 @@
             lengthArr = 160;
 			// 烟雾初始显示比例 原0.1
             scaleMin = 0.1;
-            Tm = 275;
+            Tm = 75;
             flagVector = 1;
             jug = new JUG();
             gene = new GENEL();
@@ -41,7 +41,7 @@
            // addChild(smokeSprite);  //可注销
             lengthArr = PachN;
             loc1 = 0;
-            while (loc1 < lengthArr) 
+            while (loc1 < 500) 
             {
                 loc2 = new PACH1();
                 arrayPach[loc1] = loc2;
@@ -74,13 +74,18 @@
                 arrayPach[loc1].alpha = arrayPach[loc1].alpha - AlphaV;
                 arrayPach[loc1].scaleX = arrayPach[loc1].scaleX + (0.005 + arrayPach[0].sc);//src =0.005//
                 arrayPach[loc1].scaleY = arrayPach[loc1].scaleY + (0.005 + arrayPach[0].sc);//速度
-                arrayPach[loc1].y = arrayPach[loc1].y + (0.5 + 5 * arrayPach[loc1].vy);// +向下/0.5
-                arrayPach[loc1].x = arrayPach[loc1].x + 0.5 * arrayPach[loc1].vx;//0.05 //扩散
-				// arrayPach[loc1].x = arrayPach[loc1].x - (0.2 + 0.1 * arrayPach[loc1].vx);
-                // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vy;
+                 //arrayPach[loc1].y = arrayPach[loc1].y - (0.5 + 0.5 * arrayPach[loc1].vy);// +向下/0.5
+                 //arrayPach[loc1].x = arrayPach[loc1].x + 0.05 * arrayPach[loc1].vx;//0.05 //扩散
+				 // arrayPach[loc1].x = arrayPach[loc1].x + (0.5 + 0.1 * arrayPach[loc1].vy);//向右
+                 // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vx;//向右
+				 // arrayPach[loc1].x = -arrayPach[loc1].y + (0.5+0.1* arrayPach[loc1].vy);
+				 // arrayPach[loc1].y = -arrayPach[loc1].x - (0.05* arrayPach[loc1].vx);//两个+ 右下    //++-- 右上//----左下
 				
+				arrayPach[loc1].y = (arrayPach[loc1].y +YS* arrayPach[loc1].vy);
+				arrayPach[loc1].x = (arrayPach[loc1].x + XS* arrayPach[loc1].vx);
+				 
 				
-                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.7 * arrayPach[loc1].rot;//0.7
+                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.7 * arrayPach[loc1].rot;//0.7//烟雾旋转
                 ++loc1;
             }
             return;
@@ -140,12 +145,20 @@
             arrayPach[0].transform.colorTransform = colorPc;
             arrayPach[0].rot = -3 + Math.floor(7 * Math.random());
 			//arrayPach[0].rot = 10;
-            arrayPach[0].vx = flagVector * Math.floor(5 * Math.random());
-            arrayPach[0].vy = Math.floor(2 * Math.random());
-            arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
-            arrayPach[0].sc = 0.01 * Math.random();//0.001//速度
+            // arrayPach[0].vx = flagVector * Math.floor(5 * Math.random());
+            // arrayPach[0].vy = Math.floor(2 * Math.random());
+			//trace(Math.random());
+			arrayPach[0].vx = v_XS;
+            arrayPach[0].vy = v_YS;
+			trace(v_XS,v_YS);
+			
+            //arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
+			arrayPach[0].alf = 0.2 + 3 * Math.random();
+            arrayPach[0].sc = 0.01 * Math.random();//0.001//绽放大小速度
             arrayPach[0].x = point0.x;
             arrayPach[0].y = point0.y;
+			//arrayPach[0].x =0;
+            //arrayPach[0].y = 0;
             arrayPach[0].scaleX = scaleMin;
             arrayPach[0].scaleY = scaleMin;
             smokeSprite.addChild(arrayPach[0]);
@@ -184,7 +197,13 @@
             SMT.start();
             return;
         }
-
+	
+	
+		public var XS:Number=1.0;
+		public var YS:Number=1.0;
+		
+		public var v_XS:Number= Math.floor(5 * Math.random());
+		public var v_YS:Number=Math.floor(2 * Math.random());
         public var PachN:int=50;
 
         internal var smokeSprite:flash.display.Sprite;
