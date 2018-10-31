@@ -150,7 +150,8 @@
 			//trace(Math.random());
 			arrayPach[0].vx = v_XS;
             arrayPach[0].vy = v_YS;
-			trace(v_XS,v_YS);
+			
+			//trace(v_XS,v_YS);
 			
             //arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
 			arrayPach[0].alf = 0.2 + 3 * Math.random();
@@ -200,7 +201,7 @@
 	
 	
 		public var XS:Number=1.0;
-		public var YS:Number=1.0;
+		public var YS:Number=-1.0;
 		
 		public var v_XS:Number= Math.floor(5 * Math.random());
 		public var v_YS:Number=Math.floor(2 * Math.random());

@@ -191,17 +191,22 @@
 
 		public function degree(e:Event):void
 		{
-		trace(Math.tan(Math.PI/180*45))
+			trace(Math.tan(Math.PI/180*45))
+			trace(myTextC.text);
 			if (myTextC.text.length!=0){
 			
-				//smoke.XS = 1
-				//smoke.YS = -1
+				
 				trace('OK');
-				smoke.v_YS = Math.floor(2 * Math.random());
-				smoke.arrayPach[0].vy =smoke.v_YS;
-				smoke.v_XS = int((0.5+0.5*smoke.v_YS)/(Math.tan(myTextC*(Math.PI/180))*0.05));
-				smoke.arrayPach[0].vx = smoke.v_XS ;
-				trace(smoke.v_YS,smoke.v_XS);
+				smoke.v_YS = 2 * Math.random();
+				trace("Y:",smoke.v_YS);
+				//smoke.arrayPach[0].vy =smoke.v_YS;
+				var z =(Math.tan(Math.PI/180*(myTextC.text)));
+				trace("z:",z)
+				//smoke.v_XS = (0.5+0.5*smoke.v_YS)/(z*0.05)/10.0;
+				smoke.v_XS =z*smoke.v_YS;
+				
+				//smoke.arrayPach[0].vx = smoke.v_XS ;
+				trace(z,smoke.v_YS,smoke.v_XS);
 			}
 			// if (myTextC >90&&myTextC<=180)
 			// {	smoke.XS = -1
