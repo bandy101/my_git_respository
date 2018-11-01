@@ -19,19 +19,21 @@
 	import flash.net.URLRequest;
 	import flash.net.*;
 	import 	fl.video.*;
+	 import flash.geom.Matrix;
 	import flash.display.Sprite; 
 	 import flash.text.TextField; 
 	 import flash.text.TextFieldAutoSize; 
 	 import flash.text.TextFormat; 
-	public class demoScript extends flash.display.MovieClip
+	public class demoScript extends flash.display.Sprite
 	{
 		private var bt1:Button;
 		private var file:FileReference=new FileReference();
 		private var fileRef:FileReference= new FileReference();
 		private var loader:Loader = new Loader();
 		private var buttonShape:Shape = new Shape();
+		var recMatrix= new Matrix();
 		var myText0:TextField = new TextField  ;
-		var myText1:TextField = new TextField  ;
+		var myText1:TextField = new TextField  ;	
 		var myTextC:TextField = new TextField  ;
 		//var loader.loader=new Loader();
 		public function demoScript()
@@ -167,6 +169,7 @@
 			addChild(todSprite);
 			addChild(smoke.FnSmoke());
 			addEventListener(flash.events.Event.ENTER_FRAME, FnGoPl);
+			recMatrix =smoke.smokeSprite.transform.matrix;
 			//bt1.addEventListener(MouseEvent.CLICK, Kn);
 			//addChild(bt1);
 			Kn();
@@ -181,7 +184,7 @@
 				//trace("已单击鼠标");
 				smoke.smokeSprite.x =myText1.text;
 				smoke.smokeSprite.y = myText0.text;
-				
+				//smoke.tra
 			}
 
 			return;
@@ -189,24 +192,57 @@
 		
 		}
 
+		public function pds():void{
+		//trace(myText0.text.length,myText1.text.length);
+			if (myText0.text.length!=0 && myText1.text.length!=0)
+			{
+				//trace("已单击鼠标");
+				smoke.smokeSprite.x =myText1.text;
+				smoke.smokeSprite.y = myText0.text;
+
+			}
+
+			return;
+			
+		
+		}
+		
+		var te:int=0;
 		public function degree(e:Event):void
 		{
 			trace(Math.tan(Math.PI/180*45))
 			trace(myTextC.text);
 			if (myTextC.text.length!=0){
 			
+				// if (myTextC.text)
+				// trace('OK');
+				// //smoke.v_YS = 2 * Math.random();
+				// smoke.v_XS = 2;
+				// trace("Y:",smoke.v_YS);
+				// //smoke.arrayPach[0].vy =smoke.v_YS;
+				// var z =(Math.tan(Math.PI/180*(myTextC.text)));
+				// trace("z:",z)
+				// //smoke.v_XS = (0.5+0.5*smoke.v_YS)/(z*0.05)/10.0;
+				// smoke.v_YS =smoke.v_XS*z;
+				// //smoke.arrayPach[0].vx = smoke.v_XS ;
+				// trace(z,smoke.v_YS,smoke.v_XS);
+			recMatrix.rotate(Math.PI/180*Math.abs(360-te));
+			smoke.smokeSprite.transform.matrix = recMatrix;
+			//var tt:Matrix = new Matrix();
+			//tt = recMatrix;
+			te = myTextC.text 
+			
+			recMatrix.a =1;
+			recMatrix.b =2;
+			//recMatrix.translate(200,200);
+			recMatrix.rotate(Math.PI/180*myTextC.text);
+			// recMatrix.translate(200,200)
+			smoke.smokeSprite.transform.matrix = recMatrix;
+			pds();
+			}
+			else
+			{
 				
-				trace('OK');
-				smoke.v_YS = 2 * Math.random();
-				trace("Y:",smoke.v_YS);
-				//smoke.arrayPach[0].vy =smoke.v_YS;
-				var z =(Math.tan(Math.PI/180*(myTextC.text)));
-				trace("z:",z)
-				//smoke.v_XS = (0.5+0.5*smoke.v_YS)/(z*0.05)/10.0;
-				smoke.v_XS =z*smoke.v_YS;
-				
-				//smoke.arrayPach[0].vx = smoke.v_XS ;
-				trace(z,smoke.v_YS,smoke.v_XS);
 			}
 			// if (myTextC >90&&myTextC<=180)
 			// {	smoke.XS = -1

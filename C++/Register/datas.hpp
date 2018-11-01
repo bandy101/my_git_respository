@@ -8,7 +8,10 @@ class DataS : public QWidget {
 public:
 	DataS(QWidget * parent = Q_NULLPTR);
 	~DataS();
-
+	public slots:
+	void showPup();
+public:
+	void init();
 private:
 	Ui::DataS ui;
 };

@@ -40,6 +40,8 @@ class Gui(QWidget,Ui_Form):
             try:
                 if _['id']=='02':
                     self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
+                if _['id']=='03':
+                    self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
             except:
                 pass
         ##平台{01:qingyuan,02:guangzhou}

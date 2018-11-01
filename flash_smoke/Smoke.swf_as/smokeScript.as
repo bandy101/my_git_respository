@@ -4,7 +4,7 @@
     import flash.events.*;
     import flash.geom.*;
     import flash.utils.*;
-    
+     import flash.geom.Matrix;
     public class smokeScript extends flash.display.Sprite
     {
         public function smokeScript(arg1:*, arg2:*, arg3:*, arg4:*, arg5:*)
@@ -64,7 +64,7 @@
             smokeSprite.addChild(jug);
             return;
         }
-
+		
         internal function FnSmokeUp1(arg1:flash.events.Event):void
         {
             var loc1:*=0;
@@ -74,15 +74,15 @@
                 arrayPach[loc1].alpha = arrayPach[loc1].alpha - AlphaV;
                 arrayPach[loc1].scaleX = arrayPach[loc1].scaleX + (0.005 + arrayPach[0].sc);//src =0.005//
                 arrayPach[loc1].scaleY = arrayPach[loc1].scaleY + (0.005 + arrayPach[0].sc);//速度
-                 //arrayPach[loc1].y = arrayPach[loc1].y - (0.5 + 0.5 * arrayPach[loc1].vy);// +向下/0.5
-                 //arrayPach[loc1].x = arrayPach[loc1].x + 0.05 * arrayPach[loc1].vx;//0.05 //扩散
-				 // arrayPach[loc1].x = arrayPach[loc1].x + (0.5 + 0.1 * arrayPach[loc1].vy);//向右
-                 // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vx;//向右
+                 arrayPach[loc1].y = arrayPach[loc1].y + (0.5 + 0.5 * arrayPach[loc1].vy);// +向下/0.5
+                 arrayPach[loc1].x = arrayPach[loc1].x + 0.05 * arrayPach[loc1].vx;//0.05 //扩散
+				 // // arrayPach[loc1].x = arrayPach[loc1].x + (0.5 + 0.1 * arrayPach[loc1].vy);//向右
+                 // // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vx;//向右
 				 // arrayPach[loc1].x = -arrayPach[loc1].y + (0.5+0.1* arrayPach[loc1].vy);
 				 // arrayPach[loc1].y = -arrayPach[loc1].x - (0.05* arrayPach[loc1].vx);//两个+ 右下    //++-- 右上//----左下
 				
-				arrayPach[loc1].y = (arrayPach[loc1].y +YS* arrayPach[loc1].vy);
-				arrayPach[loc1].x = (arrayPach[loc1].x + XS* arrayPach[loc1].vx);
+				//arrayPach[loc1].y = (arrayPach[loc1].y +YS* arrayPach[loc1].vy);
+				//arrayPach[loc1].x = (arrayPach[loc1].x + XS* arrayPach[loc1].vx);
 				 
 				
                 arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.7 * arrayPach[loc1].rot;//0.7//烟雾旋转
@@ -145,11 +145,11 @@
             arrayPach[0].transform.colorTransform = colorPc;
             arrayPach[0].rot = -3 + Math.floor(7 * Math.random());
 			//arrayPach[0].rot = 10;
-            // arrayPach[0].vx = flagVector * Math.floor(5 * Math.random());
-            // arrayPach[0].vy = Math.floor(2 * Math.random());
+             arrayPach[0].vx = flagVector * Math.floor(5 * Math.random());
+             arrayPach[0].vy = Math.floor(2 * Math.random());
 			//trace(Math.random());
-			arrayPach[0].vx = v_XS;
-            arrayPach[0].vy = v_YS;
+			//arrayPach[0].vx = v_XS;
+            //arrayPach[0].vy = v_YS;
 			
 			//trace(v_XS,v_YS);
 			
