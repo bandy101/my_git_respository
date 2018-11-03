@@ -18,7 +18,7 @@
             arrayPach = new Array();
             lengthArr = 160;
 			// 烟雾初始显示比例 原0.1
-            scaleMin = 0.1;
+            scaleMin = 0.3;
             Tm = 75;
             flagVector = 1;
             jug = new JUG();

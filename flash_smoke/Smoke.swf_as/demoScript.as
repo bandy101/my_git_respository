@@ -34,20 +34,47 @@
 		var recMatrix= new Matrix();
 		var myText0:TextField = new TextField  ;
 		var myText1:TextField = new TextField  ;	
-		var myTextC:TextField = new TextField  ;
+		var myText_b:TextField = new TextField  ;
+		var myText_as:TextField = new TextField  ;
+		var myText_bs:TextField = new TextField  ;
 		//var loader.loader=new Loader();
 		public function demoScript()
 		{			
-			myTextC.border = true;
-			myTextC.type = TextFieldType.INPUT;
-			myTextC.restrict = "0-9";
-			myTextC.maxChars = 3;
-			addChild(myTextC);
-			myTextC.width = 40;
-			myTextC.height = 20;
-			myTextC.x=40;
-			myTextC.y=330;
-			myTextC.addEventListener(Event.CHANGE,degree);
+			myText_as.border = true;
+			myText_as.type = TextFieldType.INPUT;
+			myText_as.restrict = "0-5";
+			myText_as.maxChars = 3;
+			addChild(myText_as);
+			myText_as.width = 40;
+			myText_as.height = 20;
+			myText_as.x=300;
+			myText_as.y=50;
+			myText_as.addEventListener(Event.CHANGE,ab);
+		
+			myText_bs.border = true;
+			myText_bs.type = TextFieldType.INPUT;
+			myText_bs.restrict = "0-5";
+			myText_bs.maxChars = 3;
+			addChild(myText_bs);
+			myText_bs.width = 40;
+			myText_bs.height = 20;
+			myText_bs.x=340;
+			myText_bs.y=50;
+			myText_bs.addEventListener(Event.CHANGE,ab);
+		
+		
+		
+		
+			myText_b.border = true;
+			myText_b.type = TextFieldType.INPUT;
+			myText_b.restrict = "0-9";
+			myText_b.maxChars = 3;
+			addChild(myText_b);
+			myText_b.width = 40;
+			myText_b.height = 20;
+			myText_b.x=100;
+			myText_b.y=500;
+			myText_b.addEventListener(Event.CHANGE,degree);
 		
 		
 			//0:Y 1:X
@@ -58,8 +85,8 @@
 			addChild(myText0);
 			myText0.width = 60;
 			myText0.height = 20;
-			myText0.x=40;
-			myText0.y=370;
+			myText0.x=100;
+			myText0.y=600;
 			myText1.border = true;
 			myText1.type = TextFieldType.INPUT;
 			myText1.restrict = "0-9";
@@ -67,8 +94,8 @@
 			addChild(myText1);
 			myText1.width = 60;
 			myText1.height = 20;
-			myText1.x=40;
-			myText1.y=350;
+			myText1.x=100;
+			myText1.y=550;
 			myText1.addEventListener(Event.CHANGE,pd);
 			myText0.addEventListener(Event.CHANGE,pd);
 			var loc1:* = null;
@@ -77,12 +104,12 @@
 			var loc4:* = null;
 			//BGraund = new flash.display.Sprite();
 			todSprite = new flash.display.Sprite();
-			smoke = new smokeScript(350,200,16711935,100,0);
-			plz0 = new toddlerScript(80,30);
-			plz1 = new toddlerScript(100,30);
-			plz2 = new toddlerScript(255,50);//烟雾数值
-			plz3 = new toddlerScript(255,50);
-			plz4 = new toddlerScript(255,50);
+			smoke = new smokeScript(350,200,16711935,100,0.0041);
+			plz0 = new toddlerScript(80,40);
+			plz1 = new toddlerScript(100,50);
+			plz2 = new toddlerScript(255,0);//烟雾数值
+			plz3 = new toddlerScript(255,0);
+			plz4 = new toddlerScript(255,0);
 			PachNFi = new flash.text.TextField();
 			PachNFo = new flash.text.TextFormat();
 			AlphaVFi = new flash.text.TextField();
@@ -191,7 +218,22 @@
 			
 		
 		}
-
+		public function ab(e:Event):void{
+		if (myText_as.text.length!=0 )
+			{
+				recMatrix.a =myText_as.text;
+			}
+		else{recMatrix.b =1;}
+		
+		if (myText_bs.text.length!=0 )
+			{
+				recMatrix.b =myText_bs.text;
+			}
+		else{recMatrix.b =1;}
+		smoke.smokeSprite.transform.matrix = recMatrix;
+		return;
+		}
+		
 		public function pds():void{
 		//trace(myText0.text.length,myText1.text.length);
 			if (myText0.text.length!=0 && myText1.text.length!=0)
@@ -211,16 +253,16 @@
 		public function degree(e:Event):void
 		{
 			trace(Math.tan(Math.PI/180*45))
-			trace(myTextC.text);
-			if (myTextC.text.length!=0){
+			trace(myText_b.text);
+			if (myText_b.text.length!=0){
 			
-				// if (myTextC.text)
+				// if (myText_b.text)
 				// trace('OK');
 				// //smoke.v_YS = 2 * Math.random();
 				// smoke.v_XS = 2;
 				// trace("Y:",smoke.v_YS);
 				// //smoke.arrayPach[0].vy =smoke.v_YS;
-				// var z =(Math.tan(Math.PI/180*(myTextC.text)));
+				// var z =(Math.tan(Math.PI/180*(myText_b.text)));
 				// trace("z:",z)
 				// //smoke.v_XS = (0.5+0.5*smoke.v_YS)/(z*0.05)/10.0;
 				// smoke.v_YS =smoke.v_XS*z;
@@ -230,12 +272,12 @@
 			smoke.smokeSprite.transform.matrix = recMatrix;
 			//var tt:Matrix = new Matrix();
 			//tt = recMatrix;
-			te = myTextC.text 
+			te = myText_b.text 
 			
-			recMatrix.a =1;
-			recMatrix.b =2;
+			//recMatrix.a =1;
+			//recMatrix.b =2;
 			//recMatrix.translate(200,200);
-			recMatrix.rotate(Math.PI/180*myTextC.text);
+			recMatrix.rotate(Math.PI/180*myText_b.text);
 			// recMatrix.translate(200,200)
 			smoke.smokeSprite.transform.matrix = recMatrix;
 			pds();
@@ -244,11 +286,11 @@
 			{
 				
 			}
-			// if (myTextC >90&&myTextC<=180)
+			// if (myText_b >90&&myText_b<=180)
 			// {	smoke.XS = -1
 				// smoke.YS = -1
 				// smoke.v_YS = Math.floor(2 * Math.random());
-				// smoke.arrayPach[0].vx = (0.5+0.5*smoke.v_YS)/(Math.tan(myTextC)*0.05);
+				// smoke.arrayPach[0].vx = (0.5+0.5*smoke.v_YS)/(Math.tan(myText_b)*0.05);
 				// smoke.
 			// }
 			
@@ -277,7 +319,7 @@
 		   
 			buttonShape.graphics.beginFill(0x336699);
 			//buttonShape.graphics.drawCircle(30, 25, 25);
-			buttonShape.graphics.drawRect(20,10,120,25);
+			buttonShape.graphics.drawRect(100,50,30,25);
 			
 			var button = new SimpleButton(buttonShape,buttonShape,buttonShape,buttonShape);
 			button.alpha = 0.5;
@@ -361,11 +403,11 @@
 		function onLoadComplete(e:Event):void
 		{
 			trace(stage.width,stage.height,loader.width,loader.height);
-			var tempData:BitmapData=new BitmapData(570,300,  //loder.
+			var tempData:BitmapData=new BitmapData(2090,1080,  //loder.
 										false,null);
 			//loader.scaleMode=StageScaEXACT_FIT;
-			loader.content.width=400	;
-			loader.content.height=300;
+			loader.content.width=1920;
+			loader.content.height=1080;
 			tempData.draw(loader); //绘画
 			//var bitmap:Bitmap = new Bitmap(tempData); //转换类型
 			// addChild(bitmap);
@@ -378,7 +420,7 @@
 				//mtr.a = stage.width/loader.width;
 				//mtr.d = stage.height/loader.height;
 					 graphics.beginBitmapFill(tempData, mtr, true, true);
-					 graphics.drawRect(170, 0, 400, 300 );//stageHeight 舞台大小变化小 两height变化大
+					 graphics.drawRect(170, 0, 1920, 1080 );//stageHeight 舞台大小变化小 两height变化大
 					 loader.contentLoaderInfo.removeEventListener(Event.COMPLETE , onLoadComplete);
 					 // loader = null;
 		}
