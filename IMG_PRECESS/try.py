@@ -64,7 +64,16 @@ if __name__ =='__main__':
     prob= get_probility(im1,im2)
     print(prob)
     paths = 'H:/分类任务/0_非车'
-    start(paths)
+    #start(paths) //测试
+    cv2.imshow('src',im1)
+    cv2.imshow('flip0',cv2.flip(im1,0)) #0 垂直翻转 >=1 水平翻转
+    cv2.imshow('flip1',cv2.flip(im1,1))
+    cv2.imshow('flip2',cv2.flip(im1,2))
+    cv2.imshow('flip3',cv2.flip(im1,3))
+    cv2.waitKey()
+
+
+
 
 
 # if __name__ == '__main__':

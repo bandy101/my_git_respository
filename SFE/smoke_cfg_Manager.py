@@ -1,9 +1,17 @@
 import requests
-import os,shutil
+import os,shutil,cv2
+
 from os import path
 import json,time
 import zipfile
+import numpy as np
 from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait
+def cv_imread(f_path):
+    img = cv2.imdecode(np.fromfile(f_path,dtype=np.uint8),-1)
+    return img
+
+def cv_imwrite(f_path,im):
+    cv2.imencode('.jpg',im)[1].tofile(f_path)#保存图片
 
 global PRE_URL,Cookies,Chunk_Size,qys,xxs,INDEX
 qys ='http://202.105.10.126:1577'
@@ -50,6 +58,47 @@ XLS_NAME={
 #all lists http://218.28.71.220:1570/api/record/SFE-R600-V23W1906/
 
 #'exist'http://218.28.71.220:1570/api/status
+
+
+def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误判','黑烟视频','黑烟误判']):
+    switch =True
+    currentDir =os.getcwd()
+    for _ in Names:
+        if not path.exists(namePrefix+'/'+path.join(dir_name,dir_name,_)):
+            os.makedirs(namePrefix+'/'+path.join(dir_name,dir_name,_))
+    srcPath = namePrefix+'/'+path.join(dir_name,dir_name)
+
+    for d in os.listdir(namePrefix+'/'+dir_name):
+        print(path.join(namePrefix+'/'+dir_name,d))
+        print(f'----{d}----')
+        allNames = [ _ for _ in os.listdir(path.join(namePrefix+'/'+dir_name,d)) if _[-3:]=='mp4']
+        
+        # for _ in os.listdir(path.join(namePrefix+'/'+dir_name,d)):
+        #     print(_[-3:])
+        if not switch:
+            break
+        for n in allNames:
+            im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
+            im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
+            while(1):
+                cv2.imshow('Image1',im1)
+                cv2.imshow('Image2',im2)
+                k=cv2.waitKey(1)&0xFF  
+                if k ==32:
+                    break
+                if k in [ord('w'),ord('W')]:
+                    #写入记录的操作#
+                    print('---写入成功---')
+                    cv_imwrite(namePrefix+'/'+path.join(dir_name,dir_name,'车辆误判',n[:-4]+'_1.jpg'),im1)
+                    cv_imwrite(namePrefix+'/'+path.join(dir_name,dir_name,'车辆误判',n[:-4]+'_2.jpg'),im2)
+                if k in [102,70]:
+                    os.chdir(path.abspath(path.join(namePrefix,dir_name,d)))
+                    os.system(n)
+                    os.chdir(currentDir)
+                if k==111: #'o' 全部关闭
+                    switch = False
+            if not switch:break
+            
 def get_lists(url):
     res = requests.get(url,cookies=Cookies)
     try:
@@ -140,14 +189,21 @@ def pre_start(pre_path='./video/'):
             # print(l['upload'],l['upload']=='未上传')
             if l['status']==False and l['upload']=='未上传':
                 names.append(l['name'])
-        # print(names)
+        print(names)
         mp4_url= []
         target_name = []
         for name in names:
+            #视频 download
             mp4_url.append(PRE_URL+'/api/record/'+site+'/'+name+'/video')
             target_name.append(pre_path+TSNO[site]+'/'+name+'.mp4')
-            # print(TSNO[site])
-        all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
+            #图片
+            mp4_url.append(PRE_URL+'/api/record/'+site+'/'+name+'/image1')
+            target_name.append(pre_path+TSNO[site]+'/image1/'+name+'_1.jpg')
+
+            mp4_url.append(PRE_URL+'/api/record/'+site+'/'+name+'/image2')
+            target_name.append(pre_path+TSNO[site]+'/image2/'+name+'_2.jpg')
+
+            all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
         wait(all_task,return_when=ALL_COMPLETED)
 #确认
 
@@ -163,6 +219,8 @@ def confirm(ID,paths,flag=False):
     sites = dict(zip(TSNO.values(),TSNO.keys()))
     for p,fdirs,files in os.walk(paths):
         if not files:continue
+        #print(p)
+        if 'image1' in p or 'image2' in p:continue
         alls_file_name = list(map(lambda x:x[:-4],files)) 
         for f in alls_file_name:
             if not Y:
@@ -243,7 +301,7 @@ if __name__ == '__main__':
     r =requests.post(PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login',json=paramer,timeout=10)
     r =r.headers['Set-Cookie'].split(';')[0].split('=')
     Cookies ={r[0]:r[1]}
-    flag = input('#---q:退出---d:下载---c:确认---#:')
+    flag = input('#---q:退出---d:下载---c:确认---t:查看图片#:')
 
     if flag.lower()=='d':
     
@@ -283,15 +341,17 @@ if __name__ == '__main__':
                     k = f.read().split()
                 confirm(k,p+path_name,True)
         #统计记录(xls)
-        if com.lower() in ['n','y','f']:        
-            ws,index,wbk =get_xls_sheet()
-            resouce_path = p+path_name
-            for name in os.listdir(resouce_path):
-                if name[:2]=='20':continue
-                write_xls(resouce_path,int(index),ws,name,path_name)
-            ws.write(int(index),0,str(path_name))
-            wbk.save(xls_names+'.xls')
+        # if com.lower() in ['n','y','f']:        
+        #     ws,index,wbk =get_xls_sheet()
+        #     resouce_path = p+path_name
+        #     for name in os.listdir(resouce_path):
+        #         if name[:2]=='20':continue  #排除确认的黑烟
+        #         write_xls(resouce_path,int(index),ws,name,path_name)
+        #     ws.write(int(index),0,str(path_name))
+        #     wbk.save(xls_names+'.xls')
     elif flag.lower()=='q':print('已退出!')
+    elif flag.lower() in ['t','T']:
+        Classification(p,begindate)
     else:raise '输入错误!'
     ##----stop----##
     # import re
