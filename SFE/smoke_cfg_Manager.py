@@ -5,7 +5,7 @@ from os import path
 import json,time
 import zipfile
 import numpy as np
-from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait
+from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait,FIRST_COMPLETED
 def cv_imread(f_path):
     img = cv2.imdecode(np.fromfile(f_path,dtype=np.uint8),-1)
     return img
@@ -37,7 +37,7 @@ TSNO={
     "SFE-R600-V23W2926":"G107铁道路桥2号机",
     "SFE-R600-G22W2807":"广清大道(龙塘)",
     "SFE-R600-G22W2714":"治超站出口",
-    "SFE-R600-G22W2772":"三棵竹一桥(源潭)",
+    "SFE-R600-G22W2772":"三棵   竹一桥(源潭)",
     "SFE-R600-G22W2798":"清远大道(党校)"
 }
 XLS_NAME={
@@ -204,7 +204,8 @@ def pre_start(pre_path='./video/'):
             target_name.append(pre_path+TSNO[site]+'/image2/'+name+'_2.jpg')
 
             all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
-        wait(all_task,return_when=ALL_COMPLETED)
+        #wait(all_task,return_when=ALL_COMPLETED)
+        wait(all_task,return_when=FIRST_COMPLETED)
 #确认
 
 def confirm(ID,paths,flag=False):
