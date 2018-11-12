@@ -1,5 +1,5 @@
 import requests
-import os,shutil,cv2
+import os,shutil,cv2,random
 
 from os import path
 import json,time
@@ -37,7 +37,7 @@ TSNO={
     "SFE-R600-V23W2926":"G107铁道路桥2号机",
     "SFE-R600-G22W2807":"广清大道(龙塘)",
     "SFE-R600-G22W2714":"治超站出口",
-    "SFE-R600-G22W2772":"三棵   竹一桥(源潭)",
+    "SFE-R600-G22W2772":"三棵竹一桥(源潭)",
     "SFE-R600-G22W2798":"清远大道(党校)"
 }
 XLS_NAME={
@@ -72,14 +72,27 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
         print(path.join(namePrefix+'/'+dir_name,d))
         print(f'----{d}----')
         allNames = [ _ for _ in os.listdir(path.join(namePrefix+'/'+dir_name,d)) if _[-3:]=='mp4']
-        
-        # for _ in os.listdir(path.join(namePrefix+'/'+dir_name,d)):
-        #     print(_[-3:])
+
         if not switch:
             break
         for n in allNames:
-            im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
-            im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
+            try:
+                im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
+                im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
+            except: 
+                print('####error!')
+                site = dict(zip(TSNO.values(),TSNO.keys()))[d]
+                mp4_url_1 = PRE_URL+'/api/record/'+site+'/'+n[:-4]+'/image1'
+                target_name_1 = path.join(namePrefix,dir_name,d,'image1',n[:-4]+'_1.jpg')
+                mp4_url_2 = PRE_URL+'/api/record/'+site+'/'+n[:-4]+'/image2'
+                target_name_2 = path.join(namePrefix,dir_name,d,'image2',n[:-4]+'_2.jpg')
+                print('url:',mp4_url_1)
+                print('name:',target_name_1)
+                download(mp4_url_1,target_name_1),download(mp4_url_2,target_name_2)
+                try:
+                    im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
+                    im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
+                except:continue
             while(1):
                 cv2.imshow('Image1',im1)
                 cv2.imshow('Image2',im2)
@@ -203,12 +216,13 @@ def pre_start(pre_path='./video/'):
             mp4_url.append(PRE_URL+'/api/record/'+site+'/'+name+'/image2')
             target_name.append(pre_path+TSNO[site]+'/image2/'+name+'_2.jpg')
 
-            all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
+        all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
         #wait(all_task,return_when=ALL_COMPLETED)
-        wait(all_task,return_when=FIRST_COMPLETED)
+        #wait(all_task,return_when=FIRST_COMPLETED)
 #确认
 
 def confirm(ID,paths,flag=False):
+    sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
     if not flag:
         have_is = [((i not in ['',None],len(i)==21)) for i in ID]
         is_confirm = all([_ for _ in (have_is)])
@@ -219,8 +233,10 @@ def confirm(ID,paths,flag=False):
         Y= True
     sites = dict(zip(TSNO.values(),TSNO.keys()))
     for p,fdirs,files in os.walk(paths):
+        if p.count('2018',0,len(p)) >=2:
+            print(p)
+            continue
         if not files:continue
-        #print(p)
         if 'image1' in p or 'image2' in p:continue
         alls_file_name = list(map(lambda x:x[:-4],files)) 
         for f in alls_file_name:
@@ -271,6 +287,36 @@ def confirm(ID,paths,flag=False):
                         print(res.url,'确认成功！')
                 except Exception as e:
                     print(e)
+
+    ##随机选取视频存放到对应的文件夹
+    #path:video/20xxx/
+    # path.basename ```morning:20181112+07~9 noon:10~13 afternoon:14~17
+    for d in sites_name:
+        all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_+'.mp4'))]
+        morn,noon,afnoon =[],[],[]
+        for _ in all_name:
+            if str(_[8:10]) in ['7','8','9','10']:
+                morn.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
+                path.join(paths,d+'/image2',_+'_2.jpg')])
+            if str(_[8:10]) in ['11','12','13']:
+                noon.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
+                path.join(paths,d+'/image2',_+'_2.jpg')])
+            if str(_[8:10]) in ['14','15','16','17']:
+                afnoon.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
+                path.join(paths,d+'/image2',_+'_2.jpg')])
+    
+    #开始导入
+        src = path.join(paths,path.basename(paths),'黑烟误判',d)
+        for _,n in zip(['上','中','下'],[morn,noon,afnoon]):
+            srss = path.join(src,_)
+            os.makedirs(srss,exist_ok=True)
+            if len(n)==0:continue
+            for i in n[int(random.uniform(0,len(n)))]:
+                try:
+                    shutil.copy(i,srss)
+                except:
+                    import traceback
+                    traceback.print_exc()
 
 def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
@@ -337,6 +383,7 @@ if __name__ == '__main__':
         if com.lower()=='f':
             dirs = input('输入文本路径(默认./config.txt):')
             if dirs in [None,'']:
+                print('start')
                 k = []
                 with open('config.txt',encoding='utf-8',mode='r') as f:
                     k = f.read().split()
