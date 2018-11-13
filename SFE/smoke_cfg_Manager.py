@@ -72,7 +72,7 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
         print(path.join(namePrefix+'/'+dir_name,d))
         print(f'----{d}----')
         allNames = [ _ for _ in os.listdir(path.join(namePrefix+'/'+dir_name,d)) if _[-3:]=='mp4']
-
+        backNames = allNames.copy()
         if not switch:
             break
         for n in allNames:
@@ -80,7 +80,7 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
                 im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
                 im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
             except: 
-                print('####error!')
+                print('####error!####')
                 site = dict(zip(TSNO.values(),TSNO.keys()))[d]
                 mp4_url_1 = PRE_URL+'/api/record/'+site+'/'+n[:-4]+'/image1'
                 target_name_1 = path.join(namePrefix,dir_name,d,'image1',n[:-4]+'_1.jpg')
@@ -93,6 +93,7 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
                     im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
                     im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
                 except:continue
+                
             while(1):
                 cv2.imshow('Image1',im1)
                 cv2.imshow('Image2',im2)
@@ -101,7 +102,7 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
                     break
                 if k in [ord('w'),ord('W')]:
                     #写入记录的操作#
-                    print('---写入成功---')
+                    #print('---写入成功---')
                     cv_imwrite(namePrefix+'/'+path.join(dir_name,dir_name,'车辆误判',n[:-4]+'_1.jpg'),im1)
                     cv_imwrite(namePrefix+'/'+path.join(dir_name,dir_name,'车辆误判',n[:-4]+'_2.jpg'),im2)
                 if k in [102,70]:
@@ -222,7 +223,9 @@ def pre_start(pre_path='./video/'):
 #确认
 
 def confirm(ID,paths,flag=False):
+
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
+
     if not flag:
         have_is = [((i not in ['',None],len(i)==21)) for i in ID]
         is_confirm = all([_ for _ in (have_is)])
@@ -292,7 +295,7 @@ def confirm(ID,paths,flag=False):
     #path:video/20xxx/
     # path.basename ```morning:20181112+07~9 noon:10~13 afternoon:14~17
     for d in sites_name:
-        all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_+'.mp4'))]
+        all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_))]
         morn,noon,afnoon =[],[],[]
         for _ in all_name:
             if str(_[8:10]) in ['7','8','9','10']:
@@ -310,6 +313,7 @@ def confirm(ID,paths,flag=False):
         for _,n in zip(['上','中','下'],[morn,noon,afnoon]):
             srss = path.join(src,_)
             os.makedirs(srss,exist_ok=True)
+            # print(len(n))
             if len(n)==0:continue
             for i in n[int(random.uniform(0,len(n)))]:
                 try:
@@ -318,6 +322,13 @@ def confirm(ID,paths,flag=False):
                     import traceback
                     traceback.print_exc()
 
+    tn = path.join(paths,path.basename(paths))
+    print(tn)
+    if path.exists(tn+'-smoke'):
+        print('存在黑烟')
+        if os.path.exists(path.join(tn,'黑烟视频')):
+            shutil.rmtree(path.join(tn,'黑烟视频'))
+        shutil.copytree(tn+'-smoke',path.join(tn,'黑烟视频'))
 def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
