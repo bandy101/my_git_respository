@@ -83,7 +83,7 @@ class BlackBox:
         cv_imwrite(paths,tempImg)
 
     
-
+    #为人民处理黑烟视频素材
     def grabVideo(self,videoPath: str,placeName: str,scale: float=0.4,serialNumber: int=0):
         """ 获取视频素材   
         截出的图片以`日期_地名_编号`的格式命名
@@ -145,7 +145,7 @@ class BlackBox:
                         index +=1
                     except:break
             if not switch:break
-    
+    #为人民处理黑烟图片素材
     def grabPicture(self,picPath: str,placeName: str,scale: float=0.4,serialNumber: int=0):
         """ 获取图片素材   
         截出的图片以`日期_地名_编号`的格式命名
@@ -206,7 +206,7 @@ class BlackBox:
                             except:break
                     if not switch:break
             if not switch:break
-
+    #改变世界的格局
     def moveFormat(self,srcPath :str,moveType :str='mp4',dstPath :str=None):
         '''
         @srcPath :操作的文件夹目录
@@ -228,6 +228,9 @@ class BlackBox:
                         print(_)
                         print('p:',p)
         print('移动成功')
+    #为世界处理黑烟
+    def smokeManager(self,*arg):
+        
 if __name__ == '__main__':
     from fire import Fire
     Fire(BlackBox)
