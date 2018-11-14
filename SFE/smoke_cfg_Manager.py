@@ -223,7 +223,11 @@ def pre_start(pre_path='./video/'):
 #确认
 
 def confirm(ID,paths,flag=False):
-
+    index = 0
+    siteName= None
+    if 'video_new' in paths:
+        siteName= '新乡'
+    else:siteName = '清远'
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
 
     if not flag:
@@ -243,6 +247,7 @@ def confirm(ID,paths,flag=False):
         if 'image1' in p or 'image2' in p:continue
         alls_file_name = list(map(lambda x:x[:-4],files)) 
         for f in alls_file_name:
+            index =0
             if not Y:
                 ids = [_ for _ in ID]
                 if f not in ids:
@@ -260,9 +265,9 @@ def confirm(ID,paths,flag=False):
                     res = requests.get(url,cookies=Cookies)
                     print(res.url,'上传成功！')
                     ps = path.join(paths,path.basename(paths)+'-smoke')
-                    ps =path.join(ps,path.split(p)[-1])
+                    ps =path.join(ps,path.basename(paths)+' '+siteName)
                     if not path.exists(ps):os.makedirs(ps)
-                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'_'+ps[-3:]+'.mp4')
+                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:04}'+'.mp4')
             #全部确认
             else:
                 site = sites[path.split(p)[-1]]
@@ -276,9 +281,9 @@ def confirm(ID,paths,flag=False):
                             res = requests.get(url,cookies=Cookies)
                             print(res.url,'上传成功！')
                             ps = path.join(paths,path.basename(paths)+'-smoke')
-                            ps =path.join(ps,path.split(p)[-1])
+                            ps =path.join(ps,path.basename(paths)+' '+siteName)
                             if not path.exists(ps):os.makedirs(ps)
-                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f)+'_'+ps[-3:]+'.mp4')
+                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:04}'+'.mp4')
                         else:
                             url = PRE_URL+'/api/record/'+site+\
                             '/'+f+'/status'

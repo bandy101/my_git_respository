@@ -1,5 +1,5 @@
 from os import path 
-import os,cv2
+import os,cv2,time
 import numpy as np
 import sys,shutil
 
@@ -210,7 +210,7 @@ class BlackBox:
     def moveFormat(self,srcPath :str,moveType :str='mp4',dstPath :str=None):
         '''
         @srcPath :操作的文件夹目录
-        @moveType :操作文件的类型
+        @moveType :操作文件的类型(defalt :mp4)
         @dstPath :目标目录(默认当前输入目录)
         '''
         if not dstPath:dstPath = srcPath
@@ -230,7 +230,50 @@ class BlackBox:
         print('移动成功')
     #为世界处理黑烟
     def smokeManager(self,*arg):
-        
+        pass
+    #使用对应标准分类黑烟视频
+    def classifyVideo(self,srcVideoPath: str,dstPath: str=None,platform: str='清远',serialNumber: int=0):
+        platform +='平台'
+        '''
+        description :
+            视频素材
+                -非黑烟视频
+                -黑烟视频
+                    -未知时间[ID]
+                    -日期+来源(yearmonthday+来源平台) eg.[20181001 清远平台]
+                        -视频文件 eg.[20181001_站点名称_serialNumber]
+        @paramer
+            srcVideoPath :分类的文件夹
+            dstPath      :存放的文件夹
+        '''
+        #index = serialNumber #编号
+        if not dstPath:dstPath=srcVideoPath  #输入目录
+        targitDir = path.join(dstPath,'视频素材','黑烟视频')
+        os.makedirs(targitDir,exist_ok=True)
+        for p,d,fs in os.walk(srcVideoPath):
+            if '视频素材' in p:continue
+            index =serialNumber#编号
+            for f in fs:
+                siteName = path.basename(p)
+                print(siteName)
+                #判断视频文件命名方式转换对应格式[ID,format(date),timestamp]
+                if f[0] in ['4']:
+                    idDir = path.join(targitDir,'未知时间')
+                    os.makedirs(idDir,exist_ok=True)
+                    shutil.copy(path.join(p,f),idDir)
+                else:
+                    if f[0] in ['1']:
+                        dateName = time.strftime('%Y%m%d',time.localtime(int(f[:10])))
+                    elif f[0] in ['2']:
+                        dateName =f[0:8]
+                    else:
+                        dateName =f[9:17]
+                    dateDir =  path.join(targitDir,dateName+' '+platform)
+                    os.makedirs(dateDir,exist_ok=True)
+                    newVideoName = f"{dateName}_{siteName}_{index:04}"
+                    shutil.copy(path.join(p,f),path.join(dateDir,newVideoName+f[-4:]))
+                    index +=1
+
 if __name__ == '__main__':
     from fire import Fire
     Fire(BlackBox)
