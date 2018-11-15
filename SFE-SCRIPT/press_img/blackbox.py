@@ -274,6 +274,45 @@ class BlackBox:
                     shutil.copy(path.join(p,f),path.join(dateDir,newVideoName+f[-4:]))
                     index +=1
 
+    #从分类完成的视频中筛选出符合要求
+    def classifyVideo_(self,srcPath: str,arg: str):
+        #使用ANSI  避免乱码
+        '''
+        @pramer
+        srcPath str:分类的文件夹
+        *arg :特殊参数文本 (关键词_serialNumber):文本名称
+        '''
+        csfName,start= ['非黑烟视频','不明显'],0
+        import re
+        for k in [arg]:
+            with open(k,mode='r+') as ff:
+                text = ff.read()
+                results =[_ for _ in re.split('[\s]',text) if _ not in['',None]]
+                for p,d,fs in os.walk(srcPath):#H:\AI_Data\素材库_黑烟视频\分站点\all\视频素材\黑烟视频
+                    if d in [[]]:targitDir = path.join(path.dirname(path.dirname(p)),csfName[start],path.basename(p))
+                    for f in fs:
+                        #if any([all([_x in f for _x in a.split('_')]) for a in results if ]):
+                        for r in results:
+                            # print(r.split('-'),[_x in f for _x in r.split('_')])
+                            if all([_x in f for _x in r.split('-')]):
+                                os.makedirs(targitDir,exist_ok=True)
+                                print(targitDir)
+                                results.remove(r)
+                                shutil.move(path.join(p,f),targitDir)
+                                break
+            start +=1
+                                
+                            
+                            
+                            
+
+
+
+                    
+
+
+
+
 if __name__ == '__main__':
     from fire import Fire
     Fire(BlackBox)
