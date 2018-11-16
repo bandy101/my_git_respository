@@ -226,8 +226,8 @@ def confirm(ID,paths,flag=False):
     index = 0
     siteName= None
     if 'video_new' in paths:
-        siteName= '新乡'
-    else:siteName = '清远'
+        siteName= '新乡平台'
+    else:siteName = '清远平台'
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
 
     if not flag:
@@ -304,14 +304,13 @@ def confirm(ID,paths,flag=False):
         morn,noon,afnoon =[],[],[]
         for _ in all_name:
             if str(_[8:10]) in ['7','8','9','10']:
-                morn.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
-                path.join(paths,d+'/image2',_+'_2.jpg')])
+                # morn.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
+                # path.join(paths,d+'/image2',_+'_2.jpg')])
+                morn.append([path.join(paths,d,_+'.mp4')])
             if str(_[8:10]) in ['11','12','13']:
-                noon.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
-                path.join(paths,d+'/image2',_+'_2.jpg')])
+                noon.append([path.join(paths,d,_+'.mp4')])
             if str(_[8:10]) in ['14','15','16','17']:
-                afnoon.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
-                path.join(paths,d+'/image2',_+'_2.jpg')])
+                afnoon.append([path.join(paths,d,_+'.mp4')])
     
     #开始导入
         src = path.join(paths,path.basename(paths),'黑烟误判',d)

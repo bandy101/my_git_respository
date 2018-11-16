@@ -83,7 +83,7 @@ class BlackBox:
         cv_imwrite(paths,tempImg)
 
     
-    #为人民处理黑烟视频素材
+    #处理黑烟视频素材
     def grabVideo(self,videoPath: str,placeName: str,scale: float=0.4,serialNumber: int=0):
         """ 获取视频素材   
         截出的图片以`日期_地名_编号`的格式命名
@@ -145,7 +145,7 @@ class BlackBox:
                         index +=1
                     except:break
             if not switch:break
-    #为人民处理黑烟图片素材
+    #处理黑烟图片素材
     def grabPicture(self,picPath: str,placeName: str,scale: float=0.4,serialNumber: int=0):
         """ 获取图片素材   
         截出的图片以`日期_地名_编号`的格式命名
@@ -206,7 +206,7 @@ class BlackBox:
                             except:break
                     if not switch:break
             if not switch:break
-    #改变世界的格局
+    #移动一个目录所有特定文件
     def moveFormat(self,srcPath :str,moveType :str='mp4',dstPath :str=None):
         '''
         @srcPath :操作的文件夹目录
@@ -228,9 +228,11 @@ class BlackBox:
                         print(_)
                         print('p:',p)
         print('移动成功')
-    #为世界处理黑烟
+    #处理黑烟记录
     def smokeManager(self,*arg):
         pass
+
+
     #使用对应标准分类黑烟视频
     def classifyVideo(self,srcVideoPath: str,dstPath: str=None,platform: str='清远',serialNumber: int=0):
         platform +='平台'
@@ -254,8 +256,12 @@ class BlackBox:
             if '视频素材' in p:continue
             index =serialNumber#编号
             for f in fs:
+                dt = f
+                if '-' in f:
+                    dt = f.replace('-','')
+                    print(dt,f)
                 siteName = path.basename(p)
-                print(siteName)
+                # print(siteName)
                 #判断视频文件命名方式转换对应格式[ID,format(date),timestamp]
                 if f[0] in ['4']:
                     idDir = path.join(targitDir,'未知时间')
@@ -263,11 +269,11 @@ class BlackBox:
                     shutil.copy(path.join(p,f),idDir)
                 else:
                     if f[0] in ['1']:
-                        dateName = time.strftime('%Y%m%d',time.localtime(int(f[:10])))
+                        dateName = time.strftime('%Y%m%d',time.localtime(int(dt[:10])))
                     elif f[0] in ['2']:
-                        dateName =f[0:8]
+                        dateName =dt[0:8]
                     else:
-                        dateName =f[9:17]
+                        dateName =dt[9:17]
                     dateDir =  path.join(targitDir,dateName+' '+platform)
                     os.makedirs(dateDir,exist_ok=True)
                     newVideoName = f"{dateName}_{siteName}_{index:04}"
@@ -282,13 +288,13 @@ class BlackBox:
         srcPath str:分类的文件夹
         *arg :特殊参数文本 (关键词_serialNumber):文本名称
         '''
-        csfName,start= ['非黑烟视频','不明显'],0
+        csfName,start= ['非黑烟视频','不明显'],1
         import re
         for k in [arg]:
             with open(k,mode='r+') as ff:
                 text = ff.read()
                 results =[_ for _ in re.split('[\s]',text) if _ not in['',None]]
-                for p,d,fs in os.walk(srcPath):#H:\AI_Data\素材库_黑烟视频\分站点\all\视频素材\黑烟视频
+                for p,d,fs in os.walk(srcPath):     #H:\AI_Data\素材库_黑烟视频\分站点\all\视频素材\黑烟视频
                     if d in [[]]:targitDir = path.join(path.dirname(path.dirname(p)),csfName[start],path.basename(p))
                     for f in fs:
                         #if any([all([_x in f for _x in a.split('_')]) for a in results if ]):
@@ -296,14 +302,44 @@ class BlackBox:
                             # print(r.split('-'),[_x in f for _x in r.split('_')])
                             if all([_x in f for _x in r.split('-')]):
                                 os.makedirs(targitDir,exist_ok=True)
-                                print(targitDir)
+                                print(r)
                                 results.remove(r)
                                 shutil.move(path.join(p,f),targitDir)
                                 break
+            print(results)
             start +=1
-                                
-                            
-                            
+
+    #合并线上记录的黑烟
+    def smokeSet(self,srcPath: str,dstPath: str=None,tagt :str='dest'):
+        '''
+            description:
+            将分好的视频合并成对应的站点
+            eg.
+            -K
+                A           B       
+                    -a          -a
+                    -b          -b
+            将A、B文件夹中对应的文件夹[a,b]中相同名称的文件夹中的文件合并在
+            (默认)当前目录的tagt中
+        @paramer
+            srcPath str:A、B的上层目录K
+            dstPath str:默认(K/tagt)
+            tagt str:子目录名称
+        '''
+
+        if not dstPath:dstPath=srcPath
+        dstPath =path.join(dstPath,tagt)
+        if not path.exists(dstPath):os.makedirs(dstPath,exist_ok=True)
+        for p,d,fs in os.walk(srcPath):
+            if 'dest' in p:continue
+            targitD = path.join(dstPath,path.basename(p))
+            for f in fs:
+                os.makedirs(targitD,exist_ok=True)
+                shutil.copy(path.join(p,f),targitD)                          
+
+
+
+                      
                             
 
 
