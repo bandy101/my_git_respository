@@ -171,7 +171,7 @@ if __name__=='__main__':
         grab_time = _['monitorTimeStr']
         grab_point = _['name']
         ringelman = _['ringelman']
-        targit = str(car_number)+'\t'+car_color+'\t'+str(grab_time)+'\t'+str(grab_point)+'\t'+str(ringelman)
+        targit = str(car_number)+'#'+car_color+'#'+str(grab_time)+'#'+str(grab_point)+'#'+str(ringelman)
         with open('data.txt',mode='a') as f:
             f.write(targit)
             f.write('\n')

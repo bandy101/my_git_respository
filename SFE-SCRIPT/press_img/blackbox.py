@@ -1,5 +1,5 @@
 from os import path 
-import os,cv2,time
+import os,cv2,time,re
 import numpy as np
 import sys,shutil
 
@@ -228,7 +228,7 @@ class BlackBox:
                         print(_)
                         print('p:',p)
         print('移动成功')
-    #处理黑烟记录
+    #处理黑烟记录   
     def smokeManager(self,*arg):
         pass
 
@@ -337,8 +337,46 @@ class BlackBox:
                 os.makedirs(targitD,exist_ok=True)
                 shutil.copy(path.join(p,f),targitD)                          
 
+    #word文档表格生成
+    def wordG(self,dataPath: str,delimiter: str='#'):
+        '''
+        dataPath str:导入的数据路径
+        delimiter str:分隔符（界定符）
+        '''
 
+        from docx import Document
+        from docx.shared import Inches
+        document = Document()
+        table = document.add_table(rows=35, cols=5,style="Table Grid")
+        heading_cells = table.rows[0].cells
+        heading_cells[0].text = '车牌号'
+        heading_cells[1].text = '车牌颜色'
+        heading_cells[2].text = '抓拍时间'
+        heading_cells[3].text = '抓拍点位'
+        heading_cells[4].text = '林格曼等级'
+        index = 0
+        with open(dataPath,mode='r+') as f:
+            text = f.readline()
+            while text:
+                print(text.split('\t'))
+                try:
+                    # for j,_ in enumerate(re.split('[\s]',text)):
+                    for j,_ in enumerate(text.split(delimiter)):
+                        table.cell(index,j).text= _
+                except:pass
+                text = f.readline()
+                index +=1
 
+        document.save('test.docx')
+
+    #excel 生成
+    def excelX(self):
+        '''
+        description:
+        '''
+        
+    def importData(self,url: str):
+        pass
                       
                             
 

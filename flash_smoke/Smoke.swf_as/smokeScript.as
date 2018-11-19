@@ -119,6 +119,7 @@
             loc1 = Math.floor(4 * Math.random());
             if (loc1 == 0) 
             {
+				trace('loc1:1');
                 loc2 = new PACH1();
                 arrayPach.unshift(loc2); //将loc 添加到arrayPach 开头
             }
