@@ -300,7 +300,9 @@ def confirm(ID,paths,flag=False):
     ##随机选取视频存放到对应的文件夹
     #path:video/20xxx/
     # path.basename ```morning:20181112+07~9 noon:10~13 afternoon:14~17
+    xxx=0
     for d in sites_name:
+        xxx=0
         all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_))]
         morn,noon,afnoon =[],[],[]
         for _ in all_name:
@@ -322,7 +324,8 @@ def confirm(ID,paths,flag=False):
             if len(n)==0:continue
             for i in n[int(random.uniform(0,len(n)))]:
                 try:
-                    shutil.copy(i,srss)
+                    shutil.copyfile(i,path.join(srss,path.basename(paths).replace('-','')+f'_{d}_{xxx:02}.mp4'))
+                    xxx+=1
                 except:
                     import traceback
                     traceback.print_exc()
@@ -415,8 +418,8 @@ if __name__ == '__main__':
         #     wbk.save(xls_names+'.xls')
     elif flag.lower()=='q':print('已退出!')
     elif flag.lower() in ['t','T']:
-        Classification(p,begindate.replace('-',''))
-    else:raise '输入错误!'
+        Classification(p,begindate)
+    else:raise '输入错误!'  
     ##----stop----##
     # import re
     # x =input(':')
