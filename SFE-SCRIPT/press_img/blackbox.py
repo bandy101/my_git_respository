@@ -169,13 +169,16 @@ class BlackBox:
         dstDir = path.join(saveDirName,'dst')
         _srcDir = path.join(saveDirName,'_src') #posive
         _dstDir = path.join(saveDirName,'_dst')
-        os.makedirs(srcDir),os.makedirs(dstDir),os.makedirs(_srcDir),os.makedirs(_dstDir)
+        try:
+            os.makedirs(srcDir),os.makedirs(dstDir),os.makedirs(_srcDir),os.makedirs(_dstDir)
+        except:pass
         cv2.namedWindow(self._widghtName),cv2.setMouseCallback(self._widghtName,self._callBack)
         switch =True#图像显示开关
         index = serialNumber
         for p,d,f in os.walk(picPath):
             for _ in f:
-                if _[-4:].lower() in ['jpg','jpeg','png']:
+                if _[-3:].lower() in ['jpg','jpeg','png']:
+                    print('start')
                     self._img = cv_imread(path.join(p,_))
                     if scale:self._img = cv2.resize(self._img,None,fx=scale,fy=scale)
                     self._tempIm = self._img.copy()
@@ -331,11 +334,17 @@ class BlackBox:
         dstPath =path.join(dstPath,tagt)
         if not path.exists(dstPath):os.makedirs(dstPath,exist_ok=True)
         for p,d,fs in os.walk(srcPath):
-            if 'dest' in p:continue
+            if tagt in p:continue
             targitD = path.join(dstPath,path.basename(p))
             for f in fs:
+                if  'train' not in targitD and 'test' not in targitD: #--计算素材库的量
+                    if 'train' in p:
+                        targitD +='/train'
+                    if 'test' in p:
+                        targitD +='/test'
                 os.makedirs(targitD,exist_ok=True)
                 shutil.copy(path.join(p,f),targitD)                          
+
 
     #word文档表格生成
     def wordG(self,dataPath: str,delimiter: str='#'):
@@ -374,7 +383,7 @@ class BlackBox:
         '''
         description:
         '''
-        
+
     def importData(self,url: str):
         pass
                       

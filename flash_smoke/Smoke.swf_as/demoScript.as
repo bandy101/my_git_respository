@@ -181,7 +181,7 @@
 			ColorPcGFi.setTextFormat(ColorPcGFo);
 			todSprite.addChild(plz4.toddlerShow(20, 180));
 			ColorPcBFo.bold = true;
-			ColorPcBFo.size = 14;
+			ColorPcBFo.size = 	14;
 			ColorPcBFo.color = 5592439;
 			ColorPcBFi.autoSize = flash.text.TextFieldAutoSize.LEFT;
 			addChild(ColorPcBFi);

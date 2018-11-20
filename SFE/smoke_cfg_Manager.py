@@ -60,7 +60,7 @@ XLS_NAME={
 #'exist'http://218.28.71.220:1570/api/status
 
 
-def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误判','黑烟视频','黑烟误判']):
+def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误判','黑烟视频','非黑烟']):
     switch =True
     currentDir =os.getcwd()
     for _ in Names:
@@ -228,12 +228,13 @@ def confirm(ID,paths,flag=False):
     if 'video_new' in paths:
         siteName= '新乡平台'
     else:siteName = '清远平台'
+    print('sitename:',siteName)
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
 
     if not flag:
         have_is = [((i not in ['',None],len(i)==21)) for i in ID]
         is_confirm = all([_ for _ in (have_is)])
-        if not is_confirm:    
+        if not is_confirm:
             raise '请输入正常的ID!!'
         Y= False
     else:
@@ -267,7 +268,7 @@ def confirm(ID,paths,flag=False):
                     ps = path.join(paths,path.basename(paths)+'-smoke')
                     ps =path.join(ps,path.basename(paths)+' '+siteName)
                     if not path.exists(ps):os.makedirs(ps)
-                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:04}'+'.mp4')
+                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:02}'+'.mp4')
             #全部确认
             else:
                 site = sites[path.split(p)[-1]]
@@ -281,9 +282,9 @@ def confirm(ID,paths,flag=False):
                             res = requests.get(url,cookies=Cookies)
                             print(res.url,'上传成功！')
                             ps = path.join(paths,path.basename(paths)+'-smoke')
-                            ps =path.join(ps,path.basename(paths)+' '+siteName)
+                            ps =path.join(ps,path.basename(paths.replace('-',''))+' '+siteName)
                             if not path.exists(ps):os.makedirs(ps)
-                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:04}'+'.mp4')
+                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:02}'+'.mp4')
                         else:
                             url = PRE_URL+'/api/record/'+site+\
                             '/'+f+'/status'
@@ -291,7 +292,7 @@ def confirm(ID,paths,flag=False):
                             print(res.url,'确认成功！')
                     #---#
                     else:
-                        res = requests.get(url,cookies=Cookies) 
+                        res = requests.get(url,cookies=Cookies)
                         print(res.url,'确认成功！')
                 except Exception as e:
                     print(e)
@@ -313,9 +314,9 @@ def confirm(ID,paths,flag=False):
                 afnoon.append([path.join(paths,d,_+'.mp4')])
     
     #开始导入
-        src = path.join(paths,path.basename(paths),'黑烟误判',d)
+        src = path.join(paths,path.basename(paths).replace('-',''),'非黑烟')
         for _,n in zip(['上','中','下'],[morn,noon,afnoon]):
-            srss = path.join(src,_)
+            srss = path.join(src,path.basename(paths).replace('-','')+' '+siteName)
             os.makedirs(srss,exist_ok=True)
             # print(len(n))
             if len(n)==0:continue
@@ -330,9 +331,9 @@ def confirm(ID,paths,flag=False):
     print(tn)
     if path.exists(tn+'-smoke'):
         print('存在黑烟')
-        if os.path.exists(path.join(tn,'黑烟视频')):
-            shutil.rmtree(path.join(tn,'黑烟视频'))
-        shutil.copytree(tn+'-smoke',path.join(tn,'黑烟视频'))
+        if not os.path.exists(path.join(tn.replace('-',''),'黑烟视频')):
+            os.makedirs(path.join(tn.replace('-',''),'黑烟视频'))
+        shutil.copytree(tn+'-smoke',path.join(tn.replace('-',''),'黑烟视频'))
 def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
@@ -414,7 +415,7 @@ if __name__ == '__main__':
         #     wbk.save(xls_names+'.xls')
     elif flag.lower()=='q':print('已退出!')
     elif flag.lower() in ['t','T']:
-        Classification(p,begindate)
+        Classification(p,begindate.replace('-',''))
     else:raise '输入错误!'
     ##----stop----##
     # import re
