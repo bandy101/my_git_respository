@@ -233,7 +233,8 @@ class BlackBox:
         print('移动成功')
     #处理黑烟记录   
     def smokeManager(self,*arg):
-        pass
+        def down_video():
+            pass
 
 
     #使用对应标准分类黑烟视频

@@ -62,11 +62,12 @@ XLS_NAME={
 
 def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误判','黑烟视频','非黑烟']):
     switch =True
+    dirNameFomats = dir_name.replace('-','')
     currentDir =os.getcwd()
     for _ in Names:
-        if not path.exists(namePrefix+'/'+path.join(dir_name,dir_name,_)):
-            os.makedirs(namePrefix+'/'+path.join(dir_name,dir_name,_))
-    srcPath = namePrefix+'/'+path.join(dir_name,dir_name)
+        if not path.exists(namePrefix+'/'+path.join(dir_name,dirNameFomats,_)):
+            os.makedirs(namePrefix+'/'+path.join(dir_name,dirNameFomats,_))
+    srcPath = namePrefix+'/'+path.join(dir_name,dirNameFomats)
 
     for d in os.listdir(namePrefix+'/'+dir_name):
         print(path.join(namePrefix+'/'+dir_name,d))
@@ -79,8 +80,10 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
             try:
                 im1 = cv_imread(path.join(namePrefix,dir_name,d+'\\image1\\'+n[:-4]+'_1.jpg'))
                 im2 = cv_imread(path.join(namePrefix,dir_name,d+'\\image2\\'+n[:-4]+'_2.jpg'))
-            except: 
-                print('####error!####')
+            except:
+                import traceback
+                traceback.print_exc() 
+                print('####error####')
                 site = dict(zip(TSNO.values(),TSNO.keys()))[d]
                 mp4_url_1 = PRE_URL+'/api/record/'+site+'/'+n[:-4]+'/image1'
                 target_name_1 = path.join(namePrefix,dir_name,d,'image1',n[:-4]+'_1.jpg')
@@ -103,8 +106,8 @@ def Classification(namePrefix='video_qy',dir_name='2018-11-08',Names=['车辆误
                 if k in [ord('w'),ord('W')]:
                     #写入记录的操作#
                     #print('---写入成功---')
-                    cv_imwrite(namePrefix+'/'+path.join(dir_name,dir_name,'车辆误判',n[:-4]+'_1.jpg'),im1)
-                    cv_imwrite(namePrefix+'/'+path.join(dir_name,dir_name,'车辆误判',n[:-4]+'_2.jpg'),im2)
+                    cv_imwrite(namePrefix+'/'+path.join(dir_name,dirNameFomats,'车辆误判',n[:-4]+'_1.jpg'),im1)
+                    cv_imwrite(namePrefix+'/'+path.join(dir_name,dirNameFomats,'车辆误判',n[:-4]+'_2.jpg'),im2)
                 if k in [102,70]:
                     os.chdir(path.abspath(path.join(namePrefix,dir_name,d)))
                     os.system(n)
@@ -123,14 +126,15 @@ def get_lists(url):
 
 def get_sites(url):
     res = requests.get(url,cookies=Cookies)
-    sites = json.loads(res.content)['content'].keys()
+    sites = [_['id']for _ in json.loads(res.content)['content']]
+    print(sites)
     return list(sites)
 
 def down_video(url):
     assert isinstance(url,str)
     try:
         res = requests.get(url,stream=True,cookies=Cookies)
-        print(res)
+        # print(res,'url:',url)
         return res
     except Exception as e:
         print(e)
@@ -202,7 +206,7 @@ def pre_start(pre_path='./video/'):
         for l in lists: 
             # print(l['upload'],l['upload']=='未上传')
             if l['status']==False and l['upload']=='未上传':
-                names.append(l['name'])
+                names.append(str(l['id']))
         print(names)
         mp4_url= []
         target_name = []
@@ -230,7 +234,7 @@ def confirm(ID,paths,flag=False):
     else:siteName = '清远平台'
     print('sitename:',siteName)
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
-
+#/*
     if not flag:
         have_is = [((i not in ['',None],len(i)==21)) for i in ID]
         is_confirm = all([_ for _ in (have_is)])
@@ -262,7 +266,7 @@ def confirm(ID,paths,flag=False):
                         print(e)
                 # 上传
                 else:
-                    url =PRE_URL[:7]+'json@'+PRE_URL[7:]+'/api/record/'+site+'/'+f+'/upload'
+                    url =PRE_URL+'/api/record/'+site+'/'+f+'/upload'
                     res = requests.get(url,cookies=Cookies)
                     print(res.url,'上传成功！')
                     ps = path.join(paths,path.basename(paths)+'-smoke')
@@ -278,7 +282,7 @@ def confirm(ID,paths,flag=False):
                     #---# 通过文本
                     if ID:
                         if f in ID:
-                            url =PRE_URL[:7]+'json@'+PRE_URL[7:]+'/api/record/'+site+'/'+f+'/upload'
+                            url =PRE_URL+'/api/record/'+site+'/'+f+'/upload'
                             res = requests.get(url,cookies=Cookies)
                             print(res.url,'上传成功！')
                             ps = path.join(paths,path.basename(paths)+'-smoke')
@@ -334,9 +338,11 @@ def confirm(ID,paths,flag=False):
     print(tn)
     if path.exists(tn+'-smoke'):
         print('存在黑烟')
-        if not os.path.exists(path.join(tn.replace('-',''),'黑烟视频')):
-            os.makedirs(path.join(tn.replace('-',''),'黑烟视频'))
-        shutil.copytree(tn+'-smoke',path.join(tn.replace('-',''),'黑烟视频'))
+        tn_ = path.join(path.dirname(tn),path.basename(tn).replace('-',''))
+        if os.path.exists(path.join(tn_,'黑烟视频')):
+            shutil.rmtree(path.join(tn_,'黑烟视频'))
+            # os.makedirs(path.join(tn_,'黑烟视频'))
+        shutil.copytree(tn+'-smoke',path.join(tn_,'黑烟视频'),)#递归复制整个 src 文件夹。 目标文件夹名为 dst，不能已经存在；方法会自动创建 dst 根文件夹。
 def start(down_load_path='./video_qy/',times=''):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
@@ -347,8 +353,8 @@ if __name__ == '__main__':
             print(e)
     import datetime
     paramer ={ 
-        'password':'4f768021243118a2ac7f2d6e524346fc',
-        'user':'sfe'
+        'password':'5313232ef0a55311cf31e00b97afa15c',
+        'user':'auditor'
     }
 
 
@@ -363,8 +369,8 @@ if __name__ == '__main__':
     if seach_site=='0':PRE_URL,p=qys, './video_qy/'
     elif seach_site=='1':PRE_URL,p=xxs ,'./video_new/'
     else:raise '错误的站点输入！'
-    print('######-',PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login')
-    r =requests.post(PRE_URL[:7]+'json:sfe@'+PRE_URL[7:]+'/api/login',json=paramer,timeout=10)
+    print('######-',PRE_URL[:7]+'json:auditor@'+PRE_URL[7:]+'/api/login')
+    r =requests.post(PRE_URL[:7]+'json:auditor@'+PRE_URL[7:]+'/api/login',json=paramer,timeout=10)
     r =r.headers['Set-Cookie'].split(';')[0].split('=')
     Cookies ={r[0]:r[1]}
     flag = input('#---q:退出---d:下载---c:确认---t:查看图片#:')

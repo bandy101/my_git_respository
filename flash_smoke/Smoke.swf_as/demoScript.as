@@ -39,7 +39,7 @@
 		var myText_bs:TextField = new TextField  ;
 		//var loader.loader=new Loader();
 		public function demoScript()
-		{			
+		{	
 			myText_as.border = true;
 			myText_as.type = TextFieldType.INPUT;
 			myText_as.restrict = "0-5";
@@ -196,7 +196,7 @@
 			addChild(todSprite);
 			addChild(smoke.FnSmoke());
 			addEventListener(flash.events.Event.ENTER_FRAME, FnGoPl);
-			recMatrix =smoke.smokeSprite.transform.matrix;
+			recMatrix =smoke.smokeSprite.transform.matrix;	
 			//bt1.addEventListener(MouseEvent.CLICK, Kn);
 			//addChild(bt1);
 			Kn();
