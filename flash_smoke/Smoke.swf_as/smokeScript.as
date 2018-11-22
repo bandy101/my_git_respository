@@ -43,7 +43,7 @@
             lengthArr = PachN;
             loc1 = 0;
             while (loc1 < 500) 
-            {
+            {	
                 loc2 = new PACH1();
                 arrayPach[loc1] = loc2;
                 arrayPach[loc1].scaleX = scaleMin;
@@ -117,7 +117,7 @@
             {
                 flagVector = -flagVector;
             }
-            loc1 = Math.floor(4 * Math.random());
+            loc1 = Math.floor(4 * Math.random());  //随机烟雾形态形状
             if (loc1 == 0) 
             {
 				trace('loc1:1');

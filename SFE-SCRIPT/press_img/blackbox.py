@@ -84,31 +84,38 @@ class BlackBox:
 
     
     #处理黑烟视频素材
-    def grabVideo(self,videoPath: str,placeName: str,scale: float=0.4,serialNumber: int=0):
+    def grabVideo(self,flag: int=1,placeName: str=None,scale: float=0.8,serialNumber: int=0):
         """ 获取视频素材   
         截出的图片以`日期_地名_编号`的格式命名
         @videoPath str: 视频路径
         @placeName str: 地点名称
         @scale float: 显示图片缩放比例(0~1,默认0.4)
         @serialNumber: 起始编号
-        """
+        """ 
 
-
+        # videoPath: str,
+        videoPath = r'H:\AI_Data\海康Data\2018-10\train\黑烟\20181028 新乡平台\20181028_S308新乡收费站1号机_0004.mp4'
+        fs = path.basename(path.dirname(videoPath)).replace(' ','_')
+        placeName= fs
         from datetime import datetime
         today = datetime.now().strftime('%Y%m%d')
-        saveDirName = path.join(path.dirname(videoPath),path.basename(videoPath)[:path.basename(videoPath).rindex('.')])
+        # saveDirName = path.join(path.dirname(videoPath),path.basename(videoPath)[:path.basename(videoPath).rindex('.')])
+        saveDirName = path.dirname(path.dirname(videoPath))
+        
         #初始化目录
-        if all([path.exists(saveDirName),path.isdir(saveDirName)]):
-            import shutil
-            try:shutil.rmtree(saveDirName)
-            except:
-                for p,d,fs in os.walk(saveDirName):
-                    for _ in fs:os.remove(path.join(p,_))
-        srcDir = path.join(saveDirName,'src')
-        dstDir = path.join(saveDirName,'dst')
+        # if all([path.exists(saveDirName),path.isdir(saveDirName)]):
+        #     import shutil
+        #     try:shutil.rmtree(saveDirName)
+        #     except:
+        #         for p,d,fs in os.walk(saveDirName):
+        #             for _ in fs:os.remove(path.join(p,_))
+        srcDir = path.join(saveDirName,'src',fs,str(flag))
+        dstDir = path.join(saveDirName,'dst',fs,str(flag))
+        print(srcDir,dstDir)
         _srcDir = path.join(saveDirName,'_src') #posive
         _dstDir = path.join(saveDirName,'_dst')
-        os.makedirs(srcDir),os.makedirs(dstDir),os.makedirs(_srcDir),os.makedirs(_dstDir)
+        os.makedirs(srcDir,exist_ok=True),os.makedirs(dstDir,exist_ok=True)
+        # os.makedirs(_srcDir),os.makedirs(_dstDir)# f——Key 收集负样本
 
         cap = cv2.VideoCapture(videoPath)
         cv2.namedWindow(self._widghtName),cv2.setMouseCallback(self._widghtName,self._callBack)
@@ -131,14 +138,15 @@ class BlackBox:
                     switch =False
                     break
                 if key in[86,119]:#w active
-                    _ =f'{today}_{placeName}_{index:02}.jpg' 
+                    # _ =f'{today}_{placeName}_{index:02}.jpg' 
+                    _ = f'{fs}_{path.basename(videoPath)[9:-4]}_{index:04}.jpg'
                     try:
                         self._write_sample(path.join(dstDir,_),self._tempIm)
                         cv_imwrite(path.join(srcDir,_),self._img)
                         index +=1
                     except:break
                 if key in[70,102]:#f #position
-                    _ =f'{today}_{placeName}_{index:02}.jpg' 
+                    _ =f'{today}_{placeName}_{index:04}.jpg' 
                     try:
                         self._write_sample(path.join(_dstDir,_),self._tempIm)
                         cv_imwrite(path.join(_srcDir,_),self._img)

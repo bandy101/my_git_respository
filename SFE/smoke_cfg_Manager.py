@@ -207,6 +207,9 @@ def pre_start(pre_path='./video/'):
             # print(l['upload'],l['upload']=='未上传')
             if l['status']==False and l['upload']=='未上传':
                 names.append(str(l['id']))
+                with open('temp_timeId.txt',mode='a') as tempF:
+                    tempF.write(l['name']),tempF.write(str(TSNO[site]))
+                    tempF.write('\n')
         print(names)
         mp4_url= []
         target_name = []
@@ -220,12 +223,28 @@ def pre_start(pre_path='./video/'):
 
             mp4_url.append(PRE_URL+'/api/record/'+site+'/'+name+'/image2')
             target_name.append(pre_path+TSNO[site]+'/image2/'+name+'_2.jpg')
-
+        
         all_task = [pool.submit(download,url,name) for name,url in zip(target_name,mp4_url)]
         #wait(all_task,return_when=ALL_COMPLETED)
         #wait(all_task,return_when=FIRST_COMPLETED)
 #确认
 
+def timeId():
+    site_url = PRE_URL+'/api/status'
+    list_pre = PRE_URL+'/api/record/'
+    sites = get_sites(site_url)
+    for site in sites:
+        lists =get_lists(list_pre+site)
+        # names = []
+        for l in lists: 
+            # print(l['upload'],l['upload']=='未上传')
+            if l['status']==False and l['upload']=='未上传':
+                # names.append(str(l['id']))
+                with open('temp_timeId.txt',mode='a') as tempF:
+                    print(TSNO[site])
+                    tempF.write(str(l['id']))
+                    tempF.write(l['name']),tempF.write(str(TSNO[site]))
+                    tempF.write('\n')
 def confirm(ID,paths,flag=False):
     index = 0
     siteName= None
@@ -234,9 +253,8 @@ def confirm(ID,paths,flag=False):
     else:siteName = '清远平台'
     print('sitename:',siteName)
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
-#/*
     if not flag:
-        have_is = [((i not in ['',None],len(i)==21)) for i in ID]
+        have_is = [((i not in ['',None],len(i)==5)) for i in ID]
         is_confirm = all([_ for _ in (have_is)])
         if not is_confirm:
             raise '请输入正常的ID!!'
@@ -307,17 +325,27 @@ def confirm(ID,paths,flag=False):
     xxx=0
     for d in sites_name:
         xxx=0
-        all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_))]
+        all_name = []
+        with open('temp_timeId.txt',mode='r+') as r:
+            txt = r.readline()
+            while txt:
+                if txt[28:] !=str(d):
+                    txt=r.readline()
+                    continue 
+                all_name.append(txt)
+                txt=r.readline()
+        # all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_))]
         morn,noon,afnoon =[],[],[]
         for _ in all_name:
-            if str(_[8:10]) in ['7','8','9','10']:
+            if _ in [' ',None,'']:continue
+            if str(_[16:18]) in ['07','08','09','10']:
                 # morn.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
                 # path.join(paths,d+'/image2',_+'_2.jpg')])
-                morn.append([path.join(paths,d,_+'.mp4')])
-            if str(_[8:10]) in ['11','12','13']:
-                noon.append([path.join(paths,d,_+'.mp4')])
-            if str(_[8:10]) in ['14','15','16','17']:
-                afnoon.append([path.join(paths,d,_+'.mp4')])
+                morn.append([path.join(paths,d,_[:5]+'.mp4')])
+            if str(_[16:18]) in ['11','12','13']:
+                noon.append([path.join(paths,d,_[:5]+'.mp4')])
+            if str(_[16:18]) in ['14','15','16','17']:
+                afnoon.append([path.join(paths,d,_[:5]+'.mp4')])
     
     #开始导入
         src = path.join(paths,path.basename(paths).replace('-',''),'非黑烟')
@@ -343,7 +371,7 @@ def confirm(ID,paths,flag=False):
             shutil.rmtree(path.join(tn_,'黑烟视频'))
             # os.makedirs(path.join(tn_,'黑烟视频'))
         shutil.copytree(tn+'-smoke',path.join(tn_,'黑烟视频'),)#递归复制整个 src 文件夹。 目标文件夹名为 dst，不能已经存在；方法会自动创建 dst 根文件夹。
-def start(down_load_path='./video_qy/',times=''):
+def start(down_load_path='./video_qy/',times='a'):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
     with open('xls_config.txt',mode='r+') as f:
@@ -374,6 +402,8 @@ if __name__ == '__main__':
     r =r.headers['Set-Cookie'].split(';')[0].split('=')
     Cookies ={r[0]:r[1]}
     flag = input('#---q:退出---d:下载---c:确认---t:查看图片#:')
+
+
 
     if flag.lower()=='d':
     
@@ -425,6 +455,8 @@ if __name__ == '__main__':
     elif flag.lower()=='q':print('已退出!')
     elif flag.lower() in ['t','T']:
         Classification(p,begindate)
+    elif flag.lower()=='l':
+        timeId()
     else:raise '输入错误!'  
     ##----stop----##
     # import re
