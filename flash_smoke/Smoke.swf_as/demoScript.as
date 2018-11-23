@@ -215,8 +215,6 @@
 			}
 
 			return;
-			
-		
 		}
 		public function ab(e:Event):void{
 		if (myText_as.text.length!=0 )

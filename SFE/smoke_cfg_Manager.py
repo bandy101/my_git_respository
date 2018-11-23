@@ -6,6 +6,7 @@ import json,time
 import zipfile
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor,ALL_COMPLETED,wait,FIRST_COMPLETED
+
 def cv_imread(f_path):
     img = cv2.imdecode(np.fromfile(f_path,dtype=np.uint8),-1)
     return img
@@ -208,6 +209,7 @@ def pre_start(pre_path='./video/'):
             if l['status']==False and l['upload']=='未上传':
                 names.append(str(l['id']))
                 with open('temp_timeId.txt',mode='a') as tempF:
+                    tempF.write(str(l['id']))
                     tempF.write(l['name']),tempF.write(str(TSNO[site]))
                     tempF.write('\n')
         print(names)
@@ -253,6 +255,8 @@ def confirm(ID,paths,flag=False):
     else:siteName = '清远平台'
     print('sitename:',siteName)
     sites_name = [_ for _ in os.listdir(paths) if '2018' not in _]
+
+
     if not flag:
         have_is = [((i not in ['',None],len(i)==5)) for i in ID]
         is_confirm = all([_ for _ in (have_is)])
@@ -329,15 +333,19 @@ def confirm(ID,paths,flag=False):
         with open('temp_timeId.txt',mode='r+') as r:
             txt = r.readline()
             while txt:
-                if txt[28:] !=str(d):
+                if str(d) not in txt[28:]:
                     txt=r.readline()
+                    # print(txt,'txt[28:]:',txt[28:],len(txt[28:]),len(d))
                     continue 
+                # print()
                 all_name.append(txt)
                 txt=r.readline()
         # all_name = [_[:-4] for _ in os.listdir(path.join(paths,d)) if path.isfile(path.join(paths,d,_))]
         morn,noon,afnoon =[],[],[]
+        # print(all_name)
         for _ in all_name:
             if _ in [' ',None,'']:continue
+            print(_[16:18])
             if str(_[16:18]) in ['07','08','09','10']:
                 # morn.append([path.join(paths,d,_+'.mp4'),path.join(paths,d+'/image1',_+'_1.jpg'),\
                 # path.join(paths,d+'/image2',_+'_2.jpg')])
@@ -361,7 +369,7 @@ def confirm(ID,paths,flag=False):
                 except:
                     import traceback
                     traceback.print_exc()
-
+    
     tn = path.join(paths,path.basename(paths))
     print(tn)
     if path.exists(tn+'-smoke'):
@@ -371,6 +379,7 @@ def confirm(ID,paths,flag=False):
             shutil.rmtree(path.join(tn_,'黑烟视频'))
             # os.makedirs(path.join(tn_,'黑烟视频'))
         shutil.copytree(tn+'-smoke',path.join(tn_,'黑烟视频'),)#递归复制整个 src 文件夹。 目标文件夹名为 dst，不能已经存在；方法会自动创建 dst 根文件夹。
+    os.remove('temp_timeId.txt')
 def start(down_load_path='./video_qy/',times='a'):
     pre_start(down_load_path+times)
 if __name__ == '__main__':

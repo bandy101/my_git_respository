@@ -75,8 +75,8 @@
                 arrayPach[loc1].alpha = arrayPach[loc1].alpha - AlphaV;
                 arrayPach[loc1].scaleX = arrayPach[loc1].scaleX + (0.005 + arrayPach[0].sc);//src =0.005//
                 arrayPach[loc1].scaleY = arrayPach[loc1].scaleY + (0.005 + arrayPach[0].sc);//速度
-                 arrayPach[loc1].y = arrayPach[loc1].y + (1.0 + 0.5 * arrayPach[loc1].vy);// +向下/0.5
-                 arrayPach[loc1].x = arrayPach[loc1].x + 0.06 * arrayPach[loc1].vx;//0.05 //扩散
+                 arrayPach[loc1].y = arrayPach[loc1].y + (0.5 + 0.5 * arrayPach[loc1].vy);// +向下/0.5
+                 arrayPach[loc1].x = arrayPach[loc1].x + 0.05 * arrayPach[loc1].vx;//0.05 //扩散
 				 // // arrayPach[loc1].x = arrayPach[loc1].x + (0.5 + 0.1 * arrayPach[loc1].vy);//向右
                  // // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vx;//向右
 				 // arrayPach[loc1].x = -arrayPach[loc1].y + (0.5+0.1* arrayPach[loc1].vy);
@@ -157,7 +157,7 @@
 			
             //arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
 			arrayPach[0].alf = 0.2 + 3 * Math.random();
-            arrayPach[0].sc = 0.01 * Math.random();//0.001//绽放大小速度
+            arrayPach[0].sc = 0.05 * Math.random();//0.001//绽放大小速度
             arrayPach[0].x = point0.x;
             arrayPach[0].y = point0.y;
 			//arrayPach[0].x =0;

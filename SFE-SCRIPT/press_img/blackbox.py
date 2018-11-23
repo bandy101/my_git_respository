@@ -84,7 +84,7 @@ class BlackBox:
 
     
     #处理黑烟视频素材
-    def grabVideo(self,flag: int=1,placeName: str=None,scale: float=0.8,serialNumber: int=0):
+    def grabVideo(self,flag: int=1,placeName: str=None,scale: float=0.4,serialNumber: int=0):
         """ 获取视频素材   
         截出的图片以`日期_地名_编号`的格式命名
         @videoPath str: 视频路径
@@ -94,7 +94,7 @@ class BlackBox:
         """ 
 
         # videoPath: str,
-        videoPath = r'H:\AI_Data\海康Data\2018-10\train\黑烟\20181028 新乡平台\20181028_S308新乡收费站1号机_0004.mp4'
+        videoPath = r'C:\Users\NHT\Desktop\20181122_合肥\train\黑烟\20181122 海康合肥\20181122_海康合肥_05.mp4'
         fs = path.basename(path.dirname(videoPath)).replace(' ','_')
         placeName= fs
         from datetime import datetime
