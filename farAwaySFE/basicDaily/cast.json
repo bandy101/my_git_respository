@@ -1,0 +1,6160 @@
+{
+	"id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+	"name": "遥感检测智能监管系统-sqlserver",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"id": "073e54ab-6c47-3883-2f37-cc956ac18519",
+			"name": "API用户",
+			"description": "",
+			"order": [
+				"423ed347-f527-cdb0-85f1-f844c92d739e",
+				"ea5b7b27-75bc-71f5-a8a5-51906f0b15c3",
+				"9b0ede54-66a5-24cc-42c3-52d69dc90483",
+				"29f608a3-3c61-c82c-8cf2-573b386a6e51",
+				"2760846c-3e6b-d834-bdcb-22001dbfe5f1",
+				"10e7497c-5e6c-9b15-1701-e1b0751f2866"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "498f61a2-54ad-ae6c-ac50-91989a0eadde",
+			"name": "Auth认证",
+			"description": "",
+			"order": [
+				"a70b9639-3144-5252-11d9-1252b8bf1ada",
+				"a6d70352-c9c1-ae94-c9a5-aa3d8152b0b6",
+				"c3a7b6d8-5147-b0ed-616d-f60f612d439e"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "bfce0b42-39bc-6555-03b5-c89abd21c5d1",
+			"name": "业务逻辑",
+			"description": "",
+			"order": [],
+			"folders_order": [
+				"b806629f-d3aa-ca30-fe7b-a5c457ef5db7",
+				"3091e3a0-e059-c2ac-ba47-aec2f78cf978",
+				"2205db08-18a6-222a-6e1b-41a5d9576cf7",
+				"004c9771-0992-6799-6c6e-7d18ddf1e716",
+				"454420ee-e906-85c5-1f9d-b130a6ce0515",
+				"709147f4-cc9b-0cf5-515f-9f99f5f11e34",
+				"3ddccc0d-eaad-3815-7b0f-295dcd2dde59",
+				"aaaa30b1-2b7a-692b-4026-7feec211b806",
+				"12192d89-f580-ed44-2ac9-2e73a2e1fd75",
+				"31c7896f-40a5-1409-c577-e2d2d20d3e61",
+				"3e33de75-ecd9-7065-6ff1-d582443e0803"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "2af8ca11-9d09-d8df-8ee4-740662ed65cb",
+			"name": "图片相关",
+			"description": "",
+			"order": [
+				"d9b95ad6-4790-8592-24ce-0bfcd6497e9b",
+				"338e2b26-c610-48b3-b34b-31dd04912447",
+				"69cc3f1b-ce14-0813-e7e0-4e26495b335e"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "067a339a-20a9-d695-4edb-3d5d3c135a92",
+			"name": "基础信息",
+			"description": "",
+			"order": [],
+			"folders_order": [
+				"96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "31c7896f-40a5-1409-c577-e2d2d20d3e61",
+			"name": "处罚",
+			"description": "",
+			"order": [
+				"85596e45-1160-9db8-fbf7-6cd893e55b07",
+				"d2429ee8-02ba-3603-4331-fe4a0c30330e",
+				"8a00aa64-aeb2-be3d-5070-6338aafa0f84",
+				"82133298-80ea-6152-ad16-ed60e78ddec6",
+				"e693b630-3834-37ad-6e73-9a85073b37b9",
+				"e087f178-b643-8008-bb43-8191edc8cb8e"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6",
+			"name": "定时器",
+			"description": "",
+			"order": [
+				"51d3b9c4-6cb9-58bb-c120-90759303f162",
+				"ad7b6b96-00f1-87db-9895-e32032416e51",
+				"cdc00e2e-8c3e-0034-8e30-55a416d20a76",
+				"74185c29-8476-d1aa-75e5-cf1de65b7d12",
+				"c4c18f78-e36c-6099-8f89-0d41d0d2f9b8",
+				"d0bc2422-8a24-c177-d155-abbf310b4b09",
+				"ef39ecfb-3d2d-bb75-d1e0-3762aa8b9238",
+				"97966f83-d732-7132-96c9-fb85a411c1a4",
+				"023bce0f-ca5b-a3a7-c0bb-aaa1060203d7",
+				"4a028f15-54d1-1836-8a5d-3b07652d5b20",
+				"c46eb1e5-afea-c5b0-4269-5be8240e5659"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "f46bcb27-b365-110c-b815-43d6c741e066",
+			"name": "导出报表（同一个接口，不同参数）",
+			"description": "",
+			"order": [
+				"ba930b72-3f7e-3a7e-9cd3-8c6feae2a62d",
+				"35b911e4-7d4b-cca9-8f68-57fa7895dcd9",
+				"46c9fa01-c6cd-6cdc-9227-59fc8a1f70f4",
+				"24e9f0c7-a192-d2de-6ca0-9a49b8cc1a78",
+				"d6ba7a14-385d-8cbd-bcb3-3ee922661d56",
+				"cbffc8b8-e27e-b7c0-0dca-330a2352bae1"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "aaaa30b1-2b7a-692b-4026-7feec211b806",
+			"name": "日志",
+			"description": "",
+			"order": [
+				"b4b87799-5254-225c-951c-a4100959be12",
+				"7e900e02-6ccc-3fa7-d38a-7f9ca079849b"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "909d1869-03d5-8e29-0b44-ac5789b186b0",
+			"name": "用户",
+			"description": "",
+			"order": [
+				"5855bc69-a903-987d-9f2d-a07d0c2254b1",
+				"ce1e3488-78ef-4d64-66c3-67b5e3dfa1b0",
+				"a101796a-c876-8026-d423-54a58ebc51b3",
+				"69eb5d18-4851-085b-64af-b077f5bd9703",
+				"5832ba69-7f42-7bff-03d4-1cbca217af49",
+				"181e02d8-38ea-4ab2-d29a-cdee049c7e69",
+				"8f282115-be3d-9610-9794-a4d1c676330c",
+				"11260850-7d7a-551e-2bb6-3247dbd6d641",
+				"e05d9ef7-e324-33b1-58b1-3a9f70493e4d",
+				"cd7b1365-fca1-dd43-d423-11344c03a58a"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "a80c7dfc-7c5c-aecd-fa50-a9ab3e712b4a",
+			"name": "用户管理",
+			"description": "",
+			"order": [],
+			"folders_order": [
+				"909d1869-03d5-8e29-0b44-ac5789b186b0",
+				"eaf5e29c-64b9-3406-909e-e7772da24c24",
+				"12f85da5-ebf1-8c81-3041-32b194f209b1",
+				"8e14a69e-a119-a2ff-6832-bedf5ed864be",
+				"073e54ab-6c47-3883-2f37-cc956ac18519"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "709147f4-cc9b-0cf5-515f-9f99f5f11e34",
+			"name": "监测站信息",
+			"description": "",
+			"order": [
+				"f038d1ca-3297-9f7b-6275-d8a55756f776",
+				"8cdd3081-1a0f-74b8-fc16-03a51e7bc7fb",
+				"ccfa8315-eed8-c89b-2052-921b6441ae29",
+				"da1929e3-f07c-ca99-08d7-0ba07ebdb188"
+			],
+			"folders_order": [
+				"d4052af8-7487-3b04-645f-eb50b6239e0c",
+				"0f7993af-a4fa-81c4-8593-a280bfd59d24"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "2205db08-18a6-222a-6e1b-41a5d9576cf7",
+			"name": "空气质量",
+			"description": "",
+			"order": [
+				"607301b2-890a-052e-472a-2db64285ea7f",
+				"97f52d88-838e-8ca9-cf0e-ba63052a8250",
+				"3b3a4638-a181-6fd6-89d0-6b8ae77f57d7",
+				"15886c73-7a3f-2671-8d16-038baea6cfcf",
+				"f3ec4265-cc34-7114-f0e9-bf4382e5d891",
+				"9c4f8b71-df3b-531f-476d-f5c2235f75aa"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "1ffe4273-9bf4-8def-1cb5-f5e34fc8b1d6",
+			"name": "空气质量",
+			"description": "",
+			"order": [
+				"951a7898-cc98-f80e-efd0-3adb8843fae6",
+				"3ed042d3-809b-f8f1-e52d-49819ec95f24",
+				"c544fbfc-644b-161d-4f6f-1f67404c11e4",
+				"b60e57f3-62f9-d091-4563-011498ec387b"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "0f7993af-a4fa-81c4-8593-a280bfd59d24",
+			"name": "空气质量监测站",
+			"description": "",
+			"order": [
+				"1505d0f7-7e66-e16f-9cc8-770cc930a178",
+				"d3abc31c-e758-6aed-d4c2-3a5b9a06cf45",
+				"c8a2cf35-e309-a1f2-1379-63b65be14fa5",
+				"cee103b0-ee48-001a-322b-62085f75ab72",
+				"a27c156b-32d0-cac2-e8fd-1d006c26b824",
+				"fe272b46-9799-e30d-0f30-a62d860e5417",
+				"2e3424d6-6688-8a84-825c-95c1c239657b"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "eaf5e29c-64b9-3406-909e-e7772da24c24",
+			"name": "组织机构或部门",
+			"description": "",
+			"order": [
+				"050c5017-6554-f52b-140e-2165fa64ab1b",
+				"291e434e-43b6-b204-beda-0055b6399288",
+				"5ff5d89b-ba97-da1e-1550-5898b14d7b89",
+				"db264595-e902-7f0d-8b5f-baa2aba4dd32",
+				"54e968d6-cc02-4c23-84d8-1d03fc804f30",
+				"9a5e0282-520f-9254-ee9b-d96550559eaa",
+				"14cc5d45-b546-1887-7d56-0f7187d1397a"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "3e33de75-ecd9-7065-6ff1-d582443e0803",
+			"name": "统计分析",
+			"description": "",
+			"order": [],
+			"folders_order": [
+				"1ffe4273-9bf4-8def-1cb5-f5e34fc8b1d6",
+				"e9ca03ca-8052-9b7a-2c62-9c51020727b6",
+				"51f7aaf9-6eae-684f-0442-a6a1b51a1413",
+				"3b8e72b2-266b-6cbb-d6a9-6873d239883e"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "96ebc891-580d-4cb2-f7e6-8994ee5f3327",
+			"name": "行政区域",
+			"description": "",
+			"order": [
+				"e6b95c09-350b-d1d6-ff81-d32552560acf",
+				"945efcdc-1914-0a46-82c7-57a12c4b1929",
+				"ac45089c-c6cb-2ac2-5ed6-bc2984bd6372",
+				"2fe56db4-1865-841a-8ffa-2ada71130b21",
+				"64676b96-cb54-aede-9c33-54e6f1ceeb0d",
+				"f5d18d96-6d30-d366-17dd-6931501b9088"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "12f85da5-ebf1-8c81-3041-32b194f209b1",
+			"name": "角色",
+			"description": "",
+			"order": [
+				"0a722ddc-8904-1e26-b889-e661e86edf1e",
+				"32583953-ddee-68e6-9402-c02421863d6c",
+				"2f26dff0-d109-1fae-9c0d-9f6ba69d879a",
+				"da6dd440-6942-26cc-2259-6e06e5f615cf",
+				"9948e339-bce7-c654-e8d5-b7efe9c1d7c8",
+				"d16a425b-2145-1848-3534-59835e09879b",
+				"ae511925-1c48-80e9-4cb0-7fef671457ca"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "8e14a69e-a119-a2ff-6832-bedf5ed864be",
+			"name": "资源",
+			"description": "",
+			"order": [
+				"fb3e9166-f401-f031-b6f8-be210f400563",
+				"721a61a2-376d-2b0c-d0f4-903ba5737198",
+				"65a72629-180a-96f8-1aa0-879a60e8bfa8",
+				"a19807cf-4149-a2e5-f583-8e34866fcbe0",
+				"db1691a8-7f38-d99b-23ae-94ca1e1f5d0d"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "3b935e57-b4be-f894-02a2-572d1bf3c602",
+			"name": "超标库",
+			"description": "",
+			"order": [
+				"26fd7256-8526-8270-833c-fbc932a6dc97",
+				"e4ab439b-3cb6-7046-6be2-d1b4b7199f48"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "737a30bb-4e5e-b0b0-cc9f-dca434914eac",
+			"name": "超标统计",
+			"description": "",
+			"order": [
+				"5c323900-e356-7b06-d918-18dce6222df7"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "cbe71938-3d15-f7fe-e679-981a61678146",
+			"name": "超限因子排放比例（停用）",
+			"description": "",
+			"order": [
+				"b46fd930-4a7c-57ce-c04a-400ea6622912",
+				"b3b72d8e-9982-041b-da29-31c0629383f3"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "c89fc970-cf70-91c8-2099-257a9afc4587",
+			"name": "超限库",
+			"description": "",
+			"order": [
+				"4f3970fd-453b-bb85-b887-d309235ed03e",
+				"4475649b-fdba-8189-62d5-a82de546cbe8"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "ba35378d-512c-69f3-8ef0-a1febd2da090",
+			"name": "超限车辆（包括超限因子、遥测数据）",
+			"description": "",
+			"order": [
+				"f7d8c8bc-8d66-5740-a79f-75304d1e9e62",
+				"d32cda57-1b83-17ac-7972-3ef2c190c448"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "004c9771-0992-6799-6c6e-7d18ddf1e716",
+			"name": "车流量",
+			"description": "",
+			"order": [
+				"46b855a8-42f0-b927-dfc1-67f4875bad26",
+				"955b85a1-6f7c-b1d6-8674-6d29c1b19f1a"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "51f7aaf9-6eae-684f-0442-a6a1b51a1413",
+			"name": "车流量",
+			"description": "",
+			"order": [],
+			"folders_order": [
+				"5fc91244-863d-d5b6-0afb-774d52fa878f",
+				"2bf118bd-9be5-198a-bf75-7992228c7bc5",
+				"a6446c8a-077d-fd43-4ade-1cbe5bc4e8e2",
+				"d9bbc1d1-b128-444a-a126-8a0cd5dfb01a"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "a6446c8a-077d-fd43-4ade-1cbe5bc4e8e2",
+			"name": "车流量蓝黄车牌（停用）",
+			"description": "",
+			"order": [
+				"f1fc7b88-f129-0529-a4c5-554b0a51de97",
+				"9be15f66-2b6f-b51a-063c-63044ca648b9",
+				"94b33d92-b18c-2471-279a-31525f0dcdf8"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "d9bbc1d1-b128-444a-a126-8a0cd5dfb01a",
+			"name": "车流量车辆归属地（停用）",
+			"description": "",
+			"order": [
+				"6b644101-7478-14ee-b669-d6902ff80eb4",
+				"2f22a494-f684-f424-180b-10749df97df5",
+				"0e845144-d7a3-39c8-915d-be928cdb4b19"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "5fc91244-863d-d5b6-0afb-774d52fa878f",
+			"name": "车流量车辆类型（车辆归属地、蓝黄车牌）",
+			"description": "",
+			"order": [
+				"aed27d09-09b6-c235-ec34-d2296b4e93f6",
+				"47f753f0-5019-4dc9-c3c3-640d86508b5d",
+				"6203c64b-0229-9ca6-b506-0ca0dd31418e",
+				"dc0d9286-95fb-73cc-6a0e-00f48f474293"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "2bf118bd-9be5-198a-bf75-7992228c7bc5",
+			"name": "车流量（车辆类型、车道号）",
+			"description": "",
+			"order": [
+				"6c652a78-35ba-2c76-ca3e-a9f56c58d9b2",
+				"6dadbe74-834a-3311-a64e-da30bc776e6d",
+				"12e86e70-1a9c-0684-2608-1314c48dd115",
+				"c935aae0-c5c7-91c0-1c9f-9682e02e777f",
+				"7f472136-a139-b1f3-aff0-98dcc298e13f"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "454420ee-e906-85c5-1f9d-b130a6ce0515",
+			"name": "车辆信息",
+			"description": "",
+			"order": [
+				"f07ac4ae-b680-0d77-eff5-12e743dbd99b",
+				"ba225e3a-f397-2a5e-43cf-74ca0acf3c2b",
+				"ed6db809-4a96-0999-c482-87d3b923f8b6"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "d4052af8-7487-3b04-645f-eb50b6239e0c",
+			"name": "遥感监测站",
+			"description": "",
+			"order": [
+				"28b54689-f99a-10b4-341e-bb83f11a464d",
+				"63510a53-8388-3189-a19d-9e071c1acaf3",
+				"7355e265-347f-4d64-79c0-9963d5c1e664",
+				"b81f8774-8904-2087-1f8a-decb98df15a1",
+				"b5616ad5-7cfd-7369-6970-00ce144dc237",
+				"c599cfe8-6f57-f058-5dfa-4e284ff83a26",
+				"e7260002-b9f8-6d89-5f62-ca0a76a291a4",
+				"3b7978fc-b614-f552-cc89-336389b2bf38"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "3ddccc0d-eaad-3815-7b0f-295dcd2dde59",
+			"name": "遥感计量",
+			"description": "",
+			"order": [
+				"5f3226cb-4ad4-f14a-3f43-571618afce30",
+				"dbdfece0-4a6b-062a-be4e-e71747467fcd",
+				"812f73db-6afc-15ec-0c50-2ec0ffc9f30c",
+				"2b08181c-1919-e0c4-764c-f6ca34838969",
+				"da5f4893-205a-7463-d7d9-42d0661dcb20"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "3091e3a0-e059-c2ac-ba47-aec2f78cf978",
+			"name": "遥测",
+			"description": "",
+			"order": [
+				"2e6f3180-5621-e327-1356-d1b04024f010",
+				"8d9af0c7-ef20-6dd2-cb1d-f6282a7d1bbb",
+				"cf01ccb1-7900-da54-0b87-16b74c2e17fb",
+				"21b254db-b877-f0ac-5748-b47770739e13",
+				"e04fae24-7681-30f1-b9f5-be5721d140ec",
+				"72459891-055b-6288-8e76-3b0d6046731a",
+				"06a3ee2c-9488-488c-2fe0-dd4ac25f1adb",
+				"060b331e-cbde-baf2-ee08-9196797bac30"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "3b8e72b2-266b-6cbb-d6a9-6873d239883e",
+			"name": "遥测数据",
+			"description": "",
+			"order": [],
+			"folders_order": [
+				"3b935e57-b4be-f894-02a2-572d1bf3c602",
+				"c89fc970-cf70-91c8-2099-257a9afc4587",
+				"737a30bb-4e5e-b0b0-cc9f-dca434914eac",
+				"ba35378d-512c-69f3-8ef0-a1febd2da090",
+				"52745155-de47-3d7e-bef9-7b41ea4b1901",
+				"d94006fc-0fb8-d0f4-7708-7f758a13b508",
+				"cbe71938-3d15-f7fe-e679-981a61678146"
+			],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "d94006fc-0fb8-d0f4-7708-7f758a13b508",
+			"name": "遥测数据（是否有效、是否超限）",
+			"description": "",
+			"order": [
+				"d1dd4cd9-3e2e-c38e-e7b2-77f343a61fb5",
+				"859cc3c1-3287-c943-7ee3-75f9c4702d05",
+				"74271f1c-4e8f-5df7-723a-a63b53258dbc",
+				"e64caa53-219f-8d8f-58e7-d7377c624883"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "52745155-de47-3d7e-bef9-7b41ea4b1901",
+			"name": "遥测数据（蓝黄车牌、合格与否）",
+			"description": "",
+			"order": [
+				"6a42ce31-df86-a485-17b6-15a784ce067f",
+				"ce52da38-7463-6baa-30ca-f1674f3e1abb"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7",
+			"name": "黑烟",
+			"description": "",
+			"order": [
+				"3b3963c2-d8e8-5144-10e3-efb798c1a873",
+				"c564f6d1-8809-adac-0f59-af85a775bafb",
+				"b2370360-11ce-d605-9777-c5729f74d368",
+				"39616ff3-92a5-90d7-32f7-980ebf766912",
+				"4fca44a4-7a30-8ef5-f626-2dad35b0a7e8",
+				"efb852a5-9f1a-370a-6cd9-8eb3d2c4473d",
+				"bac28abd-cb79-18c9-6237-ede12b3029ff"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "e9ca03ca-8052-9b7a-2c62-9c51020727b6",
+			"name": "黑烟",
+			"description": "",
+			"order": [
+				"d57f4c58-2156-feea-5207-6d1cbe4de3f8",
+				"1aef9588-bf2b-c578-fa80-c8814add5d3c"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		},
+		{
+			"id": "12192d89-f580-ed44-2ac9-2e73a2e1fd75",
+			"name": "黑烟黑名单",
+			"description": "",
+			"order": [
+				"75f844d6-c3a5-4fbc-2c2d-ea42c1de1df1",
+				"ae30e51c-8a61-68ae-44a1-b7b2290ad339"
+			],
+			"folders_order": [],
+			"owner": 0,
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7"
+		}
+	],
+	"folders_order": [
+		"067a339a-20a9-d695-4edb-3d5d3c135a92",
+		"498f61a2-54ad-ae6c-ac50-91989a0eadde",
+		"2af8ca11-9d09-d8df-8ee4-740662ed65cb",
+		"f46bcb27-b365-110c-b815-43d6c741e066",
+		"51862a46-5c6d-8c8e-8584-8b6f5d28b3f6",
+		"a80c7dfc-7c5c-aecd-fa50-a9ab3e712b4a",
+		"bfce0b42-39bc-6555-03b5-c89abd21c5d1"
+	],
+	"timestamp": 0,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "023bce0f-ca5b-a3a7-c0bb-aaa1060203d7",
+			"name": "立即执行一个定时器",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/quartz/task/runnow/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "050c5017-6554-f52b-140e-2165fa64ab1b",
+			"name": "ui-获取所有组织机构或部门",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/organizationList",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "060b331e-cbde-baf2-ee08-9196797bac30",
+			"name": "ui-删除单条遥测数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensing/473797149306916864",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "06a3ee2c-9488-488c-2fe0-dd4ac25f1adb",
+			"name": "获取遥测总量",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensingTotal",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "0a722ddc-8904-1e26-b889-e661e86edf1e",
+			"name": "ui-获取所有角色",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/roleList",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "0e845144-d7a3-39c8-915d-be928cdb4b19",
+			"name": "ui-车流量车辆归属地年统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/licenseBelongYear?tsNo=全部&date=2018-07-07",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "全部"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-07"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d9bbc1d1-b128-444a-a126-8a0cd5dfb01a"
+		},
+		{
+			"id": "10e7497c-5e6c-9b15-1701-e1b0751f2866",
+			"name": "删除API用户信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/apiUser/474524056731705344",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "073e54ab-6c47-3883-2f37-cc956ac18519"
+		},
+		{
+			"id": "11260850-7d7a-551e-2bb6-3247dbd6d641",
+			"name": "ui-修改当前用户信息",
+			"description": "put 修改",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"name\":\"超级管理员\",\r\n\t\"oldPassword\":\"sfe5188\",\r\n\t\"password\":\"654321\",\r\n\t\"confirmPassword\":\"654321\",\r\n\t\"sex\":\"W\",\r\n\t\"phone\":\"15920923333\",\r\n\t\"remark\":\"测试中\"\r\n}\r\n",
+			"url": "{{ip}}/api/{{version}}/loginUser/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "12e86e70-1a9c-0684-2608-1314c48dd115",
+			"name": "车流量车道号日统计（每小时车道流量）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/trafficLaneDay?tsNo=SFE-R600-G22W2798&date=2018-07-27",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-27"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2bf118bd-9be5-198a-bf75-7992228c7bc5"
+		},
+		{
+			"id": "14cc5d45-b546-1887-7d56-0f7187d1397a",
+			"name": "ui-删除指定组织结构或部门",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/organization/474519328965361664",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "1505d0f7-7e66-e16f-9cc8-770cc930a178",
+			"name": "ui-获取所有空气站基本信息（地图）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorAirQualityInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		},
+		{
+			"id": "15886c73-7a3f-2671-8d16-038baea6cfcf",
+			"name": "获取某一设备最新空气质量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airQuality?tsNo=AQM65-G22W2714",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "AQM65-G22W2714"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2205db08-18a6-222a-6e1b-41a5d9576cf7"
+		},
+		{
+			"id": "181e02d8-38ea-4ab2-d29a-cdee049c7e69",
+			"name": "ui-新增用户信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"account\":\"hell_account1\",\r\n\t\"userName\":\"Osiris\",\r\n\t\"password\":\"sfe5188\",\r\n\t\"sex\":\"M\",\r\n\t\"userType\":1,\r\n\t\"organ\":\"0\",\r\n\t\"phone\":\"15920923333\",\r\n\t\"remark\":\"Sun-\",\r\n\t\"status\":\"1\",\r\n\t\"roleId\":\"3\"\r\n}",
+			"url": "{{ip}}/api/{{version}}/user",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "1aef9588-bf2b-c578-fa80-c8814add5d3c",
+			"name": "ui-黑烟是否确认月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeReportMonth?tsNo=SFE-R600-G22W2798&date=2018-07-27",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-27"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "e9ca03ca-8052-9b7a-2c62-9c51020727b6"
+		},
+		{
+			"id": "21b254db-b877-f0ac-5748-b47770739e13",
+			"name": "ui-根据遥测/黑烟数据id获取图片列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/photo?kind=1&brsId=473797149306916864",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "kind",
+					"value": "1"
+				},
+				{
+					"key": "brsId",
+					"value": "473797149306916864"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "24e9f0c7-a192-d2de-6ca0-9a49b8cc1a78",
+			"name": "遥测月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/export?type=1&period=month&date=2018-07-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "1"
+				},
+				{
+					"key": "period",
+					"value": "month"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "f46bcb27-b365-110c-b815-43d6c741e066"
+		},
+		{
+			"id": "26fd7256-8526-8270-833c-fbc932a6dc97",
+			"name": "ui-超标库查询（不透光烟度限值默认为30，超限次数默认为2，时间默认为当前时间，格式为yyyy-MM-dd HH:mm:ss）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsStandardLib?pageNum=1&pageSize=30&smoke=25&count=2&date=2018-08-03 01:02:03",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "smoke",
+					"value": "25"
+				},
+				{
+					"key": "count",
+					"value": "2"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-03 01:02:03"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3b935e57-b4be-f894-02a2-572d1bf3c602"
+		},
+		{
+			"id": "2760846c-3e6b-d834-bdcb-22001dbfe5f1",
+			"name": "修改API用户信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"remarks\":\"SFE设备\",\n\t\"status\":1,\n\t\"userName\":\"TEST\",\n\t\"userPwd\":\"123456\",\n\t\"grandDate\":\"2018-05-07 10:34:34\",\n\t\"grandMan\":\"admin1\",\n\t\"url\":\"/air2.html\",\n\t\"id\":\"474524056731705344\"\n}",
+			"url": "{{ip}}/api/{{version}}/apiUser",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "073e54ab-6c47-3883-2f37-cc956ac18519"
+		},
+		{
+			"id": "28b54689-f99a-10b4-341e-bb83f11a464d",
+			"name": "ui-获取所有遥感站基本信息（地图）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensingInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "291e434e-43b6-b204-beda-0055b6399288",
+			"name": "ui-获取所有父级组织机构或部门",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/porganList",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "29f608a3-3c61-c82c-8cf2-573b386a6e51",
+			"name": "修改API用户密码",
+			"description": "put 修改",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"userPwd\":\"sfe5188\"}",
+			"url": "{{ip}}/api/{{version}}/apiUser/1/pwd",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "073e54ab-6c47-3883-2f37-cc956ac18519"
+		},
+		{
+			"id": "2b08181c-1919-e0c4-764c-f6ca34838969",
+			"name": "新增标气计量结果",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"equipmentCode\":\"eqp004\",\n\t\"computationTime\":\"2018-01-07 13:00:00\",\n\t\"co2\":16.2,\n\t\"co\":9.45,\n\t\"hc\":12,\n\t\"no\":13,\n\t\"opacity\":14.12,\n\t\"windSpeed\":8.72,\n\t\"windDirection\":\"东南向\",\n\t\"temperature\":22.3,\n\t\"humidity\":6.45,\n\t\"atmosphere\":1023.4,\n\t\"oac\":\"504.34\",\n\t\"irInten\":\"50\",\n\t\"uvInten\":\"60\",\n\t\"operationTimeBegin\":\"2018-01-07 13:00:00\",\n\t\"operationTimeEnd\":\"2018-01-07 13:10:20.123\",\n\t\"operator\":\"管理员\",\n\t\"hit\":\"无\"\n}",
+			"url": "{{ip}}/api/{{version}}/gasComputation",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3ddccc0d-eaad-3815-7b0f-295dcd2dde59"
+		},
+		{
+			"id": "2e3424d6-6688-8a84-825c-95c1c239657b",
+			"name": "ui-删除单条空气质量检测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/monitorAirQuality/440582101",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		},
+		{
+			"id": "2e6f3180-5621-e327-1356-d1b04024f010",
+			"name": "ui-分页查询遥测数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensingPageQuery?pageNum=1&pageSize=30&provinceId=&cityId=&countyId=&tsNo=SFE-R600-G22W2772&monitorBeginTimeStr=2018-07-29 15:00:00&monitorEndTimeStr=2018-07-29 16:00:00&license=粤&minCO=0&maxCO=100&minCO2=&maxCO2=&minNO=&maxNO=&minHC=0&maxHC=1500&minSmoke=0&maxSmoke=100&minVSP=&maxVSP=&minConfidence=&maxConfidence=&result=&isNotZero=1&validity=1",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": ""
+				},
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "monitorBeginTimeStr",
+					"value": "2018-07-29 15:00:00"
+				},
+				{
+					"key": "monitorEndTimeStr",
+					"value": "2018-07-29 16:00:00"
+				},
+				{
+					"key": "license",
+					"value": "粤"
+				},
+				{
+					"key": "minCO",
+					"value": "0"
+				},
+				{
+					"key": "maxCO",
+					"value": "100"
+				},
+				{
+					"key": "minCO2",
+					"value": ""
+				},
+				{
+					"key": "maxCO2",
+					"value": ""
+				},
+				{
+					"key": "minNO",
+					"value": ""
+				},
+				{
+					"key": "maxNO",
+					"value": ""
+				},
+				{
+					"key": "minHC",
+					"value": "0"
+				},
+				{
+					"key": "maxHC",
+					"value": "1500"
+				},
+				{
+					"key": "minSmoke",
+					"value": "0"
+				},
+				{
+					"key": "maxSmoke",
+					"value": "100"
+				},
+				{
+					"key": "minVSP",
+					"value": ""
+				},
+				{
+					"key": "maxVSP",
+					"value": ""
+				},
+				{
+					"key": "minConfidence",
+					"value": ""
+				},
+				{
+					"key": "maxConfidence",
+					"value": ""
+				},
+				{
+					"key": "result",
+					"value": ""
+				},
+				{
+					"key": "isNotZero",
+					"value": "1"
+				},
+				{
+					"key": "validity",
+					"value": "1"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "2f22a494-f684-f424-180b-10749df97df5",
+			"name": "ui-车流量车辆归属地月统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/licenseBelongMonth?tsNo=&date=2018-06-07",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "date",
+					"value": "2018-06-07"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d9bbc1d1-b128-444a-a126-8a0cd5dfb01a"
+		},
+		{
+			"id": "2f26dff0-d109-1fae-9c0d-9f6ba69d879a",
+			"name": "ui-根据父级、子级角色名称分页查询角色列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rolePageQuery?name=&pName=&pageSize=20&pageNum=1",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "name",
+					"value": ""
+				},
+				{
+					"key": "pName",
+					"value": ""
+				},
+				{
+					"key": "pageSize",
+					"value": "20"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "2fe56db4-1865-841a-8ffa-2ada71130b21",
+			"name": "ui-获取所有省份信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/allProvince",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+		},
+		{
+			"id": "32583953-ddee-68e6-9402-c02421863d6c",
+			"name": "ui-获取所有父级角色",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/proleList",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "338e2b26-c610-48b3-b34b-31dd04912447",
+			"name": "图片上传 多个文件 ",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "params",
+			"data": [
+				{
+					"key": "file",
+					"value": "",
+					"type": "file"
+				}
+			],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/picture/uploads.do",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2af8ca11-9d09-d8df-8ee4-740662ed65cb"
+		},
+		{
+			"id": "35b911e4-7d4b-cca9-8f68-57fa7895dcd9",
+			"name": "空气质量月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/export?type=2&period=month&tsNo=AQM65-G22W2798&date=2018-07-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "2"
+				},
+				{
+					"key": "period",
+					"value": "month"
+				},
+				{
+					"key": "tsNo",
+					"value": "AQM65-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "f46bcb27-b365-110c-b815-43d6c741e066"
+		},
+		{
+			"id": "39616ff3-92a5-90d7-32f7-980ebf766912",
+			"name": "获取某一设备最新黑烟数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessage?tsNo=SFE-R600-G22W2714",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2714"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "3b3963c2-d8e8-5144-10e3-efb798c1a873",
+			"name": "ui-分页查询黑烟数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessagePageQuery?pageNum=1&pageSize=30&provinceId=&cityId=&countyId=&tsNo=SFE-R600-G22W2772&license=&monitorBeginTime=&monitorEndTime=&hbflbz=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": ""
+				},
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "license",
+					"value": ""
+				},
+				{
+					"key": "monitorBeginTime",
+					"value": ""
+				},
+				{
+					"key": "monitorEndTime",
+					"value": ""
+				},
+				{
+					"key": "hbflbz",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "3b3a4638-a181-6fd6-89d0-6b8ae77f57d7",
+			"name": "ui-获取单条空气质量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airQuality/474192576147709952",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2205db08-18a6-222a-6e1b-41a5d9576cf7"
+		},
+		{
+			"id": "3b7978fc-b614-f552-cc89-336389b2bf38",
+			"name": "ui-删除单条遥感站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensing/SFE-R911-G22W2798",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "3ed042d3-809b-f8f1-e52d-49819ec95f24",
+			"name": "ui-获取一小时内的空气质量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airByHour?tsNo=AQM65-G22W2772&date=2018-07-29 15:00",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "AQM65-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-29 15:00"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "1ffe4273-9bf4-8def-1cb5-f5e34fc8b1d6"
+		},
+		{
+			"id": "423ed347-f527-cdb0-85f1-f844c92d739e",
+			"name": "查询所有API用户信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/apiUserList",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "073e54ab-6c47-3883-2f37-cc956ac18519"
+		},
+		{
+			"id": "4475649b-fdba-8189-62d5-a82de546cbe8",
+			"name": "ui-根据车牌分页查询半年内遥测数据（不透光烟度限值默认为30，CO默认4，NO默认3000，HC默认2500，时间默认为当前时间，格式为yyyy-MM-dd HH:mm:ss）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsLimitByLicense?pageNum=1&pageSize=10&license=粤R37632&smoke=30&co=4&no=3000&hc=2500&date=2018-08-04 00:00:00",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "10"
+				},
+				{
+					"key": "license",
+					"value": "粤R37632"
+				},
+				{
+					"key": "smoke",
+					"value": "30"
+				},
+				{
+					"key": "co",
+					"value": "4"
+				},
+				{
+					"key": "no",
+					"value": "3000"
+				},
+				{
+					"key": "hc",
+					"value": "2500"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-04 00:00:00"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "c89fc970-cf70-91c8-2099-257a9afc4587"
+		},
+		{
+			"id": "46b855a8-42f0-b927-dfc1-67f4875bad26",
+			"name": "ui-车流量分页查询",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/trafficFlowInfoPageQuery?pageNum=1&pageSize=8&tsNo=&license=&vehicalType=&beginDate=&endDate=\n",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "license",
+					"value": ""
+				},
+				{
+					"key": "vehicalType",
+					"value": ""
+				},
+				{
+					"key": "beginDate",
+					"value": ""
+				},
+				{
+					"key": "endDate",
+					"value": "\n"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "004c9771-0992-6799-6c6e-7d18ddf1e716"
+		},
+		{
+			"id": "46c9fa01-c6cd-6cdc-9227-59fc8a1f70f4",
+			"name": "遥测日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/export?type=1&period=date&date=2018-08-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "1"
+				},
+				{
+					"key": "period",
+					"value": "date"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "f46bcb27-b365-110c-b815-43d6c741e066"
+		},
+		{
+			"id": "47f753f0-5019-4dc9-c3c3-640d86508b5d",
+			"name": "ui-车流量车辆类型日统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/vehicalTypeDay?tsNo=SFE-R600-G22W2798&date=2018-07-28",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "5fc91244-863d-d5b6-0afb-774d52fa878f"
+		},
+		{
+			"id": "4a028f15-54d1-1836-8a5d-3b07652d5b20",
+			"name": "获取所有计划中的任务列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/quartz/task/all",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "4f3970fd-453b-bb85-b887-d309235ed03e",
+			"name": "ui-超限库查询（不透光烟度限值默认为30，CO默认4，NO默认3000，HC默认2500，时间默认为当前时间，格式为yyyy-MM-dd HH:mm:ss）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsLimitLib?pageNum=1&pageSize=30&smoke=30&co=4&no=3000&hc=2500&date=2018-08-03 01:02:03",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "smoke",
+					"value": "30"
+				},
+				{
+					"key": "co",
+					"value": "4"
+				},
+				{
+					"key": "no",
+					"value": "3000"
+				},
+				{
+					"key": "hc",
+					"value": "2500"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-03 01:02:03"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "c89fc970-cf70-91c8-2099-257a9afc4587"
+		},
+		{
+			"id": "4fca44a4-7a30-8ef5-f626-2dad35b0a7e8",
+			"name": "ui-黑烟车信息修改（车牌号、林格曼黑度）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"id\":\"472816558268956672\",\n\t\"license\":\"粤85858\",\n\t\"ringelman\":4\n}",
+			"url": "{{ip}}/api/{{version}}/smokeMessage?id=472816558268956672",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "472816558268956672"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "51d3b9c4-6cb9-58bb-c120-90759303f162",
+			"name": "动态定时任务综合例子",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/quartz/integrated/",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "54e968d6-cc02-4c23-84d8-1d03fc804f30",
+			"name": "ui-新增组织机构或部门",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"organ\":\"013\",\n\t\"name\":\"额\",\n\t\"address\":\"正基4楼\",\n\t\"icon\":\"无\",\n\t\"seq\":2,\n\t\"createDate\":\"2018-08-02\",\n\t\"organType\":\"1\"\n}",
+			"url": "{{ip}}/api/{{version}}/organization",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "5832ba69-7f42-7bff-03d4-1cbca217af49",
+			"name": "获取所有用户",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/userList",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "5855bc69-a903-987d-9f2d-a07d0c2254b1",
+			"name": "ui-分页获取用户列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/userOrganPageQuery?account=&userName=&organ=&phone=&sex=&status=&userType=&pageNum=1&pageSize=2",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "account",
+					"value": ""
+				},
+				{
+					"key": "userName",
+					"value": ""
+				},
+				{
+					"key": "organ",
+					"value": ""
+				},
+				{
+					"key": "phone",
+					"value": ""
+				},
+				{
+					"key": "sex",
+					"value": ""
+				},
+				{
+					"key": "status",
+					"value": ""
+				},
+				{
+					"key": "userType",
+					"value": ""
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "2"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "5c323900-e356-7b06-d918-18dce6222df7",
+			"name": "ui-超标统计（不透光烟度限值默认为30，超限次数默认为2，时间默认为当前时间，格式为yyyy-MM-dd HH:mm:ss）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsStandardReport?smoke=30&count=1&date=2018-08-24",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "smoke",
+					"value": "30"
+				},
+				{
+					"key": "count",
+					"value": "1"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-24"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "737a30bb-4e5e-b0b0-cc9f-dca434914eac"
+		},
+		{
+			"id": "5f3226cb-4ad4-f14a-3f43-571618afce30",
+			"name": "ui-分页查询标气计量结果",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/gasComputationPageQuery?pageNum=1&pageSize=8&provinceId=440000&cityId=&countyId=全部&tsNo=123&equipmentCode=004&computationBeginTime=2018-01-07&computationEndTime=2018-01-08",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "provinceId",
+					"value": "440000"
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": "全部"
+				},
+				{
+					"key": "tsNo",
+					"value": "123"
+				},
+				{
+					"key": "equipmentCode",
+					"value": "004"
+				},
+				{
+					"key": "computationBeginTime",
+					"value": "2018-01-07"
+				},
+				{
+					"key": "computationEndTime",
+					"value": "2018-01-08"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3ddccc0d-eaad-3815-7b0f-295dcd2dde59"
+		},
+		{
+			"id": "5ff5d89b-ba97-da1e-1550-5898b14d7b89",
+			"name": "ui-根据父级、子级部门名称分页查询组织机构或部门列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/organizationPageQuery?pName=研发&name=&pageSize=2&pageNum=1",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pName",
+					"value": "研发"
+				},
+				{
+					"key": "name",
+					"value": ""
+				},
+				{
+					"key": "pageSize",
+					"value": "2"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "607301b2-890a-052e-472a-2db64285ea7f",
+			"name": "ui-分页查询空气质量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airQualityPageQuery?pageNum=1&pageSize=8&provinceId=&cityId=&countyId=全部&tsNo=&collectionBeginDate=&collectionEndDate=&minO3=&maxO3=&minNo2=&maxNo2=&minCo=&maxCo=&minSo2=&maxSo2=&minPm25=0&maxPm25=&minPm10=0&maxPm10=&minNox=0&maxNox=&minH2s=0&maxH2s=&minCo2=0&maxCo2=&minVoc=0&maxVoc=&minHumidity=0&maxHumidity=&minTemperature=0&maxTemperature=&minRainfall=&maxRainfall=&minAqi=&maxAqi=&minAtmosphere=0&maxAtmosphere=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": "全部"
+				},
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "collectionBeginDate",
+					"value": ""
+				},
+				{
+					"key": "collectionEndDate",
+					"value": ""
+				},
+				{
+					"key": "minO3",
+					"value": ""
+				},
+				{
+					"key": "maxO3",
+					"value": ""
+				},
+				{
+					"key": "minNo2",
+					"value": ""
+				},
+				{
+					"key": "maxNo2",
+					"value": ""
+				},
+				{
+					"key": "minCo",
+					"value": ""
+				},
+				{
+					"key": "maxCo",
+					"value": ""
+				},
+				{
+					"key": "minSo2",
+					"value": ""
+				},
+				{
+					"key": "maxSo2",
+					"value": ""
+				},
+				{
+					"key": "minPm25",
+					"value": "0"
+				},
+				{
+					"key": "maxPm25",
+					"value": ""
+				},
+				{
+					"key": "minPm10",
+					"value": "0"
+				},
+				{
+					"key": "maxPm10",
+					"value": ""
+				},
+				{
+					"key": "minNox",
+					"value": "0"
+				},
+				{
+					"key": "maxNox",
+					"value": ""
+				},
+				{
+					"key": "minH2s",
+					"value": "0"
+				},
+				{
+					"key": "maxH2s",
+					"value": ""
+				},
+				{
+					"key": "minCo2",
+					"value": "0"
+				},
+				{
+					"key": "maxCo2",
+					"value": ""
+				},
+				{
+					"key": "minVoc",
+					"value": "0"
+				},
+				{
+					"key": "maxVoc",
+					"value": ""
+				},
+				{
+					"key": "minHumidity",
+					"value": "0"
+				},
+				{
+					"key": "maxHumidity",
+					"value": ""
+				},
+				{
+					"key": "minTemperature",
+					"value": "0"
+				},
+				{
+					"key": "maxTemperature",
+					"value": ""
+				},
+				{
+					"key": "minRainfall",
+					"value": ""
+				},
+				{
+					"key": "maxRainfall",
+					"value": ""
+				},
+				{
+					"key": "minAqi",
+					"value": ""
+				},
+				{
+					"key": "maxAqi",
+					"value": ""
+				},
+				{
+					"key": "minAtmosphere",
+					"value": "0"
+				},
+				{
+					"key": "maxAtmosphere",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2205db08-18a6-222a-6e1b-41a5d9576cf7"
+		},
+		{
+			"id": "6203c64b-0229-9ca6-b506-0ca0dd31418e",
+			"name": "ui-车流量车辆类型月统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/vehicalTypeMonth?tsNo=SFE-R600-G22W2772&date=2018-07-10",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-10"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "5fc91244-863d-d5b6-0afb-774d52fa878f"
+		},
+		{
+			"id": "63510a53-8388-3189-a19d-9e071c1acaf3",
+			"name": "ui-获取所有遥感站基本信息（下拉列表）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensing",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "64676b96-cb54-aede-9c33-54e6f1ceeb0d",
+			"name": "ui-根据省份id获取相应的城市信息列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/allCity?pId=440000",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pId",
+					"value": "440000"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+		},
+		{
+			"id": "65a72629-180a-96f8-1aa0-879a60e8bfa8",
+			"name": "建立角色与菜单、按钮、接口的权限关系",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"roleId\":\"2\",\n\t\"resourceIds\":\"1,4,214\"\n}",
+			"url": "{{ip}}/api/{{version}}/roleResource",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "8e14a69e-a119-a2ff-6832-bedf5ed864be"
+		},
+		{
+			"id": "69cc3f1b-ce14-0813-e7e0-4e26495b335e",
+			"name": "图片显示",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/picture/file/1518502337319/jpg",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2af8ca11-9d09-d8df-8ee4-740662ed65cb"
+		},
+		{
+			"id": "69eb5d18-4851-085b-64af-b077f5bd9703",
+			"name": "ui-根据id查询单个用户（包括角色、部门）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/userInfo/3",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "6a42ce31-df86-a485-17b6-15a784ce067f",
+			"name": "ui-遥测数据日统计报表（蓝黄车牌、合格与否）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsReportDay?tsNo=SFE-R600-G22W2772&date=2018-07-28",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "52745155-de47-3d7e-bef9-7b41ea4b1901"
+		},
+		{
+			"id": "6b644101-7478-14ee-b669-d6902ff80eb4",
+			"name": "ui-车流量车辆归属地日统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/licenseBelongDay?tsNo=SFE-R600-G22W2798&date=2018-07-07",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-07"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d9bbc1d1-b128-444a-a126-8a0cd5dfb01a"
+		},
+		{
+			"id": "6c652a78-35ba-2c76-ca3e-a9f56c58d9b2",
+			"name": "ui-车流量日统计（每小时总量、各车辆类型数量）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/trafficDay?tsNo=SFE-R600-G22W2714&date=2018-07-27",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2714"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-27"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2bf118bd-9be5-198a-bf75-7992228c7bc5"
+		},
+		{
+			"id": "6dadbe74-834a-3311-a64e-da30bc776e6d",
+			"name": "ui-车流量车道号时统计",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/trafficLaneByHour?tsNo=SFE-R600-G22W2714&date=2018-07-29 12:00:00",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2714"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-29 12:00:00"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2bf118bd-9be5-198a-bf75-7992228c7bc5"
+		},
+		{
+			"id": "721a61a2-376d-2b0c-d0f4-903ba5737198",
+			"name": "根据角色id和菜单id获取按钮信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/resource?roleId=1&menuId=4",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "roleId",
+					"value": "1"
+				},
+				{
+					"key": "menuId",
+					"value": "4"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "8e14a69e-a119-a2ff-6832-bedf5ed864be"
+		},
+		{
+			"id": "72459891-055b-6288-8e76-3b0d6046731a",
+			"name": "获取某一设备最新遥测数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensing?tsNo=SFE-R600-G22W2772",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "7355e265-347f-4d64-79c0-9963d5c1e664",
+			"name": "ui-分页查询遥感监测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensingPageQuery?pageNum=1&pageSize=2&provinceId=440000&cityId=441800&countyId=全部&tsNo=SFE-R600-G22W2772&kind=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "2"
+				},
+				{
+					"key": "provinceId",
+					"value": "440000"
+				},
+				{
+					"key": "cityId",
+					"value": "441800"
+				},
+				{
+					"key": "countyId",
+					"value": "全部"
+				},
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "kind",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "74185c29-8476-d1aa-75e5-cf1de65b7d12",
+			"name": "动态删除定时任务类",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"jobName\":\"动态任务调度\",\"jobGroupName\":\"XLXXCC_JOB_GROUP\",\"triggerName\":\"动态任务触发器\",\"triggerGroupName\":\"XLXXCC_JOB_GROUP\",\"jobClass\":\"com.sfe.ssm.quartz.achieve.MyJob\",\"cron\":\"0/1 * * * * ?\"}",
+			"url": "{{ip}}/api/{{version}}/quartz/task/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "74271f1c-4e8f-5df7-723a-a63b53258dbc",
+			"name": "ui-遥测数据是否有效、是否超限月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsValidityMonth?tsNo=SFE-R600-G22W2772&date=2018-07-29",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-29"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d94006fc-0fb8-d0f4-7708-7f758a13b508"
+		},
+		{
+			"id": "75f844d6-c3a5-4fbc-2c2d-ea42c1de1df1",
+			"name": "ui-分页查询黑烟黑名单列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessageBlackListPageQuery?pageNum=1&pageSize=30&license=粤&monitorBeginTime=2018-07-28&monitorEndTime=2018-07-29&updateBeginTime=2018-07-01&updateEndTime=2018-09-01&recordCount=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "license",
+					"value": "粤"
+				},
+				{
+					"key": "monitorBeginTime",
+					"value": "2018-07-28"
+				},
+				{
+					"key": "monitorEndTime",
+					"value": "2018-07-29"
+				},
+				{
+					"key": "updateBeginTime",
+					"value": "2018-07-01"
+				},
+				{
+					"key": "updateEndTime",
+					"value": "2018-09-01"
+				},
+				{
+					"key": "recordCount",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12192d89-f580-ed44-2ac9-2e73a2e1fd75"
+		},
+		{
+			"id": "7e900e02-6ccc-3fa7-d38a-7f9ca079849b",
+			"name": "ui-分页查询运行日志（即设备自检信息）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/equipmentCheckMessagePageQuery?tsNo=123&provinceId=440000&cityId=&countyId=全部&checkResult=1&kind=02&checkBeginTime=&checkEndTime=&pageNum=1&pageSize=8",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "123"
+				},
+				{
+					"key": "provinceId",
+					"value": "440000"
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": "全部"
+				},
+				{
+					"key": "checkResult",
+					"value": "1"
+				},
+				{
+					"key": "kind",
+					"value": "02"
+				},
+				{
+					"key": "checkBeginTime",
+					"value": ""
+				},
+				{
+					"key": "checkEndTime",
+					"value": ""
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "aaaa30b1-2b7a-692b-4026-7feec211b806"
+		},
+		{
+			"id": "7f472136-a139-b1f3-aff0-98dcc298e13f",
+			"name": "ui-车流量年统计（每月总量、各车辆类型数量）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/trafficYear?tsNo=SFE-R600-G22W2714&date=2019-07-27",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2714"
+				},
+				{
+					"key": "date",
+					"value": "2019-07-27"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2bf118bd-9be5-198a-bf75-7992228c7bc5"
+		},
+		{
+			"id": "812f73db-6afc-15ec-0c50-2ec0ffc9f30c",
+			"name": "获取某一设备最新标气计量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/gasComputation?tsNo=123",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "123"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3ddccc0d-eaad-3815-7b0f-295dcd2dde59"
+		},
+		{
+			"id": "82133298-80ea-6152-ad16-ed60e78ddec6",
+			"name": "ui-遥测处罚依据查询",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/exhaustPunishPursuantInfo?id=476681719435280384&pageNum=1&pageSize=8",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "476681719435280384"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "31c7896f-40a5-1409-c577-e2d2d20d3e61"
+		},
+		{
+			"id": "85596e45-1160-9db8-fbf7-6cd893e55b07",
+			"name": "ui-处罚数据分页查询",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/punishManageInfoPageQuery?pageNum=1&pageSize=8&license=&ownerVehicle=&punishmentType=&beginDate=&endDate=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "license",
+					"value": ""
+				},
+				{
+					"key": "ownerVehicle",
+					"value": ""
+				},
+				{
+					"key": "punishmentType",
+					"value": ""
+				},
+				{
+					"key": "beginDate",
+					"value": ""
+				},
+				{
+					"key": "endDate",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "31c7896f-40a5-1409-c577-e2d2d20d3e61"
+		},
+		{
+			"id": "859cc3c1-3287-c943-7ee3-75f9c4702d05",
+			"name": "ui-遥测数据是否有效、是否超限日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsValidityDay?tsNo=SFE-R600-G22W2772&date=2018-07-27",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-27"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d94006fc-0fb8-d0f4-7708-7f758a13b508"
+		},
+		{
+			"id": "8a00aa64-aeb2-be3d-5070-6338aafa0f84",
+			"name": "ui-修改处罚数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"id\":\"476778081266909184\",\n\t\"license\":\"粤AU029F\",\n\t\"vehicalType\":\"SUV\",\n\t\"penaltyAmount\":\"6000\",\n\t\"punishmentType\":\"1\",\n\t\"state\":\"2\",\n\t\"remark\":\"KKTTTVV\",\n\t\"updateDate\":\"\",\n\t\"editId\":\"24\"\n}",
+			"url": "{{ip}}/api/{{version}}/punishInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "31c7896f-40a5-1409-c577-e2d2d20d3e61"
+		},
+		{
+			"id": "8cdd3081-1a0f-74b8-fc16-03a51e7bc7fb",
+			"name": "新增监测设备自检信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"SFE-R911-G22W2798\",\n\t\"checkTime\":\"2018-04-23 16:08:01\",\n\t\"kind\":\"01\",\n\t\"checkResult\":\"1\"\n}",
+			"url": "{{ip}}/api/{{version}}/equipmentCheckMessage",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "709147f4-cc9b-0cf5-515f-9f99f5f11e34"
+		},
+		{
+			"id": "8d9af0c7-ef20-6dd2-cb1d-f6282a7d1bbb",
+			"name": "ui-按查询条件导出遥测数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensingExport?pageNum=1&pageSize=30&provinceId=&cityId=&countyId=&tsNo=SFE-R600-G22W2821&monitorBeginTimeStr=2018-06-01&monitorEndTimeStr=2018-07-25&license=粤&minCO=&maxCO=&minCO2=0&maxCO2=&minNO=&maxNO=&minHC=&maxHC=&minSmoke=&maxSmoke=&minVSP=&maxVSP=&minConfidence=&maxConfidence=&result=&isNotZero=1&validity=1",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": ""
+				},
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2821"
+				},
+				{
+					"key": "monitorBeginTimeStr",
+					"value": "2018-06-01"
+				},
+				{
+					"key": "monitorEndTimeStr",
+					"value": "2018-07-25"
+				},
+				{
+					"key": "license",
+					"value": "粤"
+				},
+				{
+					"key": "minCO",
+					"value": ""
+				},
+				{
+					"key": "maxCO",
+					"value": ""
+				},
+				{
+					"key": "minCO2",
+					"value": "0"
+				},
+				{
+					"key": "maxCO2",
+					"value": ""
+				},
+				{
+					"key": "minNO",
+					"value": ""
+				},
+				{
+					"key": "maxNO",
+					"value": ""
+				},
+				{
+					"key": "minHC",
+					"value": ""
+				},
+				{
+					"key": "maxHC",
+					"value": ""
+				},
+				{
+					"key": "minSmoke",
+					"value": ""
+				},
+				{
+					"key": "maxSmoke",
+					"value": ""
+				},
+				{
+					"key": "minVSP",
+					"value": ""
+				},
+				{
+					"key": "maxVSP",
+					"value": ""
+				},
+				{
+					"key": "minConfidence",
+					"value": ""
+				},
+				{
+					"key": "maxConfidence",
+					"value": ""
+				},
+				{
+					"key": "result",
+					"value": ""
+				},
+				{
+					"key": "isNotZero",
+					"value": "1"
+				},
+				{
+					"key": "validity",
+					"value": "1"
+				},
+				{
+					"key": null,
+					"value": null
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "8f282115-be3d-9610-9794-a4d1c676330c",
+			"name": "ui-修改用户信息",
+			"description": "put 修改",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"account\":\"sfe\",\r\n\t\"roleId\":\"1\",\r\n\t\"name\":\"sfer\",\r\n\t\"password\":\"sfe5188\",\r\n\t\"sex\":\"M\",\r\n\t\"phone\":\"15920923333\",\r\n\t\"remark\":\"SAT-1DDDDDD\",\r\n\t\"organ\":\"0\",\r\n\t\"status\":\"0\",\r\n\t\"userType\":\"0\"\r\n}\r\n",
+			"url": "{{ip}}/api/{{version}}/user/474515706009997312",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "945efcdc-1914-0a46-82c7-57a12c4b1929",
+			"name": "ui-根据省份id获取相应的城市信息列表（启用状态）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/city?pId=440000",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pId",
+					"value": "440000"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+		},
+		{
+			"id": "94b33d92-b18c-2471-279a-31525f0dcdf8",
+			"name": "ui-车流量蓝黄车牌年统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/licenseTypeYear?tsNo=&date=2018-07-07",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "date",
+					"value": "2018-07-07"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "a6446c8a-077d-fd43-4ade-1cbe5bc4e8e2"
+		},
+		{
+			"id": "951a7898-cc98-f80e-efd0-3adb8843fae6",
+			"name": "ui-空气质量日统计报表（站点可为空，日期可不填，默认今天）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airReportDay?tsNo=AQM65-G22W2772&date=2018-08-07",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "AQM65-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-07"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "1ffe4273-9bf4-8def-1cb5-f5e34fc8b1d6"
+		},
+		{
+			"id": "955b85a1-6f7c-b1d6-8674-6d29c1b19f1a",
+			"name": "ui-车辆信息查询",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/carManageInfo?license=粤A192TA",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "license",
+					"value": "粤A192TA"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "004c9771-0992-6799-6c6e-7d18ddf1e716"
+		},
+		{
+			"id": "97966f83-d732-7132-96c9-fb85a411c1a4",
+			"name": "恢复一个定时器",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/quartz/task/resume/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "97f52d88-838e-8ca9-cf0e-ba63052a8250",
+			"name": "ui-按查询条件导出空气质量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airQualityExport?pageNum=1&pageSize=8&provinceId=&cityId=&countyId=全部&tsNo=&collectionBeginDate=&collectionEndDate=&minO3=&maxO3=&minNo2=&maxNo2=&minCo=&maxCo=&minSo2=&maxSo2=&minPm25=0&maxPm25=&minPm10=0&maxPm10=&minNox=0&maxNox=&minH2s=0&maxH2s=&minCo2=0&maxCo2=&minVoc=0&maxVoc=&minHumidity=0&maxHumidity=&minTemperature=0&maxTemperature=&minRainfall=&maxRainfall=&minAqi=&maxAqi=&minAtmosphere=0&maxAtmosphere=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": "全部"
+				},
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "collectionBeginDate",
+					"value": ""
+				},
+				{
+					"key": "collectionEndDate",
+					"value": ""
+				},
+				{
+					"key": "minO3",
+					"value": ""
+				},
+				{
+					"key": "maxO3",
+					"value": ""
+				},
+				{
+					"key": "minNo2",
+					"value": ""
+				},
+				{
+					"key": "maxNo2",
+					"value": ""
+				},
+				{
+					"key": "minCo",
+					"value": ""
+				},
+				{
+					"key": "maxCo",
+					"value": ""
+				},
+				{
+					"key": "minSo2",
+					"value": ""
+				},
+				{
+					"key": "maxSo2",
+					"value": ""
+				},
+				{
+					"key": "minPm25",
+					"value": "0"
+				},
+				{
+					"key": "maxPm25",
+					"value": ""
+				},
+				{
+					"key": "minPm10",
+					"value": "0"
+				},
+				{
+					"key": "maxPm10",
+					"value": ""
+				},
+				{
+					"key": "minNox",
+					"value": "0"
+				},
+				{
+					"key": "maxNox",
+					"value": ""
+				},
+				{
+					"key": "minH2s",
+					"value": "0"
+				},
+				{
+					"key": "maxH2s",
+					"value": ""
+				},
+				{
+					"key": "minCo2",
+					"value": "0"
+				},
+				{
+					"key": "maxCo2",
+					"value": ""
+				},
+				{
+					"key": "minVoc",
+					"value": "0"
+				},
+				{
+					"key": "maxVoc",
+					"value": ""
+				},
+				{
+					"key": "minHumidity",
+					"value": "0"
+				},
+				{
+					"key": "maxHumidity",
+					"value": ""
+				},
+				{
+					"key": "minTemperature",
+					"value": "0"
+				},
+				{
+					"key": "maxTemperature",
+					"value": ""
+				},
+				{
+					"key": "minRainfall",
+					"value": ""
+				},
+				{
+					"key": "maxRainfall",
+					"value": ""
+				},
+				{
+					"key": "minAqi",
+					"value": ""
+				},
+				{
+					"key": "maxAqi",
+					"value": ""
+				},
+				{
+					"key": "minAtmosphere",
+					"value": "0"
+				},
+				{
+					"key": "maxAtmosphere",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2205db08-18a6-222a-6e1b-41a5d9576cf7"
+		},
+		{
+			"id": "9948e339-bce7-c654-e8d5-b7efe9c1d7c8",
+			"name": "ui-新增角色",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"pId\":\"401340782134427648\",\r\n\t\"name\":\"异形管理员\",\r\n\t\"seq\":1,\r\n\t\"description\":\"异性管理员描述\",\r\n\t\"status\":\"0\"\r\n}\r\n",
+			"url": "{{ip}}/api/{{version}}/role",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "9a5e0282-520f-9254-ee9b-d96550559eaa",
+			"name": "ui-修改组织机构或部门",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"id\":\"474518216715632640\",\n\t\"organ\":\"012\",\n\t\"name\":\"软件\",\n\t\"address\":\"正基404\",\n\t\"icon\":\"无\",\n\t\"porgan\":\"010\",\n\t\"seq\":1,\n\t\"createDate\":\"2018-08-02\",\n\t\"organType\":\"1\"\n}",
+			"url": "{{ip}}/api/{{version}}/organization",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "9b0ede54-66a5-24cc-42c3-52d69dc90483",
+			"name": "新增API用户",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json\n// Authorization: bearer {{apiToken}}\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"userName\":\"SFE-R600-123\",\"userPwd\":\"sfe5188\",\"grandDate\":\"2018-04-09\",\"grandMan\":\"admin\",\"remarks\":\"哦\",\"status\":1,\"url\":\"/api/1/remoteSensingExhaust\"}",
+			"url": "{{ip}}/api/{{version}}/apiUser",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{apiToken}}",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "073e54ab-6c47-3883-2f37-cc956ac18519"
+		},
+		{
+			"id": "9be15f66-2b6f-b51a-063c-63044ca648b9",
+			"name": "ui-车流量蓝黄车牌月统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/licenseTypeMonth?tsNo=全部&date=2018-07-07",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "全部"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-07"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "a6446c8a-077d-fd43-4ade-1cbe5bc4e8e2"
+		},
+		{
+			"id": "9c4f8b71-df3b-531f-476d-f5c2235f75aa",
+			"name": "ui-删除单条空气质量数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airQuality/474192576147709952",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2205db08-18a6-222a-6e1b-41a5d9576cf7"
+		},
+		{
+			"id": "a101796a-c876-8026-d423-54a58ebc51b3",
+			"name": "ui-根据id查询单个用户",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/user/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "a19807cf-4149-a2e5-f583-8e34866fcbe0",
+			"name": "新增资源数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n        \"name\": \"test\",\n        \"url\": \"/test\",\n        \"description\": \"测试\",\n        \"pId\": \"0\",\n        \"seq\": 1,\n        \"status\": \"0\",\n        \"resourceType\": 1,\n        \"createDate\": \"2018-08-02 14:47:15\"\n    }",
+			"url": "{{ip}}/api/{{version}}/resource",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "8e14a69e-a119-a2ff-6832-bedf5ed864be"
+		},
+		{
+			"id": "a27c156b-32d0-cac2-e8fd-1d006c26b824",
+			"name": "ui-新增空气质量监测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"440582101\",\n\t\"organ\":\"环保局\",\n\t\"name\":\"龙湖空气质量监测站一号\",\n\t\"shortName\":\"一号\",\n\t\"popedom\":\"龙湖区\",\n\t\"address\":\"龙湖高新电脑中心\",\n\t\"longitude\":123.45,\n\t\"latitude\":23.45,\n\t\"firstAuthDate\":\"2018-01-09\",\n\t\"linkDate\":\"2018-01-09\",\n\t\"principal\":\"管理员\",\n\t\"chiefTelephone\":\"15920924527\",\n\t\"instrumentModel\":\"AQ-512\",\n\t\"instrumentManufactory\":\"德润达\",\n\t\"validDate\":\"2019-01-09\",\n\t\"powerSupply\":\"市政220V供电\",\n\t\"workingConditions\":\"T(-10-55)\",\n\t\"status\":\"1\",\n\t\"o3Lc\":\"0-5001ppm\",\n\t\"no2Lc\":\"0-5002ppm\",\n\t\"coLc\":\"0-5003ppm\",\n\t\"so2Lc\":\"0-5004ppm\",\n\t\"noxLc\":\"0-5005ppm\",\n\t\"h2sLc\":\"0-5006ppm\",\n\t\"co2Lc\":\"0-5007ppm\",\n\t\"vocLc\":\"0-5008ppm\",\n\t\"pm1Lc\":\"0-5009ppm\",\n\t\"pm25Lc\":\"0-5010ppm\",\n\t\"pm10Lc\":\"0-5011ppm\",\n\t\"tspLc\":\"0-5012ppm\",\n\t\"provinceId\":\"520000\",\n\t\"cityId\":\"520400\",\n\t\"countyId\":\"520402\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorAirQualityInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		},
+		{
+			"id": "a6d70352-c9c1-ae94-c9a5-aa3d8152b0b6",
+			"name": "ui-登录",
+			"description": "获取令牌",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"clientId\":\"098f6bcd4621d373cade4e832627b4f6\",\n\t\"userName\":\"admin\",\n\t\"password\":\"sfe5188\"\n}",
+			"url": "{{ip}}/api/v1/login/",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "498f61a2-54ad-ae6c-ac50-91989a0eadde"
+		},
+		{
+			"id": "a70b9639-3144-5252-11d9-1252b8bf1ada",
+			"name": "getToken",
+			"description": "获取令牌",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"clientId\":\"098f6bcd4621d373cade4e832627b4f6\",\n\t\"userName\":\"admin\",\n\t\"password\":\"sfe5188\",\n\t\"captchaCode\":\"232\",\n\t\"captchaValue\":\"232\"\n}",
+			"url": "{{ip}}/api/{{version}}/oauth/token",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "498f61a2-54ad-ae6c-ac50-91989a0eadde"
+		},
+		{
+			"id": "ac45089c-c6cb-2ac2-5ed6-bc2984bd6372",
+			"name": "ui-根据城市id获取相应县/区信息列表（启用状态）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/county?pId=440100",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pId",
+					"value": "440100"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+		},
+		{
+			"id": "ad7b6b96-00f1-87db-9895-e32032416e51",
+			"name": "动态添加定时任务类",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"jobName\":\"动态任务调度\",\"jobGroupName\":\"XLXXCC_JOB_GROUP\",\"triggerName\":\"动态任务触发器\",\"triggerGroupName\":\"XLXXCC_JOB_GROUP\",\"jobClass\":\"com.sfe.ssm.quartz.achieve.MyJob\",\"cron\":\"0/1 * * * * ?\"}",
+			"url": "{{ip}}/api/{{version}}/quartz/task/",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "ae30e51c-8a61-68ae-44a1-b7b2290ad339",
+			"name": "ui-根据车牌分页查询黑烟数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessagePageQueryByLicense?license=粤85858&pageNum=1&pageSize=8&provinceId=440000&cityId=441800&countyId=441801",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "license",
+					"value": "粤85858"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "provinceId",
+					"value": "440000"
+				},
+				{
+					"key": "cityId",
+					"value": "441800"
+				},
+				{
+					"key": "countyId",
+					"value": "441801"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12192d89-f580-ed44-2ac9-2e73a2e1fd75"
+		},
+		{
+			"id": "ae511925-1c48-80e9-4cb0-7fef671457ca",
+			"name": "ui-删除指定角色",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/role/474519744920592384",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "aed27d09-09b6-c235-ec34-d2296b4e93f6",
+			"name": "ui-车流量车辆类型时统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/vehicalTypeHour?tsNo=SFE-R600-G22W2772&date=2018-07-29 09:00:00",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-29 09:00:00"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "5fc91244-863d-d5b6-0afb-774d52fa878f"
+		},
+		{
+			"id": "b2370360-11ce-d605-9777-c5729f74d368",
+			"name": "ui-获取单条黑烟数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessage/472816558268956672",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "b3b72d8e-9982-041b-da29-31c0629383f3",
+			"name": "ui-超限因子排放月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsExceedReportMonth?tsNo=SFE-R600-G22W2798&date=2018-07-29&smoke=30&co=4&no=3000&hc=2500",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-29"
+				},
+				{
+					"key": "smoke",
+					"value": "30"
+				},
+				{
+					"key": "co",
+					"value": "4"
+				},
+				{
+					"key": "no",
+					"value": "3000"
+				},
+				{
+					"key": "hc",
+					"value": "2500"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "cbe71938-3d15-f7fe-e679-981a61678146"
+		},
+		{
+			"id": "b46fd930-4a7c-57ce-c04a-400ea6622912",
+			"name": "ui-超限因子排放日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsExceedReportDay?tsNo=SFE-R600-G22W2772&date=2018-07-28&hc=2500",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28"
+				},
+				{
+					"key": "hc",
+					"value": "2500"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "cbe71938-3d15-f7fe-e679-981a61678146"
+		},
+		{
+			"id": "b4b87799-5254-225c-951c-a4100959be12",
+			"name": "ui-分页查询登录日志",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/login/loadLogPageQuery?userName=admin&operBeginDate=2018-02-06&operEndDate=2018-02-07&pageNum=1&pageSize=2",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "userName",
+					"value": "admin"
+				},
+				{
+					"key": "operBeginDate",
+					"value": "2018-02-06"
+				},
+				{
+					"key": "operEndDate",
+					"value": "2018-02-07"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "2"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "aaaa30b1-2b7a-692b-4026-7feec211b806"
+		},
+		{
+			"id": "b5616ad5-7cfd-7369-6970-00ce144dc237",
+			"name": "ui-获取单条遥感站基本信息（分页详细）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensing/SFE-R600-G22W2772",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "b60e57f3-62f9-d091-4563-011498ec387b",
+			"name": "ui-空气质量年统计报表（站点可为空，日期可不填，默认今年）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airReportYear?tsNo=&date=2018-07-11",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "date",
+					"value": "2018-07-11"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "1ffe4273-9bf4-8def-1cb5-f5e34fc8b1d6"
+		},
+		{
+			"id": "b81f8774-8904-2087-1f8a-decb98df15a1",
+			"name": "ui-获取单条遥感站基本信息（地图）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensingInfo/SFE-R600-G22W2772",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "ba225e3a-f397-2a5e-43cf-74ca0acf3c2b",
+			"name": "ui-查询单条车辆信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/car/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "454420ee-e906-85c5-1f9d-b130a6ce0515"
+		},
+		{
+			"id": "ba930b72-3f7e-3a7e-9cd3-8c6feae2a62d",
+			"name": "空气质量日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/export?type=2&period=date&tsNo=AQM65-G22W2798&date=2018-08-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "2"
+				},
+				{
+					"key": "period",
+					"value": "date"
+				},
+				{
+					"key": "tsNo",
+					"value": "AQM65-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "f46bcb27-b365-110c-b815-43d6c741e066"
+		},
+		{
+			"id": "bac28abd-cb79-18c9-6237-ede12b3029ff",
+			"name": "ui-删除单条黑烟数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessage/405671996744007680",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "c3a7b6d8-5147-b0ed-616d-f60f612d439e",
+			"name": "ui-验证Token",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/login/token",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "498f61a2-54ad-ae6c-ac50-91989a0eadde"
+		},
+		{
+			"id": "c46eb1e5-afea-c5b0-4269-5be8240e5659",
+			"name": " 获取所有正在运行的job",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/quartz/task/run",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "c4c18f78-e36c-6099-8f89-0d41d0d2f9b8",
+			"name": "动态添加定时任务类 毫秒",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"jobName\":\"动态任务调度\",\"jobGroupName\":\"XLXXCC_JOB_GROUP\",\"triggerName\":\"动态任务触发器\",\"triggerGroupName\":\"XLXXCC_JOB_GROUP\",\"jobClass\":\"com.sfe.ssm.quartz.achieve.MySimpleJob\",\"cron\":\"1000\"}",
+			"url": "{{ip}}/api/{{version}}/quartz/task/simple/",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "c544fbfc-644b-161d-4f6f-1f67404c11e4",
+			"name": "ui-空气质量月统计报表（站点可为空，日期可不填，默认本月）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airReportMonth?tsNo=AQM65-G22W2772&date=2018-07-11",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "AQM65-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-11"
+				},
+				{
+					"key": null,
+					"value": null
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "1ffe4273-9bf4-8def-1cb5-f5e34fc8b1d6"
+		},
+		{
+			"id": "c564f6d1-8809-adac-0f59-af85a775bafb",
+			"name": "ui-获取黑烟视频数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/video/474144591486615552",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "c599cfe8-6f57-f058-5dfa-4e284ff83a26",
+			"name": "ui-新增遥感监测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"address\":\"\",\r\n\t\"chiefTelephone\":\"无\",\r\n\t\"direction\":\"1\",\r\n\t\"firstAuthDate\":\"2018-04-02 00:00:00\",\r\n\t\"kind\":\"1\",\r\n\t\"lanes\":\"1\",\r\n\t\"latitude\":\"23.650131\",\r\n\t\"license\":\"无\",\r\n\t\"linkDate\":\"2018-04-02 00:00:00\",\r\n\t\"longitude\":\"113.036041\",\r\n\t\"method\":\"0\",\r\n\t\"name\":\"贵州安顺\",\r\n\t\"organ\":\"贵州省安顺市\",\r\n\t\"principal\":\"无\",\r\n\t\"ramp\":\"0\",\r\n\t\"shortName\":\"贵州安顺 \",\r\n\t\"status\":\"1\",\r\n\t\"tsNo\":\"SFE-R911-G22W2798\",\r\n\t\"vehicleModel\":\"无\",\r\n\t\"provinceId\":\"440000\",\r\n\t\"cityId\":\"441800\",\r\n\t\"countyId\":\"441802\"\r\n}",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensingInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "c8a2cf35-e309-a1f2-1379-63b65be14fa5",
+			"name": "ui-分页查询空气站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/monitorAirQualityPageQuery?pageNum=1&pageSize=30&provinceId=&cityId=全部&countyId=&tsNo=&validBeginDate=&validEndDate=&instrumentModel=&instrumentManufactory=&powerSupply=",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": "全部"
+				},
+				{
+					"key": "countyId",
+					"value": ""
+				},
+				{
+					"key": "tsNo",
+					"value": ""
+				},
+				{
+					"key": "validBeginDate",
+					"value": ""
+				},
+				{
+					"key": "validEndDate",
+					"value": ""
+				},
+				{
+					"key": "instrumentModel",
+					"value": ""
+				},
+				{
+					"key": "instrumentManufactory",
+					"value": ""
+				},
+				{
+					"key": "powerSupply",
+					"value": ""
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		},
+		{
+			"id": "c935aae0-c5c7-91c0-1c9f-9682e02e777f",
+			"name": "ui-车流量月统计（每日总量、各车辆类型数量）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/trafficMonth?tsNo=SFE-R600-G22W2772&date=2018-08-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2bf118bd-9be5-198a-bf75-7992228c7bc5"
+		},
+		{
+			"id": "cbffc8b8-e27e-b7c0-0dca-330a2352bae1",
+			"name": "车流量月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/export?type=3&period=month&date=2018-07-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "3"
+				},
+				{
+					"key": "period",
+					"value": "month"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "f46bcb27-b365-110c-b815-43d6c741e066"
+		},
+		{
+			"id": "ccfa8315-eed8-c89b-2052-921b6441ae29",
+			"name": "新增移动式站点运行记录",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"line\":\"4\",\n\t\"lohNo\":\"20180109\",\n\t\"lane\":\"3\",\n\t\"direction\":1,\n\t\"ramp\":3,\n\t\"popedom\":\"440582\",\n\t\"address\":\"龙湖高新电脑中心\",\n\t\"longitude\":\"123.45\",\n\t\"latitude\":\"23.45\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorMobileSiteRunRecord",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "709147f4-cc9b-0cf5-515f-9f99f5f11e34"
+		},
+		{
+			"id": "cd7b1365-fca1-dd43-d423-11344c03a58a",
+			"name": "删除指定用户",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/user/474515706009997312",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "cdc00e2e-8c3e-0034-8e30-55a416d20a76",
+			"name": "动态修改定时任务类",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"jobName\":\"动态任务调度\",\"jobGroupName\":\"XLXXCC_JOB_GROUP\",\"triggerName\":\"动态任务触发器\",\"triggerGroupName\":\"XLXXCC_JOB_GROUP\",\"jobClass\":\"com.sfe.ssm.quartz.achieve.MyJob\",\"cron\":\"0/1 * * * * ?\"}",
+			"url": "{{ip}}/api/{{version}}/quartz/task/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "ce1e3488-78ef-4d64-66c3-67b5e3dfa1b0",
+			"name": "ui-分页获取用户列表（包括角色、部门）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/userInfoPageQuery?account=&userName=&organ=&phone=&sex=&status=&userType=&pageNum=1&pageSize=2",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "account",
+					"value": ""
+				},
+				{
+					"key": "userName",
+					"value": ""
+				},
+				{
+					"key": "organ",
+					"value": ""
+				},
+				{
+					"key": "phone",
+					"value": ""
+				},
+				{
+					"key": "sex",
+					"value": ""
+				},
+				{
+					"key": "status",
+					"value": ""
+				},
+				{
+					"key": "userType",
+					"value": ""
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "2"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "ce52da38-7463-6baa-30ca-f1674f3e1abb",
+			"name": "ui-遥测数据月统计报表（蓝黄车牌、合格与否）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsReportMonth?tsNo=SFE-R600-G22W2714&date=2018-07-28",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2714"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "52745155-de47-3d7e-bef9-7b41ea4b1901"
+		},
+		{
+			"id": "cee103b0-ee48-001a-322b-62085f75ab72",
+			"name": "ui-获取单条空气质量检测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorAirQualityInfo/AQM65-G22W2714",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		},
+		{
+			"id": "cf01ccb1-7900-da54-0b87-16b74c2e17fb",
+			"name": "ui-分页查询遥测数据-珠海",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensingPageQuery?pageNum=1&pageSize=30&provinceId=&cityId=&countyId=&tsNo=SFE-R600-G22W2798&monitorBeginTimeStr=2018-06-01&monitorEndTimeStr=2018-06-20&license=粤&minCO=&maxCO=&minCO2=&maxCO2=&minNO=&maxNO=&minHC=&maxHC=&minSmoke=&maxSmoke=&minVSP=&maxVSP=&minConfidence=&maxConfidence=&result=1&valid=1&licenseType=2&lane=2&fuelType=&minTemperature=20.2&maxTemperature=30&minHumidity=50&maxHumidity=100",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "30"
+				},
+				{
+					"key": "provinceId",
+					"value": ""
+				},
+				{
+					"key": "cityId",
+					"value": ""
+				},
+				{
+					"key": "countyId",
+					"value": ""
+				},
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "monitorBeginTimeStr",
+					"value": "2018-06-01"
+				},
+				{
+					"key": "monitorEndTimeStr",
+					"value": "2018-06-20"
+				},
+				{
+					"key": "license",
+					"value": "粤"
+				},
+				{
+					"key": "minCO",
+					"value": ""
+				},
+				{
+					"key": "maxCO",
+					"value": ""
+				},
+				{
+					"key": "minCO2",
+					"value": ""
+				},
+				{
+					"key": "maxCO2",
+					"value": ""
+				},
+				{
+					"key": "minNO",
+					"value": ""
+				},
+				{
+					"key": "maxNO",
+					"value": ""
+				},
+				{
+					"key": "minHC",
+					"value": ""
+				},
+				{
+					"key": "maxHC",
+					"value": ""
+				},
+				{
+					"key": "minSmoke",
+					"value": ""
+				},
+				{
+					"key": "maxSmoke",
+					"value": ""
+				},
+				{
+					"key": "minVSP",
+					"value": ""
+				},
+				{
+					"key": "maxVSP",
+					"value": ""
+				},
+				{
+					"key": "minConfidence",
+					"value": ""
+				},
+				{
+					"key": "maxConfidence",
+					"value": ""
+				},
+				{
+					"key": "result",
+					"value": "1"
+				},
+				{
+					"key": "valid",
+					"value": "1"
+				},
+				{
+					"key": "licenseType",
+					"value": "2"
+				},
+				{
+					"key": "lane",
+					"value": "2"
+				},
+				{
+					"key": "fuelType",
+					"value": ""
+				},
+				{
+					"key": "minTemperature",
+					"value": "20.2"
+				},
+				{
+					"key": "maxTemperature",
+					"value": "30"
+				},
+				{
+					"key": "minHumidity",
+					"value": "50"
+				},
+				{
+					"key": "maxHumidity",
+					"value": "100"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "d0bc2422-8a24-c177-d155-abbf310b4b09",
+			"name": "动态修改定时任务类 毫秒",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"jobName\":\"动态任务调度\",\"jobGroupName\":\"XLXXCC_JOB_GROUP\",\"triggerName\":\"动态任务触发器\",\"triggerGroupName\":\"XLXXCC_JOB_GROUP\",\"jobClass\":\"com.sfe.ssm.quartz.achieve.MySimpleJob\",\"cron\":\"100\"}",
+			"url": "{{ip}}/api/{{version}}/quartz/task/simple/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "d16a425b-2145-1848-3534-59835e09879b",
+			"name": "ui-修改角色",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"id\":\"474519744920592384\",\r\n\t\"pId\":\"1\",\r\n\t\"name\":\"异形管理员\",\r\n\t\"seq\":2,\r\n\t\"description\":\"异形理事会成员\"\r\n}\r\n",
+			"url": "{{ip}}/api/{{version}}/role",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "d1dd4cd9-3e2e-c38e-e7b2-77f343a61fb5",
+			"name": "ui-遥测数据是否有效、是否超限时统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsValidityHour?tsNo=SFE-R600-G22W2772&date=2018-07-28 18:00:00",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28 18:00:00"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d94006fc-0fb8-d0f4-7708-7f758a13b508"
+		},
+		{
+			"id": "d2429ee8-02ba-3603-4331-fe4a0c30330e",
+			"name": "ui-新增处罚数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"license\":\"粤AAW006\",\n\t\"vehicalType\":\"SUV\",\n\t\"ownerVehicle\":\"刘备\",\n\t\"penaltyAmount\":\"5000\",\n\t\"punishmentType\":\"1\",\n\t\"transfiniteNumber\":\"2\",\n\t\"state\":\"2\",\n\t\"remark\":\"AABBCC\",\n\t\"updateDate\":\"2018-04-29 10:59:58\",\n\t\"editId\":\"24\",\n\t\"createDate\":\"2018-03-25 10:59:58\",\n\t\"createId\":\"24\"\n}",
+			"url": "{{ip}}/api/{{version}}/punishInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "31c7896f-40a5-1409-c577-e2d2d20d3e61"
+		},
+		{
+			"id": "d32cda57-1b83-17ac-7972-3ef2c190c448",
+			"name": "ui-超限车辆月统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsCarReportMonth?tsNo=SFE-R600-G22W2772&date=2018-07-28&smoke=30&co=4&no=3000&hc=2500",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28"
+				},
+				{
+					"key": "smoke",
+					"value": "30"
+				},
+				{
+					"key": "co",
+					"value": "4"
+				},
+				{
+					"key": "no",
+					"value": "3000"
+				},
+				{
+					"key": "hc",
+					"value": "2500"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "ba35378d-512c-69f3-8ef0-a1febd2da090"
+		},
+		{
+			"id": "d3abc31c-e758-6aed-d4c2-3a5b9a06cf45",
+			"name": "ui-获取所有空气站基本信息（下拉列表）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorBeginTime\":\"2018-01-08 01:02:03\",\n\t\"monitorEndTime\":\"2018-01-08 01:02:04\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorAirQuality?provinceId=440000&cityId=441800&countyId=441801",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "provinceId",
+					"value": "440000"
+				},
+				{
+					"key": "cityId",
+					"value": "441800"
+				},
+				{
+					"key": "countyId",
+					"value": "441801"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		},
+		{
+			"id": "d57f4c58-2156-feea-5207-6d1cbe4de3f8",
+			"name": "ui-黑烟是否确认日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeReportDay?tsNo=SFE-R600-G22W2798&date=2018-07-27",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-27"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "e9ca03ca-8052-9b7a-2c62-9c51020727b6"
+		},
+		{
+			"id": "d6ba7a14-385d-8cbd-bcb3-3ee922661d56",
+			"name": "车流量日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/export?type=3&period=date&date=2018-08-01",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "3"
+				},
+				{
+					"key": "period",
+					"value": "date"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-01"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "f46bcb27-b365-110c-b815-43d6c741e066"
+		},
+		{
+			"id": "d9b95ad6-4790-8592-24ce-0bfcd6497e9b",
+			"name": "图片上传 单个文件",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "params",
+			"data": [
+				{
+					"key": "file",
+					"value": "",
+					"type": "file"
+				}
+			],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/picture/upload.do",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2af8ca11-9d09-d8df-8ee4-740662ed65cb"
+		},
+		{
+			"id": "da1929e3-f07c-ca99-08d7-0ba07ebdb188",
+			"name": "新增设备状态信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"monitorTime\":\"2018-01-08 01:02:03\",\n\t\"irPower\":11,\n\t\"irInten\":22,\n\t\"irUseTime\":33,\n\t\"uvIntegral\":44,\n\t\"uvInten\":55,\n\t\"uvUseTime\":66,\n\t\"withoutTemperature\":27.4,\n\t\"withoutHumidity\":13.2,\n\t\"withoutatmosphere\":1021.3,\n\t\"windSpeed\":5.37,\n\t\"insideTemperature\":28.2,\n\t\"insideHumidity\":12.3,\n\t\"insideAtmosphere\":1034.2\t\n}",
+			"url": "{{ip}}/api/{{version}}/equipmentStatusInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "709147f4-cc9b-0cf5-515f-9f99f5f11e34"
+		},
+		{
+			"id": "da5f4893-205a-7463-d7d9-42d0661dcb20",
+			"name": "新增烟度片计量结果",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"smokeFilmNumber\":1,\n\t\"measurementResultOne\":234.56,\n\t\"errorOne\":234.67,\n\t\"measurementResultTwo\":456.78,\n\t\"errorTwo\":456.89,\n\t\"measurementResultThree\":567.89,\n\t\"errorThree\":567.90,\n\t\"operationTimeBegin\":\"2018-01-07 13:00:00\",\n\t\"operationTimeEnd\":\"2018-01-07 13:10:20.123\",\n\t\"operator\":\"管理员\",\n\t\"hit\":\"无\"\n}",
+			"url": "{{ip}}/api/{{version}}/opacityComputation",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3ddccc0d-eaad-3815-7b0f-295dcd2dde59"
+		},
+		{
+			"id": "da6dd440-6942-26cc-2259-6e06e5f615cf",
+			"name": "ui-根据id查询单个角色",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/role/2",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "12f85da5-ebf1-8c81-3041-32b194f209b1"
+		},
+		{
+			"id": "db1691a8-7f38-d99b-23ae-94ca1e1f5d0d",
+			"name": "根据资源id删除资源",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "DELETE",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/resource/474522251747717120",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "8e14a69e-a119-a2ff-6832-bedf5ed864be"
+		},
+		{
+			"id": "db264595-e902-7f0d-8b5f-baa2aba4dd32",
+			"name": "ui-根据id查询单个组织机构或部门",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/organization/426323263258361856",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "eaf5e29c-64b9-3406-909e-e7772da24c24"
+		},
+		{
+			"id": "dbdfece0-4a6b-062a-be4e-e71747467fcd",
+			"name": "ui-分页查询烟度片计量结果",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/opacityComputationPageQuery?smokeFilmNumber=1&pageNum=1&pageSize=8",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "smokeFilmNumber",
+					"value": "1"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3ddccc0d-eaad-3815-7b0f-295dcd2dde59"
+		},
+		{
+			"id": "dc0d9286-95fb-73cc-6a0e-00f48f474293",
+			"name": "ui-车流量车辆类型年统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/vehicalTypeYear?tsNo=SFE-R600-G22W2772&date=2018-07-10",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-10"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "5fc91244-863d-d5b6-0afb-774d52fa878f"
+		},
+		{
+			"id": "e04fae24-7681-30f1-b9f5-be5721d140ec",
+			"name": "ui-查询单条遥测数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/remoteSensing/473797149306916864",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3091e3a0-e059-c2ac-ba47-aec2f78cf978"
+		},
+		{
+			"id": "e05d9ef7-e324-33b1-58b1-3a9f70493e4d",
+			"name": "修改用户密码",
+			"description": "put 修改",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\"password\":\"sfe5188\"}",
+			"url": "{{ip}}/api/{{version}}/user/1/pwd",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "909d1869-03d5-8e29-0b44-ac5789b186b0"
+		},
+		{
+			"id": "e087f178-b643-8008-bb43-8191edc8cb8e",
+			"headers": "Authorization: bearer {{token}}\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{ip}}/api/{{version}}/punishManageReport?beginDate=&endDate=",
+			"queryParams": [
+				{
+					"key": "beginDate",
+					"value": "",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "endDate",
+					"value": "",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"data": null,
+			"dataMode": "params",
+			"name": "ui-处罚统计查询",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1534239165688,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "31c7896f-40a5-1409-c577-e2d2d20d3e61"
+		},
+		{
+			"id": "e4ab439b-3cb6-7046-6be2-d1b4b7199f48",
+			"name": "ui-根据车牌分页查询半年内遥测数据（不透光烟度限值默认为30，时间默认为当前时间，格式为yyyy-MM-dd HH:mm:ss）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsStandardByLicense?pageNum=1&pageSize=10&license=粤R34586&smoke=25&date=2018-08-03 01:02:03",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "10"
+				},
+				{
+					"key": "license",
+					"value": "粤R34586"
+				},
+				{
+					"key": "smoke",
+					"value": "25"
+				},
+				{
+					"key": "date",
+					"value": "2018-08-03 01:02:03"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "3b935e57-b4be-f894-02a2-572d1bf3c602"
+		},
+		{
+			"id": "e64caa53-219f-8d8f-58e7-d7377c624883",
+			"name": "ui-遥测数据是否有效、是否超限年统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsValidityYear?tsNo=SFE-R600-G22W2772&date=2018-07-29",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-29"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d94006fc-0fb8-d0f4-7708-7f758a13b508"
+		},
+		{
+			"id": "e693b630-3834-37ad-6e73-9a85073b37b9",
+			"name": "ui-黑烟处罚依据查询",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokePunishPursuantInfo?id=476680637632004096&pageNum=1&pageSize=8",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "476680637632004096"
+				},
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "31c7896f-40a5-1409-c577-e2d2d20d3e61"
+		},
+		{
+			"id": "e6b95c09-350b-d1d6-ff81-d32552560acf",
+			"name": "ui-获取省份信息列表(启用状态)",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/province",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+		},
+		{
+			"id": "e7260002-b9f8-6d89-5f62-ca0a76a291a4",
+			"name": "ui-修改遥感监测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\r\n\t\"tsNo\":\"SFE-R911-G22W2798\",\r\n\t\"address\":\"广东省清远源潭治超检查站源潭镇253省道东50米\",\r\n\t\"chiefTelephone\":\"无\",\r\n\t\"direction\":\"1\",\r\n\t\"firstAuthDate\":\"2018-04-02 00:00:00\",\r\n\t\"kind\":\"1\",\r\n\t\"lanes\":\"1\",\r\n\t\"latitude\":\"23.66999\",\r\n\t\"license\":\"无\",\r\n\t\"linkDate\":\"2018-04-02 00:00:00\",\r\n\t\"longitude\":\"113.194317\",\r\n\t\"method\":\"0\",\r\n\t\"name\":\"治超站出口\",\r\n\t\"organ\":\"清远市\",\r\n\t\"principal\":\"无\",\r\n\t\"ramp\":\"0\",\r\n\t\"shortName\":\"治超站出口 \",\r\n\t\"status\":\"1\",\r\n\t\"vehicleModel\":\"无\",\r\n\t\"status\":\"1\",\r\n\t\"camera1\":\"1:202.105.10.126:40000:99:ADMIN:123456\",\r\n\t\"camera2\":\"2:202.105.10.126:40000:99:ADMIN:123456\",\r\n\t\"camera3\":\"3:202.105.10.126:40000:99:ADMIN:123456\",\r\n\t\"camera4\":\"4:202.105.10.126:40000:99:ADMIN:123456\",\r\n\t\"provinceId\":\"440000\",\r\n\t\"cityId\":\"441800\",\r\n\t\"countyId\":\"441802\"\r\n}",
+			"url": "{{ip}}/api/{{version}}/monitorRemoteSensingInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "d4052af8-7487-3b04-645f-eb50b6239e0c"
+		},
+		{
+			"id": "ea5b7b27-75bc-71f5-a8a5-51906f0b15c3",
+			"name": "分页查询API用户信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/apiUserPageQuery?pageNum=1&pageSize=8&userName=&remarks=&status=1&grandBeginDate=&grandEndDate=&grandMan=admin&url=traffic",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "userName",
+					"value": ""
+				},
+				{
+					"key": "remarks",
+					"value": ""
+				},
+				{
+					"key": "status",
+					"value": "1"
+				},
+				{
+					"key": "grandBeginDate",
+					"value": ""
+				},
+				{
+					"key": "grandEndDate",
+					"value": ""
+				},
+				{
+					"key": "grandMan",
+					"value": "admin"
+				},
+				{
+					"key": "url",
+					"value": "traffic"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "073e54ab-6c47-3883-2f37-cc956ac18519"
+		},
+		{
+			"id": "ed6db809-4a96-0999-c482-87d3b923f8b6",
+			"name": "ui-更新单条车辆信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"carId\":\"1\",\n\t\"ownerVehicle\":\"黄小建\",\n\t\"idNumber\":\"440512199209091234\",\n\t\"sex\":\"女\",\n\t\"mobile\":\"18928996735\",\n\t\"telephone\":\"075483372737\",\n\t\"postcode\":\"515000\",\n\t\"address\":\"广东省汕头市龙湖区\",\n\t\"purpose\":\"自驾\",\n\t\"testMethod\":\"未知0\",\n\t\"ownerRemark\":\"test\",\n\t\"license\":\"粤DJ1639\",\n\t\"vin\":\"未知\",\n\t\"licenseCode\":\"1\",\n\t\"vehicalType\":\"2\",\n\t\"releaseDate\":\"2018-08-01\",\n\t\"recordDate\":\"2018-08-01\",\n\t\"annualSurvey\":\"2\",\n\t\"fuelType\":\"柴油\",\n\t\"engineNo\":\"未知1\",\n\t\"oilDrive\":\"未知2\",\n\t\"installObd\":\"未知3\",\n\t\"tailpipeNum\":\"4\",\n\t\"range\":\"50.2\",\n\t\"tireModel\":\"未知5\"\n}",
+			"url": "{{ip}}/api/{{version}}/car",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "454420ee-e906-85c5-1f9d-b130a6ce0515"
+		},
+		{
+			"id": "ef39ecfb-3d2d-bb75-d1e0-3762aa8b9238",
+			"name": "暂停一个定时器",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/quartz/task/pause/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "51862a46-5c6d-8c8e-8584-8b6f5d28b3f6"
+		},
+		{
+			"id": "efb852a5-9f1a-370a-6cd9-8eb3d2c4473d",
+			"name": "ui-审核黑烟数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/smokeMessageConfirm/472816558268956672",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "b806629f-d3aa-ca30-fe7b-a5c457ef5db7"
+		},
+		{
+			"id": "f038d1ca-3297-9f7b-6275-d8a55756f776",
+			"name": "新增监测站故障信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "POST",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"123\",\n\t\"kind\":\"0\",\n\t\"faultDescribe\":\"故障描述啊\",\n\t\"faultDate\":\"2017-12-29 10:50:23\",\n\t\"remarks\":\"故障了\",\n\t\"faultReason\":\"气温低，湿度大\"\n}",
+			"url": "{{ip}}/api/{{version}}/faultMessage",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "709147f4-cc9b-0cf5-515f-9f99f5f11e34"
+		},
+		{
+			"id": "f07ac4ae-b680-0d77-eff5-12e743dbd99b",
+			"name": "ui-分页查询车辆信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/carPageQuery?pageNum=1&pageSize=8&license=&vehicalType=4&owner=张",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pageNum",
+					"value": "1"
+				},
+				{
+					"key": "pageSize",
+					"value": "8"
+				},
+				{
+					"key": "license",
+					"value": ""
+				},
+				{
+					"key": "vehicalType",
+					"value": "4"
+				},
+				{
+					"key": "owner",
+					"value": "张"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "454420ee-e906-85c5-1f9d-b130a6ce0515"
+		},
+		{
+			"id": "f1fc7b88-f129-0529-a4c5-554b0a51de97",
+			"name": "ui-车流量蓝黄车牌日统计报表（站点可空）",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/licenseTypeDay?tsNo=SFE-R600-G22W2798&date=2018-07-10",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2798"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-10"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "a6446c8a-077d-fd43-4ade-1cbe5bc4e8e2"
+		},
+		{
+			"id": "f3ec4265-cc34-7114-f0e9-bf4382e5d891",
+			"name": "ui-获取某一设备最新的60条连续数据",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Content-Type: application/json\nAuthorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/airInOneMin?tsNo=sfe-tesing-5478",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "sfe-tesing-5478"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "2205db08-18a6-222a-6e1b-41a5d9576cf7"
+		},
+		{
+			"id": "f5d18d96-6d30-d366-17dd-6931501b9088",
+			"name": "ui-根据城市id获取相应县/区信息列表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/allCounty?pId=440100",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "pId",
+					"value": "440100"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "96ebc891-580d-4cb2-f7e6-8994ee5f3327"
+		},
+		{
+			"id": "f7d8c8bc-8d66-5740-a79f-75304d1e9e62",
+			"name": "ui-超限车辆日统计报表",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/rsCarReportDay?tsNo=SFE-R600-G22W2772&date=2018-07-28&smoke=30&co=4&no=3000&hc=2500",
+			"responses": [],
+			"queryParams": [
+				{
+					"key": "tsNo",
+					"value": "SFE-R600-G22W2772"
+				},
+				{
+					"key": "date",
+					"value": "2018-07-28"
+				},
+				{
+					"key": "smoke",
+					"value": "30"
+				},
+				{
+					"key": "co",
+					"value": "4"
+				},
+				{
+					"key": "no",
+					"value": "3000"
+				},
+				{
+					"key": "hc",
+					"value": "2500"
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "ba35378d-512c-69f3-8ef0-a1febd2da090"
+		},
+		{
+			"id": "fb3e9166-f401-f031-b6f8-be210f400563",
+			"name": "根据角色id获取菜单信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "GET",
+			"headers": "Authorization: bearer {{token}}",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{ip}}/api/{{version}}/resource/role/1",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "8e14a69e-a119-a2ff-6832-bedf5ed864be"
+		},
+		{
+			"id": "fe272b46-9799-e30d-0f30-a62d860e5417",
+			"name": "ui-修改空气质量监测站基本信息",
+			"description": "",
+			"collectionId": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"method": "PUT",
+			"headers": "Authorization: bearer {{token}}\nContent-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{\n\t\"tsNo\":\"440582101\",\n\t\"organ\":\"清远环保局\",\n\t\"name\":\"清远环保局空气质量监测站1号\",\n\t\"shortName\":\"清A1\",\n\t\"popedom\":\"440582\",\n\t\"address\":\"广东省清远市\",\n\t\"longitude\":111.11,\n\t\"latitude\":23.11,\n\t\"firstAuthDate\":\"2018-02-01\",\n\t\"linkDate\":\"2018-02-01\",\n\t\"principal\":\"超级管理员\",\n\t\"chiefTelephone\":\"15920924526\",\n\t\"instrumentModel\":\"AQ-5121\",\n\t\"instrumentManufactory\":\"康姆德润达\",\n\t\"validDate\":\"2019-02-01\",\n\t\"powerSupply\":\"1、市政220V供电\",\n\t\"workingConditions\":\"Temp(-10-55)\",\n\t\"status\":\"2\",\n\t\"o3Lc\":\"0.01-5001ppm\",\n\t\"no2Lc\":\"0.01-5002ppm\",\n\t\"coLc\":\"0.01-5003ppm\",\n\t\"so2Lc\":\"0.01-5004ppm\",\n\t\"noxLc\":\"0.01-5005ppm\",\n\t\"h2sLc\":\"0.01-5006ppm\",\n\t\"co2Lc\":\"0.01-5007ppm\",\n\t\"vocLc\":\"0.01-5008ppm\",\n\t\"pm1Lc\":\"0.01-5009ppm\",\n\t\"pm25Lc\":\"0.01-5010ppm\",\n\t\"pm10Lc\":\"0.01-5011ppm\",\n\t\"tspLc\":\"0.01-5012ppm\",\n\t\"provinceId\":\"440000\",\n\t\"cityId\":\"440500\",\n\t\"countyId\":\"440513\"\n}",
+			"url": "{{ip}}/api/{{version}}/monitorAirQualityInfo",
+			"responses": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "bearer {{token}}"
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"collection_id": "e7035bdb-56c5-6500-76b4-c6b43301e5f7",
+			"folder": "0f7993af-a4fa-81c4-8593-a280bfd59d24"
+		}
+	]
+}

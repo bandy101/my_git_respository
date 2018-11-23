@@ -1,0 +1,3 @@
+/home/sfe/workspace/dest_linux/SFE/thirdparty/Esegment/build/CMakeFiles/edit_cache.dir
+/home/sfe/workspace/dest_linux/SFE/thirdparty/Esegment/build/CMakeFiles/rebuild_cache.dir
+/home/sfe/workspace/dest_linux/SFE/thirdparty/Esegment/build/CMakeFiles/PyEsegment.dir

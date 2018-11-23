@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file '.\border_setting.ui'
+#
+# Created by: PyQt5 UI code generator 5.9
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(418, 418)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label_image = QtWidgets.QLabel(Dialog)
+        self.label_image.setMinimumSize(QtCore.QSize(400, 300))
+        self.label_image.setMaximumSize(QtCore.QSize(400, 300))
+        self.label_image.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.label_image.setFrameShape(QtWidgets.QFrame.Panel)
+        self.label_image.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.label_image.setText("")
+        self.label_image.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.label_image.setObjectName("label_image")
+        self.verticalLayout.addWidget(self.label_image)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label_border_up = QtWidgets.QLabel(Dialog)
+        self.label_border_up.setObjectName("label_border_up")
+        self.horizontalLayout.addWidget(self.label_border_up)
+        self.edit_up = QtWidgets.QLineEdit(Dialog)
+        self.edit_up.setReadOnly(True)
+        self.edit_up.setObjectName("edit_up")
+        self.horizontalLayout.addWidget(self.edit_up)
+        self.btn_up_add = QtWidgets.QPushButton(Dialog)
+        self.btn_up_add.setAutoDefault(False)
+        self.btn_up_add.setFlat(False)
+        self.btn_up_add.setObjectName("btn_up_add")
+        self.horizontalLayout.addWidget(self.btn_up_add)
+        self.btn_up_del = QtWidgets.QPushButton(Dialog)
+        self.btn_up_del.setAutoDefault(False)
+        self.btn_up_del.setFlat(False)
+        self.btn_up_del.setObjectName("btn_up_del")
+        self.horizontalLayout.addWidget(self.btn_up_del)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.label_border_down = QtWidgets.QLabel(Dialog)
+        self.label_border_down.setObjectName("label_border_down")
+        self.horizontalLayout_2.addWidget(self.label_border_down)
+        self.edit_down = QtWidgets.QLineEdit(Dialog)
+        self.edit_down.setReadOnly(True)
+        self.edit_down.setObjectName("edit_down")
+        self.horizontalLayout_2.addWidget(self.edit_down)
+        self.btn_down_add = QtWidgets.QPushButton(Dialog)
+        self.btn_down_add.setAutoDefault(False)
+        self.btn_down_add.setObjectName("btn_down_add")
+        self.horizontalLayout_2.addWidget(self.btn_down_add)
+        self.btn_down_del = QtWidgets.QPushButton(Dialog)
+        self.btn_down_del.setAutoDefault(False)
+        self.btn_down_del.setObjectName("btn_down_del")
+        self.horizontalLayout_2.addWidget(self.btn_down_del)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.line = QtWidgets.QFrame(Dialog)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.verticalLayout.addWidget(self.line)
+        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
+        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setObjectName("buttonBox")
+        self.verticalLayout.addWidget(self.buttonBox)
+
+        self.retranslateUi(Dialog)
+        self.buttonBox.accepted.connect(Dialog.accept)
+        self.buttonBox.rejected.connect(Dialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "车道边界设置"))
+        self.label_border_up.setText(_translate("Dialog", "上边界"))
+        self.btn_up_add.setText(_translate("Dialog", "添加"))
+        self.btn_up_del.setText(_translate("Dialog", "删除"))
+        self.label_border_down.setText(_translate("Dialog", "下边界"))
+        self.btn_down_add.setText(_translate("Dialog", "添加"))
+        self.btn_down_del.setText(_translate("Dialog", "删除"))
+

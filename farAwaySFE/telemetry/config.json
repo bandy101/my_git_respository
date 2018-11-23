@@ -1,0 +1,59 @@
+{   
+    "id": "farAwaySFE",
+    "name": "0",
+    "telemetryEquipment":
+    {
+        "SFE-R600-B22W4419": "移动式",
+        "SFE-R600-V22W3522": "S229环宇立交桥治超站1号机",
+        "SFE-R600-V22W4495": "S229环宇立交桥治超站2号机",
+        "SFE-R600-V23W1906": "S308大召营镇1号机",
+        "SFE-R600-V23W1922": "S308大召营镇2号机",
+        "SFE-R600-V23W1948": "S308新乡收费站1号机",
+        "SFE-R600-V23W2819": "S308新乡收费站2号机",
+        "SFE-R600-V23W2833": "G107好运饲料1号机",
+        "SFE-R600-V23W2851": "G107好运饲料2号机",
+        "SFE-R600-V23W2902": "G107铁道路桥1号机",
+        "SFE-R600-V23W2926": "G107铁道路桥2号机",
+        "SFE-R600-G22W2807": "广清大道(龙塘)",
+        "SFE-R600-G22W2714": "治超站出口",
+        "SFE-R600-G22W2772": "三棵竹一桥(源潭)",
+        "SFE-R600-G22W2798": "清远大道(党校)"
+    }, 
+    "sitePosition":
+    {
+        "qingyuan": "http://202.105.10.126:1577",
+        "xinxiang": "http://218.28.71.220:1570"
+    },
+
+    "publicURL":[
+        {
+            "plate_color": "/api/list/plate_color",
+            "annotation": "获取车牌颜色列表"
+        },
+        {
+            "plate_type": "/api/list/plate_type",
+            "annotation": "获取车牌类型列表"
+        },
+        {
+            "vehicle_color": "/api/list/plate_type",
+            "annotation": "获取车辆颜色列表(车身)"
+        },
+        {
+            "vehicle_type": "/api/list/plate_type",
+            "annotation": "获取车辆类型列表"
+        },
+        {
+            "vehicle_type": "/api/list/plate_type",
+            "annotation": "获取车辆类型列表"
+        },
+        {
+            "website": "/api/record",
+            "annotation": "获取站点ID(名称)列表"
+        },
+        {
+            "website": "/api/record/site_id",
+            "annotation": "获取单条id记录"
+        },
+    ]
+    
+}
