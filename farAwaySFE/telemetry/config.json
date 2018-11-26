@@ -25,35 +25,43 @@
         "xinxiang": "http://218.28.71.220:1570"
     },
 
-    "publicURL":[
-        {
+    "publicURL":{
+        "plate_color": {
             "plate_color": "/api/list/plate_color",
             "annotation": "获取车牌颜色列表"
         },
-        {
+        "plate_type":{
             "plate_type": "/api/list/plate_type",
             "annotation": "获取车牌类型列表"
         },
-        {
+        "vehicle_color":{
             "vehicle_color": "/api/list/plate_type",
             "annotation": "获取车辆颜色列表(车身)"
         },
-        {
+        "vehicle_type":{
             "vehicle_type": "/api/list/plate_type",
             "annotation": "获取车辆类型列表"
         },
-        {
+        "vehicle_type":{
             "vehicle_type": "/api/list/plate_type",
             "annotation": "获取车辆类型列表"
         },
-        {
+        "website":{
             "website": "/api/record",
             "annotation": "获取站点ID(名称)列表"
         },
-        {
-            "website": "/api/record/site_id",
+        "websiterecord":{
+            "websiterecord": "/api/record/site_id",
             "annotation": "获取单条id记录"
         },
-    ]
+        "status":{
+            "url": "/api/record/{site}/{record_id}/status",
+            "annotation": "确认非黑烟"
+        },
+        "upload":{
+            "url": "/api/record/{site}/{record_id}/upload",
+            "annotation": "确认非黑烟"
+        }
+    }
     
 }

@@ -20,7 +20,7 @@
             lengthArr = 160;
 			// 烟雾初始显示比例 原0.1
             scaleMin = 0.3;
-            Tm = 175;
+            Tm = 75;
             flagVector = 1;
             jug = new JUG();
             gene = new GENEL();
@@ -86,7 +86,7 @@
 				//arrayPach[loc1].x = (arrayPach[loc1].x + XS* arrayPach[loc1].vx);
 				 
 				
-                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.9 * arrayPach[loc1].rot;//0.7//烟雾旋转
+                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.2 * arrayPach[loc1].rot;//0.7//烟雾旋转
                 ++loc1;
             }
             return;
@@ -157,7 +157,7 @@
 			
             //arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
 			arrayPach[0].alf = 0.2 + 3 * Math.random();
-            arrayPach[0].sc = 0.05 * Math.random();//0.001//绽放大小速度
+            arrayPach[0].sc = 0.001 * Math.random();//0.001//绽放大小速度
             arrayPach[0].x = point0.x;
             arrayPach[0].y = point0.y;
 			//arrayPach[0].x =0;

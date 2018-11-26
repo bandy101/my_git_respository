@@ -19,7 +19,7 @@
 	import flash.net.URLRequest;
 	import flash.net.*;
 	import 	fl.video.*;
-	 import flash.geom.Matrix;
+	import flash.geom.Matrix;
 	import flash.display.Sprite; 
 	 import flash.text.TextField; 
 	 import flash.text.TextFieldAutoSize; 
@@ -401,11 +401,11 @@
 		function onLoadComplete(e:Event):void
 		{
 			trace(stage.width,stage.height,loader.width,loader.height);
-			var tempData:BitmapData=new BitmapData(2090,1080,  //loder.
+			var tempData:BitmapData=new BitmapData(960,600,  //loder.
 										false,null);
 			//loader.scaleMode=StageScaEXACT_FIT;
-			loader.content.width=1920;
-			loader.content.height=1080;
+			loader.content.width=800;
+			loader.content.height=600;
 			tempData.draw(loader); //绘画
 			//var bitmap:Bitmap = new Bitmap(tempData); //转换类型
 			// addChild(bitmap);
@@ -418,7 +418,7 @@
 				//mtr.a = stage.width/loader.width;
 				//mtr.d = stage.height/loader.height;
 					 graphics.beginBitmapFill(tempData, mtr, true, true);
-					 graphics.drawRect(170, 0, 1920, 1080 );//stageHeight 舞台大小变化小 两height变化大
+					 graphics.drawRect(170, 0, 800, 600 );//stageHeight 舞台大小变化小 两height变化大
 					 loader.contentLoaderInfo.removeEventListener(Event.COMPLETE , onLoadComplete);
 					 // loader = null;
 		}

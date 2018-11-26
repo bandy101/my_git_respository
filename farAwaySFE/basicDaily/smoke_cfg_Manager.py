@@ -248,6 +248,7 @@ def timeId():
                     tempF.write(l['name']),tempF.write(str(TSNO[site]))
                     tempF.write('\n')
 def confirm(ID,paths,flag=False):
+
     index = 0
     siteName= None
     if 'video_new' in paths:
@@ -294,7 +295,15 @@ def confirm(ID,paths,flag=False):
                     ps = path.join(paths,path.basename(paths)+'-smoke')
                     ps =path.join(ps,path.basename(paths)+' '+siteName)
                     if not path.exists(ps):os.makedirs(ps)
-                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:02}'+'.mp4')
+                    with open('temp_timeId.txt',mode='r+') as r:
+                        txt = r.readline()
+                        while txt:
+                            if str(f) not in str(txt):
+                                txt=r.readline()
+                                continue 
+                            txt=r.readline()
+                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,txt[5:15].replace('/','')+'_'+path.basename(p)\
+                                +f'_{index:02}'+'.mp4')
             #全部确认
             else:
                 site = sites[path.split(p)[-1]]
@@ -310,7 +319,15 @@ def confirm(ID,paths,flag=False):
                             ps = path.join(paths,path.basename(paths)+'-smoke')
                             ps =path.join(ps,path.basename(paths.replace('-',''))+' '+siteName)
                             if not path.exists(ps):os.makedirs(ps)
-                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,f[:8])+'_'+path.basename(p)+f'_{index:02}'+'.mp4')
+                            with open('temp_timeId.txt',mode='r+') as r:
+                                txt = r.readline()
+                                while txt:
+                                    if str(f) not in str(txt):
+                                        txt=r.readline()
+                                        continue 
+                                    txt=r.readline()
+                                    shutil.move(path.join(p,f)+'.mp4',path.join(ps,txt[5:15].replace('/','')+'_'+path.basename(p)\
+                                        +f'_{index:02}'+'.mp4')
                         else:
                             url = PRE_URL+'/api/record/'+site+\
                             '/'+f+'/status'
@@ -379,7 +396,7 @@ def confirm(ID,paths,flag=False):
             shutil.rmtree(path.join(tn_,'黑烟视频'))
             # os.makedirs(path.join(tn_,'黑烟视频'))
         shutil.copytree(tn+'-smoke',path.join(tn_,'黑烟视频'),)#递归复制整个 src 文件夹。 目标文件夹名为 dst，不能已经存在；方法会自动创建 dst 根文件夹。
-    os.remove('temp_timeId.txt')
+    # os.remove('temp_timeId.txt')
 def start(down_load_path='./video_qy/',times='a'):
     pre_start(down_load_path+times)
 if __name__ == '__main__':
