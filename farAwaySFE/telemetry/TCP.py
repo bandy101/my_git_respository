@@ -2,7 +2,7 @@
 date:
 author: miachelwbzhu
 """
-from .__init__ import *
+from __init__ import *
 
 
 Chunk_Size =1024 #字节数
@@ -13,8 +13,10 @@ class TCP:
 
     def __init__(self,loginurl: str,Paramer :dict=None):
         '''出初始化参数'''
-
-        self._loginurl = loginurl
+        self.__COOKIES = None
+        self.loginurl = loginurl
+        self._loginurl= loginurl[:loginurl.rindex('/')+1]+'json:auditor@'+\
+                        loginurl[loginurl.rindex('/')+1:]+'/api/login'
         if Paramer:
             self._paramer = Paramer
         else:
@@ -22,7 +24,9 @@ class TCP:
 
     def getInfo(self,url,isStream: bool=False):
         assert isinstance(url,str)
+        print('##############')
         try:
+            print('url:',url)
             if isStream:
                 res = requests.get(url,stream=True,cookies=self._cookie)
             else:
@@ -30,6 +34,7 @@ class TCP:
         except:
             traceback.print_exc()
             return None
+        print(res)
         return res
 
     #下载数据资源

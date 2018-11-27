@@ -27,31 +27,31 @@
 
     "publicURL":{
         "plate_color": {
-            "plate_color": "/api/list/plate_color",
+            "url": "/api/list/plate_color",
             "annotation": "获取车牌颜色列表"
         },
         "plate_type":{
-            "plate_type": "/api/list/plate_type",
+            "url": "/api/list/plate_type",
             "annotation": "获取车牌类型列表"
         },
         "vehicle_color":{
-            "vehicle_color": "/api/list/plate_type",
+            "url": "/api/list/plate_type",
             "annotation": "获取车辆颜色列表(车身)"
         },
         "vehicle_type":{
-            "vehicle_type": "/api/list/plate_type",
+            "url": "/api/list/plate_type",
             "annotation": "获取车辆类型列表"
         },
         "vehicle_type":{
-            "vehicle_type": "/api/list/plate_type",
+            "url": "/api/list/plate_type",
             "annotation": "获取车辆类型列表"
         },
         "website":{
-            "website": "/api/record",
+            "url": "/api/record",
             "annotation": "获取站点ID(名称)列表"
         },
         "websiterecord":{
-            "websiterecord": "/api/record/site_id",
+            "url": "/api/record/site_id",
             "annotation": "获取单条id记录"
         },
         "status":{
@@ -60,8 +60,19 @@
         },
         "upload":{
             "url": "/api/record/{site}/{record_id}/upload",
-            "annotation": "确认非黑烟"
+            "annotation": "上传黑烟"
+        },
+        "video":{
+            "url": "/api/record/{site}/{record_id}/video",
+            "annotation": "下载黑烟视频"
+        },
+        "image1":{
+            "url": "/api/record/{site}/{record_id}/image1",
+            "annotation": "下载黑烟图片1"
+        },
+        "image2":{
+            "url": "/api/record/{site}/{record_id}/image2",
+            "annotation": "下载黑烟图片2"
         }
     }
-    
 }

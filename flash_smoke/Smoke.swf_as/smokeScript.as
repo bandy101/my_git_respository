@@ -77,16 +77,16 @@
                 arrayPach[loc1].scaleY = arrayPach[loc1].scaleY + (0.005 + arrayPach[0].sc);//速度
                  arrayPach[loc1].y = arrayPach[loc1].y + (0.5 + 0.5 * arrayPach[loc1].vy);// +向下/0.5
                  arrayPach[loc1].x = arrayPach[loc1].x + 0.05 * arrayPach[loc1].vx;//0.05 //扩散
-				 // // arrayPach[loc1].x = arrayPach[loc1].x + (0.5 + 0.1 * arrayPach[loc1].vy);//向右
-                 // // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vx;//向右
-				 // arrayPach[loc1].x = -arrayPach[loc1].y + (0.5+0.1* arrayPach[loc1].vy);
-				 // arrayPach[loc1].y = -arrayPach[loc1].x - (0.05* arrayPach[loc1].vx);//两个+ 右下    //++-- 右上//----左下
+				// // arrayPach[loc1].x = arrayPach[loc1].x + (0.5 + 0.1 * arrayPach[loc1].vy);//向右
+                // // arrayPach[loc1].y = arrayPach[loc1].y + 0.05 * arrayPach[loc1].vx;//向右
+				// arrayPach[loc1].x = -arrayPach[loc1].y + (0.5+0.1* arrayPach[loc1].vy);
+				// arrayPach[loc1].y = -arrayPach[loc1].x - (0.05* arrayPach[loc1].vx);//两个+ 右下    //++-- 右上//----左下
 				
 				//arrayPach[loc1].y = (arrayPach[loc1].y +YS* arrayPach[loc1].vy);
 				//arrayPach[loc1].x = (arrayPach[loc1].x + XS* arrayPach[loc1].vx);
 				 
 				
-                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.2 * arrayPach[loc1].rot;//0.7//烟雾旋转
+                arrayPach[loc1].rotation = arrayPach[loc1].rotation + 0.7 * arrayPach[loc1].rot;//0.7//烟雾旋转
                 ++loc1;
             }
             return;

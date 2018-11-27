@@ -291,6 +291,7 @@ def confirm(ID,paths,flag=False):
                 else:
                     url =PRE_URL+'/api/record/'+site+'/'+f+'/upload'
                     res = requests.get(url,cookies=Cookies)
+                    # http://json@218.28.71.220:1570/api/record/SFE-R600-V23W1906/53831/upload
                     print(res.url,'上传成功！')
                     ps = path.join(paths,path.basename(paths)+'-smoke')
                     ps =path.join(ps,path.basename(paths)+' '+siteName)
