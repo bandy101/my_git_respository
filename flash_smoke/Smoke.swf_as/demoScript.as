@@ -401,11 +401,11 @@
 		function onLoadComplete(e:Event):void
 		{
 			trace(stage.width,stage.height,loader.width,loader.height);
-			var tempData:BitmapData=new BitmapData(960,600,  //loder.
+			var tempData:BitmapData=new BitmapData(1808,864,  //loder.
 										false,null);
 			//loader.scaleMode=StageScaEXACT_FIT;
-			loader.content.width=800;
-			loader.content.height=600;
+			loader.content.width=1638;
+			loader.content.height=864;
 			tempData.draw(loader); //绘画
 			//var bitmap:Bitmap = new Bitmap(tempData); //转换类型
 			// addChild(bitmap);
@@ -418,7 +418,7 @@
 				//mtr.a = stage.width/loader.width;
 				//mtr.d = stage.height/loader.height;
 					 graphics.beginBitmapFill(tempData, mtr, true, true);
-					 graphics.drawRect(170, 0, 800, 600 );//stageHeight 舞台大小变化小 两height变化大
+					 graphics.drawRect(170, 0, 1638, 864 );//stageHeight 舞台大小变化小 两height变化大
 					 loader.contentLoaderInfo.removeEventListener(Event.COMPLETE , onLoadComplete);
 					 // loader = null;
 		}

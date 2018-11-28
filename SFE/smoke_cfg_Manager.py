@@ -289,10 +289,10 @@ def confirm(ID,paths,flag=False):
                         print(e)
                 # 上传
                 else:
-                    url =PRE_URL+'/api/record/'+site+'/'+f+'/upload'
-                    res = requests.get(url,cookies=Cookies)
+                    # url =PRE_URL+'/api/record/'+site+'/'+f+'/upload'
+                    # res = requests.get(url,cookies=Cookies)
                     # http://json@218.28.71.220:1570/api/record/SFE-R600-V23W1906/53831/upload
-                    print(res.url,'上传成功！')
+                    # print(res.url,'上传成功！')
                     ps = path.join(paths,path.basename(paths)+'-smoke')
                     ps =path.join(ps,path.basename(paths)+' '+siteName)
                     if not path.exists(ps):os.makedirs(ps)
@@ -303,8 +303,12 @@ def confirm(ID,paths,flag=False):
                                 txt=r.readline()
                                 continue 
                             txt=r.readline()
-                            shutil.move(path.join(p,f)+'.mp4',path.join(ps,txt[5:15].replace('/','')+'_'+path.basename(p)\
-                                +f'_{index:02}'+'.mp4'))
+                            try:
+                                shutil.move(path.join(p,f)+'.mp4',path.join(ps,txt[5:15].replace('/','')+'_'+path.basename(p)\
+                                    +f'_{index:02}'+'.mp4'))
+                            except:
+                                import traceback
+                                traceback.print_exc()
             #全部确认
             else:
                 site = sites[path.split(p)[-1]]
@@ -315,8 +319,8 @@ def confirm(ID,paths,flag=False):
                     if ID:
                         if f in ID:
                             url =PRE_URL+'/api/record/'+site+'/'+f+'/upload'
-                            res = requests.get(url,cookies=Cookies)
-                            print(res.url,'上传成功！')
+                            # res = requests.get(url,cookies=Cookies)
+                            # print(res.url,'上传成功！')
                             ps = path.join(paths,path.basename(paths)+'-smoke')
                             ps =path.join(ps,path.basename(paths.replace('-',''))+' '+siteName)
                             if not path.exists(ps):os.makedirs(ps)
@@ -413,7 +417,7 @@ if __name__ == '__main__':
     }
 
 
-    day_num =0      #距离当前的日期的天数 （0表示当天）
+    day_num =1      #距离当前的日期的天数 （0表示当天）
 
 
     now_time = datetime.datetime.now()

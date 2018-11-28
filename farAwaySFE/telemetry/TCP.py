@@ -24,17 +24,16 @@ class TCP:
 
     def getInfo(self,url,isStream: bool=False):
         assert isinstance(url,str)
-        print('##############')
         try:
-            print('url:',url)
+            # print('url:',url)
             if isStream:
                 res = requests.get(url,stream=True,cookies=self._cookie)
             else:
                 res = requests.get(url,cookies=self._cookie)
         except:
             traceback.print_exc()
-            return None
-        print(res)
+            # return None
+        if res.status_code !=200: print(res,url)
         return res
 
     #下载数据资源

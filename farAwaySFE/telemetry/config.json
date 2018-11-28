@@ -51,7 +51,7 @@
             "annotation": "获取站点ID(名称)列表"
         },
         "websiterecord":{
-            "url": "/api/record/site_id",
+            "url": "/api/record/{site}",
             "annotation": "获取单条id记录"
         },
         "status":{

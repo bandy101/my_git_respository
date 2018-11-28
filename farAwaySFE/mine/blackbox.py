@@ -162,7 +162,6 @@ class BlackBox:
         @scale float: 显示图片缩放比例(0~1,默认0.4)
         @serialNumber: 起始编号
         """
-
         from datetime import datetime
         today = datetime.now().strftime('%Y%m%d')
         saveDirName = picPath
@@ -178,12 +177,14 @@ class BlackBox:
         _srcDir = path.join(saveDirName,'_src') #posive
         _dstDir = path.join(saveDirName,'_dst')
         try:
-            os.makedirs(srcDir),os.makedirs(dstDir),os.makedirs(_srcDir),os.makedirs(_dstDir)
+            os.makedirs(srcDir),os.makedirs(dstDir)
+            # os.makedirs(_srcDir),os.makedirs(_dstDir) #接触f 负样本
         except:pass
         cv2.namedWindow(self._widghtName),cv2.setMouseCallback(self._widghtName,self._callBack)
         switch =True#图像显示开关
         index = serialNumber
         for p,d,f in os.walk(picPath):
+            if any([srcDir in p,dstDir in p,_srcDir in p,_dstDir in p]):continue
             for _ in f:
                 if _[-3:].lower() in ['jpg','jpeg','png']:
                     print('start')
@@ -395,8 +396,21 @@ class BlackBox:
 
     def importData(self,url: str):
         pass
-                      
-                            
+
+    #间隔取一定数目文件                 
+    def filtrate(self,paths: str,num: int,targitPath: str='targit'):
+        '''num: 数目'''
+        index = 0
+        targitPath = path.join(paths,targitPath)
+        os.makedirs(targitPath,exist_ok=True)
+        for p,d,f in os.walk(paths):
+            if targitPath in p: continue
+            for _ in f:
+                if not index%num:
+                    shutil.copy(path.join(p,_),targitPath)
+                index +=1
+                    
+
 
 
 
