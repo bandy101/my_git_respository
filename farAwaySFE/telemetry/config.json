@@ -24,8 +24,16 @@
         "qingyuan": "http://202.105.10.126:1577",
         "xinxiang": "http://218.28.71.220:1570"
     },
-
+    "account":
+    {
+        "password":"5313232ef0a55311cf31e00b97afa15c",
+        "user":"auditor"
+    },
     "publicURL":{
+        "login":{
+            "url": "/api/login",
+            "annotation": "获取登陆权限"
+        },
         "plate_color": {
             "url": "/api/list/plate_color",
             "annotation": "获取车牌颜色列表"

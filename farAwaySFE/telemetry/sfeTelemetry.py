@@ -8,19 +8,20 @@ Chunk_Size =1024 #字节数
 class SFETelemerty(TCP):
     
     def __init__(self,loginurl: str,Paramer :dict):
+        '''
+            @ Paramer dict: 登陆账户密码
+            @ loginurl str: 网址IP(域名)
+        '''
+
         super().__init__(loginurl,Paramer)
-        with open('config.json',encoding='utf-8') as f:
-            alls = json.load(f)
-            self._configs = alls
-            self.TSNO  = alls['telemetryEquipment'] #prefix = deviceNumber
-            self.TSNO_ = dict(zip(self.TSNO.values(),self.TSNO.keys()))
-            self._SITES = None # 站点集合 
+
+        self.SITES = self.sitesID  # 站点名称
     
     # 操作黑烟
     def opSmoke(self,site,recordID,flag: str='status'):
         '''@paramer `` flag∈['status','upload']``` '''
 
-        targitURL = str(self._configs['publicURL'][flag]['url'])
+        targitURL = str(self.configs['publicURL'][flag]['url'])
         targitURL = targitURL.replace(r'{site}',site)
         targitURL = targitURL.replace(r'{record_id}',recordID)
         self.getInfo(self.loginurl+targitURL)
@@ -85,10 +86,9 @@ class SFETelemerty(TCP):
     # 获取设备编号(站点)
     @property
     def sitesID(self):
-        targitURL = str(self._configs['publicURL']['website']['url'])
+        targitURL = str(self.configs['publicURL']['website']['url'])
         targitURL = self.loginurl + targitURL
         res  = self.getInfo(targitURL)
-        print(res.content)
         sites = [_ for _ in json.loads(res.content)['content']]
         return sites
 
@@ -133,12 +133,13 @@ if __name__ == '__main__':
     if not path.exists(currentPath): os.makedirs(currentPath)
     
     #记录下信息的文件:currentPath/recordinfo
-    recordINFO = str(begindate) + '_info.txt'
+    recordINFO = str(begindate).replace('-','') + '_info.txt'
 
     #```flag_fun 功能标识
     flag_fun = input('#---q:退出---d:下载---c:确认----u:上传(暂无)---v:查看图片#:')
     if flag_fun.lower() in ['d','q','d','v','c']: # 功能选择
         if flag_fun.lower() == 'd': #下载
+            print('----开始下载----')
             sites = SFET.sitesID
             video_url = SFET.loginurl + alls['publicURL']['video']['url']    
             image1_url = SFET.loginurl + alls['publicURL']['image1']['url']
@@ -160,10 +161,9 @@ if __name__ == '__main__':
                         image1_url_ = image1_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
                         image2_url_ = image2_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
                         targit_urls.extend((video_url_,image1_url_,image1_url_))
-                        
                         name = list_['name']
                         #排除非法命名
-                        for _ in ['\\','/','*','?','<','>','|',':']:
+                        for _ in ['\\','/','*','?','<','>','|',':',' ']:
                             if _ in name:
                                 name = name.replace(_,'')
                         
@@ -171,6 +171,8 @@ if __name__ == '__main__':
                         targit_path_image1 = path.join(downloadPath,'image1')+'/'+str(list_['id'])+'~'+name+'_1.jpg'
                         targit_path_image2 = path.join(downloadPath,'image2')+'/'+str(list_['id'])+'~'+name+'_2.jpg'
                         targit_paths.extend((targit_path_video,targit_path_image1,targit_path_image2))
+                        # print('targit_paths:',targit_paths)
+                        # print('test:',video_url_,'path:',targit_path_video)
 
                         #记录下载信息(id~name~site)
                         with open(path.join(currentPath,recordINFO),mode='a') as tempF:#'~' 是分隔符

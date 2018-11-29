@@ -76,6 +76,7 @@ class BlackBox:
         a = a-min(a)
         a = a/r
         return a
+   
     @property
     def _callBack(self):
         return self._loadMouseCallback()
@@ -449,7 +450,7 @@ class BlackBox:
                 dst[i,j] =self._get_neighbor(mat,i,j)
         return dst
     
-    # 巴适距离
+    # 巴适距离 筛选相似的图片
     def get_probility(self,im1,im2):
         '''
             @im1,im2 灰度图
