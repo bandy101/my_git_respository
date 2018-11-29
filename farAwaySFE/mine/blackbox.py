@@ -9,6 +9,9 @@ def cv_imread(f_path):
 def cv_imwrite(f_path,im):
     cv2.imencode('.jpg',im)[1].tofile(f_path)#保存图片
 
+'''
+    cv2.flip(im1,0)) #0 垂直翻转 >=1 水平翻转
+'''
 
 _BlackBox__img = None
 class BlackBox:
@@ -53,6 +56,26 @@ class BlackBox:
             self.car_height = abs(y -self.iy)
             self.right_x,self.right_y = max(x,self.ix),max(self.iy,y)    
 
+    # lbp的辅助操作
+    def _get_neighbor(self,mat,i,j):
+        center = mat[i,j][-1]
+        x1,y1= i+1,j+1
+        result = 0
+        for k in range(8):
+            result = result + (mat[x1,y1][-1]>center)*(1<<k)
+            if y1-j>=0:
+                y1 =y1-1
+            else:
+                x1,y1 = x1 -1,j+1
+            if (x1,y1) in [(i,j)]:y1 = y1-1
+        return result
+
+    #归一化
+    def _normlize(self,a):
+        r = max(a)-min(a)
+        a = a-min(a)
+        a = a/r
+        return a
     @property
     def _callBack(self):
         return self._loadMouseCallback()
@@ -246,7 +269,7 @@ class BlackBox:
             pass
 
 
-    #使用对应标准分类黑烟视频
+    # 使用对应标准分类黑烟视频
     def classifyVideo(self,srcVideoPath: str,dstPath: str=None,platform: str='清远',serialNumber: int=0):
         platform +='平台'
         '''
@@ -293,7 +316,7 @@ class BlackBox:
                     shutil.copy(path.join(p,f),path.join(dateDir,newVideoName+f[-4:]))
                     index +=1
 
-    #从分类完成的视频中筛选出符合要求
+    # 从分类完成的视频中筛选出符合要求
     def classifyVideo_(self,srcPath: str,arg: str):
         #使用ANSI  避免乱码
         '''
@@ -322,7 +345,7 @@ class BlackBox:
             print(results)
             start +=1
 
-    #合并线上记录的黑烟
+    # 合并线上记录的黑烟
     def smokeSet(self,srcPath: str,dstPath: str=None,tagt :str='dest'):
         '''
             description:
@@ -356,7 +379,7 @@ class BlackBox:
                 shutil.copy(path.join(p,f),targitD)                          
 
 
-    #word文档表格生成
+    # word文档表格生成
     def wordG(self,dataPath: str,delimiter: str='#'):
         '''
         dataPath str:导入的数据路径
@@ -388,7 +411,7 @@ class BlackBox:
 
         document.save('test.docx')
 
-    #excel 生成
+    # excel 生成
     def excelX(self):
         '''
         description:
@@ -397,7 +420,7 @@ class BlackBox:
     def importData(self,url: str):
         pass
 
-    #间隔取一定数目文件                 
+    # 间隔取一定数目文件                 
     def filtrate(self,paths: str,num: int,targitPath: str='targit'):
         '''num: 数目'''
         index = 0
@@ -409,8 +432,37 @@ class BlackBox:
                 if not index%num:
                     shutil.copy(path.join(p,_),targitPath)
                 index +=1
-                    
 
+    # LBP
+    def LBP(self,img):
+        '''设置灰度阈值
+            BP的基本思想是定义于像素的8邻域中,以中心像素的灰度值为阈值,
+            将周围8个像素的值与其比较,如果周围的像素值小于中心像素的灰度值,
+            该像素位置就被标记为0,否则标记为1.每个像素得到一个二进制组合,
+            就像00010011.每个像素有8个相邻的像素点,即有2^8种可能性组合 
+        '''
+        dst = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        mat = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+        h,w = dst.shape
+        for i in range(1,h-1):
+            for j in range(1,w-1):
+                dst[i,j] =self._get_neighbor(mat,i,j)
+        return dst
+    
+    # 巴适距离
+    def get_probility(self,im1,im2):
+        '''
+            @im1,im2 灰度图
+            通过比对 对应灰度值的频率
+            return 相似的的概率(0~1)
+        '''
+        hist0,_ = np.histogram(im1.ravel(),256,[0,256])
+        hist1,_ = np.histogram(im2.ravel(),256,[0,256])
+        a ,b= self._normlize(hist0),self._normlize(hist1)
+        BC = sum(np.sqrt(a*b))  
+        prob_0 = BC/np.sqrt(sum(a)*sum(b))  #原始巴适距离
+        prob_1 = 1-np.sqrt(1-(BC/np.sqrt(sum(a)*sum(b)))) #进行优化
+        return prob_1
 
 
 

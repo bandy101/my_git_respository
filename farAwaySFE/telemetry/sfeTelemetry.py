@@ -21,14 +21,15 @@ class SFETelemerty(TCP):
         '''@paramer `` flag∈['status','upload']``` '''
 
         targitURL = str(self._configs['publicURL'][flag]['url'])
-        targitURL.replace('{site}',site)
-        targitURL.replace('{record_id}',recordID)
-        self.getInfo(targitURL)
+        targitURL = targitURL.replace(r'{site}',site)
+        targitURL = targitURL.replace(r'{record_id}',recordID)
+        self.getInfo(self.loginurl+targitURL)
+        print(self.loginurl+targitURL,'--确认成功')
 
     # 鉴赏黑烟
     def authenticate(self,currentPath: str,dirName: str,Names=['车辆误判','黑烟视频','非黑烟']):
         '''     '''
-        switch =True #鉴赏的开关
+        switch =True #鉴赏的开关 # ['o']
         currentDir =os.getcwd()
         sites = [_ for _ in os.listdir(currentPath) if path.isdir(path.join(currentPath,_)) and _ not  in [dirName]] # 通过文件夹名称获取站点对应名
         print(sites)
@@ -49,7 +50,7 @@ class SFETelemerty(TCP):
                         im2 = cv_imread(path.join(_path,'image2',f[:-4]+'_2.jpg'))
                         index +=1
                     except:
-                        ''' #重新下载#'''
+                        ''' #重新下载# 待完成'''
                         traceback.print_exc()
                         continue
                 while(1):
@@ -69,7 +70,7 @@ class SFETelemerty(TCP):
                         #print('---写入成功---')
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
-                        
+                        print('  --写入成功')
                     if k in [102,70]: # f 
                         os.chdir(path.abspath(path.join(currentPath,site)))
                         print(f)
@@ -105,15 +106,17 @@ if __name__ == '__main__':
     #--start--#
         #urlPrefix: 网址前缀
         #paths : 操作的根目录
+        # '增加平台'
     print('\t请选择区域!')
     flag_site = input('#----1:清远,2:新乡----#:')
     if flag_site=='1':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
-        
+        platform = '清远平台'
     elif flag_site=='2':
         urlPrefix = str(alls['sitePosition']['xinxiang'])
         paths = './videoData_xinxiang' 
+        platform = '新乡平台'
 
     else:raise '错误的输入！'
     #```初始化 接口
@@ -133,8 +136,8 @@ if __name__ == '__main__':
     recordINFO = str(begindate) + '_info.txt'
 
     #```flag_fun 功能标识
-    flag_fun = input('#---q:退出---d:下载---c:确认----u:上传---v:查看图片#:')
-    if flag_fun.lower() in ['d','q','d','v','c']:
+    flag_fun = input('#---q:退出---d:下载---c:确认----u:上传(暂无)---v:查看图片#:')
+    if flag_fun.lower() in ['d','q','d','v','c']: # 功能选择
         if flag_fun.lower() == 'd': #下载
             sites = SFET.sitesID
             video_url = SFET.loginurl + alls['publicURL']['video']['url']    
@@ -149,6 +152,7 @@ if __name__ == '__main__':
                 # 获取站点记录列表
                 list_url = urlPrefix+str(alls['publicURL']['websiterecord']['url']).replace("{site}",site)
                 lists =json.loads(SFET.getInfo(list_url).content)['content']
+
                 for list_ in lists:
                     if all([list_['status'] in [False],list_['upload']\
                     in ['未上传']]):
@@ -183,10 +187,10 @@ if __name__ == '__main__':
             '''
         
             print('确认前需要确保各个站点的视频已经下载下来!')
-            print('#----y:推送ID---n:全部确认---f:读取文本ID---q:退出----#')
+            print('#----y:推送ID---f:读取文本ID---q:退出----#')
             com =input('输入确认模式↑:')
             if com.lower()=='q':
-                print('已退出')
+                print('    ---已退出')
             else:
                 if com.lower()=='y':
                     k = []
@@ -202,14 +206,22 @@ if __name__ == '__main__':
                         k = []
                         with open('config.txt',encoding='utf-8',mode='r') as f:
                             k = f.read().split()
+                if com.lower() not in ['y','f']: raise '   错误的输入!'
+                
+
                 ID =k #所有黑烟的id
-                morn,noon,afnoon =[],[],[] # 上中下负样本路径
+                SITE,morn,noon,afnoon =[],[],[],[] # 上中下负样本路径
+                confirmNum =0 #确认总数
                 try:
                     with open(path.join(currentPath,recordINFO),mode='r+') as f:
                         txt = f.readline()
+                        print('正在确认···')
                         while txt:
                             id_,name,site = txt.split('~')
-                            name = name.replace(' ','')
+                            site = site.replace('\n','')
+                            # name = name.replace(' ','') #后期可能添加的操作 2018.11.29
+
+                            SITE.append(site)
                             if str(name[8:10]) in ['07','08','09','10']:
                                 morn.append(path.join(currentPath,site,id_+'~'+name+'.mp4'))
                             elif str(name[8:10]) in ['11','12','13',]:
@@ -217,21 +229,85 @@ if __name__ == '__main__':
                             else:
                                 afnoon.append(path.join(currentPath,site,id_+'~'+name+'.mp4'))
                             
-                            # 确认黑烟ID
-                            if str(id_) not in ID:
-                                SFET.opSmoke(site,id_)
-                            else: #对应的黑烟ID处理(目前仅支持手动上传2018.11.21)
-                                targitPsmoke= path.join(currentPath,begindate+'~smoke',site)
-                                os.makedirs(targitPsmoke,exist_ok=True)
-                                shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
+                            # 确认黑烟ID flag: 测试功能开关
+                            flag = 1
+                            if flag:
+                                if str(id_) not in ID:
+                                    SFET.opSmoke(SFET.TSNO_[site],id_)
+                                    confirmNum = confirmNum+1
+                                else: #对应的黑烟ID处理(目前仅支持手动上传2018.11.21)
+                                    targitPsmoke= path.join(currentPath,begindate+'~smoke',site)
+                                    os.makedirs(targitPsmoke,exist_ok=True)
+                                    shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
                             txt = f.readline()
                 except Exception as e:
                     print(e)
-                # 收集``上中下负样本
-                
+                print('确认总数:',confirmNum,'下载总数:',len(SITE))
+                SITE = set(SITE)
+                gatherMorn ,gatherNoon ,gatherAfnoon= {}, {}, {}
+
+                for _ in SITE:
+                    _ = {_:[]}
+                    gatherMorn.update(_)
+                    gatherNoon.update(_)
+                    gatherAfnoon.update(_)
+                           
+        # 收集``各站点上中下负样本 各一个
+                plat = begindate.replace(' ','')+' '+platform   #保存格式
+                noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
+                os.makedirs(noSmokePath,exist_ok=True)
+                for site in SITE:
+                    for m in morn:
+                        if site in m: gatherMorn[site].append(m)
+                    for n in noon:
+                        if site in n: gatherNoon[site].append(n)
+                    for a in afnoon:
+                        if site in a: gatherAfnoon[site].append(a)
+                #`` 收集
+                for key in SITE:
+                    index_ = 0
+                    strengthM ,strengthN ,strengthA= len(gatherMorn),len(gatherNoon),len(gatherAfnoon)
+                    PM = str(gatherMorn[key][int(random.uniform(0,strengthM))])
+                    PN = str(gatherNoon[key][int(random.uniform(0,strengthN))])
+                    PA = str(gatherAfnoon[key][int(random.uniform(0,strengthA))])
+
+
+                    # print('###',f'{str(path.basename(PM)).split('~')}')
+                    PMName = path.basename(PM).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    index_ =index_ +1
+                    PNName = path.basename(PN).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    index_ =index_ +1
+                    PAName = path.basename(PA).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    index_ =index_ +1
+                    try:
+                        shutil.copy(PM,path.join(noSmokePath,PMName))
+                        shutil.copy(PN,path.join(noSmokePath,PNName))
+                        shutil.copy(PA,path.join(noSmokePath,PAName))
+                    except:
+                        print('pm:',PM)
+                        print('pn:',PN)
+                        print('pa:',PA)
+
+        # 将保存的黑烟移入 对应文件夹Dirname  YearMonDay
+                _temp = begindate.replace('-','')
+                Dirname = path.join(currentPath,begindate+'~smoke')
+                targitP = path.join(currentPath,begindate.replace('-',''),'黑烟视频',begindate.replace('-','')+' '+platform)
+                os.makedirs(targitP,exist_ok=True)
+                if path.exists(Dirname):
+                    for p,d,f in os.walk(Dirname):
+                        index_ = 0
+                        for _ in f:
+                            shutil.copy(path.join(p,_),path.join(targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
+                            index_ = index_ + 1
+                print('    --操作完成')
+        
+        # ohter
         if flag_fun.lower() =='v': #鉴赏
             SFET.authenticate(currentPath,begindate.replace('-',''))
-    else:raise '错误的输入！'
+        if flag_fun.lower() in ['q']: print('   --已退出')
+    else:
+        raise '错误的输入！'
+    input()
         
 
         

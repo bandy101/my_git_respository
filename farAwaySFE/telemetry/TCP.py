@@ -33,7 +33,8 @@ class TCP:
         except:
             traceback.print_exc()
             # return None
-        if res.status_code !=200: print(res,url)
+        if res.status_code !=200 or not json.loads(res.content)['content']: 
+            print(res,url)
         return res
 
     #下载数据资源

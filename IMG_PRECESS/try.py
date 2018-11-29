@@ -10,6 +10,7 @@ def normlize(a):
     a = a-min(a)
     a = a/r
     return a
+    
 def get_gray_img(paths,chenel=0):
     print(paths)
     return cv2.cv2.imdecode(np.fromfile(paths,dtype=np.uint8),0)
