@@ -157,7 +157,7 @@
 			
             //arrayPach[0].alf = 0.2 + 3 * Math.random();//0.2 + 0.3
 			arrayPach[0].alf = 0.2 + 3 * Math.random();
-            arrayPach[0].sc = 0.001 * Math.random();//0.001//绽放大小速度
+            arrayPach[0].sc = 0.02 * Math.random();//0.001//绽放大小速度
             arrayPach[0].x = point0.x;
             arrayPach[0].y = point0.y;
 			//arrayPach[0].x =0;

@@ -25,20 +25,24 @@ class SFETelemerty(TCP):
         targitURL = targitURL.replace(r'{site}',site)
         targitURL = targitURL.replace(r'{record_id}',recordID)
         self.getInfo(self.loginurl+targitURL)
-        print(self.loginurl+targitURL,'--确认成功')
+        flag = 1
+        if flag:
+            print(self.loginurl+targitURL,'--确认成功')
 
     # 鉴赏黑烟
     def authenticate(self,currentPath: str,dirName: str,Names=['车辆误判','黑烟视频','非黑烟']):
         '''     '''
+        SCALE = 0.8
         switch =True #鉴赏的开关 # ['o']
         currentDir =os.getcwd()
-        sites = [_ for _ in os.listdir(currentPath) if path.isdir(path.join(currentPath,_)) and _ not  in [dirName]] # 通过文件夹名称获取站点对应名
-        print(sites)
+        sites = [_ for _ in os.listdir(currentPath) if path.isdir(path.join(currentPath,_)) and _.replace('-','')[:8] not  in [dirName]] # 通过文件夹名称获取站点对应名
         # 初始化开始文件夹
         for _ in Names:
             os.makedirs(path.join(currentPath,dirName,_),exist_ok=True)
 
         for site in sites:
+            print('每个站点间隔50张图片显示一次当前图片地址:',site)
+
             _path = path.join(currentPath,site)
             index = -1
             if not switch:
@@ -50,18 +54,23 @@ class SFETelemerty(TCP):
                         im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
                         im2 = cv_imread(path.join(_path,'image2',f[:-4]+'_2.jpg'))
                         index +=1
-                    except:
-                        ''' #重新下载# 待完成'''
-                        traceback.print_exc()
-                        continue
-                while(1):
-                    try:
-                        cv2.imshow('Image1',im1)
-                        cv2.imshow('Image2',im2)
                         if not index%50:
                             print(path.join(_path,'image2',f[:-4]+'_2.jpg'))
                     except:
+                        ''' #重新下载# 待完成'''    
                         traceback.print_exc()
+                        with open('log.txt',mode='a') as f:
+                            f.write(traceback.format_exc()+'\n'+path.join(_path,'image1',f[:-4])+'\n')
+                        continue
+                while(1):
+                    try:
+                        cv2.imshow('Image1',cv2.resize(im1,None,fx=SCALE,fy=SCALE))
+                        cv2.imshow('Image2',cv2.resize(im2,None,fx=SCALE,fy=SCALE))
+
+                    except:
+                        traceback.print_exc()
+                        with open('log.txt',mode='a') as f:
+                            f.write(traceback.format_exc()+'\n'+'imshowError:'+path.join(_path,'image1',f[:-4])+'\n')
                         break
                     k=cv2.waitKey(1)&0xFF  
                     if k ==32:
@@ -71,15 +80,14 @@ class SFETelemerty(TCP):
                         #print('---写入成功---')
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
-                        print('  --写入成功')
+                        print('  --写入成功 ',f)
                     if k in [102,70]: # f 
                         os.chdir(path.abspath(path.join(currentPath,site)))
-                        print(f)
-                        print(os.getcwd())
                         os.system("\""+f+"\"") #含有空格
                         os.chdir(currentDir) #回到基本路径防止相对路径错误
                     if k==111: #'o' 全部关闭
                         switch = False
+                        cv2.destroyAllWindows()
                         break
                 if not switch:break
 
@@ -125,6 +133,7 @@ if __name__ == '__main__':
     
     #当前时间 year-mon-day
         #day_num 距离当前的日期的天数 （0表示当天）
+
     now_time ,day_num= datetime.datetime.now(),0
     begindate = (now_time + datetime.timedelta(days = -day_num)).strftime('%Y-%m-%d')
      
@@ -137,9 +146,15 @@ if __name__ == '__main__':
 
     #```flag_fun 功能标识
     flag_fun = input('#---q:退出---d:下载---c:确认----u:上传(暂无)---v:查看图片#:')
+    startTime = time.time() #开始时间
+    print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(startTime)))
+
     if flag_fun.lower() in ['d','q','d','v','c']: # 功能选择
+        with open('log.txt',mode='a') as f:
+            f.write(str(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(startTime)))+'\n')
         if flag_fun.lower() == 'd': #下载
             print('----开始下载----')
+
             sites = SFET.sitesID
             video_url = SFET.loginurl + alls['publicURL']['video']['url']    
             image1_url = SFET.loginurl + alls['publicURL']['image1']['url']
@@ -148,6 +163,7 @@ if __name__ == '__main__':
             targit_urls= []
             targit_paths = []
             for site in sites:
+                
                 downloadPath = path.join(currentPath,SFET.TSNO[site]) #下载的文件夹
                 if not path.exists(downloadPath): os.makedirs(downloadPath)
                 # 获取站点记录列表
@@ -181,7 +197,9 @@ if __name__ == '__main__':
                             tempF.write('\n')
                 #线程池下载
                     #单个站点下载
-                all_task = [pool.submit(SFET.download,url,path_) for url,path_ in zip(targit_urls,targit_paths)]
+            all_task = [pool.submit(SFET.download,url,path_) for url,path_ in zip(targit_urls,targit_paths)]
+            wait(all_task,return_when=ALL_COMPLETED)  # 当线程全部完成 开始下一步
+            print('共下载 ',int(len(targit_urls))/3,' 视频')
 
         if flag_fun.lower() =='c': #确认
             '''
@@ -214,6 +232,7 @@ if __name__ == '__main__':
                 ID =k #所有黑烟的id
                 SITE,morn,noon,afnoon =[],[],[],[] # 上中下负样本路径
                 confirmNum =0 #确认总数
+                _tempStr = None
                 try:
                     with open(path.join(currentPath,recordINFO),mode='r+') as f:
                         txt = f.readline()
@@ -238,13 +257,17 @@ if __name__ == '__main__':
                                     SFET.opSmoke(SFET.TSNO_[site],id_)
                                     confirmNum = confirmNum+1
                                 else: #对应的黑烟ID处理(目前仅支持手动上传2018.11.21)
+                                    _tempStr +=(txt+'\n')
                                     targitPsmoke= path.join(currentPath,begindate+'~smoke',site)
                                     os.makedirs(targitPsmoke,exist_ok=True)
                                     shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
                             txt = f.readline()
                 except Exception as e:
                     print(e)
+                    with open('log.txt',mode='a') as f:
+                        f.write(repr(e)+'\n')
                 print('确认总数:',confirmNum,'下载总数:',len(SITE))
+                print('待手动上传:',_tempStr)
                 SITE = set(SITE)
                 gatherMorn ,gatherNoon ,gatherAfnoon= {}, {}, {}
 
@@ -255,7 +278,7 @@ if __name__ == '__main__':
                     gatherAfnoon.update(_)
                            
         # 收集``各站点上中下负样本 各一个
-                plat = begindate.replace(' ','')+' '+platform   #保存格式
+                plat = begindate.replace('-','')+' '+platform   #保存格式
                 noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
                 os.makedirs(noSmokePath,exist_ok=True)
                 for site in SITE:
@@ -265,6 +288,7 @@ if __name__ == '__main__':
                         if site in n: gatherNoon[site].append(n)
                     for a in afnoon:
                         if site in a: gatherAfnoon[site].append(a)
+                    print(site,'~非黑烟数:',int(len(gatherMorn[site]+gatherNoon[site]+gatherAfnoon[site]))/3)
                 #`` 收集
                 for key in SITE:
                     index_ = 0
@@ -285,10 +309,12 @@ if __name__ == '__main__':
                         shutil.copy(PM,path.join(noSmokePath,PMName))
                         shutil.copy(PN,path.join(noSmokePath,PNName))
                         shutil.copy(PA,path.join(noSmokePath,PAName))
-                    except:
+                    except Exception as e:
                         print('pm:',PM)
                         print('pn:',PN)
                         print('pa:',PA)
+                        with open('log.txt',mode='a') as f:
+                            f.write(repr(e)+'\n')
 
         # 将保存的黑烟移入 对应文件夹Dirname  YearMonDay
                 _temp = begindate.replace('-','')
@@ -305,11 +331,18 @@ if __name__ == '__main__':
         
         # ohter
         if flag_fun.lower() =='v': #鉴赏
+            print('w:将误判的车辆(小轿车)写入对应的文件夹,具体查看``word-线上黑烟记录模板\n\
+            f:查看当前图片对应的视频,确定是黑烟后,将视频文件名称进行截图(后续的``确认``操作需要用到)')
             SFET.authenticate(currentPath,begindate.replace('-',''))
         if flag_fun.lower() in ['q']: print('   --已退出')
     else:
         raise '错误的输入！'
-    input()
+    endTime = time.time() #结束时间
+    print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(endTime)))
+    
+    print('历时 ',int(endTime - startTime)//60,' 分钟 ',\
+            int(endTime - startTime)-int(endTime - startTime)//60*60,' 秒')
+    input('输入任意键退出!')
         
 
         

@@ -147,7 +147,7 @@ def download(url,paths,num=1):
     # yield
     if not path.exists(dir_name):os.makedirs(dir_name)
     res=down_video(url)
-    while   res:    
+    while   res:
         content_length = int(res.headers['content-length'])
         if path.exists(paths):
             if path.getsize(paths)==content_length:
@@ -417,7 +417,7 @@ if __name__ == '__main__':
     }
 
 
-    day_num =1      #距离当前的日期的天数 （0表示当天）
+    day_num =0      #距离当前的日期的天数 （0表示当天）
 
 
     now_time = datetime.datetime.now()

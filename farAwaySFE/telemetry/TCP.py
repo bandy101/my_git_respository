@@ -32,25 +32,30 @@ class TCP:
         self.loginurl = loginurl
         self._loginurl= loginurl[:loginurl.rindex('/')+1]+'json:'+user+'@'+\
                         loginurl[loginurl.rindex('/')+1:]+URLlogin
+
         print(self._loginurl)
         self._cookie_ = self._cookie
-        print(self._cookie_)
 
     def getInfo(self,url,isStream: bool=False):
         assert isinstance(url,str)
         try:
             # print('url:',url)
             if isStream:
-                res = requests.get(url,stream=True,cookies=self._cookie_,timeout=10)
+                res = requests.get(url,stream=True,cookies=self._cookie_,timeout=6)
             else:
                 res = requests.get(url,cookies=self._cookie_)
         except:
             traceback.print_exc()
-            # return None
-        if res.status_code !=200 or not json.loads(res.content)['success']: 
-            print(' --异常!',res,url)
 
-        # print(res,res.url)
+        try:
+            if res.status_code !=200 : 
+                print(' --异常!',res,url)
+            elif not isStream and not json.loads(res.content)['success'] :
+                print(' --异常!',res.url)
+            else: pass
+        except Exception as e:
+            with open('log.txt',mode='a') as f:
+                f.write(repr(e)+'\n')
         return res
 
     #下载数据资源
@@ -61,11 +66,8 @@ class TCP:
         '''
         [dir_name,dir_basename] = path.split(paths)
         if not path.exists(dir_name):os.makedirs(dir_name)
-        # print('path:',paths)
-        #开始下载
-        # print('downloadURL:',url)
+
         res = self.getInfo(url,True)
-        print('video_res:',res)
         while res:
             content_length = int (res.headers['content-length'])
             if path.exists(paths):
@@ -82,6 +84,8 @@ class TCP:
                         break
             except:
                 traceback.print_exc()
+                with open('log.txt',mode='a') as f:
+                    f.write(traceback.format_exc()+'\n')
             res = self.getInfo(url,True)
 
 
@@ -95,11 +99,7 @@ class TCP:
         if self.__COOKIES:
             return self.__COOKIES
         else:
-            print('Paramer:',Paramer)
-            print('loginURL:',loginURL)
-            
             r = requests.post(loginURL,json=Paramer,timeout=8)
             result = r.headers['Set-Cookie'].split(';')[0].split('=')
-            # print('rusult:',result)
             return {result[0]:result[1]}
     

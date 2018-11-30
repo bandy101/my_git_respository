@@ -26,6 +26,7 @@ class BlackBox:
         self._widghtName = 'ImageShow' 
         #self._img = None
         self._drawing=False
+
     def _loadMouseCallback(self):
         '''
         @
@@ -142,7 +143,9 @@ class BlackBox:
         # os.makedirs(_srcDir),os.makedirs(_dstDir)# f——Key 收集负样本
 
         cap = cv2.VideoCapture(videoPath)
-        cv2.namedWindow(self._widghtName),cv2.setMouseCallback(self._widghtName,self._callBack)
+        # namedWindow 默认情况下，是1，自动调整窗口大小模式。如果在图片高清情况下，显示图片窗口很大，电脑屏幕放不下，
+        # 并且窗口还不能通过拖动鼠标来调整打下。Flags=0，是WINDOW_NORMAL，在这个模式下可以调整窗口的大小.
+        cv2.namedWindow(self._widghtName,0),cv2.setMouseCallback(self._widghtName,self._callBack)
         switch =True#图像显示开关
         index = serialNumber
         while True:
