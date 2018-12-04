@@ -1,0 +1,1 @@
+"use strict";define(function(){return{setLocalStorage:function(t,e){localStorage.setItem(t,e)},getLocalStorage:function(t){return localStorage.getItem(t)}}});

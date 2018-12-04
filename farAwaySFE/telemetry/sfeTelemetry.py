@@ -2,7 +2,6 @@ from __init__ import *
 
 from TCP import TCP
 
-
 Chunk_Size =1024 #字节数
 
 class SFETelemerty(TCP):
@@ -59,9 +58,10 @@ class SFETelemerty(TCP):
                     except:
                         ''' #重新下载# 待完成'''    
                         traceback.print_exc()
-                        with open('log.txt',mode='a') as f:
-                            f.write(traceback.format_exc()+'\n'+path.join(_path,'image1',f[:-4])+'\n')
+                        with open('log.txt',mode='a') as fs:
+                            fs.write(traceback.format_exc()+'\n'+path.join(_path,'image1',f[:-4])+'\n')
                         continue
+                else:continue
                 while(1):
                     try:
                         cv2.imshow('Image1',cv2.resize(im1,None,fx=SCALE,fy=SCALE))
@@ -69,8 +69,8 @@ class SFETelemerty(TCP):
 
                     except:
                         traceback.print_exc()
-                        with open('log.txt',mode='a') as f:
-                            f.write(traceback.format_exc()+'\n'+'imshowError:'+path.join(_path,'image1',f[:-4])+'\n')
+                        with open('log.txt',mode='a') as fs:
+                            fs.write(traceback.format_exc()+'\n'+'imshowError:'+path.join(_path,'image1',f[:-4])+'\n')
                         break
                     k=cv2.waitKey(1)&0xFF  
                     if k ==32:
@@ -81,7 +81,7 @@ class SFETelemerty(TCP):
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
                         print('  --写入成功 ',f)
-                    if k in [102,70]: # f 
+                    if k in [102,70]: # f  
                         os.chdir(path.abspath(path.join(currentPath,site)))
                         os.system("\""+f+"\"") #含有空格
                         os.chdir(currentDir) #回到基本路径防止相对路径错误
@@ -90,6 +90,7 @@ class SFETelemerty(TCP):
                         cv2.destroyAllWindows()
                         break
                 if not switch:break
+        cv2.destroyAllWindows()
 
     # 获取设备编号(站点)
     @property
@@ -232,7 +233,7 @@ if __name__ == '__main__':
                 ID =k #所有黑烟的id
                 SITE,morn,noon,afnoon =[],[],[],[] # 上中下负样本路径
                 confirmNum =0 #确认总数
-                _tempStr = None
+                _tempStr = ''
                 try:
                     with open(path.join(currentPath,recordINFO),mode='r+') as f:
                         txt = f.readline()
@@ -257,13 +258,15 @@ if __name__ == '__main__':
                                     SFET.opSmoke(SFET.TSNO_[site],id_)
                                     confirmNum = confirmNum+1
                                 else: #对应的黑烟ID处理(目前仅支持手动上传2018.11.21)
-                                    _tempStr +=(txt+'\n')
+                                    print('txt:',txt)
+                                    _tempStr =_tempStr + (str(txt)+'\n')
                                     targitPsmoke= path.join(currentPath,begindate+'~smoke',site)
                                     os.makedirs(targitPsmoke,exist_ok=True)
                                     shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
                             txt = f.readline()
                 except Exception as e:
                     print(e)
+                    traceback.print_exc()
                     with open('log.txt',mode='a') as f:
                         f.write(repr(e)+'\n')
                 print('确认总数:',confirmNum,'下载总数:',len(SITE))
@@ -279,8 +282,10 @@ if __name__ == '__main__':
                            
         # 收集``各站点上中下负样本 各一个
                 plat = begindate.replace('-','')+' '+platform   #保存格式
+                #非黑烟收集目录
                 noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
                 os.makedirs(noSmokePath,exist_ok=True)
+                
                 for site in SITE:
                     for m in morn:
                         if site in m: gatherMorn[site].append(m)
@@ -310,9 +315,9 @@ if __name__ == '__main__':
                         shutil.copy(PN,path.join(noSmokePath,PNName))
                         shutil.copy(PA,path.join(noSmokePath,PAName))
                     except Exception as e:
-                        print('pm:',PM)
-                        print('pn:',PN)
-                        print('pa:',PA)
+                        # print('pm:',PM)
+                        # print('pn:',PN)
+                        # print('pa:',PA)
                         with open('log.txt',mode='a') as f:
                             f.write(repr(e)+'\n')
 
@@ -342,7 +347,8 @@ if __name__ == '__main__':
     
     print('历时 ',int(endTime - startTime)//60,' 分钟 ',\
             int(endTime - startTime)-int(endTime - startTime)//60*60,' 秒')
-    input('输入任意键退出!')
+    if flag_fun.lower() not in ['d']:
+        input('输入任意键退出!')
         
 
         

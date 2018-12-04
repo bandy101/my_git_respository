@@ -1,0 +1,9 @@
+{
+    "server_name": "黑烟管理平台 - 测试站点",
+    "log_dir": "./logs",
+    "socket_port": 12345,
+    "rtmp_host": "127.0.0.1:1935",
+    "auth_code_path": "./auth_code",
+    "config_dir": "./config",
+    "net_rtmp_host": null
+}

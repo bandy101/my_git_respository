@@ -1,0 +1,480 @@
+{
+	"id": "52fa0a1e-13aa-498f-89a2-1998d983abb0",
+	"name": "黑烟控制平台",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"04c084f6-c266-4313-91fa-b1ae200e0b96",
+		"5a122ed3-b516-4909-877e-504ef9d95614",
+		"7370cb33-f20e-4975-a438-211bf2f584b9",
+		"2bd04be8-9015-489b-b4ef-e3b3ccdc651d",
+		"e5faba61-87f8-49c4-bfbc-24b940a4cd7e",
+		"69b29887-ea17-488e-b0fa-98b474fca1cf",
+		"8a38caf3-2649-4f03-acab-a8fb7e81e08d",
+		"cc652429-40b3-40d5-a046-f114906dee86",
+		"699eddb6-acdf-45eb-a047-99131e268e4f",
+		"8a995e2d-e353-4bcd-9eaf-8fd9b542469e",
+		"db8ce908-ca99-409b-8421-c46b432d412b",
+		"8e65ee54-e1a3-4d43-b1cb-b7bddf1e247e",
+		"63e67980-9147-48c0-9163-44885de09f34",
+		"c22071ba-19cf-4f20-a79b-83eb35caf60b",
+		"046d0842-95d6-42da-820f-3dd92077adb3",
+		"fa62268f-e09e-4f59-a2fa-d9bd8bfb72e2",
+		"1d5ad4c7-ec65-464d-8d6a-d875efcde6d8",
+		"e9cbfacc-f4d5-4e2d-83ee-473ccc7f8326",
+		"d9830461-4cb3-4f35-b5e8-6c4ddb80b198"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "046d0842-95d6-42da-820f-3dd92077adb3",
+			"name": "获取所有配置当前的RTMP推送状态",
+			"url": "http://sfe:sfe-123456@localhost/api/rtmp",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "04c084f6-c266-4313-91fa-b1ae200e0b96",
+			"name": "登录验证",
+			"url": "http://sfe:sfe-123456@localhost/api/check",
+			"description": "登录验证",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "1d5ad4c7-ec65-464d-8d6a-d875efcde6d8",
+			"name": "启动ID为test的RTMP推送",
+			"url": "http://sfe:sfe-123456@localhost/api/rtmp/test?action=start",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "start",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "2bd04be8-9015-489b-b4ef-e3b3ccdc651d",
+			"name": "停止所有配置的黑烟检测",
+			"url": "http://sfe:sfe-123456@localhost/api/config?action=stopAll",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "stopAll",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "5a122ed3-b516-4909-877e-504ef9d95614",
+			"name": "获取所有配置",
+			"url": "http://sfe:sfe-123456@localhost/api/config",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "63e67980-9147-48c0-9163-44885de09f34",
+			"name": "获取所有配置的当前运行状态",
+			"url": "http://sfe:sfe-123456@localhost/api/status",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "699eddb6-acdf-45eb-a047-99131e268e4f",
+			"name": "重启ID为test的黑烟检测",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test?action=restart",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "restart",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "69b29887-ea17-488e-b0fa-98b474fca1cf",
+			"name": "获取ID为test的配置",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "7370cb33-f20e-4975-a438-211bf2f584b9",
+			"name": "启动所有配置的黑烟检测",
+			"url": "http://sfe:sfe-123456@localhost/api/config?action=startAll",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "startAll",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "8a38caf3-2649-4f03-acab-a8fb7e81e08d",
+			"name": "启动ID为test的黑烟检测",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test?action=start",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "start",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "8a995e2d-e353-4bcd-9eaf-8fd9b542469e",
+			"name": "修改ID为test的配置",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n    \"id\": \"test\",\n    \"name\": \"Test\",\n    \"upload_func\": \"test\",\n    \"video_source\": \"E:/workspace/SmokeDetector/SFE/resource/video/smoke/T02_3_0.mp4\",\n    \"Ringelmann\": 2,\n    \"save_path\": \"save\",\n    \"border\": null,\n    \"start_time\": null,\n    \"stop_time\": null,\n    \"statistics\": \"test\",\n    \"statis_interval\": \"1\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "8e65ee54-e1a3-4d43-b1cb-b7bddf1e247e",
+			"name": "删除ID为test2的配置",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "c22071ba-19cf-4f20-a79b-83eb35caf60b",
+			"name": "获取ID为test的当前运行状态",
+			"url": "http://sfe:sfe-123456@localhost/api/status/test",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "cc652429-40b3-40d5-a046-f114906dee86",
+			"name": "停止ID为test的黑烟检测",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test?action=stop",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "stop",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "d9830461-4cb3-4f35-b5e8-6c4ddb80b198",
+			"name": "获取ID为test的一帧图片的路径",
+			"url": "http://sfe:sfe-123456@localhost/api/frame/test",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "db8ce908-ca99-409b-8421-c46b432d412b",
+			"name": "添加ID为test2的配置",
+			"url": "http://sfe:sfe-123456@localhost/api/config/test2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n    \"id\": \"test2\",\n    \"name\": \"Test\",\n    \"upload_func\": \"test\",\n    \"video_source\": \"E:/workspace/SmokeDetector/SFE/resource/video/smoke/T02_3_0.mp4\",\n    \"Ringelmann\": 2,\n    \"save_path\": \"save\",\n    \"border\": null,\n    \"start_time\": null,\n    \"stop_time\": null,\n    \"statistics\": \"test\",\n    \"statis_interval\": \"1\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "e5faba61-87f8-49c4-bfbc-24b940a4cd7e",
+			"name": "令服务器重新加载所有配置",
+			"url": "http://sfe:sfe-123456@localhost/api/config?action=reload",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "reload",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "e9cbfacc-f4d5-4e2d-83ee-473ccc7f8326",
+			"name": "停止ID为test的RTMP推送",
+			"url": "http://sfe:sfe-123456@localhost/api/rtmp/test?action=stop",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "action",
+					"value": "stop",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "fa62268f-e09e-4f59-a2fa-d9bd8bfb72e2",
+			"name": "获取ID为test当前的RTMP推送状态",
+			"url": "http://sfe:sfe-123456@localhost/api/rtmp/test",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		}
+	]
+}

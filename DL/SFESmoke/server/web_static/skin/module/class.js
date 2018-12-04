@@ -1,0 +1,1 @@
+"use strict";define(function(){var s=function(s,a){return s.className.match(new RegExp("(\\s|^)"+a+"(\\s|$)"))};return{hasClass:s,addClass:function(s,a){this.hasClass(s,a)||(s.className+=" "+a)},replaceClass:function(s,a){this.hasClass(s,a)||(s.className=a)},removeClass:function(a,e){if(s(a,e)){var n=new RegExp("(\\s|^)"+e+"(\\s|$)");a.className=a.className.replace(n," ")}}}});

@@ -189,6 +189,7 @@ class BlackBox:
         @scale float: 显示图片缩放比例(0~1,默认0.4)
         @serialNumber: 起始编号
         """
+        
         from datetime import datetime
         today = datetime.now().strftime('%Y%m%d')
         saveDirName = picPath
@@ -420,6 +421,7 @@ class BlackBox:
         '''
         description:
         '''
+        
 
     def importData(self,url: str):
         pass
