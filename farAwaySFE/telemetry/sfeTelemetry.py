@@ -255,7 +255,12 @@ if __name__ == '__main__':
                             flag = 1
                             if flag:
                                 if str(id_) not in ID:
-                                    SFET.opSmoke(SFET.TSNO_[site],id_)
+                                    try:
+                                        SFET.opSmoke(SFET.TSNO_[site],id_)
+                                    except:
+                                        traceback.print_exc()
+                                        with open('log.txt',mode='a') as f:
+                                            f.write(traceback.format_exc()+'\n')
                                     confirmNum = confirmNum+1
                                 else: #对应的黑烟ID处理(目前仅支持手动上传2018.11.21)
                                     print('txt:',txt)

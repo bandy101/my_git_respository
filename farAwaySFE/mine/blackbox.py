@@ -109,7 +109,7 @@ class BlackBox:
 
     
     #处理黑烟视频素材
-    def grabVideo(self,flag: int=1,placeName: str=None,scale: float=0.4,serialNumber: int=0):
+    def grabVideo(self,flag: int=1,placeName: str=None,scale: float=0.8,serialNumber: int=0):
         """ 获取视频素材   
         截出的图片以`日期_地名_编号`的格式命名
         @videoPath str: 视频路径
@@ -119,7 +119,7 @@ class BlackBox:
         """ 
 
         # videoPath: str,
-        videoPath = r'C:\Users\NHT\Desktop\20181122_合肥\train\黑烟\20181122 海康合肥\20181122_海康合肥_05.mp4'
+        videoPath = r'H:\AI_Data\海康Data\201811\20181114 清远平台\20181114_治超站出口_0002.mp4'
         fs = path.basename(path.dirname(videoPath)).replace(' ','_')
         placeName= fs
         from datetime import datetime
@@ -134,18 +134,18 @@ class BlackBox:
         #     except:
         #         for p,d,fs in os.walk(saveDirName):
         #             for _ in fs:os.remove(path.join(p,_))
-        srcDir = path.join(saveDirName,'src',fs,str(flag))
-        dstDir = path.join(saveDirName,'dst',fs,str(flag))
+        srcDir = path.join(saveDirName,'src',fs,str(1))
+        dstDir = path.join(saveDirName,'dst',fs,str(1))
         print(srcDir,dstDir)
-        _srcDir = path.join(saveDirName,'_src') #posive
-        _dstDir = path.join(saveDirName,'_dst')
+        _srcDir = path.join(saveDirName,'src',fs,'0') #posive
+        _dstDir = path.join(saveDirName,'dst',fs,'0')
         os.makedirs(srcDir,exist_ok=True),os.makedirs(dstDir,exist_ok=True)
-        # os.makedirs(_srcDir),os.makedirs(_dstDir)# f——Key 收集负样本
+        os.makedirs(_srcDir,exist_ok=True),os.makedirs(_dstDir,exist_ok=True)# f——Key 收集负样本
 
         cap = cv2.VideoCapture(videoPath)
         # namedWindow 默认情况下，是1，自动调整窗口大小模式。如果在图片高清情况下，显示图片窗口很大，电脑屏幕放不下，
         # 并且窗口还不能通过拖动鼠标来调整打下。Flags=0，是WINDOW_NORMAL，在这个模式下可以调整窗口的大小.
-        cv2.namedWindow(self._widghtName,0),cv2.setMouseCallback(self._widghtName,self._callBack)
+        cv2.namedWindow(self._widghtName,1),cv2.setMouseCallback(self._widghtName,self._callBack)
         switch =True#图像显示开关
         index = serialNumber
         while True:

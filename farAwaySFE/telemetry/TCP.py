@@ -56,6 +56,7 @@ class TCP:
         except Exception as e:
             with open('log.txt',mode='a') as f:
                 f.write(repr(e)+'\n')
+            return None
         return res
 
     #下载数据资源
