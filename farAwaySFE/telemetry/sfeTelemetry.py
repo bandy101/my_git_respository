@@ -6,7 +6,7 @@ Chunk_Size =1024 #字节数
 
 class SFETelemerty(TCP):
     
-    def __init__(self,loginurl: str,Paramer :dict):
+    def __init__(self,loginurl: str,Paramer: dict):
         '''
             @ Paramer dict: 登陆账户密码
             @ loginurl str: 网址IP(域名)
@@ -14,7 +14,7 @@ class SFETelemerty(TCP):
 
         super().__init__(loginurl,Paramer)
 
-        self.SITES = self.sitesID  # 站点名称
+        # self.SITES = self.sitesID  # 站点名称
     
     # 操作黑烟
     def opSmoke(self,site,recordID,flag: str='status'):
@@ -31,7 +31,7 @@ class SFETelemerty(TCP):
     # 鉴赏黑烟
     def authenticate(self,currentPath: str,dirName: str,Names=['车辆误判','黑烟视频','非黑烟']):
         '''     '''
-        SCALE = 0.8
+        SCALE = 1.0
         switch =True #鉴赏的开关 # ['o']
         currentDir =os.getcwd()
         sites = [_ for _ in os.listdir(currentPath) if path.isdir(path.join(currentPath,_)) and _.replace('-','')[:8] not  in [dirName]] # 通过文件夹名称获取站点对应名
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         #paths : 操作的根目录
         # '增加平台'
     print('\t请选择区域!')
-    flag_site = input('#----1:清远,2:新乡----#:')
+    flag_site = input('#----1:清远,2:新乡,3:广州----#:')
     if flag_site=='1':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
@@ -126,6 +126,11 @@ if __name__ == '__main__':
         urlPrefix = str(alls['sitePosition']['xinxiang'])
         paths = './videoData_xinxiang' 
         platform = '新乡平台'
+
+    elif flag_site=='3':
+        urlPrefix = str(alls['sitePosition']['guangzhou'])
+        paths = './videoData_guangzhou' 
+        platform = '广州平台'
 
     else:raise '错误的输入！'
     #```初始化 接口
@@ -156,7 +161,12 @@ if __name__ == '__main__':
         if flag_fun.lower() == 'd': #下载
             print('----开始下载----')
 
-            sites = SFET.sitesID
+            if flag_site !='3': #非广州
+                sites = SFET.sitesID
+            else:
+                sites = ['SFE-R600-V23W1948-1126','SFE-R600-V23W1948-1127','SFE-R600-V23W1948-1128']
+
+
             video_url = SFET.loginurl + alls['publicURL']['video']['url']    
             image1_url = SFET.loginurl + alls['publicURL']['image1']['url']
             image2_url = SFET.loginurl + alls['publicURL']['image2']['url']
@@ -352,8 +362,8 @@ if __name__ == '__main__':
     
     print('历时 ',int(endTime - startTime)//60,' 分钟 ',\
             int(endTime - startTime)-int(endTime - startTime)//60*60,' 秒')
-    if flag_fun.lower() not in ['d']:
-        input('输入任意键退出!')
+    # if flag_fun.lower() not in ['d']:
+    input('输入任意键退出!')
         
 
         

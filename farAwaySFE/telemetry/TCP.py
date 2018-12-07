@@ -11,8 +11,11 @@ _TCP__Paramer =None
 class TCP:
     """创建对应的TCP连接"""
 
-    def __init__(self,loginurl: str,Paramer :dict=None):
-        '''出初始化参数'''
+    def __init__(self,loginurl: str,Paramer :dict=None,flag: bool=False):
+        '''出初始化参数
+        flag bool:True 对应查询光强
+        '''
+        
 
         if Paramer:
             self._paramer = Paramer
@@ -30,26 +33,39 @@ class TCP:
         self.TSNO_ = dict(zip(self.TSNO.values(),self.TSNO.keys()))
         self.__COOKIES = None
         self.loginurl = loginurl
-        self._loginurl= loginurl[:loginurl.rindex('/')+1]+'json:'+user+'@'+\
-                        loginurl[loginurl.rindex('/')+1:]+URLlogin
+        if flag:
+            self._loginurl = loginurl[:loginurl.rindex('/')+1]+'json:'+user+'@'+\
+                            loginurl[loginurl.rindex('/')+1:]+URLlogin
+        else:
+            self._loginurl = loginurl + URLlogin + '/'
 
         print(self._loginurl)
         self._cookie_ = self._cookie
 
-    def getInfo(self,url,isStream: bool=False):
+    @property
+    def cookie(self):
+        return self._cookie_ 
+
+    def getInfo(self,url, isStream: bool=False,flag: str='get',**arg):
         assert isinstance(url,str)
+        RE = None
+        print('arg:',arg)
         try:
-            # print('url:',url)
+            if 'get' in flag.lower():
+                RE = requests.get
+            if 'post' in flag.lower():
+                RE = requests.post
             if isStream:
-                res = requests.get(url,stream=True,cookies=self._cookie_,timeout=6)
+                res = RE(url,stream=True,cookies=self.cookie,timeout=6,**arg)
             else:
-                res = requests.get(url,cookies=self._cookie_)
+                res = RE(url,cookies=self.cookie,**arg)
         except:
             traceback.print_exc()
 
         try:
             if res.status_code !=200 : 
                 print(' --异常!',res,url)
+                
             elif not isStream and not json.loads(res.content)['success'] :
                 print(' --异常!',res.url)
             else: pass
@@ -100,7 +116,9 @@ class TCP:
         if self.__COOKIES:
             return self.__COOKIES
         else:
-            r = requests.post(loginURL,json=Paramer,timeout=8)
+            # loginURL = 'http://60.165.50.66:11000/api/login/'
+            r = requests.post(loginURL,json=Paramer,timeout=8,verify=False)
+            print('获取cookies!')
             result = r.headers['Set-Cookie'].split(';')[0].split('=')
             return {result[0]:result[1]}
     

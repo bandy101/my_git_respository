@@ -119,7 +119,7 @@ class BlackBox:
         """ 
 
         # videoPath: str,
-        videoPath = r'H:\AI_Data\海康Data\201811\20181114 清远平台\20181114_治超站出口_0002.mp4'
+        videoPath = r'H:\AI_Data\海康Data\201811\20181128 清远平台\36745_治超站出口_00.mp4'
         fs = path.basename(path.dirname(videoPath)).replace(' ','_')
         placeName= fs
         from datetime import datetime
