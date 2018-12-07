@@ -19,8 +19,9 @@ class Device(SFETelemerty):
         loginurl = self.loginurl + '/api/login/'
         print('url:',loginurl)
         r = self.getInfo(loginurl,flag='post',json=js_pwd)
-        print(r)
+        print('rpost:',r)
         r = requests.post(loginurl,json=js_pwd)
+        print('rrr:',r.content)
         self.token = json.loads(r.content)['content']['token']
 
     @property

@@ -48,8 +48,8 @@ class TCP:
 
     def getInfo(self,url, isStream: bool=False,flag: str='get',**arg):
         assert isinstance(url,str)
-        RE = None
-        print('arg:',arg)
+        RE ,res= None, None
+        # print('arg:',list(arg.values())[0])
         try:
             if 'get' in flag.lower():
                 RE = requests.get
@@ -58,7 +58,13 @@ class TCP:
             if isStream:
                 res = RE(url,stream=True,cookies=self.cookie,timeout=6,**arg)
             else:
-                res = RE(url,cookies=self.cookie,**arg)
+                if arg:
+                    print('flag:',flag)
+                    print('arg----#',list(arg.values())[0])
+                    res = RE(url,cookies=self.cookie,json=list(arg.values())[0])
+                    print('res->',res.content)
+                else:
+                    res = RE(url,cookies=self.cookie,**arg)
         except:
             traceback.print_exc()
 
@@ -72,6 +78,7 @@ class TCP:
         except Exception as e:
             with open('log.txt',mode='a') as f:
                 f.write(repr(e)+'\n')
+            print('flag:',flag,'error!:',res)
             return None
         return res
 
