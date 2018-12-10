@@ -23,7 +23,6 @@ hbxx=[#-----鹤壁----#
     {'鹤壁-G107国道2号机':'http://120.194.138.243:11002/'},
     {'鹤壁-东海路1号机':'http://120.194.139.137:11001/'},
     {'鹤壁-东海路2号机':'http://120.194.139.137:11002/'}
-    
 ]
 sichuans=[ #----四川----#
         {'四川-01':'http://182.150.48.217:11000/'},
@@ -134,7 +133,6 @@ def get_strength(url,token):
         k = False
     return red,purple,k
 
-
 def check_(times=200):
     alls = []
     ps = 'api/light_source_settings/lightStrength/?t=0.1571323848346986?'
@@ -145,6 +143,8 @@ def check_(times=200):
     with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
         ff.writelines(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))
         strs+=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())+'<br>'
+    
+    startTime = time.time() #开始时间
     for it in alls:
         with open('./检测报告.txt',encoding='utf-8',mode='a') as ff:
             ff.writelines('\n')
@@ -201,6 +201,9 @@ def check_(times=200):
                     ff.writelines(list(i.keys())[0][:2]+',其他正常')
                     strs +=list(i.keys())[0][:2]+',其他正常\n<br>'
                     ff.writelines('\n')
+    endTime = time.time() #结束时间
+    print('历时 ',int(endTime - startTime)//60,' 分钟 ',\
+        int(endTime - startTime)-int(endTime - startTime)//60*60,' 秒')
     return strs
 if __name__=='__main__':
 

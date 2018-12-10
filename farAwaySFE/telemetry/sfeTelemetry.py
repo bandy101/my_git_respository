@@ -6,13 +6,13 @@ Chunk_Size =1024 #字节数
 
 class SFETelemerty(TCP):
     
-    def __init__(self,loginurl: str,Paramer: dict):
+    def __init__(self,loginurl: str,Paramer: dict,flag: bool=False):
         '''
             @ Paramer dict: 登陆账户密码
             @ loginurl str: 网址IP(域名)
         '''
 
-        super().__init__(loginurl,Paramer)
+        super().__init__(loginurl,Paramer,flag)
 
         # self.SITES = self.sitesID  # 站点名称
     

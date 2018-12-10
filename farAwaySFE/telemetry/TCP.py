@@ -13,16 +13,17 @@ class TCP:
 
     def __init__(self,loginurl: str,Paramer :dict=None,flag: bool=False):
         '''出初始化参数
-        flag bool:True 对应查询光强
+        flag bool:True 对应查询光强,否则其他
         '''
         
 
         if Paramer:
             self._paramer = Paramer
         else:
-            self._paramer = self.__Paramer
+            # self._paramer = self.__Paramer
+            self._paramer = None
 
-        with open('config.json',encoding='utf-8') as f:
+        with open('SFETConfig.json',encoding='utf-8') as f:
             alls = json.load(f)
             self.configs = alls
         user = self.configs['account']['user']
@@ -33,11 +34,11 @@ class TCP:
         self.TSNO_ = dict(zip(self.TSNO.values(),self.TSNO.keys()))
         self.__COOKIES = None
         self.loginurl = loginurl
-        if flag:
+        if not flag:
             self._loginurl = loginurl[:loginurl.rindex('/')+1]+'json:'+user+'@'+\
                             loginurl[loginurl.rindex('/')+1:]+URLlogin
         else:
-            self._loginurl = loginurl + URLlogin + '/'
+            self._loginurl = loginurl + URLlogin[1:] + '/'
 
         print(self._loginurl)
         self._cookie_ = self._cookie
@@ -56,29 +57,37 @@ class TCP:
             if 'post' in flag.lower():
                 RE = requests.post
             if isStream:
-                res = RE(url,stream=True,cookies=self.cookie,timeout=6,**arg)
+                res = RE(url,stream=True,cookies=self.cookie,**arg)
             else:
-                if arg:
-                    print('flag:',flag)
-                    print('arg----#',list(arg.values())[0])
-                    res = RE(url,cookies=self.cookie,json=list(arg.values())[0])
-                    print('res->',res.content)
-                else:
-                    res = RE(url,cookies=self.cookie,**arg)
+                res = RE(url,cookies=self.cookie,**arg)
         except:
             traceback.print_exc()
+            return None
 
         try:
             if res.status_code !=200 : 
-                print(' --异常!',res,url)
-                
-            elif not isStream and not json.loads(res.content)['success'] :
-                print(' --异常!',res.url)
-            else: pass
+                print(f' --异常!,{flag},{res},{url}')
+                return None
+            elif not isStream:
+                try:
+                    if not json.loads(res.content)['success']:
+                        print(f' --异常!,{flag},{res},{url}')
+                        return None
+                except:
+                    try:
+                        if json.loads(res.content)['errcode']:
+                            print(f' --异常!,{flag},{res},{url}')
+                            return None
+                    except:
+                        traceback.print_exc()
+                        return None
+            else: 
+                pass
         except Exception as e:
+            traceback.print_exc()
             with open('log.txt',mode='a') as f:
                 f.write(repr(e)+'\n')
-            print('flag:',flag,'error!:',res)
+            print('flag:',flag,'error!:',res,url)
             return None
         return res
 
@@ -124,8 +133,11 @@ class TCP:
             return self.__COOKIES
         else:
             # loginURL = 'http://60.165.50.66:11000/api/login/'
-            r = requests.post(loginURL,json=Paramer,timeout=8,verify=False)
-            print('获取cookies!')
-            result = r.headers['Set-Cookie'].split(';')[0].split('=')
+            r = self.getInfo(loginURL,json=Paramer,timeout=8,verify=False,flag='post')
+            try:
+                result = r.headers['Set-Cookie'].split(';')[0].split('=')
+            except:
+                traceback.print_exc()
+                return None
             return {result[0]:result[1]}
     
