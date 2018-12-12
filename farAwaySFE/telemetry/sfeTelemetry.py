@@ -104,7 +104,7 @@ class SFETelemerty(TCP):
 if __name__ == '__main__':
     #inistanse
     pool = ThreadPoolExecutor(max_workers=8) # 线程池初始化
-    with open('config.json',encoding='utf-8') as f:
+    with open('SFETConfig.json',encoding='utf-8') as f:
         alls = json.load(f)
     paramer ={ 
         'password':'5313232ef0a55311cf31e00b97afa15c',

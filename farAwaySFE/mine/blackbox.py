@@ -56,8 +56,8 @@ class BlackBox:
             self.car_weight = abs(x -self.ix)
             self.car_height = abs(y -self.iy)
             self.right_x,self.right_y = max(x,self.ix),max(self.iy,y)    
-
-    # lbp的辅助操作
+    
+    # lbp的辅助操作 
     def _get_neighbor(self,mat,i,j):
         center = mat[i,j][-1]
         x1,y1= i+1,j+1
@@ -119,11 +119,15 @@ class BlackBox:
         """ 
 
         # videoPath: str,
-        videoPath = r'H:\AI_Data\海康Data\201811\20181128 清远平台\36745_治超站出口_00.mp4'
+        videoPath = r'H:\AI_Data\20181211\_未知时间\测试夹\487658128847028224.mp4'
         fs = path.basename(path.dirname(videoPath)).replace(' ','_')
         placeName= fs
         from datetime import datetime
-        today = datetime.now().strftime('%Y%m%d')
+        today = datetime.now().strftime('%Y%m%d_%H%M%S')
+        _bianhao = str(today).split('.')[-1]
+
+        # placeName = _bianhao
+
         # saveDirName = path.join(path.dirname(videoPath),path.basename(videoPath)[:path.basename(videoPath).rindex('.')])
         saveDirName = path.dirname(path.dirname(videoPath))
         
@@ -165,8 +169,8 @@ class BlackBox:
                     switch =False
                     break
                 if key in[86,119]:#w active
-                    # _ =f'{today}_{placeName}_{index:02}.jpg' 
-                    _ = f'{fs}_{path.basename(videoPath)[9:-4]}_{index:04}.jpg'
+                    _ =f'{today}_{placeName}_{index:04}.jpg' 
+                    # _ = f'{today}_{path.basename(videoPath)[9:-4]}_{index:04}.jpg'
                     try:
                         self._write_sample(path.join(dstDir,_),self._tempIm)
                         cv_imwrite(path.join(srcDir,_),self._img)
@@ -422,7 +426,6 @@ class BlackBox:
         description:
         '''
         
-
     def importData(self,url: str):
         pass
 
@@ -470,6 +473,25 @@ class BlackBox:
         prob_1 = 1-np.sqrt(1-(BC/np.sqrt(sum(a)*sum(b)))) #进行优化
         return prob_1
 
+    # 对于不同文件夹存放相同名称文件 进行同步(删除)
+    def delsNoSrc(self,src: str,**arg):
+        '''删除src中没有的文件'''
+
+        _index  = 0 # 删除数量
+        allFiles = [ _ for p,d,f in os.walk(src) for _ in f]
+        print((allFiles))
+        if not arg:
+            srcPrfix = src.split('视频帧原图')[0]
+            arg = [path.join(srcPrfix,'原始素材')]
+        for _ in arg:
+            print('arg:',arg)
+            for p,d,fs in os.walk(_):
+                for f in fs:
+                    if f not in allFiles:
+                        os.remove(path.join(p,f))
+                        _index +=1
+                        print(f'删除:{path.join(p,f)} 成功{_index:04}')
+                        
 
 
                     

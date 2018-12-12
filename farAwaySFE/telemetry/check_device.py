@@ -31,6 +31,8 @@ class Device(SFETelemerty):
                 if r:
                     self._token = json.loads(r.content)['content']['token']
                     break
+                else:
+                    time.sleep(0.05)
             else:
                 self._token = None
 
@@ -64,6 +66,8 @@ class Device(SFETelemerty):
                                                         int(max(self.purpleStrength,r['uvStrength']))
                 if all([self.redStrength+100>500, self.purpleStrength+100>2000]):
                     break
+            else:
+                time.sleep(0.05)
         if _index:
             return True
         else:return False
@@ -81,7 +85,9 @@ class Device(SFETelemerty):
                 self.redSource, self.purpleSource = max(self.redSource,r['irIntenPower']),\
                                         max(self.purpleSource,r['uvIntenIntegral'])
                 return True
-                break                                                        
+                break             
+            else:
+                time.sleep(0.05)
         else:return False
     
     @property
@@ -96,9 +102,32 @@ class Device(SFETelemerty):
                 except:
                     return True
                 self.speed.append(r)
+            else:
+                time.sleep(0.05)
         if any(self.speed):
             return True
         return False
+
+
+def detction(device: Device):
+        if X.Token: #
+            if all([X.getLightSource,X.getLightStrength]):
+                if any([X.redStrength+100<500,X.purpleStrength+100<2000]):# 异常
+                    with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
+                        _speed = '' if X.getSpeed else '无速度'
+                        _temp = f"{Pname} 红外功率: {X.redSource} 光强: {str(X.redStrength)} 紫外积分: {X.purpleSource} 光强: {str(X.purpleStrength)} {_speed}\n"
+                        f.write(_temp)
+                else:
+                    _index = _index - 1
+            # 页面无法打开    
+            else:
+                with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
+                    f.write(Pname+' 页面无法打开\n')
+        # 页面无法打开
+        else:
+            with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
+                f.write(Pname+' 页面无法打开\n')
+
 
 def main():
     with open('./巡检记录.txt',encoding='utf-8',mode='a') as ff:
@@ -161,3 +190,4 @@ if __name__ == '__main__':
     X = Device('http://60.165.50.66:11000/',None,True)
     # X.test()
     main()
+    input('任意键结束')

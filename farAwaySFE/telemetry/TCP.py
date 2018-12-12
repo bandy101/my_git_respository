@@ -50,7 +50,6 @@ class TCP:
     def getInfo(self,url, isStream: bool=False,flag: str='get',**arg):
         assert isinstance(url,str)
         RE ,res= None, None
-        # print('arg:',list(arg.values())[0])
         try:
             if 'get' in flag.lower():
                 RE = requests.get
@@ -70,7 +69,7 @@ class TCP:
                 return None
             elif not isStream:
                 try:
-                    if not json.loads(res.content)['success']:
+                    if not json.loads(res)['success']:
                         print(f' --异常!,{flag},{res},{url}')
                         return None
                 except:
@@ -132,9 +131,8 @@ class TCP:
         if self.__COOKIES:
             return self.__COOKIES
         else:
-            # loginURL = 'http://60.165.50.66:11000/api/login/'
-            r = self.getInfo(loginURL,json=Paramer,timeout=8,verify=False,flag='post')
             try:
+                r = requests.post(loginURL,json=Paramer,timeout=6,verify=False)
                 result = r.headers['Set-Cookie'].split(';')[0].split('=')
             except:
                 traceback.print_exc()
