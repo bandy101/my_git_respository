@@ -50,7 +50,7 @@ class SFETelemerty(TCP):
                 im1,im2 = None,None
                 if f[-3:].lower() in ['mp4','avi']:
                     try:
-                        im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
+                        # im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
                         im2 = cv_imread(path.join(_path,'image2',f[:-4]+'_2.jpg'))
                         index +=1
                         if not index%50:
@@ -64,7 +64,7 @@ class SFETelemerty(TCP):
                 else:continue
                 while(1):
                     try:
-                        cv2.imshow('Image1',cv2.resize(im1,None,fx=SCALE,fy=SCALE))
+                        # cv2.imshow('Image1',cv2.resize(im1,None,fx=SCALE,fy=SCALE))
                         cv2.imshow('Image2',cv2.resize(im2,None,fx=SCALE,fy=SCALE))
 
                     except:
@@ -78,8 +78,9 @@ class SFETelemerty(TCP):
                     if k in [ord('w'),ord('W')]:
                         #写入记录的操作#
                         #print('---写入成功---')
-                        cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
+                        # cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
                         cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
+                        \\192.168
                         print('  --写入成功 ',f)
                     if k in [102,70]: # f  
                         os.chdir(path.abspath(path.join(currentPath,site)))
@@ -140,7 +141,15 @@ if __name__ == '__main__':
     #当前时间 year-mon-day
         #day_num 距离当前的日期的天数 （0表示当天）
 
-    now_time ,day_num= datetime.datetime.now(),0
+    day_num = input('----输入处理的文件夹时间(0和默认表示当天,1：表示昨天,2:前天):')
+    day_num = day_num.strip()
+    _pattern = re.compile(r'\D')
+    if not day_num:
+        day_num = 0
+    else:
+        if _pattern.findall(day_num):
+            raise '输入错误！'
+    now_time ,day_num= datetime.datetime.now(),int(day_num)
     begindate = (now_time + datetime.timedelta(days = -day_num)).strftime('%Y-%m-%d')
      
     #当前文件夹:root/time(year-mon-day)
@@ -164,7 +173,8 @@ if __name__ == '__main__':
             if flag_site !='3': #非广州
                 sites = SFET.sitesID
             else:
-                sites = ['SFE-R600-V23W1948-1126','SFE-R600-V23W1948-1127','SFE-R600-V23W1948-1128']
+                # sites = ['SFE-R600-V23W1948-1126','SFE-R600-V23W1948-1127','SFE-R600-V23W1948-1128'] # 意外需要下载的站点
+                sites = SFET.sitesID
 
 
             video_url = SFET.loginurl + alls['publicURL']['video']['url']    
@@ -190,6 +200,7 @@ if __name__ == '__main__':
                         targit_urls.extend((video_url_,image1_url_,image1_url_))
                         name = list_['name']
                         #排除非法命名
+
                         for _ in ['\\','/','*','?','<','>','|',':',' ']:
                             if _ in name:
                                 name = name.replace(_,'')
@@ -299,6 +310,8 @@ if __name__ == '__main__':
                 plat = begindate.replace('-','')+' '+platform   #保存格式
                 #非黑烟收集目录
                 noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
+                \\192.168 noSmokePath
+
                 os.makedirs(noSmokePath,exist_ok=True)
                 
                 for site in SITE:
@@ -312,34 +325,44 @@ if __name__ == '__main__':
                 #`` 收集
                 for key in SITE:
                     index_ = 0
-                    strengthM ,strengthN ,strengthA= len(gatherMorn),len(gatherNoon),len(gatherAfnoon)
+                    strengthM ,strengthN ,strengthA= len(gatherMorn[key]),len(gatherNoon[key]),len(gatherAfnoon[key])
+                    #记录上中下文件路径
                     PM = str(gatherMorn[key][int(random.uniform(0,strengthM))])
                     PN = str(gatherNoon[key][int(random.uniform(0,strengthN))])
                     PA = str(gatherAfnoon[key][int(random.uniform(0,strengthA))])
 
+                    PTotal = gatherAfnoon[key]+gatherMorn[key]+gatherNoon[key]
+                    PT = str(PTotal[int(random.uniform(0,len(PTotal)))])
 
-                    # print('###',f'{str(path.basename(PM)).split('~')}')
-                    PMName = path.basename(PM).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    PTName = path.basename(PT).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
                     index_ =index_ +1
-                    PNName = path.basename(PN).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
-                    index_ =index_ +1
-                    PAName = path.basename(PA).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
-                    index_ =index_ +1
+
+                    # PMName = path.basename(PM).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    # index_ =index_ +1
+                    # PNName = path.basename(PN).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    # index_ =index_ +1
+                    # PAName = path.basename(PA).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
+                    # index_ =index_ +1
                     try:
-                        shutil.copy(PM,path.join(noSmokePath,PMName))
-                        shutil.copy(PN,path.join(noSmokePath,PNName))
-                        shutil.copy(PA,path.join(noSmokePath,PAName))
+                        #上中下时刻记录的非黑烟
+                        # shutil.copy(PM,path.join(noSmokePath,PMName))
+                        # shutil.copy(PN,path.join(noSmokePath,PNName))
+                        # shutil.copy(PA,path.join(noSmokePath,PAName))
+
+                        shutil.copy(PA,path.join(noSmokePath,PTName))
                     except Exception as e:
                         # print('pm:',PM)
                         # print('pn:',PN)
                         # print('pa:',PA)
+                        print('保存的非黑烟路径:',PT)
                         with open('log.txt',mode='a') as f:
-                            f.write(repr(e)+'\n')
+                            f.write(traceback.format_exc()+'\n')
 
         # 将保存的黑烟移入 对应文件夹Dirname  YearMonDay
                 _temp = begindate.replace('-','')
                 Dirname = path.join(currentPath,begindate+'~smoke')
                 targitP = path.join(currentPath,begindate.replace('-',''),'黑烟视频',begindate.replace('-','')+' '+platform)
+                \\192.168 targitP
                 os.makedirs(targitP,exist_ok=True)
                 if path.exists(Dirname):
                     for p,d,f in os.walk(Dirname):
@@ -347,6 +370,7 @@ if __name__ == '__main__':
                         for _ in f:
                             shutil.copy(path.join(p,_),path.join(targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
                             index_ = index_ + 1
+
                 print('    --操作完成')
         
         # ohter
