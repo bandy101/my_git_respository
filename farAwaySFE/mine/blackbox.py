@@ -492,7 +492,16 @@ class BlackBox:
                         _index +=1
                         print(f'删除:{path.join(p,f)} 成功{_index:04}')
                         
-
+    #重新命名目录下的文件名称
+    def rename(self,srcPath: str):
+        """重命名"""
+        _index = 0
+        for p,d,f in os.walk(srcPath):
+            for _ in f:
+                if path.isfile(path.join(p,_)):
+                    _index +=1
+                    _r = f'{_index:04}.jpg'
+                    shutil.move(path.join(p,_),path.join(p,_r))
 
                     
 
