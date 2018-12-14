@@ -29,9 +29,9 @@ class SFETelemerty(TCP):
             print(self.loginurl+targitURL,'--确认成功')
 
     # 鉴赏黑烟
-    def authenticate(self,currentPath: str,dirName: str,Names=['车辆误判','黑烟视频','非黑烟']):
+    def authenticate(self,currentPath: str,dirName: str,Names=['车辆误判','黑烟视频','非黑烟'],platsubfix: str=None):
         '''     '''
-        SCALE = 1.0
+        SCALE = 0.8
         switch =True #鉴赏的开关 # ['o']
         currentDir =os.getcwd()
         sites = [_ for _ in os.listdir(currentPath) if path.isdir(path.join(currentPath,_)) and _.replace('-','')[:8] not  in [dirName]] # 通过文件夹名称获取站点对应名
@@ -50,7 +50,7 @@ class SFETelemerty(TCP):
                 im1,im2 = None,None
                 if f[-3:].lower() in ['mp4','avi']:
                     try:
-                        # im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
+                        im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
                         im2 = cv_imread(path.join(_path,'image2',f[:-4]+'_2.jpg'))
                         index +=1
                         if not index%50:
@@ -77,11 +77,18 @@ class SFETelemerty(TCP):
                         break
                     if k in [ord('w'),ord('W')]:
                         #写入记录的操作#
-                        #print('---写入成功---')
                         # cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
-                        cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
-                        \\192.168
-                        print('  --写入成功 ',f)
+                        # cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
+                        # cv_imwrite(savePath,im1)
+                        _T = begindate.replace('-','')[:-2]
+                        savePath = r'\\192.168.20.21/AIMaterials/每日素材-未入库/车辆误判/'+_T+'/'+'车辆误判'+carErrorsufix
+                        _srcPath = path.join(_path,'image1',f[:-4]+'_1.jpg')
+                        os.makedirs(savePath,exist_ok=True)
+                        try:
+                            shutil.copy(_srcPath,savePath)
+                            print('---写入成功---')
+                        except:
+                            traceback.print_exc()
                     if k in [102,70]: # f  
                         os.chdir(path.abspath(path.join(currentPath,site)))
                         os.system("\""+f+"\"") #含有空格
@@ -123,15 +130,17 @@ if __name__ == '__main__':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
         platform = '清远平台'
+        carErrorsufix = 'qy'
     elif flag_site=='2':
         urlPrefix = str(alls['sitePosition']['xinxiang'])
         paths = './videoData_xinxiang' 
         platform = '新乡平台'
-
+        carErrorsufix = 'xx'
     elif flag_site=='3':
         urlPrefix = str(alls['sitePosition']['guangzhou'])
         paths = './videoData_guangzhou' 
         platform = '广州平台'
+        carErrorsufix = 'gz'
 
     else:raise '错误的输入！'
     #```初始化 接口
@@ -141,7 +150,7 @@ if __name__ == '__main__':
     #当前时间 year-mon-day
         #day_num 距离当前的日期的天数 （0表示当天）
 
-    day_num = input('----输入处理的文件夹时间(0和默认表示当天,1：表示昨天,2:前天):')
+    day_num = input('----输入处理的文件夹时间(0和默认表示当天,1:表示昨天,2:前天):')
     day_num = day_num.strip()
     _pattern = re.compile(r'\D')
     if not day_num:
@@ -309,8 +318,8 @@ if __name__ == '__main__':
         # 收集``各站点上中下负样本 各一个
                 plat = begindate.replace('-','')+' '+platform   #保存格式
                 #非黑烟收集目录
-                noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
-                \\192.168 noSmokePath
+                # noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
+                noSmokePath = r'\\192.168.20.21/AIMaterials/每日素材-未入库/黑烟素材/非黑烟/'+plat
 
                 os.makedirs(noSmokePath,exist_ok=True)
                 
@@ -361,14 +370,19 @@ if __name__ == '__main__':
         # 将保存的黑烟移入 对应文件夹Dirname  YearMonDay
                 _temp = begindate.replace('-','')
                 Dirname = path.join(currentPath,begindate+'~smoke')
-                targitP = path.join(currentPath,begindate.replace('-',''),'黑烟视频',begindate.replace('-','')+' '+platform)
-                \\192.168 targitP
+                # targitP = path.join(currentPath,begindate.replace('-',''),'黑烟视频',begindate.replace('-','')+' '+platform)
+                targitP = r'\\192.168.20.21/AIMaterials/每日素材-未入库/黑烟素材/黑烟视频/'+begindate.replace('-','')+' '+platform
+
                 os.makedirs(targitP,exist_ok=True)
                 if path.exists(Dirname):
                     for p,d,f in os.walk(Dirname):
                         index_ = 0
                         for _ in f:
-                            shutil.copy(path.join(p,_),path.join(targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
+                            try:
+                                shutil.copy(path.join(p,_),path.join(targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
+                            except:
+                                with open('log.txt',mode='a') as f:
+                                    f.write(traceback.format_exc()+'\n')
                             index_ = index_ + 1
 
                 print('    --操作完成')
@@ -377,7 +391,7 @@ if __name__ == '__main__':
         if flag_fun.lower() =='v': #鉴赏
             print('w:将误判的车辆(小轿车)写入对应的文件夹,具体查看``word-线上黑烟记录模板\n\
             f:查看当前图片对应的视频,确定是黑烟后,将视频文件名称进行截图(后续的``确认``操作需要用到)')
-            SFET.authenticate(currentPath,begindate.replace('-',''))
+            SFET.authenticate(currentPath,begindate.replace('-',''),platsubfix=carErrorsufix)
         if flag_fun.lower() in ['q']: print('   --已退出')
     else:
         raise '错误的输入！'
@@ -386,8 +400,8 @@ if __name__ == '__main__':
     
     print('历时 ',int(endTime - startTime)//60,' 分钟 ',\
             int(endTime - startTime)-int(endTime - startTime)//60*60,' 秒')
-    # if flag_fun.lower() not in ['d']:
-    input('输入任意键退出!')
+    if flag_fun.lower() not in ['d']:
+        input('输入任意键退出!')
         
 
         

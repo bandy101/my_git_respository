@@ -2,7 +2,7 @@ from os import path
 import os,cv2,time,re
 import numpy as np
 import sys,shutil
-
+import re
 def cv_imread(f_path):
     img = cv2.imdecode(np.fromfile(f_path,dtype=np.uint8),-1)
     return img
@@ -109,8 +109,8 @@ class BlackBox:
 
     
     #处理黑烟视频素材
-    def grabVideo(self,flag: int=1,placeName: str=None,scale: float=0.8,serialNumber: int=0):
-        """ 获取视频素材   
+    def grabVideo(self,flag: str,placeName: str=None,scale: float=0.4,serialNumber: int=0,):
+        """ 获取视频素材    flag[ test,train]
         截出的图片以`日期_地名_编号`的格式命名
         @videoPath str: 视频路径
         @placeName str: 地点名称
@@ -119,17 +119,17 @@ class BlackBox:
         """ 
 
         # videoPath: str,
-        videoPath = r'H:\AI_Data\20181211\_未知时间\测试夹\487658128847028224.mp4'
-        fs = path.basename(path.dirname(videoPath)).replace(' ','_')
-        placeName= fs
+        videoPath = r'H:\AI_Data\海康Data\海康数据\青岛\视频\非黑烟视频\测试夹\非黑烟视频\20181212 青岛\20181212_青岛_022.mp4'
+        fs = path.basename(videoPath)
+        placeName= fs[:-4]
         from datetime import datetime
-        today = datetime.now().strftime('%Y%m%d_%H%M%S')
+        today = datetime.now().strftime('%Y%m%d%H%M%S')
         _bianhao = str(today).split('.')[-1]
-
+        
         # placeName = _bianhao
 
         # saveDirName = path.join(path.dirname(videoPath),path.basename(videoPath)[:path.basename(videoPath).rindex('.')])
-        saveDirName = path.dirname(path.dirname(videoPath))
+        saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) #测试训练夹
         
         #初始化目录
         # if all([path.exists(saveDirName),path.isdir(saveDirName)]):
@@ -138,11 +138,11 @@ class BlackBox:
         #     except:
         #         for p,d,fs in os.walk(saveDirName):
         #             for _ in fs:os.remove(path.join(p,_))
-        srcDir = path.join(saveDirName,'src',fs,str(1))
-        dstDir = path.join(saveDirName,'dst',fs,str(1))
+        srcDir = path.join(saveDirName,'src',path.basename(path.dirname(videoPath)),flag,str(1))
+        dstDir = path.join(saveDirName,'dst',path.basename(path.dirname(videoPath)),flag,str(1))
         print(srcDir,dstDir)
-        _srcDir = path.join(saveDirName,'src',fs,'0') #posive
-        _dstDir = path.join(saveDirName,'dst',fs,'0')
+        _srcDir = path.join(saveDirName,'src',path.basename(path.dirname(videoPath)),flag,'0') #posive
+        _dstDir = path.join(saveDirName,'dst',path.basename(path.dirname(videoPath)),flag,'0')
         os.makedirs(srcDir,exist_ok=True),os.makedirs(dstDir,exist_ok=True)
         os.makedirs(_srcDir,exist_ok=True),os.makedirs(_dstDir,exist_ok=True)# f——Key 收集负样本
 
@@ -169,7 +169,7 @@ class BlackBox:
                     switch =False
                     break
                 if key in[86,119]:#w active
-                    _ =f'{today}_{placeName}_{index:04}.jpg' 
+                    _ =f'{placeName}_{index:04}.jpg' 
                     # _ = f'{today}_{path.basename(videoPath)[9:-4]}_{index:04}.jpg'
                     try:
                         self._write_sample(path.join(dstDir,_),self._tempIm)
@@ -177,7 +177,7 @@ class BlackBox:
                         index +=1
                     except:break
                 if key in[70,102]:#f #position
-                    _ =f'{today}_{placeName}_{index:04}.jpg' 
+                    _ =f'{placeName}_{index:04}.jpg' 
                     try:
                         self._write_sample(path.join(_dstDir,_),self._tempIm)
                         cv_imwrite(path.join(_srcDir,_),self._img)
@@ -474,15 +474,15 @@ class BlackBox:
         return prob_1
 
     # 对于不同文件夹存放相同名称文件 进行同步(删除)
-    def delsNoSrc(self,src: str,**arg):
-        '''删除src中没有的文件'''
+    def delsNoSrc(self,src: str='原始素材',**arg):
+        '''删除src[原始素材]中没有的文件'''
 
         _index  = 0 # 删除数量
         allFiles = [ _ for p,d,f in os.walk(src) for _ in f]
         print((allFiles))
         if not arg:
-            srcPrfix = src.split('视频帧原图')[0]
-            arg = [path.join(srcPrfix,'原始素材')]
+            srcPrfix = src.split('原始素材')[0]
+            arg = [path.join(srcPrfix,'原图')]
         for _ in arg:
             print('arg:',arg)
             for p,d,fs in os.walk(_):
@@ -503,11 +503,54 @@ class BlackBox:
                     _r = f'{_index:04}.jpg'
                     shutil.move(path.join(p,_),path.join(p,_r))
 
-                    
+    #2018.12.14 
+    def Classify(self,srcPath):
+        dstP = path.join(srcPath,'视频')
+        pattern = re.compile(r'\d')
+        allData = [path.join(srcPath,_) for _ in os.listdir(srcPath) if path.isdir(path.join(srcPath,_))]  
+        for _ in allData:
+            _dateName = '2018'+''.join(pattern.findall(_))
+            for p,d,f in os.walk(_):
+                if '黑烟视频' in d:
+                    _tP = path.join(p,'黑烟视频')
+                    index = 0
+                    for _f in os.listdir(_tP):
+                        _name = f'{_dateName}_青岛_{index:03}.mp4'
+                        index +=1
+                        os.makedirs(path.join(dstP,'黑烟视频',_dateName+' 青岛'),exist_ok=True)
+                        shutil.copy(path.join(_tP,_f),path.join(dstP,'黑烟视频',_dateName+' 青岛',_name))
 
+                    # shutil.copytree(_tP,path.join(dstP,_dateName))
+                if '非黑烟视频' in d:
+                    index = 0
+                    _tP = path.join(p,'非黑烟视频')
+                    for _f in os.listdir(_tP):
+                        _name = f'{_dateName}_青岛_{index:03}.mp4'
+                        index +=1
+                        os.makedirs(path.join(dstP,'非黑烟视频',_dateName+' 青岛'),exist_ok=True)
+                        shutil.copy(path.join(_tP,_f),path.join(dstP,'非黑烟视频',_dateName+' 青岛',_name))
+                    # shutil.copytree(_tP,path.join(dstP,_dateName))
 
-
-
+    #2018.12.14
+    def moveS(self,srcPath):
+        '''
+            将srcPath 目录【训练夹和测试夹】 里面的文件 转换成对应的结构
+                -训练夹
+                    ---黑烟视频
+                            ---日期来源
+                                ----日期_来源_编号
+        '''
+        #srcP = H:\AI_Data\海康Data\海康数据\青岛\视频\黑烟视频
+        alls = [path.join(srcPath,_) for _ in os.listdir(srcPath) if '青岛' in _]
+        _ttt = path.join(srcPath,'训练夹')
+        _t = [_ for _ in os.listdir(_ttt)]
+        for a in alls:
+            for p,d,f in os.walk(a):
+                for _ in f:
+                    if _ in _t:
+                        path_ = path.join(_ttt,path.basename(path.dirname(p)),path.basename(p))
+                        os.makedirs(path_,exist_ok=True)
+                        shutil.copy(path.join(p,_),path.join(path_,_))
 if __name__ == '__main__':
     from fire import Fire
     Fire(BlackBox)

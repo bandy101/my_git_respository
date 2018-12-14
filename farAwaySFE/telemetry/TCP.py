@@ -69,7 +69,7 @@ class TCP:
                 return None
             elif not isStream:
                 try:
-                    if not json.loads(res)['success']:
+                    if not json.loads(res.content)['success']:
                         print(f' --异常!,{flag},{res},{url}')
                         return None
                 except:
