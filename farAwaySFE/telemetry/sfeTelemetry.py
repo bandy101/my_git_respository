@@ -90,7 +90,10 @@ class SFETelemerty(TCP):
                         except:
                             traceback.print_exc()
                     if k in [102,70]: # f  
-                        os.chdir(path.abspath(path.join(currentPath,site)))
+                        _url = self.loginurl+'/api/record/'+self.TSNO_[site]+f[:5]+'/video'
+                        _p  = path.join(currentPath,site,f)
+                        self.download(_url,_p)
+                        os.chdir(path.abspath())
                         os.system("\""+f+"\"") #含有空格
                         os.chdir(currentDir) #回到基本路径防止相对路径错误
                     if k==111: #'o' 全部关闭
@@ -214,10 +217,12 @@ if __name__ == '__main__':
                             if _ in name:
                                 name = name.replace(_,'')
                         
-                        targit_path_video  = downloadPath+'/'+str(list_['id'])+'~'+name+'.mp4'
+                        # targit_path_video  = downloadPath+'/'+str(list_['id'])+'~'+name+'.mp4'
                         targit_path_image1 = path.join(downloadPath,'image1')+'/'+str(list_['id'])+'~'+name+'_1.jpg'
                         targit_path_image2 = path.join(downloadPath,'image2')+'/'+str(list_['id'])+'~'+name+'_2.jpg'
-                        targit_paths.extend((targit_path_video,targit_path_image1,targit_path_image2))
+                        # targit_paths.extend((targit_path_video,targit_path_image1,targit_path_image2))
+                        targit_paths.extend((targit_path_image1,targit_path_image2))
+                        
                         # print('targit_paths:',targit_paths)
                         # print('test:',video_url_,'path:',targit_path_video)
 
@@ -384,7 +389,7 @@ if __name__ == '__main__':
                                 with open('log.txt',mode='a') as f:
                                     f.write(traceback.format_exc()+'\n')
                             index_ = index_ + 1
-
+                                                
                 print('    --操作完成')
         
         # ohter
