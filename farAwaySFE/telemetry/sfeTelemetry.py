@@ -2,7 +2,8 @@ from __init__ import *
 
 from TCP import TCP
 
-Chunk_Size =1024 #字节数
+Chunk_Size =1024 # 字节数
+PERMIT = 1 # 访问AIMatris 文件夹权限
 
 class SFETelemerty(TCP):
     
@@ -29,7 +30,7 @@ class SFETelemerty(TCP):
             print(self.loginurl+targitURL,'--确认成功')
 
     # 鉴赏黑烟
-    def authenticate(self,currentPath: str,dirName: str,Names=['车辆误判','黑烟视频','非黑烟'],platsubfix: str=None):
+    def authenticate(self,currentPath: str,dirName: str,Names=['黑烟视频','非黑烟'],platsubfix: str=None):
         '''     '''
         SCALE = 0.8
         switch =True #鉴赏的开关 # ['o']
@@ -46,11 +47,12 @@ class SFETelemerty(TCP):
             index = -1
             if not switch:
                 break
-            for f in os.listdir(_path):
+            for f in os.listdir(path.join(_path,'image2')):
                 im1,im2 = None,None
-                if f[-3:].lower() in ['mp4','avi']:
+                if f[-3:].lower() in ['mp4','avi','jpg','png']:
                     try:
-                        im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
+                        f = f[:-2]
+                        # im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
                         im2 = cv_imread(path.join(_path,'image2',f[:-4]+'_2.jpg'))
                         index +=1
                         if not index%50:
@@ -82,19 +84,27 @@ class SFETelemerty(TCP):
                         # cv_imwrite(savePath,im1)
                         _T = begindate.replace('-','')[:-2]
                         savePath = r'\\192.168.20.21/AIMaterials/每日素材-未入库/车辆误判/'+_T+'/'+'车辆误判'+carErrorsufix
+                        local_savePath = path.join(currentPath,begindate.replace('-',''),'车辆误判'+carErrorsufix)
                         _srcPath = path.join(_path,'image1',f[:-4]+'_1.jpg')
-                        os.makedirs(savePath,exist_ok=True)
+                        if PERMIT:
+                            os.makedirs(savePath,exist_ok=True)
+                        os.makedirs(local_savePath,exist_ok=True)
+                        
                         try:
-                            shutil.copy(_srcPath,savePath)
-                            print('---写入成功---')
+                            if PERMIT:
+                                shutil.copy(_srcPath,savePath)
+                            shutil.copy(_srcPath,local_savePath)
+                            print('---写入成功--- ',f[:-4])
                         except:
                             traceback.print_exc()
-                    if k in [102,70]: # f  
-                        _url = self.loginurl+'/api/record/'+self.TSNO_[site]+f[:5]+'/video'
-                        _p  = path.join(currentPath,site,f)
+                    if k in [102,70]: # f
+                        _url = self.loginurl+'/api/record/'+self.TSNO_[site]+'/'+str(f.split('~')[0])+'/video'
+                        print('url:',_url)
+                        _p  = path.join(currentPath,site,f[:-4]+'.mp4')
                         self.download(_url,_p)
-                        os.chdir(path.abspath())
-                        os.system("\""+f+"\"") #含有空格
+                        os.chdir(path.abspath(path.join(currentPath,site)))
+                        # os.system("\""+f+"\"") #含有空格
+                        os.system("\""+f[:-4]+'.mp4'+"\"")
                         os.chdir(currentDir) #回到基本路径防止相对路径错误
                     if k==111: #'o' 全部关闭
                         switch = False
@@ -128,7 +138,7 @@ if __name__ == '__main__':
         #paths : 操作的根目录
         # '增加平台'
     print('\t请选择区域!')
-    flag_site = input('#----1:清远,2:新乡,3:广州----#:')
+    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河----#:')
     if flag_site=='1':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
@@ -144,7 +154,11 @@ if __name__ == '__main__':
         paths = './videoData_guangzhou' 
         platform = '广州平台'
         carErrorsufix = 'gz'
-
+    elif flag_site=='4':
+        urlPrefix = str(alls['sitePosition']['luohe'])
+        paths = './videoData_luohe' 
+        platform = '漯河平台'
+        carErrorsufix = 'lh'
     else:raise '错误的输入！'
     #```初始化 接口
     loginrurl = urlPrefix
@@ -166,7 +180,7 @@ if __name__ == '__main__':
      
     #当前文件夹:root/time(year-mon-day)
     currentPath = path.join(paths,str(begindate))
-    if not path.exists(currentPath): os.makedirs(currentPath)
+    # if not path.exists(currentPath): os.makedirs(currentPath)
     
     #记录下信息的文件:currentPath/recordinfo
     recordINFO = str(begindate).replace('-','') + '_info.txt'
@@ -182,6 +196,20 @@ if __name__ == '__main__':
         if flag_fun.lower() == 'd': #下载
             print('----开始下载----')
 
+            flagD  = input('#----全部下载:0(默认),下载当天:1,昨天:2----#:')
+            flagD = flagD.strip()
+            _pattern = re.compile(r'\D')
+            if _pattern.findall(flagD):
+                raise '输入错误！'
+            if not flagD:
+                flagD = 0
+            flagD = int(flagD)
+            _name = None
+            if flagD:
+                _name = (now_time + datetime.timedelta(days = -flagD+1)).strftime('%Y/%m/%d')
+                begindate = _name.replace('/','-')
+                currentPath = path.join(paths,str(begindate))
+                if not path.exists(currentPath): os.makedirs(currentPath)
             if flag_site !='3': #非广州
                 sites = SFET.sitesID
             else:
@@ -196,12 +224,15 @@ if __name__ == '__main__':
             targit_urls= []
             targit_paths = []
             for site in sites:
-                
                 downloadPath = path.join(currentPath,SFET.TSNO[site]) #下载的文件夹
                 if not path.exists(downloadPath): os.makedirs(downloadPath)
                 # 获取站点记录列表
                 list_url = urlPrefix+str(alls['publicURL']['websiterecord']['url']).replace("{site}",site)
                 lists =json.loads(SFET.getInfo(list_url).content)['content']
+                
+                # 测试
+                if _name:
+                    lists = [_ for _ in lists if _name in str(_['name'])]
 
                 for list_ in lists:
                     if all([list_['status'] in [False],list_['upload']\
@@ -209,7 +240,8 @@ if __name__ == '__main__':
                         video_url_ = video_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
                         image1_url_ = image1_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
                         image2_url_ = image2_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
-                        targit_urls.extend((video_url_,image1_url_,image1_url_))
+                        # targit_urls.extend((video_url_,image1_url_,image1_url_))
+                        targit_urls.extend((image1_url_,image2_url_))
                         name = list_['name']
                         #排除非法命名
 
@@ -235,7 +267,7 @@ if __name__ == '__main__':
                     #单个站点下载
             all_task = [pool.submit(SFET.download,url,path_) for url,path_ in zip(targit_urls,targit_paths)]
             wait(all_task,return_when=ALL_COMPLETED)  # 当线程全部完成 开始下一步
-            print('共下载 ',int(len(targit_urls))/3,' 视频')
+            print('共下载 ',int(len(targit_urls))/2,' 视频')
 
         if flag_fun.lower() =='c': #确认
             '''
@@ -302,7 +334,13 @@ if __name__ == '__main__':
                                     _tempStr =_tempStr + (str(txt)+'\n')
                                     targitPsmoke= path.join(currentPath,begindate+'~smoke',site)
                                     os.makedirs(targitPsmoke,exist_ok=True)
-                                    shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
+                                    try:
+                                        shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
+                                    except:
+                                        _video_url = SFET.loginurl + alls['publicURL']['video']['url'] 
+                                        _url = _video_url.replace('{record_id}',str(id_)).replace('{site}',SFET.TSNO_[site])
+                                        SFET.download(_url,path.join(currentPath,site,str(id_)+'~'+name+'.mp4'))
+                                        shutil.move(path.join(currentPath,site,str(id_)+'~'+name+'.mp4'),path.join(targitPsmoke,str(id_)+'~'+name+'.mp4'))
                             txt = f.readline()
                 except Exception as e:
                     print(e)
@@ -323,10 +361,12 @@ if __name__ == '__main__':
         # 收集``各站点上中下负样本 各一个
                 plat = begindate.replace('-','')+' '+platform   #保存格式
                 #非黑烟收集目录
-                # noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
+                local_noSmokePath = path.join(currentPath,begindate.replace('-',''),'非黑烟',plat)
                 noSmokePath = r'\\192.168.20.21/AIMaterials/每日素材-未入库/黑烟素材/非黑烟/'+plat
 
-                os.makedirs(noSmokePath,exist_ok=True)
+                if PERMIT:
+                    os.makedirs(noSmokePath,exist_ok=True)
+                os.makedirs(local_noSmokePath,exist_ok=True)
                 
                 for site in SITE:
                     for m in morn:
@@ -347,9 +387,14 @@ if __name__ == '__main__':
 
                     PTotal = gatherAfnoon[key]+gatherMorn[key]+gatherNoon[key]
                     PT = str(PTotal[int(random.uniform(0,len(PTotal)))])
-
+                    # 下载非黑烟到PT路径：
                     PTName = path.basename(PT).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
                     index_ =index_ +1
+                    _id = path.basename(PT).split('~')[0]
+                    _video_url = SFET.loginurl + alls['publicURL']['video']['url'] 
+                    _url = _video_url.replace('{record_id}',str(_id)).replace('{site}',SFET.TSNO_[key])
+                    SFET.download(_url,PT)
+
 
                     # PMName = path.basename(PM).split('~')[-1][:8] + f'_{key}_{index_:02}.mp4'
                     # index_ =index_ +1
@@ -362,8 +407,10 @@ if __name__ == '__main__':
                         # shutil.copy(PM,path.join(noSmokePath,PMName))
                         # shutil.copy(PN,path.join(noSmokePath,PNName))
                         # shutil.copy(PA,path.join(noSmokePath,PAName))
-
-                        shutil.copy(PA,path.join(noSmokePath,PTName))
+                        
+                        if PERMIT:
+                            shutil.copy(PT,path.join(noSmokePath,PTName))
+                        shutil.copy(PT,path.join(local_noSmokePath,PTName))
                     except Exception as e:
                         # print('pm:',PM)
                         # print('pn:',PN)
@@ -375,16 +422,21 @@ if __name__ == '__main__':
         # 将保存的黑烟移入 对应文件夹Dirname  YearMonDay
                 _temp = begindate.replace('-','')
                 Dirname = path.join(currentPath,begindate+'~smoke')
-                # targitP = path.join(currentPath,begindate.replace('-',''),'黑烟视频',begindate.replace('-','')+' '+platform)
+                local_targitP = path.join(currentPath,begindate.replace('-',''),'黑烟视频',begindate.replace('-','')+' '+platform)
                 targitP = r'\\192.168.20.21/AIMaterials/每日素材-未入库/黑烟素材/黑烟视频/'+begindate.replace('-','')+' '+platform
-
-                os.makedirs(targitP,exist_ok=True)
+                if PERMIT:
+                    os.makedirs(targitP,exist_ok=True)
+                os.makedirs(local_targitP,exist_ok=True)
+                
                 if path.exists(Dirname):
                     for p,d,f in os.walk(Dirname):
                         index_ = 0
                         for _ in f:
                             try:
-                                shutil.copy(path.join(p,_),path.join(targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
+                                if PERMIT:
+
+                                    shutil.copy(path.join(p,_),path.join(targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
+                                shutil.copy(path.join(p,_),path.join(local_targitP,f'{_temp}_{path.basename(p)}_{index_:02}.mp4'))
                             except:
                                 with open('log.txt',mode='a') as f:
                                     f.write(traceback.format_exc()+'\n')
@@ -405,8 +457,8 @@ if __name__ == '__main__':
     
     print('历时 ',int(endTime - startTime)//60,' 分钟 ',\
             int(endTime - startTime)-int(endTime - startTime)//60*60,' 秒')
-    if flag_fun.lower() not in ['d']:
-        input('输入任意键退出!')
+    # if flag_fun.lower() not in ['d']:
+    input('输入任意键退出!')
         
 
         
