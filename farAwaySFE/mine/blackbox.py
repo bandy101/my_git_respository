@@ -108,7 +108,13 @@ class BlackBox:
         cv_imwrite(paths,tempImg)
 
     
-    #处理黑烟视频素材
+    #处理黑烟视频素材 
+    # 一般套路: 将对应视频的转换成相应的名称 手动分类在测试夹与训练夹然后--
+    #                   具体参考Classify
+    #                                                                非黑烟
+    #                                                                黑烟
+        #                                                                日期+来源（20180101 青岛）
+        #                                                                               日期+青岛+编号
     def grabVideo(self,flag: str,placeName: str=None,scale: float=0.4,serialNumber: int=0,):
         """ 获取视频素材    flag[ test,train]
         截出的图片以`日期_地名_编号`的格式命名
@@ -117,32 +123,43 @@ class BlackBox:
         @scale float: 显示图片缩放比例(0~1,默认0.4)
         @serialNumber: 起始编号
         """ 
-
+        
+        '''
+            应对结构的选择
+                通过flag 判断 [test,train]
+                获取 视频的（日期+来源） 
+        '''
         # videoPath: str,
         videoPath = r'H:\AI_Data\海康Data\海康数据\青岛\视频\非黑烟视频\测试夹\非黑烟视频\20181212 青岛\20181212_青岛_022.mp4'
-        fs = path.basename(videoPath)
-        placeName= fs[:-4]
-        from datetime import datetime
-        today = datetime.now().strftime('%Y%m%d%H%M%S')
-        _bianhao = str(today).split('.')[-1]
         
+        #获取相应的文件夹
+        saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) # [测试,训练]夹
+        # 日期来源
+        dateAndFromSource = path.basename(path.dirname(videoPath))
+
+        # 素材文件名称前缀 = 视频名称
+        # eg. f'{placeName}_{index:04}.jpg'
+        placeName = path.basename(videoPath)[:-4]
+
+        from datetime import datetime
+        today = datetime.now().strftime('%Y%m%d.%H%M%S')
+        _bianhao = str(today).split('.')[-1]
         # placeName = _bianhao
 
-        # saveDirName = path.join(path.dirname(videoPath),path.basename(videoPath)[:path.basename(videoPath).rindex('.')])
-        saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) #测试训练夹
         
         #初始化目录
-        # if all([path.exists(saveDirName),path.isdir(saveDirName)]):
-        #     import shutil
-        #     try:shutil.rmtree(saveDirName)
-        #     except:
-        #         for p,d,fs in os.walk(saveDirName):
-        #             for _ in fs:os.remove(path.join(p,_))
-        srcDir = path.join(saveDirName,'src',path.basename(path.dirname(videoPath)),flag,str(1))
-        dstDir = path.join(saveDirName,'dst',path.basename(path.dirname(videoPath)),flag,str(1))
-        print(srcDir,dstDir)
-        _srcDir = path.join(saveDirName,'src',path.basename(path.dirname(videoPath)),flag,'0') #posive
-        _dstDir = path.join(saveDirName,'dst',path.basename(path.dirname(videoPath)),flag,'0')
+            # if all([path.exists(saveDirName),path.isdir(saveDirName)]):
+            #     import shutil
+            #     try:shutil.rmtree(saveDirName)
+            #     except:
+            #         for p,d,fs in os.walk(saveDirName):
+            #             for _ in fs:os.remove(path.join(p,_))
+            #         shutil.rmtree(saveDirName)
+
+        srcDir = path.join(saveDirName,'原图',dateAndFromSource,flag,str(1))
+        dstDir = path.join(saveDirName,'原始素材',dateAndFromSource,flag,str(1))
+        _srcDir = path.join(saveDirName,'原图',dateAndFromSource,flag,'0') #posive
+        _dstDir = path.join(saveDirName,'原始素材',dateAndFromSource,flag,'0')
         os.makedirs(srcDir,exist_ok=True),os.makedirs(dstDir,exist_ok=True)
         os.makedirs(_srcDir,exist_ok=True),os.makedirs(_dstDir,exist_ok=True)# f——Key 收集负样本
 
@@ -276,7 +293,6 @@ class BlackBox:
     def smokeManager(self,*arg):
         def down_video():
             pass
-
 
     # 使用对应标准分类黑烟视频
     def classifyVideo(self,srcVideoPath: str,dstPath: str=None,platform: str='清远',serialNumber: int=0):
