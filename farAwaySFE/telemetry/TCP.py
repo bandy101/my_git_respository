@@ -39,7 +39,6 @@ class TCP:
                             loginurl[loginurl.rindex('/')+1:]+URLlogin
         else:
             self._loginurl = loginurl + URLlogin[1:] + '/'
-
         print(self._loginurl)
         self._cookie_ = self._cookie
 

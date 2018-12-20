@@ -20,7 +20,6 @@ class SFETelemerty(TCP):
     # 操作黑烟
     def opSmoke(self,site,recordID,flag: str='status'):
         '''@paramer `` flag∈['status','upload']``` '''
-
         targitURL = str(self.configs['publicURL'][flag]['url'])
         targitURL = targitURL.replace(r'{site}',site)
         targitURL = targitURL.replace(r'{record_id}',recordID)
@@ -131,8 +130,6 @@ if __name__ == '__main__':
         'password':'5313232ef0a55311cf31e00b97afa15c',
         'user':'auditor'
     }
-
-
     #--start--#
         #urlPrefix: 网址前缀
         #paths : 操作的根目录

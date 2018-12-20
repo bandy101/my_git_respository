@@ -3,6 +3,8 @@ import os,cv2,time,re
 import numpy as np
 import sys,shutil
 import re
+from openpyxl import load_workbook
+from openpyxl import Workbook
 def cv_imread(f_path):
     img = cv2.imdecode(np.fromfile(f_path,dtype=np.uint8),-1)
     return img
@@ -437,10 +439,26 @@ class BlackBox:
         document.save('test.docx')
 
     # excel 生成
-    def excelX(self):
+    def excelX(self,value,row: int,col: int,handls: str,sheetindex: int,saveFileName: str=None):
         '''
-        description:
+        @ row int:表的行
+        @ col int:表的列
+        @ handls str:读取的xlsx文件路径 or 加载的xlsx句柄
+        @ sheetindex int:表的索引号(0 开始)
         '''
+        if type(handls).__name__ == 'str':
+            workbook = load_workbook(handls)
+        elif type(handls).__name__ == 'Workbook':
+            workbook = handls
+        else: raise '传入的handls参数错误'
+        booksheet = workbook.get_sheet_by_name(
+                    workbook.get_sheet_names()[sheetindex])
+        booksheet.cell(row,col).value = value
+        # 根据文件名保存
+        if saveFileName:
+            workbook.save(saveFileName)
+        
+
         
     def importData(self,url: str):
         pass
