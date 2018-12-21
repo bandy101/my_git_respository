@@ -12,7 +12,7 @@ class SFETelemerty(TCP):
             @ Paramer dict: 登陆账户密码
             @ loginurl str: 网址IP(域名)
         '''
-
+        
         super().__init__(loginurl,Paramer,flag)
 
         # self.SITES = self.sitesID  # 站点名称
