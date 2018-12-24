@@ -509,20 +509,20 @@ class BlackBox:
         return prob_1
 
     # 对于不同文件夹存放相同名称文件 进行同步(删除)
-    def delsNoSrc(self,src: str='原始素材',**arg):
+    def delsNoSrc(self,src: str='原始素材',*arg):
         '''删除src[原始素材]中没有的文件'''
 
         _index  = 0 # 删除数量
-        allFiles = [ _ for p,d,f in os.walk(src) for _ in f]
-        print((allFiles))
+        allFiles = [ _[:-4] for p,d,f in os.walk(src) for _ in f]
+        # print((allFiles))
         if not arg:
             srcPrfix = src.split('原始素材')[0]
             arg = [path.join(srcPrfix,'原图')]
-        for _ in arg:
+        for _ in [arg]:
             print('arg:',arg)
-            for p,d,fs in os.walk(_):
+            for p,d,fs in os.walk(''.join(_)):
                 for f in fs:
-                    if f not in allFiles:
+                    if f[:-4] not in allFiles:
                         os.remove(path.join(p,f))
                         _index +=1
                         print(f'删除:{path.join(p,f)} 成功{_index:04}')
