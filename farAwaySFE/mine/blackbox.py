@@ -125,17 +125,18 @@ class BlackBox:
         @scale float: 显示图片缩放比例(0~1,默认0.4)
         @serialNumber: 起始编号
         """ 
-        
         '''
             应对结构的选择
                 通过flag 判断 [test,train]
                 获取 视频的（日期+来源） 
         '''
+        # H:\AI_Data\海康Data\20181225\视频\非黑烟视频\test\非黑烟视频\20181221 青岛\20181221_青岛_078.mp4
         # videoPath: str,
-        videoPath = r'H:\AI_Data\海康Data\海康数据\青岛\视频\非黑烟视频\测试夹\非黑烟视频\20181212 青岛\20181212_青岛_022.mp4'
+        videoPath = r'H:\AI_Data\海康Data\20181225\入库\视频\训练夹\黑烟视频\20181219 青岛\20181219_青岛_009.mp4'
+        
         
         #获取相应的文件夹
-        saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) # [测试,训练]夹
+        saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) # [测试,训练]夹 ([test,train])
         # 日期来源
         dateAndFromSource = path.basename(path.dirname(videoPath))
 
@@ -270,7 +271,7 @@ class BlackBox:
                     if not switch:break
             if not switch:break
     #移动一个目录所有特定文件
-    def moveFormat(self,srcPath :str,moveType :str='mp4',dstPath :str=None):
+    def moveFormat(self,srcPath :str,moveType :str='jpg',dstPath :str=None):
         '''
         @srcPath :操作的文件夹目录
         @moveType :操作文件的类型(defalt :mp4)
@@ -281,7 +282,11 @@ class BlackBox:
         targit = path.join(dstPath,prefix+moveType)
         if not path.exists(targit):os.makedirs(targit)
         print(targit)
+
         for p,d,f in os.walk(srcPath):
+            # if any([True for _ in ['test','train'] if _ in p]):
+            #     print('##:',p)
+            #     continue
             if path.basename(p)==targit:continue
             for _ in f:
                 if _[-3:].lower()==moveType:
@@ -511,21 +516,25 @@ class BlackBox:
     # 对于不同文件夹存放相同名称文件 进行同步(删除)
     def delsNoSrc(self,src: str='原始素材',*arg):
         '''删除src[原始素材]中没有的文件'''
-
+        # src H:\AI_Data\海康Data\20181225\入库\原始素材
+        print('src:',src)
         _index  = 0 # 删除数量
-        allFiles = [ _[:-4] for p,d,f in os.walk(src) for _ in f]
-        # print((allFiles))
+        allFiles = [_[:-4] for p,d,f in os.walk(src) for _ in f]
         if not arg:
+            print('not arg!')
             srcPrfix = src.split('原始素材')[0]
             arg = [path.join(srcPrfix,'原图')]
-        for _ in [arg]:
+            # arg = [r'H:\AI_Data\海康Data\20181225\入库\原始素材']
+        for _ in arg:
             print('arg:',arg)
-            for p,d,fs in os.walk(''.join(_)):
+            # for p,d,fs in os.walk(''.join(_)):
+            for p,d,fs in os.walk(_):
                 for f in fs:
                     if f[:-4] not in allFiles:
+                        # print(f[:-4])
                         os.remove(path.join(p,f))
                         _index +=1
-                        print(f'删除:{path.join(p,f)} 成功{_index:04}')
+                        print(f'删除:{path.join(p,f)} 成功 {_index:04}')
                         
     #重新命名目录下的文件名称
     def rename(self,srcPath: str):
@@ -542,14 +551,16 @@ class BlackBox:
     def Classify(self,srcPath):
         dstP = path.join(srcPath,'视频')
         pattern = re.compile(r'\d')
-        allData = [path.join(srcPath,_) for _ in os.listdir(srcPath) if path.isdir(path.join(srcPath,_))]  
+        allData = [_ for _ in os.listdir(srcPath) if path.isdir(path.join(srcPath,_)) and _ not in ['视频']]  
+        print(allData)
         for _ in allData:
             _dateName = '2018'+''.join(pattern.findall(_))
-            for p,d,f in os.walk(_):
+            for p,d,f in os.walk(path.join(srcPath,_)):
                 if '黑烟视频' in d:
                     _tP = path.join(p,'黑烟视频')
                     index = 0
                     for _f in os.listdir(_tP):
+                        _dateName = _f[4:12] # 20181225
                         _name = f'{_dateName}_青岛_{index:03}.mp4'
                         index +=1
                         os.makedirs(path.join(dstP,'黑烟视频',_dateName+' 青岛'),exist_ok=True)
@@ -560,13 +571,14 @@ class BlackBox:
                     index = 0
                     _tP = path.join(p,'非黑烟视频')
                     for _f in os.listdir(_tP):
+                        _dateName = _f[7:15] # 20181225
                         _name = f'{_dateName}_青岛_{index:03}.mp4'
                         index +=1
                         os.makedirs(path.join(dstP,'非黑烟视频',_dateName+' 青岛'),exist_ok=True)
                         shutil.copy(path.join(_tP,_f),path.join(dstP,'非黑烟视频',_dateName+' 青岛',_name))
                     # shutil.copytree(_tP,path.join(dstP,_dateName))
 
-    #2018.12.14
+    #2018.12.14 / 12.25
     def moveS(self,srcPath):
         '''
             将srcPath 目录【训练夹和测试夹】 里面的文件 转换成对应的结构
@@ -576,16 +588,25 @@ class BlackBox:
                                 ----日期_来源_编号
         '''
         #srcP = H:\AI_Data\海康Data\海康数据\青岛\视频\黑烟视频
-        alls = [path.join(srcPath,_) for _ in os.listdir(srcPath) if '青岛' in _]
-        _ttt = path.join(srcPath,'训练夹')
-        _t = [_ for _ in os.listdir(_ttt)]
-        for a in alls:
-            for p,d,f in os.walk(a):
-                for _ in f:
-                    if _ in _t:
-                        path_ = path.join(_ttt,path.basename(path.dirname(p)),path.basename(p))
-                        os.makedirs(path_,exist_ok=True)
-                        shutil.copy(path.join(p,_),path.join(path_,_))
+        alls = [path.join(srcPath,_) for _ in os.listdir(srcPath) if any(['青岛' in _,'嘉兴' in _])]
+        for flag in ['train','test']:   
+            _ttt = path.join(srcPath,flag)
+            _t = [_ for _ in os.listdir(_ttt)]
+            for a in alls:
+                for p,d,f in os.walk(a):
+                    for _ in f:
+                        if _ in _t:
+                            path_ = path.join(_ttt,path.basename(path.dirname(p)),path.basename(p))
+                            os.makedirs(path_,exist_ok=True)
+                            shutil.copy(path.join(p,_),path.join(path_,_))
+
+    # temp
+    def Temp(self,src):
+        for p,d,fs in os.walk(src):
+            for f in fs:
+                if '20181221_青岛' in f:
+                    shutil.move(path.join(p,f),path.join(p,f.replace('20181221_青岛','20181221_嘉兴')))
+
 if __name__ == '__main__':
     from fire import Fire
     Fire(BlackBox)
