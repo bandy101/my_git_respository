@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>836</width>
+    <height>704</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>40</y>
+     <width>501</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Tab 1</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Tab 2</string>
+    </attribute>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="select_need_test">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>60</y>
+     <width>228</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>选择需要测试的功能</string>
+   </property>
+   <widget class="QRadioButton" name="air_quality_day">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>107</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>空气质量日统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="air_quality_mon">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>160</y>
+      <width>107</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>空气质量月统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="air_quality_year">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>107</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>空气质量年统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="telemetry_day">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>240</y>
+      <width>83</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>遥测日统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="telemetry_mon">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>83</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>遥测月统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="telemetry_data">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>遥测数据</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="air_quality_data">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>空气质量数据</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="air_quality">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>空气质量</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_hour">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>160</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量时统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_day">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>120</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量日统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_mon">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>80</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量月统计</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="car_flow_year">
+    <property name="geometry">
+     <rect>
+      <x>123</x>
+      <y>40</y>
+      <width>95</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>车流量年统计</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

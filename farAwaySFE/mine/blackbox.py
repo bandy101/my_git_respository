@@ -110,13 +110,16 @@ class BlackBox:
         cv_imwrite(paths,tempImg)
 
     
-    #处理黑烟视频素材 
-    # 一般套路: 将对应视频的转换成相应的名称 手动分类在测试夹与训练夹然后--
-    #                   具体参考Classify
+#处理黑烟视频素材 
+    # 一般套路: 将对应视频的转换成相应的名称 
+    #                   ----参考Classify
     #                                                                非黑烟
     #                                                                黑烟
-        #                                                                日期+来源（20180101 青岛）
-        #                                                                               日期+青岛+编号
+    #                                                                日期+来源（20180101 青岛）
+    #                                                                               日期_青岛_编号.mp4
+    # 然后分类在测试夹与训练夹[test,train]
+    #                    ---- 参考 moveS
+    # 分类完成视频后      ---- delsNoSrc
     def grabVideo(self,flag: str,placeName: str=None,scale: float=0.4,serialNumber: int=0,):
         """ 获取视频素材    flag[ test,train]
         截出的图片以`日期_地名_编号`的格式命名
@@ -132,8 +135,7 @@ class BlackBox:
         '''
         # H:\AI_Data\海康Data\20181225\视频\非黑烟视频\test\非黑烟视频\20181221 青岛\20181221_青岛_078.mp4
         # videoPath: str,
-        videoPath = r'H:\AI_Data\海康Data\20181225\入库\视频\训练夹\黑烟视频\20181219 青岛\20181219_青岛_009.mp4'
-        
+        videoPath = r'H:\AI_Data\海康Data\20181225\20181225 珠海\视频\train\黑烟视频\20181225 珠海\20181225_珠海_019.mp4'
         
         #获取相应的文件夹
         saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) # [测试,训练]夹 ([test,train])
@@ -516,15 +518,15 @@ class BlackBox:
     # 对于不同文件夹存放相同名称文件 进行同步(删除)
     def delsNoSrc(self,src: str='原始素材',*arg):
         '''删除src[原始素材]中没有的文件'''
-        # src H:\AI_Data\海康Data\20181225\入库\原始素材
+        # src H:\AI_Data\海康Data\20181225\入库\dest
         print('src:',src)
         _index  = 0 # 删除数量
         allFiles = [_[:-4] for p,d,f in os.walk(src) for _ in f]
         if not arg:
             print('not arg!')
             srcPrfix = src.split('原始素材')[0]
-            arg = [path.join(srcPrfix,'原图')]
-            # arg = [r'H:\AI_Data\海康Data\20181225\入库\原始素材']
+            # arg = [path.join(srcPrfix,'原图')]
+            arg = [r'H:\AI_Data\海康Data\20181225\20181225 珠海\原始素材']
         for _ in arg:
             print('arg:',arg)
             # for p,d,fs in os.walk(''.join(_)):
@@ -544,7 +546,7 @@ class BlackBox:
             for _ in f:
                 if path.isfile(path.join(p,_)):
                     _index +=1
-                    _r = f'{_index:04}.jpg'
+                    _r = f'20181225_珠海_{_index:03}.mp4'
                     shutil.move(path.join(p,_),path.join(p,_r))
 
     #2018.12.14 
@@ -581,24 +583,35 @@ class BlackBox:
     #2018.12.14 / 12.25
     def moveS(self,srcPath):
         '''
-            将srcPath 目录【训练夹和测试夹】 里面的文件 转换成对应的结构
-                -训练夹
+            srcPath 目录组成：
+                |test  : 测试的视频
+                |train : 训练的视频
+                |非黑烟视频/`` :
+                |黑烟视频/日期 地址/日期_地址_编号.mp4   : 所有的黑烟视频
+            将srcPath 目录【[test,train]】 里面的文件 转换成对应的结构
+                -训练夹、测试夹[test,train]
+                    ---非黑烟
                     ---黑烟视频
                             ---日期来源
                                 ----日期_来源_编号
         '''
-        #srcP = H:\AI_Data\海康Data\海康数据\青岛\视频\黑烟视频
-        alls = [path.join(srcPath,_) for _ in os.listdir(srcPath) if any(['青岛' in _,'嘉兴' in _])]
-        for flag in ['train','test']:   
-            _ttt = path.join(srcPath,flag)
-            _t = [_ for _ in os.listdir(_ttt)]
-            for a in alls:
-                for p,d,f in os.walk(a):
-                    for _ in f:
-                        if _ in _t:
-                            path_ = path.join(_ttt,path.basename(path.dirname(p)),path.basename(p))
-                            os.makedirs(path_,exist_ok=True)
-                            shutil.copy(path.join(p,_),path.join(path_,_))
+        _temp = ['黑烟视频','非黑烟视频']
+        for _t in _temp:
+            srcPathS = path.join(srcPath,_t)
+            # 待分类文件的地址目录
+            alls = [path.join(srcPathS,_) for _ in os.listdir(srcPathS) if any(['青岛' in _,'嘉兴' in _,'珠海' in _])]
+            print(alls)
+            for flag in ['train','test']:   
+                _ttt = path.join(srcPath,flag) # 
+                _t = [_ for _ in os.listdir(_ttt)] # 所有待分结构的文件
+                for a in alls:
+                    for p,d,f in os.walk(a):
+                        for _ in f:
+                            if _ in _t:
+                                path_ = path.join(_ttt,path.basename(path.dirname(p)),path.basename(p))
+                                print('path:',path_)
+                                os.makedirs(path_,exist_ok=True)
+                                shutil.copy(path.join(p,_),path.join(path_,_))
 
     # temp
     def Temp(self,src):
