@@ -546,7 +546,7 @@ class BlackBox:
             for _ in f:
                 if path.isfile(path.join(p,_)):
                     _index +=1
-                    _r = f'20181225_珠海_{_index:03}.mp4'
+                    _r = f'{_index:03}.jpg'
                     shutil.move(path.join(p,_),path.join(p,_r))
 
     #2018.12.14 
