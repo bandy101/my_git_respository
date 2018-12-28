@@ -361,6 +361,10 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
+   <zorder>site</zorder>
+   <zorder>splitter</zorder>
+   <zorder>search</zorder>
+   <zorder>search</zorder>
   </widget>
   <widget class="QPushButton" name="light_intensity">
    <property name="enabled">

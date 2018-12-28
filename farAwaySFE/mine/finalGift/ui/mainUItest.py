@@ -1,0 +1,110 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'main.ui'
+#
+# Created by: PyQt5 UI code generator 5.10.1
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(800, 521)
+        self.PlatgroupBox = QtWidgets.QGroupBox(Form)
+        self.PlatgroupBox.setGeometry(QtCore.QRect(570, 10, 200, 100))
+        self.PlatgroupBox.setObjectName("PlatgroupBox")
+        self.site = QtWidgets.QComboBox(self.PlatgroupBox)
+        self.site.setGeometry(QtCore.QRect(24, 70, 140, 22))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.site.sizePolicy().hasHeightForWidth())
+        self.site.setSizePolicy(sizePolicy)
+        self.site.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+        self.site.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.site.setObjectName("site")
+        self.searchResult = QtWidgets.QGroupBox(Form)
+        self.searchResult.setGeometry(QtCore.QRect(30, 10, 510, 450))
+        self.searchResult.setObjectName("searchResult")
+        self.resultText = QtWidgets.QTextEdit(self.searchResult)
+        self.resultText.setGeometry(QtCore.QRect(40, 30, 430, 390))
+        self.resultText.setObjectName("resultText")
+        self.select_need_test = QtWidgets.QGroupBox(Form)
+        self.select_need_test.setGeometry(QtCore.QRect(560, 150, 220, 360))
+        self.select_need_test.setObjectName("select_need_test")
+        self.air_quality_day_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.air_quality_day_2.setGeometry(QtCore.QRect(10, 120, 107, 16))
+        self.air_quality_day_2.setObjectName("air_quality_day_2")
+        self.air_quality_mon_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.air_quality_mon_2.setGeometry(QtCore.QRect(10, 160, 107, 16))
+        self.air_quality_mon_2.setObjectName("air_quality_mon_2")
+        self.air_quality_year_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.air_quality_year_2.setGeometry(QtCore.QRect(10, 200, 107, 16))
+        self.air_quality_year_2.setObjectName("air_quality_year_2")
+        self.telemetry_day_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.telemetry_day_2.setGeometry(QtCore.QRect(10, 240, 83, 16))
+        self.telemetry_day_2.setObjectName("telemetry_day_2")
+        self.telemetry_mon_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.telemetry_mon_2.setGeometry(QtCore.QRect(10, 280, 83, 16))
+        self.telemetry_mon_2.setObjectName("telemetry_mon_2")
+        self.telemetry_data_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.telemetry_data_2.setGeometry(QtCore.QRect(10, 320, 71, 16))
+        self.telemetry_data_2.setObjectName("telemetry_data_2")
+        self.air_quality_data_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.air_quality_data_2.setGeometry(QtCore.QRect(10, 80, 95, 16))
+        self.air_quality_data_2.setObjectName("air_quality_data_2")
+        self.air_quality_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.air_quality_2.setGeometry(QtCore.QRect(10, 40, 71, 16))
+        self.air_quality_2.setObjectName("air_quality_2")
+        self.car_flow_hour_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.car_flow_hour_2.setGeometry(QtCore.QRect(123, 160, 95, 16))
+        self.car_flow_hour_2.setObjectName("car_flow_hour_2")
+        self.car_flow_day_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.car_flow_day_2.setGeometry(QtCore.QRect(123, 120, 95, 16))
+        self.car_flow_day_2.setObjectName("car_flow_day_2")
+        self.car_flow_mon_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.car_flow_mon_2.setGeometry(QtCore.QRect(123, 80, 95, 16))
+        self.car_flow_mon_2.setObjectName("car_flow_mon_2")
+        self.car_flow_year_2 = QtWidgets.QRadioButton(self.select_need_test)
+        self.car_flow_year_2.setGeometry(QtCore.QRect(123, 40, 95, 16))
+        self.car_flow_year_2.setObjectName("car_flow_year_2")
+        self.radioButton = QtWidgets.QRadioButton(self.select_need_test)
+        self.radioButton.setGeometry(QtCore.QRect(123, 200, 89, 16))
+        self.radioButton.setObjectName("radioButton")
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setGeometry(QtCore.QRect(240, 480, 75, 23))
+        self.pushButton.setDefault(True)
+        self.pushButton.setFlat(False)
+        self.pushButton.setObjectName("pushButton")
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.PlatgroupBox.setTitle(_translate("Form", "平台"))
+        self.searchResult.setTitle(_translate("Form", "查询的结果"))
+        self.resultText.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.select_need_test.setTitle(_translate("Form", "选择需要测试的数据"))
+        self.air_quality_day_2.setText(_translate("Form", "空气质量日统计"))
+        self.air_quality_mon_2.setText(_translate("Form", "空气质量月统计"))
+        self.air_quality_year_2.setText(_translate("Form", "空气质量年统计"))
+        self.telemetry_day_2.setText(_translate("Form", "遥测日统计"))
+        self.telemetry_mon_2.setText(_translate("Form", "遥测月统计"))
+        self.telemetry_data_2.setText(_translate("Form", "遥测数据"))
+        self.air_quality_data_2.setText(_translate("Form", "空气质量数据"))
+        self.air_quality_2.setText(_translate("Form", "空气质量"))
+        self.car_flow_hour_2.setText(_translate("Form", "车流量时统计"))
+        self.car_flow_day_2.setText(_translate("Form", "车流量日统计"))
+        self.car_flow_mon_2.setText(_translate("Form", "车流量月统计"))
+        self.car_flow_year_2.setText(_translate("Form", "车流量年统计"))
+        self.radioButton.setText(_translate("Form", "光强"))
+        self.pushButton.setText(_translate("Form", "查询"))
+
