@@ -5,7 +5,7 @@ from ui.mainUI import Ui_Main
 from ui.mainUItest import Ui_Form
 import sys,os,json
 
-from finalGift import *
+from __init__ import *
 
 class DeviceGui(QWidget,Ui_Form):
     """ 最后的酱油界面 """
@@ -14,13 +14,18 @@ class DeviceGui(QWidget,Ui_Form):
         操作遥测的时候同时操作车流量
     '''
     # 站点
+    isselect = False # 是否选择功能
     siteSet = [] # 站点集合
     sitename = None # 站点名称
     flats = [] # json全部站点名称
     url = None # 平台地址
     user = None # 用户名
     pwd = None # 用户密码
+    cityId = None 
+    countyId = None
+    provinceId = None 
     selectSearch = None # 查询的功能名称
+    firstselectplat = False
 
     def __init__(self):
         super(DeviceGui,self).__init__()
@@ -44,9 +49,6 @@ class DeviceGui(QWidget,Ui_Form):
 
         # 默认平台
         self.addplat,self.siteSet[0].setChecked(True)
-
-
-
 
     # 添加平台
     @property
@@ -120,6 +122,9 @@ class DeviceGui(QWidget,Ui_Form):
             if _['plat'] == str(self.sitename):
                 self.url = _['indexlogin']
                 self.user ,self.pwd = _['username'], _['password']
+                self.cityId = _['cityId']
+                self.countyId = _['countyId']
+                self.provinceId = _['provinceId']
                 # 检测
                 if _['checkAir'].lower() == 'true':
                     for __ in self.airs:
@@ -127,9 +132,14 @@ class DeviceGui(QWidget,Ui_Form):
                 if _['checkTelemetry'].lower() == 'true':
                     for __ in self.telemetrys+self.cars:
                         __.setEnabled(True)
+                break
     
         self.site.clear()
-        self.site.addItem('请选择下列功能')
+        if not self.firstselectplat:
+            self.site.addItem('请选择查询的功能')
+        else:
+            self.checkTestselect(None)
+        
     
     # 初始化测试选项
     def initTestselect(self):
@@ -138,13 +148,14 @@ class DeviceGui(QWidget,Ui_Form):
 
     # 选择测试功能radiobutton #
     def checkTestselect(self,btn):
-
+        self.firstselectplat = True
         sitesName = ''
         for __ in self.json['platform']:
             if __['plat'] == str(self.sitename):
                 for _ in self.all_radio:
                     if _.isChecked():
                         self.token = self.json['request']['token']
+                        self.param = self.json['param'][_.text()]
                         self.selectSearch = self.json['request'][_.text()]
                         if '遥测' in _.text() or '车流量' in _.text():
                             sitesName = __['telemetryTSNO'].keys()
@@ -153,6 +164,8 @@ class DeviceGui(QWidget,Ui_Form):
                         # if  光强
                         break
                 break
+        else:
+            return False
 
         self.site.clear()
         if sitesName:
@@ -160,15 +173,35 @@ class DeviceGui(QWidget,Ui_Form):
         else:
             self.site.addItem('None')
         self.site.addItems(list(sitesName))
+        self.isselect = True
 
     @pyqtSlot()
     def on_search_clicked(self):
         # self.site.currentIndex()
         # self.site.currentText()
+        if not self.isselect:
+            QMessageBox.warning(self,
+                                    "!!!",  
+                                    "请选择查询的功能",  
+                                    QMessageBox.Yes)
+            return
         token = 'bearer '+get_token(self.token,self.user,self.pwd)
-
         url = self.url+self.selectSearch # 查询的完整url
-        param = ''
+        param = self.Param
+
+
+    @property
+    def Param(self,Param: dict):
+        _Param = self.param
+        keys = _Param.keys()
+        if 'cityId' in keys:
+            _Param['cityId'] = self.cityId
+        if 'provinceId' in keys:
+            _Param['provinceId'] = self.provinceId
+        if 'countyId' in keys:
+            _Param['countyId'] = self.countyId
+        return _Param
+
 
 def main():
     app = QApplication(sys.argv) # ui主程序

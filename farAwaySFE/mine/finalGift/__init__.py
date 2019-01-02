@@ -75,3 +75,9 @@ def telemetry_data_manerger(url,params,tsno,dict_tsnos,token):
             '最新数据时间:'+str(lists[0]['monitorTimeStr'])+'  车牌号:'+str(lists[0]['license'])+'<br>'
 
     return(strss)
+
+def searchMap():
+    _temp = {
+        '遥测数据':telemetry_data_manerger
+    }
+    return _temp

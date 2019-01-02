@@ -1,8 +1,11 @@
 {
     "name":"SFE",
-    "descreption":{"author":"最后的巡检"},
+    "descreption":{"author":"last巡检"},
     "platform":[
         {
+            "provinceId":440000,
+            "countyId":441801,
+            "cityId":441800,
             "clientId":"098f6bcd4621d373cade4e832627b4f6",
             "plat":"清远",
             "checkAir":"True",
@@ -23,7 +26,10 @@
             "username":"",
             "password":""
         },
-        {
+        {   
+            "provinceId":440000,
+            "countyId":440104,
+            "cityId":440100,
             "clientId":"098f6bcd4621d373cade4e832627b4f6",
             "plat":"广州",
             "checkAir":"False",
@@ -45,6 +51,9 @@
             "password":""
         },
         {
+            "provinceId":410000,
+            "countyId":410701,
+            "cityId":410700,
             "clientId":"098f6bcd4621d373cade4e832627b4f6",
             "plat":"新乡",
             "checkAir":"True",
@@ -73,6 +82,9 @@
             "password":""
         },
         {
+            "provinceId":410000,
+            "countyId":410601,
+            "cityId":410600,
             "clientId":"098f6bcd4621d373cade4e832627b4f6",
             "plat":"鹤壁",
             "checkAir":"False",
@@ -94,22 +106,22 @@
         }
     ],
     "request":{
-        "yaoceshujuguanli":"/api/v1/remoteSensingPageQuery",
-        "yaocheday":"/api/v1/rsCarReportDay",
-        "yaochemon":"/api/v1/rsCarReportMonth",
-        "carflowhour":"/api/v1/vehicalTypeHour",
-        "carflowday":"/api/v1/vehicalTypeDay",
-        "carflowmon":"/api/v1/vehicalTypeMonth",
-        "carflowyear":"/api/v1/vehicalTypeYear",
-        "airqualitydata":"/api/v1/airQualityPageQuery",
-        "airquality":"/api/v1/monitorAirQualityInfo",
-        "airqualityday":"/api/v1/airReportDay",
-        "airqualitymon":"/api/v1/airReportMonth",
-        "airqualityyear":"/api/v1/airReportYear",
+        "遥测数据":"/api/v1/remoteSensingPageQuery",
+        "遥测日统计":"/api/v1/rsCarReportDay",
+        "遥测月统计":"/api/v1/rsCarReportMonth",
+        "车流量时统计":"/api/v1/vehicalTypeHour",
+        "车流量日统计":"/api/v1/vehicalTypeDay",
+        "车流量月统计":"/api/v1/vehicalTypeMonth",
+        "车流量年统计":"/api/v1/vehicalTypeYear",
+        "空气质量数据":"/api/v1/airQualityPageQuery",
+        "空气质量":"/api/v1/monitorAirQualityInfo",
+        "空气质量日统计":"/api/v1/airReportDay",
+        "空气质量月统计":"/api/v1/airReportMonth",
+        "空气质量年统计":"/api/v1/airReportYear",
         "token":"/api/v1/login/"
     },
     "param":{
-        "yaoceshujuguanli":{
+        "遥测数据":{
                 "cityId" :"",
                 "monitorBeginTimeStr":"",
                 "monitorEndTimeStr"	:"",
@@ -137,7 +149,7 @@
                 "result":"",
                 "validity":""
         },
-        "yaocheday":{
+        "遥测日统计":{
                 "tsNo":"",
                 "date":"",
                 "smoke":"25",
@@ -145,7 +157,7 @@
                 "hc":"600",
                 "co":"2.0"
         },
-        "yaochemon":{
+        "遥测月统计":{
             "tsNo":"",
             "date":"",
             "smoke":"25",
@@ -153,32 +165,32 @@
             "hc":"600",
             "co":"2.0"
         },
-        "carflowhour":
+        "车流量时统计":
         {
             "tsNo":"",
             "date":""
         },
-        "carflowday":
+        "车流量日统计":
         {
             "tsNo":"",
             "date":""
         },
-        "carflowmon":
+        "车流量月统计":
         {
             "tsNo":"",
             "date":""
         },
-        "carflowyear":
+        "车流量年统计":
         {
             "tsNo":"",
             "date":""
         },
-        "airqualityinfo":
+        "空气质量":
         {
             "provinceId":"440000",
             "cityId":"441800"
         },
-        "airqualitydata":
+        "空气质量数据":
         {
             "cityId" :"",
             "collectionBeginDate":"",
@@ -204,7 +216,31 @@
             "pageSize":10,
             "provinceId":"",
             "tsNo":""
-        }  
+        },
+        "空气日统计":
+        {
+            "provinceId" :441800,
+            "cityId":441800,
+            "countyId":	441801,
+            "tsNo":"",
+            "date":""
+        },
+        "空气月统计":
+        {
+            "provinceId" :441800,
+            "cityId":441800,
+            "countyId":	441801,
+            "tsNo":"",
+            "date":""
+        },
+        "空气年统计":
+        {
+            "provinceId" :441800,
+            "cityId":441800,
+            "countyId":	441801,
+            "tsNo":"",
+            "date":""
+        }
     }
 
     
