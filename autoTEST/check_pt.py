@@ -18,6 +18,7 @@ global lanzs,henans,sichuans
 '''
 PM25,PM10,CO,NO2,O3,SO2= 115,250,35,700,300,650
 # PM25,PM10,CO,NO2,O3,SO2= 0,0,0,0,0,0
+# have_lists 暂时用不到
 def have_lists(url,year,month,day,tsno,lists):
     if lists:
         return lists
@@ -64,47 +65,6 @@ def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     return lv
 
 
-# token = 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmlxdWVfbmFtZSI6ImRlbW8iLCJwd2QiOiI3MTcyZGE4ZWY1Zjk1NDcwYjQxNWRiZDEwNDg1NjFlYiIsInVzZXJfaWQiOiIzIiwiaXNzIjoicmVzdGFwaXVzZXIiLCJhdWQiOiIwOThmNmJjZDQ2MjFkMzczY2FkZTRlODMyNjI3YjRmNiIsImV4cCI6MTUzNjE5OTY1OCwibmJmIjoxNTM0OTAzNjU4fQ.HdhVhyMJ8ORq1ingSNL4FW_NS17pXx1FVPqlHGwRC_o'
-# dict_tsnos = {
-#     '广清大道(龙塘)':'AQM65-G22W2807',
-#     '治超站出口':'AQM65-G22W2714',
-#     '三棵竹一桥(源潭)':'AQM65-G22W2772',
-#     '清远大道(党校)':'AQM65-G22W2798',
-# }
-# dict_tsnos = {
-#     '广清大道(龙塘)':'SFE-R600-G22W2807',
-#     '治超站出口':'SFE-R600-G22W2714',
-#     '三棵竹一桥(源潭)':'SFE-R600-G22W2807',
-#     '清远大道(党校)':'SFE-R600-G22W2798',
-# }
-gzs = {
-}
-# params ={
-#     'cityId' :441800,
-#     'collectionBeginDate':	'2018-08-24 00:00:00',
-#     'collectionEndDate'	:'2018-08-24 23:59:59',
-#     'countyId':	441801,
-#     'maxCo':'',
-#     'maxHumidity':'',	
-#     'maxNo2':'',	
-#     'maxO3':'',
-#     'maxPm10':'',	
-#     'maxPm25':'',	
-#     'maxSo2':'',	
-#     'maxTemperature':'',	
-#     'minCo':'',	
-#     'minHumidity':'',	
-#     'minNo2':'',	
-#     'minO3':'',	
-#     'minPm10':'',	
-#     'minPm25':'',	
-#     'minSo2':'',	
-#     'minTemperature':'',
-#     'pageNum':1,
-#     'pageSize':12,
-#     'provinceId':440000,
-#     'tsNo':''
-# }
 def params_air_telemetry(m,d,params):
     st = time.localtime()
     if len(str(m))<2:m='0'+str(m)

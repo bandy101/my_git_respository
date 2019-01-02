@@ -88,9 +88,9 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="title">
-    <string>选择需要测试的数据</string>
+    <string>选择查询的功能</string>
    </property>
-   <widget class="QRadioButton" name="air_quality_day_2">
+   <widget class="QRadioButton" name="air_quality_day">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -103,7 +103,7 @@ p, li { white-space: pre-wrap; }
      <string>空气质量日统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="air_quality_mon_2">
+   <widget class="QRadioButton" name="air_quality_mon">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -116,7 +116,7 @@ p, li { white-space: pre-wrap; }
      <string>空气质量月统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="air_quality_year_2">
+   <widget class="QRadioButton" name="air_quality_year">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -129,7 +129,7 @@ p, li { white-space: pre-wrap; }
      <string>空气质量年统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="telemetry_day_2">
+   <widget class="QRadioButton" name="telemetry_day">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -142,7 +142,7 @@ p, li { white-space: pre-wrap; }
      <string>遥测日统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="telemetry_mon_2">
+   <widget class="QRadioButton" name="telemetry_mon">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -155,7 +155,7 @@ p, li { white-space: pre-wrap; }
      <string>遥测月统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="telemetry_data_2">
+   <widget class="QRadioButton" name="telemetry_data">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -168,7 +168,7 @@ p, li { white-space: pre-wrap; }
      <string>遥测数据</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="air_quality_data_2">
+   <widget class="QRadioButton" name="air_quality_data">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -181,7 +181,7 @@ p, li { white-space: pre-wrap; }
      <string>空气质量数据</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="air_quality_2">
+   <widget class="QRadioButton" name="air_quality">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -194,7 +194,7 @@ p, li { white-space: pre-wrap; }
      <string>空气质量</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="car_flow_hour_2">
+   <widget class="QRadioButton" name="car_flow_hour">
     <property name="geometry">
      <rect>
       <x>123</x>
@@ -207,7 +207,7 @@ p, li { white-space: pre-wrap; }
      <string>车流量时统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="car_flow_day_2">
+   <widget class="QRadioButton" name="car_flow_day">
     <property name="geometry">
      <rect>
       <x>123</x>
@@ -220,7 +220,7 @@ p, li { white-space: pre-wrap; }
      <string>车流量日统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="car_flow_mon_2">
+   <widget class="QRadioButton" name="car_flow_mon">
     <property name="geometry">
      <rect>
       <x>123</x>
@@ -233,7 +233,7 @@ p, li { white-space: pre-wrap; }
      <string>车流量月统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="car_flow_year_2">
+   <widget class="QRadioButton" name="car_flow_year">
     <property name="geometry">
      <rect>
       <x>123</x>
@@ -246,7 +246,7 @@ p, li { white-space: pre-wrap; }
      <string>车流量年统计</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton">
+   <widget class="QRadioButton" name="lightstrength">
     <property name="geometry">
      <rect>
       <x>123</x>
@@ -260,7 +260,7 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="search">
    <property name="geometry">
     <rect>
      <x>240</x>

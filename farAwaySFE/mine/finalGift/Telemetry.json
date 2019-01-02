@@ -102,7 +102,10 @@
         "carflowmon":"/api/v1/vehicalTypeMonth",
         "carflowyear":"/api/v1/vehicalTypeYear",
         "airqualitydata":"/api/v1/airQualityPageQuery",
-        "airqualityinfo":"/api/v1/monitorAirQualityInfo",
+        "airquality":"/api/v1/monitorAirQualityInfo",
+        "airqualityday":"/api/v1/airReportDay",
+        "airqualitymon":"/api/v1/airReportMonth",
+        "airqualityyear":"/api/v1/airReportYear",
         "token":"/api/v1/login/"
     },
     "param":{
