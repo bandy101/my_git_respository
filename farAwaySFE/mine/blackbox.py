@@ -119,8 +119,9 @@ class BlackBox:
     #                                                                               日期_青岛_编号.mp4
     # 然后分类在测试夹与训练夹[test,train]
     #                    ---- 参考 moveS
+    #                    ---- 使用 grabVideo
     # 分类完成视频后      ---- delsNoSrc
-    def grabVideo(self,flag: str,placeName: str=None,scale: float=0.4,serialNumber: int=0,):
+    def grabVideo(self,flag: str,placeName: str=None,scale: float=0.8,serialNumber: int=0,):
         """ 获取视频素材    flag[ test,train]
         截出的图片以`日期_地名_编号`的格式命名
         @videoPath str: 视频路径
@@ -135,8 +136,8 @@ class BlackBox:
         '''
         # H:\AI_Data\海康Data\20181225\视频\非黑烟视频\test\非黑烟视频\20181221 青岛\20181221_青岛_078.mp4
         # videoPath: str,
-        videoPath = r'H:\AI_Data\海康Data\20181225\20181225 珠海\视频\train\黑烟视频\20181225 珠海\20181225_珠海_019.mp4'
-        
+        videoPath = r'H:\AI_Data\未入库12\test\非黑烟视频\20181226 漯河平台\20181226_龙江路污水处理厂_00.mp4'
+        print(path.basename(videoPath))
         #获取相应的文件夹
         saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) # [测试,训练]夹 ([test,train])
         # 日期来源
@@ -194,16 +195,24 @@ class BlackBox:
                     _ =f'{placeName}_{index:04}.jpg' 
                     # _ = f'{today}_{path.basename(videoPath)[9:-4]}_{index:04}.jpg'
                     try:
+                        if '非黑烟视频' in videoPath:
+                            print('按键w错误')
+                            raise '写入错误！'
                         self._write_sample(path.join(dstDir,_),self._tempIm)
                         cv_imwrite(path.join(srcDir,_),self._img)
                         index +=1
+                        print('写入黑烟视频成功')
                     except:break
                 if key in[70,102]:#f #position
                     _ =f'{placeName}_{index:04}.jpg' 
                     try:
+                        if '\黑烟视频' in videoPath:
+                            print('按键f错误')
+                            raise '写入错误！'
                         self._write_sample(path.join(_dstDir,_),self._tempIm)
                         cv_imwrite(path.join(_srcDir,_),self._img)
                         index +=1
+                        print('写入非黑烟视频成功')
                     except:break
             if not switch:break
     #处理黑烟图片素材
@@ -273,7 +282,7 @@ class BlackBox:
                     if not switch:break
             if not switch:break
     #移动一个目录所有特定文件
-    def moveFormat(self,srcPath :str,moveType :str='jpg',dstPath :str=None):
+    def moveFormat(self,srcPath :str,moveType :str='mp4',dstPath :str=None):
         '''
         @srcPath :操作的文件夹目录
         @moveType :操作文件的类型(defalt :mp4)
@@ -599,7 +608,7 @@ class BlackBox:
         for _t in _temp:
             srcPathS = path.join(srcPath,_t)
             # 待分类文件的地址目录
-            alls = [path.join(srcPathS,_) for _ in os.listdir(srcPathS) if any(['青岛' in _,'嘉兴' in _,'珠海' in _])]
+            alls = [path.join(srcPathS,_) for _ in os.listdir(srcPathS) if any(['青岛' in _,'嘉兴' in _,'珠海' in _,'清远'in _,'新乡'in _,'漯河'in _])]
             print(alls)
             for flag in ['train','test']:   
                 _ttt = path.join(srcPath,flag) # 
@@ -612,7 +621,15 @@ class BlackBox:
                                 print('path:',path_)
                                 os.makedirs(path_,exist_ok=True)
                                 shutil.copy(path.join(p,_),path.join(path_,_))
-
+    # 删除空文件夹针对未入库视频
+    def delEmptyDir(self,src: str):
+        for p,d,f in os.walk(src):
+            for _ in d:
+                try:
+                    os.rmdir(path.join(p,_))
+                    print('删除成功 ',_)
+                except:
+                    pass
     # temp
     def Temp(self,src):
         for p,d,fs in os.walk(src):

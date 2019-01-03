@@ -18,7 +18,7 @@ app = QApplication(sys.argv)
 
 class Gui(QWidget,Ui_Form):
 
-    signal_search =pyqtSignal() #控制查询按钮
+    # signal_search =pyqtSignal() #控制查询按钮
     signal_settext = pyqtSignal(str) #显示查询结果
     signal_start_search = pyqtSignal(int) #最初的等待查询显示
     def __init__(self):
@@ -110,15 +110,6 @@ class Gui(QWidget,Ui_Form):
         Thread(target=self.wait_search).start()
 
 
-    def clicks(self):
-        self.click= True
-        self.search.setEnabled(False)
-        # self.search_t.start()
-        # thread_bt = QThread(self)
-        # thread_bt.run = self.search_one
-        # thread_bt.start()
-        # self.search_one()m
-        Thread(target=self.search_one).start()
     def lights(self):
         space = ['&nbsp;' for _ in range(12)]
         strs = C.check_(20)
@@ -173,7 +164,7 @@ class Gui(QWidget,Ui_Form):
                 if 'telemetry' in f.__name__:
                     if test_site in [0,-1]:self.tsno = list(self.telemetry_tsno.values())
                     else:self.tsno = self.telemetry_tsno[self.site.currentText()]
-                    self.TSNO = self.telemetry_tsno
+                    self.TSNO = self.A
                 if 'car' in f.__name__:
                     if test_site in [0,-1]:self.tsno =list(self.car_tsno.values())
                     else:self.tsno = self.car_tsno[self.site.currentText()]

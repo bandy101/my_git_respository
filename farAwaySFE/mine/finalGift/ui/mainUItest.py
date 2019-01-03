@@ -28,9 +28,9 @@ class Ui_Form(object):
         self.searchResult = QtWidgets.QGroupBox(Form)
         self.searchResult.setGeometry(QtCore.QRect(30, 10, 510, 450))
         self.searchResult.setObjectName("searchResult")
-        self.resultText = QtWidgets.QTextEdit(self.searchResult)
-        self.resultText.setGeometry(QtCore.QRect(40, 30, 430, 390))
-        self.resultText.setObjectName("resultText")
+        self.result_text = QtWidgets.QTextEdit(self.searchResult)
+        self.result_text.setGeometry(QtCore.QRect(40, 30, 430, 390))
+        self.result_text.setObjectName("result_text")
         self.select_need_test = QtWidgets.QGroupBox(Form)
         self.select_need_test.setGeometry(QtCore.QRect(560, 150, 220, 360))
         self.select_need_test.setObjectName("select_need_test")
@@ -87,7 +87,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.PlatgroupBox.setTitle(_translate("Form", "平台"))
         self.searchResult.setTitle(_translate("Form", "查询的结果"))
-        self.resultText.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.result_text.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"

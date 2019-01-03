@@ -44,7 +44,7 @@ def have_lists(url,year,month,day,tsno,lists):
 def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     # if lists:
     #     return lists
-    ps =params_air_telemetry(month,day,param)
+    ps =params_air_telemetry(year,month,day,param)
     ps['tsNo'] = tsno
     # print('parama:',ps)
     res = requests.get(url,params=ps,headers={'Authorization':token},verify= False)
@@ -65,12 +65,12 @@ def have_lists_air_telemtry(token,param,url,year,month,day,tsno,lists):
     return lv
 
 
-def params_air_telemetry(m,d,params):
+def params_air_telemetry(year,m,d,params):
     st = time.localtime()
     if len(str(m))<2:m='0'+str(m)
     if len(str(d))<2:d='0'+str(d)
-    st1 =str(list(st)[0])+'-'+str(m)+'-'+str(d)+' 00:00:00'
-    st2 =str(list(st)[0])+'-'+str(m)+'-'+str(d)+' 23:59:59'
+    st1 =str(year)+'-'+str(m)+'-'+str(d)+' 00:00:00'
+    st2 =str(year)+'-'+str(m)+'-'+str(d)+' 23:59:59'
     x = params
     for _ in params.keys():
         if 'Begin' in _:
@@ -80,8 +80,6 @@ def params_air_telemetry(m,d,params):
     return x
 #--空气质量--#
 def air_quality(url,params,tsno,dict_tsnos,token):
-    ##--清远--#
-    # url ='http://202.105.10.126:8055/api/v1/monitorAirQualityInfo?provinceId=440000&cityId=441800'
     res = requests.get(url,params=params,headers={'Authorization':token},timeout=5,verify= False)
     values = json.loads(res.content)['content']
     if type(tsno)==str:values = [_ for _ in values if _['tsNo']==tsno]
@@ -106,7 +104,6 @@ def air_quality(url,params,tsno,dict_tsnos,token):
         if not strs:strss +=v['name'] +'  所有数据正常\n<br>PM2.5:'+str(v['pm25'])+' PM10:'+str(v['pm10'])+\
             ' O3:'+str(v['o3'])+' SO2:'+str(v['so2'])+' CO:'+str(v['co'])+' NO2:'+str(v['no2'])+'<br>'
         else:strss +=strs
-    # print(strs)
     return strss
 #--空气质量数据管理--#
 def air_quality_data_manger(url,params,tsno,dict_tsnos,token):
@@ -216,6 +213,7 @@ def air_quality_statistics_day(url,params,tsno,dict_tsnos,token):
                 strs +='<br>'+k +' 空气质量日统计报表数据正常'+'\n<br>'
             else:strs +='<br>'+k +' 空气质量日统计报表数据异常'+'\n<br>'
     return strs
+
 #月统计
 def air_quality_statistics_month(url,params,tsno,dict_tsnos,token): 
     strs =''
@@ -269,6 +267,7 @@ def air_quality_statistics_month(url,params,tsno,dict_tsnos,token):
                 strs +='<br>'+k +' 空气质量月统计报表数据正常'+'\n<br>'
             else:strs +='<br>'+k +' 空气质量月统计报表数据异常'+'\n<br>'
     return strs
+
 #年统计
 def air_quality_statistics_year(url,params,tsno,dict_tsnos,token):
     # param = {

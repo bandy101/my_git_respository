@@ -130,9 +130,10 @@ def detction(device: Device):
 
 
 def main():
+    strs = ''
     with open('./巡检记录.txt',encoding='utf-8',mode='a') as ff:
         ff.writelines(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())+'\n')
-        # strs+=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())+'<br>'
+        strs+=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())+'<br>'
 
     siteSet = None
     with open('siteConfig.json',encoding='utf-8') as f:
@@ -158,36 +159,36 @@ def main():
                             _speed = '' if X.getSpeed else '无速度'
                             _temp = f"{Pname} 红外功率: {X.redSource} 光强: {str(X.redStrength)} 紫外积分: {X.purpleSource} 光强: {str(X.purpleStrength)} {_speed}\n"
                             f.write(_temp)
+                            strs +=_temp
                     else:
                         _index = _index - 1
                 # 页面无法打开    
                 else:
                     with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
                         f.write(Pname+' 页面无法打开\n')
+                        strs +=Pname+' 页面无法打开\n'
             # 页面无法打开
             else:
                 with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
                     f.write(Pname+' 页面无法打开\n')
+                    strs +=Pname+' 页面无法打开\n'
             del X
         if not _index:
             with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
                 f.write(PsiteName+' 正常\n')
-        with open('./巡检记录.txt',encoding='utf-8',mode='a') as ff:
-            ff.write('\n')
+                strs +=PsiteName+' 正常\n'
     endTime = time.time() #结束时间
     _str = f'历时 {int(endTime - startTime)//60} 分钟  {int(endTime - startTime)-int(endTime - startTime)//60*60} 秒'
     with open('巡检记录.txt',encoding='utf-8',mode='a') as f:
         f.write(_str+'\n')
+    strs +=_str+'\n'
+    return strs
 
-    
-    
-    
-            
             
 
 
 if __name__ == '__main__':
     X = Device('http://60.165.50.66:11000/',None,True)
     # X.test()
-    main()
+    x = main()
     input('任意键结束')

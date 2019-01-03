@@ -34,14 +34,14 @@ class Gui(QWidget,Ui_Form):
             url_gz = 'https://gz.etc-cn.com/api/v1/login/'
             try:
                 if _['id']=='01':
-                    self.json['platform'][0]['token']='bearer '+get_token(url_qy,'demo','demo&123')
+                    self.json['platform'][0]['token']='bearer '+get_token(url_qy,'demo','123&demo')
             except:
                 pass
             try:
                 if _['id']=='02':
-                    self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
+                    self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','123&demo')
                 if _['id']=='03':
-                    self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','demo&123')
+                    self.json['platform'][1]['token']='bearer '+get_token(url_gz,'demo','123&demo')
             except:
                 pass
         ##平台{01:qingyuan,02:guangzhou}

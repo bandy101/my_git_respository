@@ -23,8 +23,8 @@
                 "清远大道(党校)":"AQM65-G22W2798"
             },
             "indexlogin":"http://202.105.10.126:8055",
-            "username":"",
-            "password":""
+            "username":"demo",
+            "password":"123&demo"
         },
         {   
             "provinceId":440000,
@@ -78,8 +78,8 @@
                 "S308新乡收费站":"SFE-H6-V23W1948"
             },
             "indexlogin":"https://xinx.etc-cn.com/",
-            "username":"",
-            "password":""
+            "username":"demo",
+            "password":"123&demo"
         },
         {
             "provinceId":410000,
@@ -217,7 +217,7 @@
             "provinceId":"",
             "tsNo":""
         },
-        "空气日统计":
+        "空气质量日统计":
         {
             "provinceId" :441800,
             "cityId":441800,
@@ -225,7 +225,7 @@
             "tsNo":"",
             "date":""
         },
-        "空气月统计":
+        "空气质量月统计":
         {
             "provinceId" :441800,
             "cityId":441800,
@@ -233,7 +233,7 @@
             "tsNo":"",
             "date":""
         },
-        "空气年统计":
+        "空气质量年统计":
         {
             "provinceId" :441800,
             "cityId":441800,
