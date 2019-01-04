@@ -47,8 +47,8 @@
             },
             "airTSNO":{},
             "indexlogin":"https://gz.etc-cn.com",
-            "username":"",
-            "password":""
+            "username":"demo",
+            "password":"123&demo"
         },
         {
             "provinceId":410000,
@@ -101,8 +101,8 @@
             },
             "airTSNO":{},
             "indexlogin":"https://hebi.etc-cn.com/",
-            "username":"",
-            "password":""
+            "username":"demo",
+            "password":"123&demo"
         }
     ],
     "request":{
@@ -152,18 +152,18 @@
         "遥测日统计":{
                 "tsNo":"",
                 "date":"",
-                "smoke":"25",
+                "smoke":"30",
                 "no":"",
-                "hc":"600",
-                "co":"2.0"
+                "hc":"",
+                "co":""
         },
         "遥测月统计":{
             "tsNo":"",
             "date":"",
-            "smoke":"25",
+            "smoke":"30",
             "no":"",
-            "hc":"600",
-            "co":"2.0"
+            "hc":"",
+            "co":""
         },
         "车流量时统计":
         {

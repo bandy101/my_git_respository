@@ -177,8 +177,9 @@ class DeviceGui(QWidget,Ui_Form):
                         if '空气' in _.text():
                             sitesName = __['airTSNO'].keys()
                             self.TSNO = __['airTSNO']
-
                         break
+                else:
+                    self.TSNO = None
                 break
         # else:
         #     return False
@@ -233,10 +234,7 @@ class DeviceGui(QWidget,Ui_Form):
         time.sleep(0.05)
         space = ['&nbsp;' for _ in range(12)]
         strs =''.join(space)+'<font size="8" color="red"><b>查询完毕</b></font><br>\n'+_x
-        
         self.signal_settext.emit(strs)
-        self.TSNO  = None
-        # print(_x)
 
     # 设置文字
     def set_text(self,str):

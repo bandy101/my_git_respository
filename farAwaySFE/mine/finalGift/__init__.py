@@ -122,7 +122,7 @@ def telemetry_data_day(url,params,tsno,dict_tsnos,token):
             yctj =0
         else:yctj = values['licenseType']['total']
         date = date
-        cxyzs = [values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['limitCount'],values['exceed']['noCount'],values['exceed']['smokeCount']]
+        cxyzs = [values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['noCount'],values['exceed']['smokeCount']]
         cxyz =any(cxyzs)
         cxyzs = list(map(lambda x:str(x),cxyzs))
         print(cxyzs)
@@ -160,14 +160,19 @@ def telemetry_data_month(url,params,tsno,dict_tsnos,token):
         params['tsNo']=_
         res = requests.get(url,params=params,headers={'Authorization':token},verify= False)
         values = json.loads(res.content)['content']
+        print('valuessss:',values)
         yctj,cxyz,cxcllx,cxclbl = 0 ,0,0,0
         if not ('licenseType' in values.keys()):
             yctj =0
             date = date
         else:
             yctj = values['licenseType']['total']
-            date = values['licenseType']['recordDateStr']
-        cxyzs = [values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['limitCount'],values['exceed']['noCount'],values['exceed']['smokeCount']]
+            try:
+                date = values['licenseType']['recordDateStr']
+            except:
+                date = date
+                
+        cxyzs = [values['exceed']['coCount'],values['exceed']['hcCount'],values['exceed']['noCount'],values['exceed']['smokeCount']]
         cxyz =any(cxyzs)
         cxyzs = list(map(lambda x:str(x),cxyzs))
         print(cxyzs)
@@ -329,19 +334,19 @@ def air_quality_statistics_day(url,params,tsno,dict_tsnos,token):
                 strs +='<br>#'+l['recordDateStr']+'#  '
                 if  not o3:
                     if l['o3']!=0:
-                        strs +=' O3:'+str(lists[0]['o3'])
+                        strs +=' O3:'+str(l['o3'])
                         o3=True
                 if  not no2:
                     if l['no2']!=0:
-                        strs +=' NO2:'+str(lists[0]['no2'])
+                        strs +=' NO2:'+str(l['no2'])
                         no2=True
                 if  not co:
                     if l['co']!=0:
-                        strs +=' CO:'+str(lists[0]['co'])
+                        strs +=' CO:'+str(l['co'])
                         co=True
                 if  not so2:
                     if l['so2']!=0:
-                        strs +=' SO2:'+str(lists[0]['so2'])
+                        strs +=' SO2:'+str(l['so2'])
                         so2=True
                 if all([o3,so2,co,so2]):
                     have_air =True
@@ -383,19 +388,19 @@ def air_quality_statistics_month(url,params,tsno,dict_tsnos,token):
                 strs +='<br>#'+l['recordDateStr']+'#  '
                 if  not o3:
                     if l['o3']!=0:
-                        strs +=' O3:'+str(lists[0]['o3'])
+                        strs +=' O3:'+str(l['o3'])
                         o3=True
                 if  not no2:
                     if l['no2']!=0:
-                        strs +=' NO2:'+str(lists[0]['no2'])
+                        strs +=' NO2:'+str(l['no2'])
                         no2=True
                 if  not co:
                     if l['co']!=0:
-                        strs +=' CO:'+str(lists[0]['co'])
+                        strs +=' CO:'+str(l['co'])
                         co=True
                 if  not so2:
                     if l['so2']!=0:
-                        strs +=' SO2:'+str(lists[0]['so2'])
+                        strs +=' SO2:'+str(l['so2'])
                         so2=True
                 if all([o3,so2,co,so2]):
                     have_air =True
@@ -417,7 +422,7 @@ def air_quality_statistics_year(url,params,tsno,dict_tsnos,token):
     keys = dict_tsnos.keys()
     strs =''
     date = str(time.strftime("%Y-%m-%d", time.localtime()))
-    url = 'http://202.105.10.126:8055/api/v1/airReportYear'
+    # url = 'http://202.105.10.126:8055/api/v1/airReportYear'
     params['date']=date
     resent_month = list(time.localtime())[1]
     if type(tsno)==str:tsno =[tsno]
@@ -442,19 +447,19 @@ def air_quality_statistics_year(url,params,tsno,dict_tsnos,token):
                 strs +='<br>#'+l['recordDateStr']+'#  '
                 if  not o3:
                     if l['o3']!=0:
-                        strs +=' O3:'+str(lists[0]['o3'])
+                        strs +=' O3:'+str(l['o3'])
                         o3=True
                 if  not no2:
                     if l['no2']!=0:
-                        strs +=' NO2:'+str(lists[0]['no2'])
+                        strs +=' NO2:'+str(l['no2'])
                         no2=True
                 if  not co:
                     if l['co']!=0:
-                        strs +=' CO:'+str(lists[0]['co'])
+                        strs +=' CO:'+str(l['co'])
                         co=True
                 if  not so2:
                     if l['so2']!=0:
-                        strs +=' SO2:'+str(lists[0]['so2'])
+                        strs +=' SO2:'+str(l['so2'])
                         so2=True
                 if all([o3,so2,co,so2]):
                     have_air =True
