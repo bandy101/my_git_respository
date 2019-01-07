@@ -121,7 +121,7 @@ class BlackBox:
     #                    ---- 参考 moveS
     #                    ---- 使用 grabVideo
     # 分类完成视频后      ---- delsNoSrc
-    def grabVideo(self,flag: str,placeName: str=None,scale: float=0.8,serialNumber: int=0,):
+    def grabVideo(self,flag: str,placeName: str=None,scale: float=0.4,serialNumber: int=0,):
         """ 获取视频素材    flag[ test,train]
         截出的图片以`日期_地名_编号`的格式命名
         @videoPath str: 视频路径
@@ -136,7 +136,7 @@ class BlackBox:
         '''
         # H:\AI_Data\海康Data\20181225\视频\非黑烟视频\test\非黑烟视频\20181221 青岛\20181221_青岛_078.mp4
         # videoPath: str,
-        videoPath = r'H:\AI_Data\未入库12\test\非黑烟视频\20181226 漯河平台\20181226_龙江路污水处理厂_00.mp4'
+        videoPath = r'H:\AI_Data\未入库12\珠海26-27\test\黑烟视频\20181227 珠海\20181227_珠海_06.mp4'
         print(path.basename(videoPath))
         #获取相应的文件夹
         saveDirName = path.dirname(path.dirname(path.dirname(videoPath))) # [测试,训练]夹 ([test,train])
@@ -525,27 +525,30 @@ class BlackBox:
         return prob_1
 
     # 对于不同文件夹存放相同名称文件 进行同步(删除)
-    def delsNoSrc(self,src: str='原始素材',*arg):
+    def delsNoSrc(self,src: str='dest',*arg):
         '''删除src[原始素材]中没有的文件'''
         # src H:\AI_Data\海康Data\20181225\入库\dest
         print('src:',src)
         _index  = 0 # 删除数量
-        allFiles = [_[:-4] for p,d,f in os.walk(src) for _ in f]
+        # 
+        allFiles = [path.join(p,_[:-4]).replace('dest','原始素材') for p,d,f in os.walk(src) for _ in f]
+        print(allFiles[0])
         if not arg:
             print('not arg!')
             srcPrfix = src.split('原始素材')[0]
             # arg = [path.join(srcPrfix,'原图')]
-            arg = [r'H:\AI_Data\海康Data\20181225\20181225 珠海\原始素材']
+            arg = [r'H:\AI_Data\未入库12\原始素材']
         for _ in arg:
             print('arg:',arg)
             # for p,d,fs in os.walk(''.join(_)):
             for p,d,fs in os.walk(_):
                 for f in fs:
-                    if f[:-4] not in allFiles:
+                    if path.join(p,f[:-4]) not in allFiles:
+                        # print('##:',path.join(p,f[:-4]))
                         # print(f[:-4])
-                        os.remove(path.join(p,f))
+                        # os.remove(path.join(p,f))
                         _index +=1
-                        print(f'删除:{path.join(p,f)} 成功 {_index:04}')
+                        # print(f'删除:{path.join(p,f)} 成功 {_index:04}')
                         
     #重新命名目录下的文件名称
     def rename(self,srcPath: str):
