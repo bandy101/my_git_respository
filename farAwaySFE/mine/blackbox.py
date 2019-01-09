@@ -531,24 +531,37 @@ class BlackBox:
         print('src:',src)
         _index  = 0 # 删除数量
         # 
-        allFiles = [path.join(p,_[:-4]).replace('dest','原始素材') for p,d,f in os.walk(src) for _ in f]
-        print(allFiles[0])
+        allFiles = [path.join(p,_[:-4]).replace('dest','原始素材').replace(r'0\test',r'test\0').replace(r'0\train',r'train\0')\
+                    .replace(r'1\test',r'test\1').replace(r'1\train',r'train\1')\
+                    for p,d,f in os.walk(src) for _ in f]
+        allFiles = list(map(lambda x:x.replace("\\",''),allFiles))
+        allFiles = list(map(lambda x:x.replace("/",''),allFiles))
+        allFiles = list(map(lambda x:x.split('原始素材')[-1],allFiles))
+        
+        _x = 'train020190102_龙江路污水处理厂_00_0003'
+        print(_x in allFiles)
+
+        print(allFiles)
         if not arg:
             print('not arg!')
             srcPrfix = src.split('原始素材')[0]
             # arg = [path.join(srcPrfix,'原图')]
-            arg = [r'H:\AI_Data\未入库12\原始素材']
+            arg = [r'H:\AI_Data\未入库12\原图']
         for _ in arg:
             print('arg:',arg)
             # for p,d,fs in os.walk(''.join(_)):
             for p,d,fs in os.walk(_):
                 for f in fs:
-                    if path.join(p,f[:-4]) not in allFiles:
+                    if path.join(path.basename(path.dirname(p)),path.basename(p),f[:-4]).replace('\\','').replace('/','')\
+                        not in allFiles:
+                        # print(path.join(path.basename(path.dirname(p)),path.basename(p),f[:-4]).replace('\\',''))
                         # print('##:',path.join(p,f[:-4]))
                         # print(f[:-4])
-                        # os.remove(path.join(p,f))
+                        os.remove(path.join(p,f))
                         _index +=1
-                        # print(f'删除:{path.join(p,f)} 成功 {_index:04}')
+                        print(f'删除:{path.join(p,f)} 成功 {_index:04}')
+        print(allFiles[0],len(allFiles))
+        
                         
     #重新命名目录下的文件名称
     def rename(self,srcPath: str):
