@@ -3,7 +3,7 @@ from __init__ import *
 from TCP import TCP
 
 Chunk_Size =1024 # 字节数
-PERMIT = 1 # 访问AIMatris 文件夹权限
+PERMIT = 0 # 访问AIMatris 文件夹权限
 
 class SFETelemerty(TCP):
     
@@ -46,6 +46,7 @@ class SFETelemerty(TCP):
             index = -1
             if not switch:
                 break
+            if not path.exists(path.join(_path,'image2')):continue
             for f in os.listdir(path.join(_path,'image2')):
                 im1,im2 = None,None
                 if f[-3:].lower() in ['mp4','avi','jpg','png']:
@@ -135,7 +136,7 @@ if __name__ == '__main__':
         #paths : 操作的根目录
         # '增加平台'
     print('\t请选择区域!')
-    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河----#:')
+    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河,5:江门----#:')
     if flag_site=='1':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
@@ -156,6 +157,11 @@ if __name__ == '__main__':
         paths = './videoData_luohe' 
         platform = '漯河平台'
         carErrorsufix = 'lh'
+    elif flag_site=='5':
+        urlPrefix = str(alls['sitePosition']['jiangmen'])
+        paths = './videoData_jiangmen' 
+        platform = '江门平台'
+        carErrorsufix = 'jm'
     else:raise '错误的输入！'
     #```初始化 接口
     loginrurl = urlPrefix
@@ -196,12 +202,14 @@ if __name__ == '__main__':
             flagD  = input('#----全部下载:0(默认),下载当天:1,昨天:2----#:')
             flagD = flagD.strip()
             _pattern = re.compile(r'\D')
+
+            if not flagD:
+                flagD = '0'
             if _pattern.findall(flagD):
                 raise '输入错误！'
-            if not flagD:
-                flagD = 0
             flagD = int(flagD)
             _name = None
+
             if flagD:
                 _name = (now_time + datetime.timedelta(days = -flagD+1)).strftime('%Y/%m/%d')
                 begindate = _name.replace('/','-')

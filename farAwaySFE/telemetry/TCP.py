@@ -63,7 +63,9 @@ class TCP:
             return None
 
         try:
-            if res.status_code !=200 : 
+            if res.status_code == 401:
+                self._cookie_ = self._cookie
+            elif res.status_code !=200 : 
                 print(f' --异常!,{flag},{res},{url}')
                 return None
             elif not isStream:

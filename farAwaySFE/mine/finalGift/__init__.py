@@ -281,7 +281,8 @@ def air_quality_data_manger(url,params,tsno,dict_tsnos,token):
         # time.sleep(1)
         interval = -int(str(lists[0]['collectionDate'])[0:10]) +int(time.time())
         if (interval//60>18):
-            strs +=k + '站点 数据异常 '+lists[0]['collectionDateStr']+' 后无空气质量数据\n'
+            strs +=k + '站点 数据异常 '+lists[0]['collectionDateStr']+' 后无空气质量数据<br>'
+            strss +=strs
             continue
         o3,no2,co,so2=False,False,False,False
         for l in lists:
@@ -294,13 +295,13 @@ def air_quality_data_manger(url,params,tsno,dict_tsnos,token):
             if  not so2:
                 if l['so2']!=0:so2=True
         if  not all([o3,so2,co,so2]):
-                strs +=k + '站点 数据值异常'+'<br>O3:'+str(lists[0]['o3'])+' NO2:'+str(lists[0]['no2'])\
-                +' CO:'+str(lists[0]['co'])+' SO2:'+str(lists[0]['so2'])+'<br>'
+            strs +=k + '站点 数据值异常'+'<br>O3:'+str(lists[0]['o3'])+' NO2:'+str(lists[0]['no2'])\
+                    +' CO:'+str(lists[0]['co'])+' SO2:'+str(lists[0]['so2'])+'<br>'
+            strss +=strs
         if strs=='':
             strss +='<b>'+k +'</b>'+ '站点 数据正常<br>O3:'+str(lists[0]['o3'])+' NO2:'+str(lists[0]['no2'])+\
             ' CO:'+str(lists[0]['co'])+' SO2:'+str(lists[0]['so2'])+'<br>'
-    print(strss)
-    return strss
+    return strss 
 
 # 空气日统计
 def air_quality_statistics_day(url,params,tsno,dict_tsnos,token):
