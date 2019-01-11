@@ -141,7 +141,7 @@ class Gui(QMainWindow,Ui_MainWindow):
         _,frame_ = cv2.threshold(frame_,244,255,cv2.THRESH_BINARY)
         frame_ = cv2.morphologyEx(frame_,cv2.MORPH_CLOSE,None,iterations=3)
         area = []
-        x= cv2.findContours(frame_,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[1]
+        x= cv2.findContours(frame_.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[1]
         for _1 in x:
             area_ = cv2.contourArea(_1)
             if area_<0 and area_<1000:

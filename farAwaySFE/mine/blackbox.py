@@ -648,11 +648,37 @@ class BlackBox:
                     pass
     # temp
     def Temp(self,src):
-        for p,d,fs in os.walk(src):
-            for f in fs:
-                if '20181221_青岛' in f:
-                    shutil.move(path.join(p,f),path.join(p,f.replace('20181221_青岛','20181221_嘉兴')))
+        with open('pos.dat',mode='a') as f: 
+            for _ in os.listdir(src):
+                f.write(path.join(src,_)+'1 0 0 64 64\n')
 
+
+    # 转换图片的大小
+    def convert(self,srcP: str,dst: str=None):
+        '''
+        src str:目标文件夹目录
+        dst str:存储文件夹目录 默认当前文件夹
+        '''
+        x = input('格式大小(默认128*128):')
+        if not x:
+            x = [128,128]
+        else:
+            x = list(map(lambda x:int(x),x.split('*')))
+            print('x:',x)
+        if not dst:
+            dst = path.join(srcP,'dest')
+            os.makedirs(dst,exist_ok=True)
+
+        _ims = [path.join(p,_) for p,d,f in os.walk(srcP) for _ in f if _[-3:].lower() in ['jpg','png']]
+        for _ in _ims:
+            try:
+                frame = cv_imread(_)
+            except:
+                print('##:',_)
+                continue
+            frame = cv2.resize(frame,(*x,))
+            cv_imwrite(path.join(dst,path.basename(_)),frame)
+        print(f'转换成功 {len(_ims)} 张')
 if __name__ == '__main__':
     from fire import Fire
     Fire(BlackBox)
