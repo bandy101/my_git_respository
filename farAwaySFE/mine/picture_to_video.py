@@ -102,7 +102,7 @@ def GMM():
                 break
     cv2.destroyAllWindows()
 
-# 分视频
+# 视频
 def classfy(srcP: str):
     videos = [path.join(p,_) for p,d,f in os.walk(srcP) for _ in f if _[-3:].lower() in ['mp4','avi']]
     for _ in videos:
@@ -123,22 +123,26 @@ def detect():
         print('加载错误！')
         return
     camera = cv2.VideoCapture('videos/qy_08.mp4')
+    width,height= camera.get(3),camera.get(4)
     while (True):
         ret,frame=camera.read()
-        frame = cv2.resize(frame,(800,600))
+        frame = cv2.resize(frame,(int(width*350/height),350))
         if ret:
             gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-            faces=car_casade.detectMultiScale(gray,1.2,4)
-            print('start')
-            for (x,y,w,h) in faces:#返回的x,y代表roi区域的左上角坐标，w,h代表宽度和高度
-                img=cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+            # gray= cv2.resize(gray,(80,60))
+            faces=car_casade.detectMultiScale(gray,1.5,4)
+            # print('start')
+            for (x,y,w,h) in faces:
+                print(x,y,w,h)
+                # img=cv2.rectangle(frame,(x*10,y*10),((x+w)*10,(y+h)*10),(255,0,0),2)
+                img=cv2.rectangle(frame,(x,y),((x+w),(y+h)),(255,0,0),2)
                 
             cv2.imshow("camera",frame)
             key=cv2.waitKey(30)&0xff
             if key==27:
                 sys.exit()
         else:
-            print('###error')
+            print('error')
             break
 carModel = VehicleModel.VehicleModel()
 carModel.load('DL/vehicle.h5')
@@ -156,7 +160,7 @@ def model_car(im):
     return bool(r)
 if __name__ == '__main__':
     # main()
-    GMM()
+    detect()
     # detect()
     # model_car()
     # classfy(input('SRCpath:'))

@@ -87,7 +87,7 @@ if __name__ == '__main__':
     # Switch to fast but low recall Selective Search method
     if (sys.argv[2] == 'f'):
         ss.switchToSelectiveSearchFast()
- 
+
     # Switch to high recall but slow Selective Search method
     elif (sys.argv[2] == 'q'):
         ss.switchToSelectiveSearchQuality()

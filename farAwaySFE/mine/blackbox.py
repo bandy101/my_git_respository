@@ -73,13 +73,30 @@ class BlackBox:
             if (x1,y1) in [(i,j)]:y1 = y1-1
         return result
 
-    #归一化
+    # 归一化
     def _normlize(self,a):
         r = max(a)-min(a)
         a = a-min(a)
         a = a/r
         return a
    
+       # LBP
+    def LBP(self,imgPath):
+        '''设置灰度阈值
+            BP的基本思想是定义于像素的8邻域中,以中心像素的灰度值为阈值,
+            将周围8个像素的值与其比较,如果周围的像素值小于中心像素的灰度值,
+            该像素位置就被标记为0,否则标记为1.每个像素得到一个二进制组合,
+            就像00010011.每个像素有8个相邻的像素点,即有2^8种可能性组合 
+        '''
+        img = cv_imread(imgPath)
+        dst = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        mat = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+        h,w = dst.shape
+        for i in range(1,h-1):
+            for j in range(1,w-1):
+                dst[i,j] =self._get_neighbor(mat,i,j)
+        print (dst[0,0],dst[0,1])
+        return dst
     @property
     def _callBack(self):
         return self._loadMouseCallback()
@@ -493,21 +510,7 @@ class BlackBox:
                     shutil.copy(path.join(p,_),targitPath)
                 index +=1
 
-    # LBP
-    def LBP(self,img):
-        '''设置灰度阈值
-            BP的基本思想是定义于像素的8邻域中,以中心像素的灰度值为阈值,
-            将周围8个像素的值与其比较,如果周围的像素值小于中心像素的灰度值,
-            该像素位置就被标记为0,否则标记为1.每个像素得到一个二进制组合,
-            就像00010011.每个像素有8个相邻的像素点,即有2^8种可能性组合 
-        '''
-        dst = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        mat = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-        h,w = dst.shape
-        for i in range(1,h-1):
-            for j in range(1,w-1):
-                dst[i,j] =self._get_neighbor(mat,i,j)
-        return dst
+
     
     # 巴适距离 筛选相似的图片
     def get_probility(self,im1,im2):
