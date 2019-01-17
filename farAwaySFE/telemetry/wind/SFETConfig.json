@@ -1,0 +1,95 @@
+{   
+    "id": "farAwaySFE",
+    "name": "0",
+    "telemetryEquipment":
+    {
+        "SFE-R600-B22W4419": "移动式",
+        "SFE-R600-V22W3522": "S229环宇立交桥治超站1号机",
+        "SFE-R600-V22W4495": "S229环宇立交桥治超站2号机",
+        "SFE-R600-V23W1906": "S308大召营镇1号机",
+        "SFE-R600-V23W1922": "S308大召营镇2号机",
+        "SFE-R600-V23W1948": "S308新乡收费站1号机",
+        "SFE-R600-V23W2819": "S308新乡收费站2号机",
+        "SFE-R600-V23W2833": "G107好运饲料1号机",
+        "SFE-R600-V23W2851": "G107好运饲料2号机",
+        "SFE-R600-V23W2902": "G107铁道路桥1号机",
+        "SFE-R600-V23W2926": "G107铁道路桥2号机",
+        "SFE-R600-G22W2807": "广清大道(龙塘)",
+        "SFE-R600-G22W2714": "治超站出口",
+        "SFE-R600-G22W2772": "三棵竹一桥(源潭)",
+        "SFE-R600-G22W2798": "清远大道(党校)",
+        "SFE-R600-V23W1948-1126":"S308新乡收费站1126",
+        "SFE-R600-V23W1948-1127":"S308新乡收费站1127",
+        "SFE-R600-V23W1948-1128":"S308新乡收费站1128",
+        "SFE-R600-G22W3413":"龙江路污水处理厂",
+        "SFE-R600-G23W1439":"杜阮北二路",
+        "SFE-R600-G22W3437":"江门大道"
+    }, 
+    "sitePosition":
+    {
+        "qingyuan": "http://202.105.10.126:1577",
+        "xinxiang": "http://218.28.71.220:1570",
+        "guangzhou":"http://183.6.189.50:1590",
+        "luohe":"http://219.157.119.194:11001",
+        "jiangmen": "http://172.16.0.115:8000"
+    },
+    "account":
+    {
+        "password":"5313232ef0a55311cf31e00b97afa15c",
+        "user":"auditor"
+    },
+    "publicURL":{
+        "login":{
+            "url": "/api/login",
+            "annotation": "获取登陆权限"
+        },
+        "plate_color": {
+            "url": "/api/list/plate_color",
+            "annotation": "获取车牌颜色列表"
+        },
+        "plate_type":{
+            "url": "/api/list/plate_type",
+            "annotation": "获取车牌类型列表"
+        },
+        "vehicle_color":{
+            "url": "/api/list/plate_type",
+            "annotation": "获取车辆颜色列表(车身)"
+        },
+        "vehicle_type":{
+            "url": "/api/list/plate_type",
+            "annotation": "获取车辆类型列表"
+        },
+        "vehicle_type":{
+            "url": "/api/list/plate_type",
+            "annotation": "获取车辆类型列表"
+        },
+        "website":{
+            "url": "/api/record",
+            "annotation": "获取站点ID(名称)列表"
+        },
+        "websiterecord":{
+            "url": "/api/record/{site}",
+            "annotation": "获取单条id记录"
+        },
+        "status":{
+            "url": "/api/record/{site}/{record_id}/status",
+            "annotation": "确认非黑烟"
+        },
+        "upload":{
+            "url": "/api/record/{site}/{record_id}/upload",
+            "annotation": "上传黑烟"
+        },
+        "video":{
+            "url": "/api/record/{site}/{record_id}/video",
+            "annotation": "下载黑烟视频"
+        },
+        "image1":{
+            "url": "/api/record/{site}/{record_id}/image1",
+            "annotation": "下载黑烟图片1"
+        },
+        "image2":{
+            "url": "/api/record/{site}/{record_id}/image2",
+            "annotation": "下载黑烟图片2"
+        }
+    }
+}
