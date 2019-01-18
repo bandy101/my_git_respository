@@ -37,7 +37,7 @@ def computeHog(imgs,features,wsize = (128,128)):
             h = imgs[i].shape[0]
             w = imgs[i].shape[1]
             roi = imgs[i][y : y + h, x : x + w]
-            # print(roi.shape)
+            # print('hog.compute:',len(hog.compute(roi)))
             features.append(hog.compute(roi))
             count += 1
     print ('count = ',count)
@@ -75,7 +75,7 @@ def get_features(features,labels):
     pos_imgs,pos_labels = read_pos_samples('C:/Users/NHT/Desktop/car/pos')
     print('computer:Y',len(pos_labels))
     features = computeHog(pos_imgs,features)
-    
+    prin
     [labels.append(1) for _ in range(len(pos_imgs))]
     
     neg_imgs,neg_labels = read_neg_samples('C:/Users/NHT/Desktop/car/neg')
@@ -101,16 +101,16 @@ def hog_train(svm):
     print('feature:',features[0],len(features[0]))
     print(np.array(features).shape)
     # svm training
-    print ('svm training...')
-    svm_train(svm,features,labels)
-    print ('svm training complete...')
+    # print ('svm training...')
+    # svm_train(svm,features,labels)
+    # print ('svm training complete...')
     
-    hog.setSVMDetector(get_svm_detector(svm))
-    hog.save('myHogDector.bin')
+    # hog.setSVMDetector(get_svm_detector(svm))
+    # hog.save('myHogDector.bin')
     
-    print('hard samples training...')
-    get_hard_samples(svm,features,labels)
-    print('hard samples complete...')
+    # print('hard samples training...')
+    # get_hard_samples(svm,features,labels)
+    # print('hard samples complete...')
     
     
 if __name__ == '__main__':

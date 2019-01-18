@@ -520,11 +520,11 @@ class BlackBox:
             return 相似的的概率(0~1)
         '''
         hist0,_ = np.histogram(im1.ravel(),256,[0,256])
-        hist1,_ = np.histogram(im2.ravel(),256,[0,256])
-        a ,b= self._normlize(hist0),self._normlize(hist1)
-        BC = sum(np.sqrt(a*b))  
-        prob_0 = BC/np.sqrt(sum(a)*sum(b))  #原始巴适距离
-        prob_1 = 1-np.sqrt(1-(BC/np.sqrt(sum(a)*sum(b)))) #进行优化
+        hist1,_ = np.histogram(im2.ravel(),256,[0,256]) #  # 将im中所有的像素分成 256 bins
+        a ,b= self._normlize(hist0),self._normlize(hist1) # 归一化
+        BC = sum(np.sqrt(a*b))   # up
+        prob_0 = BC/np.sqrt(sum(a)*sum(b))  # 原始巴适距离(巴适系数)
+        prob_1 = 1-np.sqrt(1-(BC/np.sqrt(sum(a)*sum(b)))) # 进行优化
         return prob_1
 
     # 对于不同文件夹存放相同名称文件 进行同步(删除)

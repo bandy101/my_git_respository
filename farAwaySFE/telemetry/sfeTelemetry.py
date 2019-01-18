@@ -3,7 +3,7 @@ from __init__ import *
 from TCP import TCP
 
 Chunk_Size =1024 # 字节数
-PERMIT = 0 # 访问AIMatris 文件夹权限
+PERMIT = 1 # 访问AIMatris 文件夹权限
 
 class SFETelemerty(TCP):
     
@@ -136,7 +136,7 @@ if __name__ == '__main__':
         #paths : 操作的根目录
         # '增加平台'
     print('\t请选择区域!')
-    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河,5:江门----#:')
+    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河,5:江门,6:开封----#:')
     if flag_site=='1':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
@@ -162,6 +162,11 @@ if __name__ == '__main__':
         paths = './videoData_jiangmen' 
         platform = '江门平台'
         carErrorsufix = 'jm'
+    elif flag_site=='6':
+        urlPrefix = str(alls['sitePosition']['kaifeng'])
+        paths = './videoData_kaifeng' 
+        platform = '开封平台'
+        carErrorsufix = 'kf'
     else:raise '错误的输入！'
     #```初始化 接口
     loginrurl = urlPrefix

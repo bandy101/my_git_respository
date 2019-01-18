@@ -87,8 +87,10 @@ def GMM():
                 _rects = selectRect(_im,400,1600)
                 for _rect in _rects:
                     x1,y1,x2,y2 = _rect
-                    if model_car(frame[y1:y2,x1:x2]):
-                        cv2.rectangle(_mat, (x+x1, y1+y), (x2+x, y2+y), (0, 255, 0), 2)
+                    # if model_car(frame[y1:y2,x1:x2]):
+                    cv2.rectangle(_mat, (x+x1, y1+y), (x2+x, y2+y), (0, 255, 0), 2)
+                
+                
                 # ims_.append(frame[y:y+h,x:x+w])
             # for _im in ims_:
             #     _rects = selectRect(_im,100,1600)
@@ -98,7 +100,7 @@ def GMM():
             #         cv2.rectangle(_mat, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 # cv2.rectangle(_mat, (x1, y1), (x2, y2), (0, 0, 255), 2)
             cv2.imshow('out',_mat)
-            if cv2.waitKey() == ord('q'):
+            if cv2.waitKey(22) == ord('q'):
                 break
     cv2.destroyAllWindows()
 
@@ -160,7 +162,8 @@ def model_car(im):
     return bool(r)
 if __name__ == '__main__':
     # main()
-    detect()
+    # detect()
+    GMM()
     # detect()
     # model_car()
     # classfy(input('SRCpath:'))

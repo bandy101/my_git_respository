@@ -4,10 +4,12 @@ from _op import py_cpu_nms
 from imutils.object_detection import non_max_suppression
 import cv2
 
-hog = cv.HOGDescriptor()
-hog.load('myHogDector.bin')
+from demo import get_hog_object
+# hog = get_hog_object((128*128))
+hog =  cv2.HOGDescriptor()
+hog.load('myHogDector1.bin')
  
- 
+
 # img = cv.imread('../mine/0.jpg')
 
 cam = cv2.VideoCapture('../mine/video/qd_04.mp4')
