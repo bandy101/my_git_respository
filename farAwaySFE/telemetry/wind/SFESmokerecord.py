@@ -1,5 +1,6 @@
 class SFETelemerty(TCP):
     
+
     def __init__(self,loginurl: str,Paramer: dict,PERMIT = 0):
         '''
             @ Paramer dict: 登陆账户密码
@@ -10,7 +11,7 @@ class SFETelemerty(TCP):
             self.configs = alls
         URLlogin = self.configs['publicURL']['login']['url']
         user = self.configs['account']['user'] # 用户名
-
+        
         self.TSNO  = self.configs['telemetryEquipment'] #prefix = deviceNumber （english）
         self.TSNO_ = dict(zip(self.TSNO.values(),self.TSNO.keys()))
         self.cookies_urllogin = loginurl[:loginurl.rindex('/')+1]+'json:'+user+'@'+\
@@ -38,6 +39,7 @@ class SFETelemerty(TCP):
         '''     '''
         savePath = r'\\192.168.20.21/AIMaterials/每日素材-未入库/车辆误判/'+_T+'/'+'车辆误判'+carErrorsufix
         local_savePath = path.join(currentPath,begindate.replace('-',''),'车辆误判'+carErrorsufix)
+
 
         if self.PERMIT:
             os.makedirs(savePath,exist_ok=True)

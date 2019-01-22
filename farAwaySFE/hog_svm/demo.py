@@ -1,6 +1,6 @@
 import numpy as np
 import cv2 as cv
- 
+
 from get_data import *
 # from svm_train import svm_config,svm_train,svm_save,svm_load
  
@@ -49,7 +49,7 @@ def get_svm_detector(svm):
     rho, _, _ = svm.getDecisionFunction(0)
     sv = np.transpose(sv)
     return np.append(sv,[[-rho]],0)        
- 
+
 #加载hardexample
 def get_hard_samples(svm,hog_features,labels):
     hog = get_hog_object((128,128))
@@ -75,7 +75,6 @@ def get_features(features,labels):
     pos_imgs,pos_labels = read_pos_samples('C:/Users/NHT/Desktop/car/pos')
     print('computer:Y',len(pos_labels))
     features = computeHog(pos_imgs,features)
-    prin
     [labels.append(1) for _ in range(len(pos_imgs))]
     
     neg_imgs,neg_labels = read_neg_samples('C:/Users/NHT/Desktop/car/neg')
@@ -100,17 +99,16 @@ def hog_train(svm):
     features,labels = get_features(features,labels)
     print('feature:',features[0],len(features[0]))
     print(np.array(features).shape)
-    # svm training
-    # print ('svm training...')
-    # svm_train(svm,features,labels)
-    # print ('svm training complete...')
+    print ('svm training...')
+    svm_train(svm,features,labels)
+    print ('svm training complete...')
     
-    # hog.setSVMDetector(get_svm_detector(svm))
-    # hog.save('myHogDector.bin')
+    hog.setSVMDetector(get_svm_detector(svm))
+    hog.save('myHogDector.bin')
     
-    # print('hard samples training...')
-    # get_hard_samples(svm,features,labels)
-    # print('hard samples complete...')
+    print('hard samples training...')
+    get_hard_samples(svm,features,labels)
+    print('hard samples complete...')
     
     
 if __name__ == '__main__':

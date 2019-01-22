@@ -27,7 +27,7 @@ while ret:
 
 
     rects,scores = hog.detectMultiScale(img,winStride = (8,8),padding = (0,0),scale = 1.05)
-    
+    print(scores)
     sc = [score[0] for score in scores]
     sc = np.array(sc)
     

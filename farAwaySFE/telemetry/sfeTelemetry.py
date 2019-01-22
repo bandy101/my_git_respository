@@ -3,7 +3,7 @@ from __init__ import *
 from TCP import TCP
 
 Chunk_Size =1024 # 字节数
-PERMIT = 1 # 访问AIMatris 文件夹权限
+PERMIT = 0 # 访问AIMatris 文件夹权限
 
 class SFETelemerty(TCP):
     
@@ -216,7 +216,7 @@ if __name__ == '__main__':
             _name = None
 
             if flagD:
-                _name = (now_time + datetime.timedelta(days = -flagD+1)).strftime('%Y/%m/%d')
+                _name = (now_time + datetime.timedelta(days = 1-flagD)).strftime('%Y/%m/%d')
                 begindate = _name.replace('/','-')
                 currentPath = path.join(paths,str(begindate))
                 if not path.exists(currentPath): os.makedirs(currentPath)
@@ -283,7 +283,7 @@ if __name__ == '__main__':
             '''
             通过 输入ID 比对recordINFO.split('separator')->[id,name,site]
             '''
-        
+
             print('确认前需要确保各个站点的视频已经下载下来!')
             print('#----y:推送ID---f:读取文本ID---q:退出----#')
             com =input('输入确认模式↑:')
