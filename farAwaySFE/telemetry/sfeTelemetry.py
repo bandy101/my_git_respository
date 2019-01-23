@@ -122,6 +122,7 @@ class SFETelemerty(TCP):
         sites = [_ for _ in json.loads(res.content)['content']]
         return sites
 
+
 if __name__ == '__main__':
     #inistanse
     pool = ThreadPoolExecutor(max_workers=8) # 线程池初始化
@@ -238,7 +239,7 @@ if __name__ == '__main__':
                 if not path.exists(downloadPath): os.makedirs(downloadPath)
                 # 获取站点记录列表
                 list_url = urlPrefix+str(alls['publicURL']['websiterecord']['url']).replace("{site}",site)
-                lists =json.loads(SFET.getInfo(list_url).content)['content']
+                lists = json.loads(SFET.getInfo(list_url).content)['content']
                 
                 # 测试
                 if _name:

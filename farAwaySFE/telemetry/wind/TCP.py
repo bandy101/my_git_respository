@@ -14,9 +14,10 @@ class TCP:
     def __init__(self,loginurl: str,Paramer :dict=None):
         '''出初始化参数
         '''
+        self._paramer = Paramer # 登陆账户密码
         self.__COOKIES = None
         self.loginurl = loginurl # 网站首地址
-        self.cookies_urllogin =None # 登入接口
+        # self.cookies_urllogin =None # 登入接口
 
         if self.cookies_urllogin:
             self._cookie_ = self._cookie
@@ -49,9 +50,9 @@ class TCP:
                 print(error)
                 res = None
             else:
-                for _ in ['success','errcode']:
+                for _ in ['success','errcode']: # 返回字段
                     if _ in json.loads(res.content).keys():
-                        if _ in json.loads(res.content)[_]:
+                        if json.loads(res.content)[_]:
                             break
                 else:
                     error = f' --数据流返回异常!,{flag},{res},{url}'
@@ -89,7 +90,7 @@ class TCP:
                 traceback.print_exc()
                 with open('log.txt',mode='a') as f:
                     f.write(traceback.format_exc()+'\n')
-            res = self.getInfo(url,True)
+            res = self.getInfo(url,cookies = self.cookie,stream=True)
 
 
     @property
