@@ -3,7 +3,8 @@ from SystemSetting import SystemData as SD
 # 调度表
 class Schedulsheet(SD):
     def __init__(self,name: str):
-        self.name ='asd'
+        self.name =name
+        
     
     property
     def savedata(self):

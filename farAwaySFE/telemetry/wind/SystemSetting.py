@@ -2,6 +2,7 @@
 
 # 系统设置
 class SystemData:
+    
     '''
         @ 数据路径
         @ 权限
