@@ -14,7 +14,7 @@ class SFETelemerty(TCP):
         '''
         
         super().__init__(loginurl,Paramer,flag)
-
+    
         # self.SITES = self.sitesID  # 站点名称
     
     # 操作黑烟
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     with open('SFETConfig.json',encoding='utf-8') as f:
         alls = json.load(f)
     paramer ={ 
-        'password':'5313232ef0a55311cf31e00b97afa15c',
+        'password':'5313232ef0a55311cf31e00b97afa15c', # md5 sfe@123456
         'user':'auditor'
     }
     #--start--#

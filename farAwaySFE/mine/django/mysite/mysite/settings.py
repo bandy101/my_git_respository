@@ -25,7 +25,7 @@ SECRET_KEY = '=1!-z5h-#*7!mlc&!8!c3l1)d-c*41y*tm1^zd*bd^y$0an_tx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.baidu.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
