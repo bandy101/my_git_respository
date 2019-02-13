@@ -1,5 +1,5 @@
 class SFETelemerty(TCP):
-    
+
 
     def __init__(self,loginurl: str,Paramer: dict,PERMIT: bool=True):
         '''
@@ -36,110 +36,32 @@ class SFETelemerty(TCP):
         flag = 1
         if flag:
             print(self.loginurl+targitURL,'--确认成功')
-
+        
     # 鉴赏黑烟
-    def authenticate(self,currentPath: str,dirName: str,begindate,platsubfix: str=None):
-        '''     '''
-        savePath = r'\\192.168.20.21/AIMaterials/每日素材-未入库/车辆误判/'+_T+'/'+'车辆误判'+carErrorsufix
-        local_savePath = path.join(currentPath,begindate.replace('-',''),'车辆误判'+carErrorsufix)
+    """ paramer """
 
-
-        if self.PERMIT:
-            os.makedirs(savePath,exist_ok=True)
-        os.makedirs(local_savePath,exist_ok=True)
-
-        SCALE = 0.8     # 图片缩放比例
-        switch =True #鉴赏的开关 # ['o']
-        currentDir =os.getcwd()
-        sites = [_ for _ in os.listdir(currentPath) if path.isdir(path.join(currentPath,_)) and _.replace('-','')[:8] not  in [dirName]] # 通过文件夹名称获取站点对应名
-
-        for site in sites:
-            print('每个站点间隔50张图片显示一次当前图片地址:',site)
-            _path = path.join(currentPath,site)
-            index = -1
-            if not switch:
-                break
-            if not path.exists(path.join(_path,'image2')):continue
-            for f in os.listdir(path.join(_path,'image2')):
-                im1,im2 = None,None
-                if f[-3:].lower() in ['mp4','avi','jpg','png']:
-                    try:
-                        f = f[:-2]
-                        # im1 = cv_imread(path.join(_path,'image1',f[:-4]+'_1.jpg'))
-                        im2 = cv_imread(path.join(_path,'image2',f[:-4]+'_2.jpg'))
-                        index +=1
-                        if not index%50:
-                            print(path.join(_path,'image2',f[:-4]+'_2.jpg'))
-                    except:
-                        ''' #重新下载# 待完成'''    
-                        traceback.print_exc()
-                        with open('log.txt',mode='a') as fs:
-                            fs.write(traceback.format_exc()+'\n'+path.join(_path,'image1',f[:-4])+'\n')
-                        continue
-                else:continue
-                while(1):
-                    try:
-                        # cv2.imshow('Image1',cv2.resize(im1,None,fx=SCALE,fy=SCALE))
-                        cv2.imshow('Image2',cv2.resize(im2,None,fx=SCALE,fy=SCALE))
-
-                    except:
-                        traceback.print_exc()
-                        with open('log.txt',mode='a') as fs:
-                            fs.write(traceback.format_exc()+'\n'+'imshowError:'+path.join(_path,'image1',f[:-4])+'\n')
-                        break
-                    k=cv2.waitKey(1)&0xFF  
-                    if k ==32:
-                        break
-                    if k in [ord('w'),ord('W')]:
-                        #写入记录的操作#
-                        # cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_1.jpg'),im1)
-                        # cv_imwrite(path.join(currentPath,dirName,'车辆误判',f[:-4]+'_2.jpg'),im2)
-                        # cv_imwrite(savePath,im1)
-                        _T = begindate.replace('-','')[:-2]
-                        _srcPath = path.join(_path,'image1',f[:-4]+'_1.jpg')
-
-                        
-                        try:
-                            if PERMIT:
-                                shutil.copy(_srcPath,savePath)
-                            shutil.copy(_srcPath,local_savePath)
-                            print('---写入成功--- ',f[:-4])
-                        except:
-                            traceback.print_exc()
-                    if k in [102,70]: # f
-                        _url = self.loginurl+'/api/record/'+self.TSNO_[site]+'/'+str(f.split('~')[0])+'/video'
-                        print('url:',_url)
-                        _p  = path.join(currentPath,site,f[:-4]+'.mp4')
-                        self.download(_url,_p,stream=True,cookies=self.cookie)
-                        os.chdir(path.abspath(path.join(currentPath,site)))
-                        # os.system("\""+f+"\"") #含有空格
-                        os.system("\""+f[:-4]+'.mp4'+"\"")
-                        os.chdir(currentDir) #回到基本路径防止相对路径错误
-                    if k==111: #'o' 全部关闭
-                        switch = False
-                        cv2.destroyAllWindows()
-                        break
-                if not switch:break
-        cv2.destroyAllWindows()
-
-    # 获取设备站点的编号
+    # 获取设备站点的编号(id)
     @property
     def sites(self):
+        """@return 站点id列表"""    
         targitURL = str(self.configs['publicURL']['website']['url'])
         targitURL = self.loginurl + targitURL
         res  = self.getInfo(targitURL)
         sites = [_ for _ in json.loads(res.content)['content']]
         return sites
 
-    # 获取设备编号每条记录的集合
+    # 获取设备编号site 每条记录的集合(record_id)
     def per_site_lists(self,site):
-        list_url = self.loginurl+str(alls['publicURL']['websiterecord']['url']).replace("{site}",site)
+        list_url = self.loginurl+str(self.configs['publicURL']['websiterecord']['url']).replace("{site}",site)
         _lists = json.loads(self.getInfo(list_url).content)['content']
         return _lists
     
-    # 获取所有设备编号记录集合
+    # 获取所有设备编号和对应记录集合 (id,record_id)
     def lists(self) -> list:
         _temp = []
         for _ in self.sites:
-            _temp +=self.per_site_lists(_)
+            _temp.append((_,self.per_site_lists(_)))
         return _temp
+    
+    def _download(self):
+        

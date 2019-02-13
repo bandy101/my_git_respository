@@ -19,6 +19,9 @@ class SystemData:
     def data(self):
         return self.__dict__
     
+    def __str__(self):
+        print(self.data)
+
     @property
     def savedata(self):
         import pickle

@@ -5,7 +5,7 @@ class Schedulsheet(SD):
     def __init__(self,name: str):
         self.name =name
         
-    
+
     property
     def savedata(self):
         import pickle
@@ -17,6 +17,7 @@ class PeopleSchedul:
     """
         @ 人员调度
     """
+    names = Schedulsheet
 
     def __init__(self,people: str,sites: list):
         pass
