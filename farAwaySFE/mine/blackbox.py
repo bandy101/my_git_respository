@@ -540,16 +540,13 @@ class BlackBox:
         allFiles = list(map(lambda x:x.replace("\\",''),allFiles))
         allFiles = list(map(lambda x:x.replace("/",''),allFiles))
         allFiles = list(map(lambda x:x.split('原始素材')[-1],allFiles))
-        
-        _x = 'train020190102_龙江路污水处理厂_00_0003'
-        print(_x in allFiles)
 
         print(allFiles)
         if not arg:
             print('not arg!')
             srcPrfix = src.split('原始素材')[0]
             # arg = [path.join(srcPrfix,'原图')]
-            arg = [r'H:\AI_Data\未入库12\原图']
+            arg = [r'D:\test\原图']
         for _ in arg:
             print('arg:',arg)
             # for p,d,fs in os.walk(''.join(_)):
