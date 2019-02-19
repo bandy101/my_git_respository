@@ -119,6 +119,7 @@ class SFETelemerty(TCP):
         targitURL = str(self.configs['publicURL']['website']['url'])
         targitURL = self.loginurl + targitURL
         res  = self.getInfo(targitURL)
+        print(res.content)
         sites = [_ for _ in json.loads(res.content)['content']]
         return sites
 
@@ -137,7 +138,7 @@ if __name__ == '__main__':
         #paths : 操作的根目录
         # '增加平台'
     print('\t请选择区域!')
-    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河,5:江门,6:开封----#:')
+    flag_site = input('#----1:清远,2:新乡,3:广州,4:漯河,5:江门,6:开封,7:邯郸----#:')
     if flag_site=='1':
         urlPrefix = str(alls['sitePosition']['qingyuan'])
         paths = './videoData_qingyuan' 
@@ -168,6 +169,11 @@ if __name__ == '__main__':
         paths = './videoData_kaifeng' 
         platform = '开封平台'
         carErrorsufix = 'kf'
+    elif flag_site=='7':
+        urlPrefix = str(alls['sitePosition']['handan'])
+        paths = './videoData_handan' 
+        platform = '邯郸平台'
+        carErrorsufix = 'hd'
     else:raise '错误的输入！'
     #```初始化 接口
     loginrurl = urlPrefix
@@ -249,10 +255,12 @@ if __name__ == '__main__':
                     if all([list_['status'] in [False],list_['upload']\
                     in ['未上传']]):
                         video_url_ = video_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
-                        image1_url_ = image1_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
+                        # image1_url_ = image1_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
                         image2_url_ = image2_url.replace('{record_id}',str(list_['id'])).replace('{site}',site)
                         # targit_urls.extend((video_url_,image1_url_,image1_url_))
-                        targit_urls.extend((image1_url_,image2_url_))
+                        # targit_urls.extend((image1_url_,image2_url_))
+                        targit_urls.append((image2_url_))
+
                         name = list_['name']
                         #排除非法命名
 
@@ -264,7 +272,8 @@ if __name__ == '__main__':
                         targit_path_image1 = path.join(downloadPath,'image1')+'/'+str(list_['id'])+'~'+name+'_1.jpg'
                         targit_path_image2 = path.join(downloadPath,'image2')+'/'+str(list_['id'])+'~'+name+'_2.jpg'
                         # targit_paths.extend((targit_path_video,targit_path_image1,targit_path_image2))
-                        targit_paths.extend((targit_path_image1,targit_path_image2))
+                        # targit_paths.extend((targit_path_image1,targit_path_image2))
+                        targit_paths.append((targit_path_image2))
                         
                         # print('targit_paths:',targit_paths)
                         # print('test:',video_url_,'path:',targit_path_video)

@@ -66,17 +66,17 @@ class TCP:
             if res.status_code == 401:
                 self._cookie_ = self._cookie
             elif res.status_code !=200 : 
-                print(f' --异常!,{flag},{res},{url}')
+                print(f' --异常1!,{flag},{res},{url}')
                 return None
             elif not isStream:
                 try:
                     if not json.loads(res.content)['success']:
-                        print(f' --异常!,{flag},{res},{url}')
-                        return None
+                        print(f' --异常2!ss,{flag},{res},{url}')
+                        return res
                 except:
                     try:
                         if json.loads(res.content)['errcode']:
-                            print(f' --异常!,{flag},{res},{url}')
+                            print(f' --异常3!,{flag},{res},{url}')
                             return None
                     except:
                         traceback.print_exc()
@@ -133,7 +133,7 @@ class TCP:
             return self.__COOKIES
         else:
             try:
-                r = requests.post(loginURL,json=Paramer,timeout=6,verify=False)
+                r = requests.post(loginURL,json=Paramer,timeout=15,verify=False)
                 result = r.headers['Set-Cookie'].split(';')[0].split('=')
             except:
                 traceback.print_exc()
