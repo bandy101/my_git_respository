@@ -51,7 +51,7 @@ def printShd(request):
 
     names = 'proj_name shd_no sh_date sup_name sup_tel usr_name qr_code lists cght cg_usr_name cgzt gyl'.split()
     L2 = dict(zip(names, L))
-    data = json.dumps(L2,ensure_ascii=False,cls=ComplexEncoder)    
+    data = json.dumps(L2,ensure_ascii=False,cls=ComplexEncoder)  
     s = """
         {
         "errcode": 0,

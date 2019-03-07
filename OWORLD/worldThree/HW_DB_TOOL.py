@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""DB¹²ÏíÀà¿â"""
+"""DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"""
 from django.db import connection
 class DataBaseParent:
     def __init__(self):
@@ -19,8 +19,9 @@ class DataBaseParent:
         cur.close()
         return List,iTotal_length
 
+    # 
     def select_include_name(self,sqlstr):
-        #Ñ¡Ôñ½á¹û°üº¬List,iTotal_length,lFieldName
+        #Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½List,iTotal_length,lFieldName
         #return list(self.select(sqlstr))+[self.description]
         cur=connection.cursor()
         cur.execute('SET NAMES utf8mb4')
@@ -71,7 +72,7 @@ def mGetTransactionSQL(sqlstr):
     return s
 
 def addWhereToSQL(sqlstr,field,fieldtype,mode,value1='',value2=''):
-    #ÔÚSQLÓï¾äÖÐ½«field°´modeÑ°ÕÒ
+    #ï¿½ï¿½SQLï¿½ï¿½ï¿½ï¿½Ð½ï¿½fieldï¿½ï¿½modeÑ°ï¿½ï¿½
     sqlstr=string.replace(sqlstr,'from','FROM')    
     sqlstr=string.replace(sqlstr,'where','WHERE')
     lT=string.split(sqlstr,'WHERE ')
@@ -95,7 +96,7 @@ def addWhereToSQL(sqlstr,field,fieldtype,mode,value1='',value2=''):
     return s
 
 def addOrderByToSQL(sqlstr,field,order):
-    #ÔÚSQLÓï¾äÖÐ½«field°´orderÅÅÐò
+    #ï¿½ï¿½SQLï¿½ï¿½ï¿½ï¿½Ð½ï¿½fieldï¿½ï¿½orderï¿½ï¿½ï¿½ï¿½
     sqlstr=string.replace(sqlstr,'order by','ORDER BY')
     lT=string.split(sqlstr,'ORDER BY ')
     if len(lT)==2:
