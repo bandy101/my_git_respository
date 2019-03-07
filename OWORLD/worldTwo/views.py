@@ -1,5 +1,6 @@
 #coding:utf-8
 prj_name=__name__.split('.')[0]
+print('##:',prj_name)
 from django.http import HttpResponse,JsonResponse
 from django.http import HttpResponseRedirect  
 from login import login_func,logout_func,menu_func

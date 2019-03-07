@@ -11,24 +11,24 @@ from datetime import date, datetime
 import decimal
 import re
 import MySQLdb
-#ÏÞÖÆÓÃ "from XXXX import *" Ê±¿ÉÒÔµ¼ÈëµÄÃû×Ö
+#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "from XXXX import *" Ê±ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 __all__ = ['CLIENT_NAME','WEBSITE_PATH','m_sCorpID','m_sCorpSecret',
            'db','dActiveUser',
            'TIME_OUT','mValidateUser','get_YES_NO_data','get_dept_data',
            'get_mtc_t_data','HttpResponseCORS'
            ]
 
-#»ñÈ¡¿Í»§Ãû
+#ï¿½ï¿½È¡ï¿½Í»ï¿½ï¿½ï¿½
 CLIENT_NAME      = __name__.split('.')[0]
-#ÅäÖÃÊ§Ð§Ê±¼äÎª°ë¸öÐ¡Ê±
+#ï¿½ï¿½ï¿½ï¿½Ê§Ð§Ê±ï¿½ï¿½Îªï¿½ï¿½ï¿½Ð¡Ê±
 TIME_OUT = 30 
 try:
-    db=DataBaseParent()     #¹ØÏµÊý¾Ý¿â
+    db=DataBaseParent()     #ï¿½ï¿½Ïµï¿½ï¿½ï¿½Ý¿ï¿½
 except:
     raise Exception('db connect error')
 
-def ToUnicode(s):#Òòpython¶Ô×Ö·û´®½øÐÐunicode±àÂëºó»áÔÚ×Ö·û´®µÄÇ°Ãæ¼ÓÉÏÒ»¸öÇ°ê¡u,¸ÃÇ°ê¡¶Ô±àÂëÃ»ÓÐÆðµ½×÷ÓÃ£¬ÇÒ»¹ÏÞÖÆÁË³ÌÐò¶Ô¸Ã×Ö·û´®µÄÐÞ¸Ä£¬±¾º¯Êý½öÊÇÈ¥µô¸ÃÇ°ê¡
-    try:#¿ÉÒÔÖ±½Ó×ª»»³É×Ö·û´®µÄ£¬Ö±½Ó×ª»»£¬²»¿ÉÒÔÖ±½Ó×ª»»µÄ£¬ÏÈ²ð·Ö£¬ÔÙ×éºÏ
+def ToUnicode(s):#ï¿½ï¿½pythonï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½unicodeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ç°ï¿½u,ï¿½ï¿½Ç°ê¡¶Ô±ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Ç°ï¿½
+    try:#ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Ö±ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½×ªï¿½ï¿½ï¿½Ä£ï¿½ï¿½È²ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         s=str(s.decode("GBK").encode("utf-8"))
     except:
         s1=''
@@ -73,7 +73,7 @@ class cSysInfo:
                      '','',icp,aesKey
                from `sys_info` s
                left join wx_corp_agent a on a.corp_id = s.corp_id and a.`name` = '%s'  
-            """ %(ToUnicode('ÊÚÈ¨µÇÂ¼'))
+            """ %(ToUnicode('ï¿½ï¿½È¨ï¿½ï¿½Â¼'))
         lT,iN=db.select(sql)
         self.Lsys=list(lT[0])
         
@@ -97,7 +97,7 @@ class cSysInfo:
         
 oSysInfo=cSysInfo()
 
-#¹«¹²µÄ³£Êý£¬ºÍÒ»Ð©¹²ÏíµÄ±äÁ¿
+#ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
 WEBSITE_PATH=os.path.join('/home/webroot/oWorld/',CLIENT_NAME)
 dActiveUser={}     
 Lsys = oSysInfo.get()   
@@ -159,11 +159,11 @@ def get_YES_NO_data(sDF):
     else:
         b = '1'
     L = []
-    L.append(['1',ToUnicode('ÊÇ'),'',a])
-    L.append(['0',ToUnicode('·ñ'),'',b])
+    L.append(['1',ToUnicode('ï¿½ï¿½'),'',a])
+    L.append(['0',ToUnicode('ï¿½ï¿½'),'',b])
     return L
 
-def get_mtc_t_data(sDF,type,title=ToUnicode('--ÇëÑ¡Ôñ--'),single=True):
+def get_mtc_t_data(sDF,type,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),single=True):
     sql="SELECT id,txt1 FROM mtc_t WHERE type='%s' order by sort" %type
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -180,7 +180,7 @@ def get_mtc_t_data(sDF,type,title=ToUnicode('--ÇëÑ¡Ôñ--'),single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_mtc_sys_data(sDF,type,title=ToUnicode('--ÇëÑ¡Ôñ--'),single=True):
+def get_mtc_sys_data(sDF,type,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),single=True):
     sql="SELECT id,txt1 FROM mtc_sys WHERE type='%s' order by sort" %type
     #print sql + str(single) + str(sDF)
     lT,iN = db.select(sql)
@@ -261,7 +261,7 @@ def get_sel_cols(sDF,type,title='',single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_dept_data(sDF,title=ToUnicode('--Ñ¡Ôñ²¿ÃÅ--'),single=True):
+def get_dept_data(sDF,title=ToUnicode('--Ñ¡ï¿½ï¿½ï¿½ï¿½--'),single=True):
     sql="SELECT id,cname,parent_id,iLevel=1 FROM dept where del_flag = 0 ORDER BY sort" 
     lT,iN = db.select(sql)
     ldf=[]
@@ -290,23 +290,23 @@ def get_dept_data(sDF,title=ToUnicode('--Ñ¡Ôñ²¿ÃÅ--'),single=True):
     return L
 
 def get_USTAT_data_delete(sDF,single=True):
-    #·µ»ØÓÃ»§µÄ×´Ì¬Ñ¡ÔñÊý¾Ý,0:½ûÓÃ,1:ÓÐÐ§
+    #ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½×´Ì¬Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,0:ï¿½ï¿½ï¿½ï¿½,1:ï¿½ï¿½Ð§
     sDF=str(sDF)
     if sDF=='':b='1'
     else:b=''
     L=[['','--×´Ì¬--','',b]]
     if sDF=='0':b='1'
     else:b=''
-    L.append(['0','ÎÞÐ§','',b])
+    L.append(['0','ï¿½ï¿½Ð§','',b])
     if sDF=='1':b='1'
     else:b=''
-    L.append(['1','ÓÐÐ§','',b])
+    L.append(['1','ï¿½ï¿½Ð§','',b])
     if sDF=='3':b='1'
     else:b=''
-    L.append(['3','É¾³ý','',b])
+    L.append(['3','É¾ï¿½ï¿½','',b])
     return L
 
-def get_roles_list(sDF,deptid,title=ToUnicode('--Ñ¡Ôñ½ÇÉ«--'),single=True):
+def get_roles_list(sDF,deptid,title=ToUnicode('--Ñ¡ï¿½ï¿½ï¿½É«--'),single=True):
     if sDF=='':b='1'
     else: b=''
     if title!='':
@@ -334,8 +334,8 @@ def get_roles_list(sDF,deptid,title=ToUnicode('--Ñ¡Ôñ½ÇÉ«--'),single=True):
             L.append([id,name,'',b])
     return L
 
-#»ñµÃÁ÷³ÌÒ»¼¶·ÖÀà
-def get_gw_type_data1(sDF,title=ToUnicode('--ÇëÑ¡Ôñ--'),single=True):
+#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+def get_gw_type_data1(sDF,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),single=True):
     sql="SELECT id,cname,i_level FROM gw_type WHERE i_level = 0 and status=1 ORDER BY id" 
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -352,8 +352,8 @@ def get_gw_type_data1(sDF,title=ToUnicode('--ÇëÑ¡Ôñ--'),single=True):
         L.append([e[0],txt,b])
     return L
 
-#»ñµÃÁ÷³Ì¶þ¼¶·ÖÀà
-def get_gw_type_data2(sDF,parent_id,title=ToUnicode('--¹«ÎÄÁ÷³Ì¶þ¼¶·ÖÀà--'),single=True):
+#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+def get_gw_type_data2(sDF,parent_id,title=ToUnicode('--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½--'),single=True):
     lT=[]
     if parent_id!='':
         sql="SELECT id,cname,i_level FROM gw_type WHERE p_id = %s and status=1 ORDER BY id"%(parent_id)
@@ -372,7 +372,7 @@ def get_gw_type_data2(sDF,parent_id,title=ToUnicode('--¹«ÎÄÁ÷³Ì¶þ¼¶·ÖÀà--'),sing
         L.append([int(e[0]),txt,b])
     return L
 
-def get_first_flow_data(sDF,gw_type,title=ToUnicode('--ÆðÊ¼Á÷³Ì--'),single=True):
+def get_first_flow_data(sDF,gw_type,title=ToUnicode('--ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½--'),single=True):
     lT=[]
     if gw_type !='':
         sql="SELECT id,cname FROM gw_flow_def where type_id=%s AND IFNULL(s_flag,0) = 1"%(gw_type)        
@@ -391,7 +391,7 @@ def get_first_flow_data(sDF,gw_type,title=ToUnicode('--ÆðÊ¼Á÷³Ì--'),single=True)
         L.append([int(e[0]),txt,b])
     return L
 
-def get_flow_data(sDF,gw_type,has_flow,title=ToUnicode('--ÇëÑ¡Ôñ--'),single=True):
+def get_flow_data(sDF,gw_type,has_flow,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),single=True):
     lT=[]
     if gw_type !='':
         sql="SELECT id,cname FROM gw_flow_def where type_id=%s"%(gw_type)  
@@ -427,7 +427,7 @@ def get_all_tables(sDF,title='',single=True):
         table_name = e[0]
         table_name = table_name.upper()
         table_comment = e[1] 
-        table_comment = table_comment.replace(ToUnicode('×Ô¶¯´´½¨£º'),'')
+        table_comment = table_comment.replace(ToUnicode('ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'),'')
         txt = table_name
         if table_comment != '':
             txt += "(%s)"%(table_comment)
@@ -463,7 +463,7 @@ def get_use_tables(sDF,page_id,title='',single=True):
         L.append([table_name,table_name,b])
     return L
 
-def get_form_tables(sDF,step_id,title='--Ñ¡Ôñ¹ØÁª±í--',single=True):
+def get_form_tables(sDF,step_id,title='--Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½--',single=True):
     lT=[]
     if step_id!='':
         sql="select table_name,table_ab from menu_form_tables where step_id=%s;"%step_id 
@@ -489,7 +489,7 @@ def get_form_tables(sDF,step_id,title='--Ñ¡Ôñ¹ØÁª±í--',single=True):
         L.append([table_name,table_name,b])
     return L
 
-def get_table_field(sDF,table_name,title=ToUnicode('--×Ö¶ÎÃû³Æ--'),single=True):
+def get_table_field(sDF,table_name,title=ToUnicode('--ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½--'),single=True):
     lT=[]
     if table_name !='' and table_name!=None:
         table = table_name.split(' ')
@@ -578,7 +578,7 @@ def get_col_field(sDF,page_id,title='',single=True):
     return L
 
 def mValidateUser(request,mode,menu_id):
-    """¹¦ÄÜ£ºÑéÖ¤ÓÃ»§ÊÇ·ñÓÐ·ÃÎÊµ±Ç°¹¦ÄÜµÄÈ¨ÏÞ"""
+    """ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½Ö¤ï¿½Ã»ï¿½ï¿½Ç·ï¿½ï¿½Ð·ï¿½ï¿½Êµï¿½Ç°ï¿½ï¿½ï¿½Üµï¿½È¨ï¿½ï¿½"""
     d_value = ['']*10
     source = request.POST.get('source', '')
     if source == 'wx':
@@ -590,7 +590,7 @@ def mValidateUser(request,mode,menu_id):
             s = """
                 {
                 "errcode": -1,
-                "errmsg": "ÄãÃ»ÓÐÈ¨ÏÞä¯ÀÀµ±Ç°Ò³£¡",
+                "errmsg": "ï¿½ï¿½Ã»ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ò³ï¿½ï¿½",
                 }        """
             return errCode,ToUnicode(s),d_value
         login_id = rows[0][0]  
@@ -604,7 +604,7 @@ def mValidateUser(request,mode,menu_id):
             s = """
                 {
                 "errcode": -1,
-                "errmsg": "ÑéÖ¤ÐÅÏ¢ÓÐÎó£¬ÇëÖØÐÂµÇÂ½£¡",
+                "errmsg": "ï¿½ï¿½Ö¤ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Â½ï¿½ï¿½",
                 }        """
             return errCode,ToUnicode(s),d_value
     
@@ -615,7 +615,7 @@ def mValidateUser(request,mode,menu_id):
             s = """
                 {
                 "errcode": -1,
-                "errmsg": "ÄãÃ»ÓÐÈ¨ÏÞä¯ÀÀµ±Ç°Ò³£¡",
+                "errmsg": "ï¿½ï¿½Ã»ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ò³ï¿½ï¿½",
                 }        """
             return errCode,ToUnicode(s),d_value
         usr_id = rows[0][0]  
@@ -648,7 +648,7 @@ def mValidateUser(request,mode,menu_id):
         s = """
             {
             "errcode": -1,
-            "errmsg": "ÄãÃ»ÓÐÈ¨ÏÞä¯ÀÀµ±Ç°Ò³£¡",
+            "errmsg": "ï¿½ï¿½Ã»ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ò³ï¿½ï¿½",
             }        """
         return errCode,ToUnicode(s),d_value
     sec = rows[0][5] or 0
@@ -658,7 +658,7 @@ def mValidateUser(request,mode,menu_id):
         s = """
             {
             "errcode": 1,
-            "errmsg": "µÇÂ¼³¬Ê±£¡",
+            "errmsg": "ï¿½ï¿½Â¼ï¿½ï¿½Ê±ï¿½ï¿½",
             }        """
         return errCode,ToUnicode(s),d_value
     sql = "update users_login set refresh_time=now() where id=%s"%rows[0][7]
@@ -723,7 +723,7 @@ def HttpResponseJsonCORS(request,s):
 
 def sql_decode(final_sql):
     final_sql = final_sql.upper()
-    #Ö»±£ÁôÒ»¸ö¿Õ¸ñ
+    #Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Õ¸ï¿½
     import re
     final_sql = re.sub(r'\s+', ' ', final_sql)
     #print final_sql
@@ -735,7 +735,7 @@ def sql_decode(final_sql):
     field_sql = field_sql.replace('SELECT','')
     field_sql = field_sql.replace('%Y-%M-%D','%Y-%m-%d')
 
-    #½âÎö×Ö¶Î½á¹¹
+    #ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶Î½á¹¹
     field_list = field_sql.split(',')
     field_list1 = []
     n = 0
@@ -773,17 +773,17 @@ def sql_decode(final_sql):
             if L[0] == "'ADD'":
                 L[1] = ''
                 L[2] = 'add'
-                L[3] = ToUnicode('Ìí¼Ó')
+                L[3] = ToUnicode('ï¿½ï¿½ï¿½ï¿½')
                 L[4] = 2
             elif L[0] == "'UPDATE'":
                 L[1] = ''
                 L[2] = 'update'
-                L[3] = ToUnicode('ÐÞ¸Ä')
+                L[3] = ToUnicode('ï¿½Þ¸ï¿½')
                 L[4] = 2
             elif L[0] == "'DELETE'":
                 L[1] = ''
                 L[2] = 'delete'
-                L[3] = ToUnicode('É¾³ý')
+                L[3] = ToUnicode('É¾ï¿½ï¿½')
                 L[4] = 2
             field_list1.append(L)
             sTemp = ''
@@ -792,7 +792,7 @@ def sql_decode(final_sql):
             n = n - 1
             sTemp = sTemp + e1 +","
             bFlag = 0
-    #½âÎö±í½á¹¹
+    #ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹
     table_list = table_sql.split(' JOIN ')
     table_list1 = []
     iCount = len(table_list)
@@ -849,7 +849,7 @@ def sql_decode(final_sql):
 
 def sql_decode_form(final_sql):
     final_sql = final_sql.upper()
-    #Ö»±£ÁôÒ»¸ö¿Õ¸ñ
+    #Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Õ¸ï¿½
     import re
     final_sql = re.sub(r'\s+', ' ', final_sql)
     iPos = final_sql.find(' FROM ')
@@ -860,7 +860,7 @@ def sql_decode_form(final_sql):
     field_sql = field_sql.replace('SELECT','')
     field_sql = field_sql.replace('%Y-%M-%D','%Y-%m-%d')
 
-    #½âÎö×Ö¶Î½á¹¹
+    #ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶Î½á¹¹
     field_list = field_sql.split(',')
     field_list1 = []
     n = 0
@@ -906,7 +906,7 @@ def sql_decode_form(final_sql):
             n = n - 1
             sTemp = sTemp + e1 +","
             bFlag = 0
-    #½âÎö±í½á¹¹
+    #ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹
     table_list = table_sql1.split(' JOIN ')
     table_list1 = []
     iCount = len(table_list)
@@ -1042,10 +1042,10 @@ def get_options_data_view(menu_id,usr_id,pk,type,txt,title,default,para1,para2,s
         if str(e[2])=='1': 
             #print e
             if single:
-                return e[1] or ToUnicode('ÊÇ')
+                return e[1] or ToUnicode('ï¿½ï¿½')
             else:
                 value += "%s,"%e[1]
-    if value==',': value = ToUnicode('ÊÇ')
+    if value==',': value = ToUnicode('ï¿½ï¿½')
     return value
 
 def get_options_data(menu_id,usr_id,pk,type,txt,title,default,para1,para2,single = True):
@@ -1082,7 +1082,7 @@ def get_options_data_search(menu_id,usr_id,pk,type,txt,title,default,para1,para2
 def get_options_search(menu_id,usr_id,pk,type,txt,title,default,para1,para2,single,value_dict,para_cols):
     L = []
     
-    if type==26:   #²ÄÁÏ
+    if type==26:   #ï¿½ï¿½ï¿½ï¿½
         sql="""select option_id,concat(number,'/',name),ifnull(size,'') from user_options o
                left join _m504_clgl m on m.id = o.option_id
                where option_id='%s'  and o.option_type='%s' order by o.ctime desc limit 1
@@ -1211,7 +1211,7 @@ def get_options_level(menu_id,usr_id,pk,type,txt,title,default,para1,para2,singl
 
     return L
 
-def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),view = False):
+def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1223,7 +1223,7 @@ def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'
     else:
         L=[]
     
-    if usr_id=='':#×Ê½ðÕÊºÅÊÇ¸ù¾ÝÊÚÈ¨ÓÃ»§ÌáÈ¡µÄ£¬Òò´Ë£¬µ±usr_idÎª¿ÕÊ±£¬Ó¦¸Ã·µ»Ø¿ÕµÄÁÐ±í
+    if usr_id=='':#ï¿½Ê½ï¿½ï¿½Êºï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½Ã»ï¿½ï¿½ï¿½È¡ï¿½Ä£ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½usr_idÎªï¿½ï¿½Ê±ï¿½ï¿½Ó¦ï¿½Ã·ï¿½ï¿½Ø¿Õµï¿½ï¿½Ð±ï¿½
         return L
     
     if view==True:
@@ -1250,9 +1250,9 @@ def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'
         lT1,iN1=db.select(sql1)
         if iN1>0: type_name = lT1[0][0]
         else:type_name=''
-        if type_name in [ToUnicode('ÏÖ½ð')]:#typeÎª·Ç¿Õ£¬È¡³öÖ¸¶¨ÀàÐÍµÄ×Ê½ðÕÊºÅ£¬Èç:0¡¢ÏÖ½ðÕË£¬1¡¢ÒøÐÐÕË
+        if type_name in [ToUnicode('ï¿½Ö½ï¿½')]:#typeÎªï¿½Ç¿Õ£ï¿½È¡ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ê½ï¿½ï¿½ÊºÅ£ï¿½ï¿½ï¿½:0ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ë£ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             sql+="AND type=0"
-        elif type_name in [ToUnicode('Ö§Æ±'),ToUnicode('×ªÕË')]:#typeÎª·Ç¿Õ£¬È¡³öÖ¸¶¨ÀàÐÍµÄ×Ê½ðÕÊºÅ£¬Èç:0¡¢ÏÖ½ðÕË£¬1¡¢ÒøÐÐÕË
+        elif type_name in [ToUnicode('Ö§Æ±'),ToUnicode('×ªï¿½ï¿½')]:#typeÎªï¿½Ç¿Õ£ï¿½È¡ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ê½ï¿½ï¿½ÊºÅ£ï¿½ï¿½ï¿½:0ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ë£ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             sql+="AND type=1"
         else:
             sql+="AND type=2"
@@ -1264,7 +1264,7 @@ def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'
         L.append([e[0],txt,b])
     return L
 
-def get_sup_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),view = False):
+def get_sup_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1296,7 +1296,7 @@ where ifnull(su.status,0)!=-1  and  su.cname like '%%%s%%' order by su.id desc l
         L.append([e[0],txt,b,e[3]])
     return L
 
-def get_users_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),view = False):
+def get_users_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1321,7 +1321,7 @@ def get_users_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),
         L.append([e[0],txt,b])
     return L
 
-def get_mat_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),view = False):
+def get_mat_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1346,7 +1346,7 @@ def get_mat_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),vi
         L.append([e[0],txt,b])
     return L
 
-def get_proj_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),view = False):
+def get_proj_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1376,7 +1376,7 @@ def get_proj_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),v
         L.append([e[0],txt,b])
     return L
 
-def get_proj_info_by_user(menu_id,usr_id,sDF,type,title=ToUnicode('--ÇëÑ¡Ôñ--')):
+def get_proj_info_by_user(menu_id,usr_id,sDF,type,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--')):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1399,7 +1399,7 @@ def get_proj_info_by_user(menu_id,usr_id,sDF,type,title=ToUnicode('--ÇëÑ¡Ôñ--'))
         L.append([e[0],txt,b])
     return L
 
-def get_ht_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),view = False):
+def get_ht_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ï¿½ï¿½Ñ¡ï¿½ï¿½--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1427,7 +1427,7 @@ def get_ht_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--ÇëÑ¡Ôñ--'),vie
         L.append([e[0],txt,b])
     return L
 
-def get_cw_data(menu_id,sDF,para1,para2,title='--ÇëÑ¡Ôñ--',view = False):
+def get_cw_data(menu_id,sDF,para1,para2,title='--ï¿½ï¿½Ñ¡ï¿½ï¿½--',view = False):
     if view == True:
         sql_str = """
           SELECT cw.id                          
@@ -1493,7 +1493,7 @@ def get_cw_data(menu_id,sDF,para1,para2,title='--ÇëÑ¡Ôñ--',view = False):
     return L
 
 
-def get_sql_data_level(usr_id,sDF,txt,para1,para2,title='--ÇëÑ¡Ôñ--',single=True):
+def get_sql_data_level(usr_id,sDF,txt,para1,para2,title='--ï¿½ï¿½Ñ¡ï¿½ï¿½--',single=True):
     ldf=[]
     sDF=str(sDF)
     if not sDF is None and sDF != '' and single==False:
@@ -1584,7 +1584,7 @@ def get_input_data(sDF,txt,title='',single=True):
         L.append([e1[0],txt,b])
     return L
 
-def get_sql_data(usr_id,sDF,txt,para1,para2,title='--ÇëÑ¡Ôñ--',single=True): 
+def get_sql_data(usr_id,sDF,txt,para1,para2,title='--ï¿½ï¿½Ñ¡ï¿½ï¿½--',single=True): 
     ldf=[]
     sDF=str(sDF)
     if not sDF is None and sDF != '' and single==False:
@@ -1630,7 +1630,7 @@ def get_sql_data(usr_id,sDF,txt,para1,para2,title='--ÇëÑ¡Ôñ--',single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_mtc_t_data1(sDF,type,title='--ÇëÑ¡Ôñ--',single=True):
+def get_mtc_t_data1(sDF,type,title='--ï¿½ï¿½Ñ¡ï¿½ï¿½--',single=True):
     ldf=[]
     sDF=str(sDF)
     if not sDF is None and sDF != '' and single==False:
@@ -1695,7 +1695,7 @@ def get_roleslist(dept,sDF,pk,single=True):
                 L[n][2]=1
     return L
 
-def get_dept_data1(sDF,title='--ÇëÑ¡Ôñ--',single=True):
+def get_dept_data1(sDF,title='--ï¿½ï¿½Ñ¡ï¿½ï¿½--',single=True):
     sql="SELECT id,cname,'',ifnull(ilevel,0) FROM dept where id!=1 and del_flag = 0 order by sort" 
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -1713,7 +1713,7 @@ def get_dept_data1(sDF,title='--ÇëÑ¡Ôñ--',single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_menu_list(sDF,title='--ÇëÑ¡Ôñ--',single=True):
+def get_menu_list(sDF,title='--ï¿½ï¿½Ñ¡ï¿½ï¿½--',single=True):
     sql="SELECT menu_id,menu_name FROM menu_func where menu=1 order by sort" 
     lT,iN = db.select(sql)
     sDF=str(sDF)

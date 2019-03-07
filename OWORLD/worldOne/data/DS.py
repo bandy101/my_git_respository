@@ -8,7 +8,7 @@ sys.path.append("/home/webroot/oWorld/common/")
 # exec ('from share        import ToGBK')
 # import MySQLdb
 from HW_DB   import DataBaseParent_local,DataBaseParent_byerp,DataBaseParent_byaq
-from HW_DT_TOOL                 import getToday
+from HW_DT_TOOL             import getToday
 from HW_FILE_TOOL           import make_sub_path,writeTXT,openTXT,writeLOG
 
 #本地mysql数据库

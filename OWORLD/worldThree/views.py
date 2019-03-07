@@ -1,4 +1,5 @@
 #coding:utf-8
+# urlStr:https://e.szby.cn/data_gy/common/printShd/
 prj_name=__name__.split('.')[0]
 from django.http import HttpResponse,JsonResponse
 from django.http import HttpResponseRedirect  

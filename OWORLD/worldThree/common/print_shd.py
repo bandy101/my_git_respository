@@ -17,7 +17,7 @@ exec ('from %s.share import db,HttpResponseCORS,g_data,ToGBK,mValidateUser,fs_ur
 from qr_code import genShdCode
 
 def printShd(request):
-    pk =  request.POST.get('pk') or  request.GET.get('pk','') 
+    pk =  request.POST.get('pk') or  request.GET.get('pk','')
     sql = """select op.cname,sh.sn,sh.ctime,su.cname,su.tel,sh.cusrname,ifnull(sh.qr_code,''),''
                    ,ht.req_no,cg.cusrname,m1.txt1,m2.txt1 
              from _m3000004_shd sh 
