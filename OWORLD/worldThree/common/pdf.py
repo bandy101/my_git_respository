@@ -74,7 +74,7 @@ def pdfData(request):
     field_id = request.POST.get('field_id','')
     pk = request.POST.get('pk','')
     sql = "select id,table_name,'',1 from menu_pdf_source where menu_id='%s'"%(pk)
-    NL,iN = db.select(sql)
+    NL,iN = db.select(sql) 
     L = []
     for e in NL:
         row = list(e)
@@ -85,7 +85,7 @@ def pdfData(request):
         L1,iN1 = db.select(sql)
         for e1 in L1:
             p1.append(e1[0])
-        row[2] = p1
+        row[2] = p1 # col_name 集合
         L.append(row)
     L1 = [0,'运算符',['(',')',',','+','-','*','/'],0] 
     L.append(L1)
@@ -97,7 +97,7 @@ def pdfData(request):
     L.append(L1)
     names = 'id table_name cols type'.split()
     data = [dict(zip(names, d)) for d in L]
-    data1 = json.dumps(data,ensure_ascii=False)
+    data1 = json.dumps(data,ensure_ascii=False) 
 
     pdfData = []
     L = []
@@ -116,7 +116,7 @@ def pdfData(request):
         data = [dict(zip(names, d)) for d in L]
         pdfData = json.dumps(data,ensure_ascii=False)
 
-            
+                    
     s = """
         {
         "errcode":0,

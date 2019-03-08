@@ -688,7 +688,7 @@ def HttpResponseCORS(request,s):
         pass
     else:
         origin = front_url
-      
+    
     #sql = "insert into sql_log (`sql`) values ('%s')"%(origin)
     #print sql
     #db.executesql(sql)

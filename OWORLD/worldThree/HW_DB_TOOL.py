@@ -10,6 +10,7 @@ class DataBaseParent:
             raise Exception("Can't connect to Database server!")
 
     def select(self,sqlstr):
+        """ return 结果集和记录数量"""
         cur=connection.cursor()
         cur.execute('SET NAMES utf8mb4')
         cur.execute(sqlstr)

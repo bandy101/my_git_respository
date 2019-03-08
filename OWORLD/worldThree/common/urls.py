@@ -85,4 +85,5 @@ urlpatterns = [
     url(r'uploadHT/*', upload.uploadHT, name='uploadHT'),
 
     url(r'printShd/*', print_shd.printShd, name='printShd'),
+    url(r'printPdfShd/*', print_shd.printPdfShd, name='printPdfShd'),
 ]
