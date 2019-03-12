@@ -104,8 +104,6 @@ def printPdfShd(request):
 
     data = L2['lists'] # 材料明细内容数据
     #print ToGBK(s)
-    
-
 
     # 页面大小   (四联二分217*140mm ，四联 217*280mm: 4.4 2.72)
     pageWidth = 21.7     
@@ -118,58 +116,14 @@ def printPdfShd(request):
 
     # 1 inch = 2.54cm  1cm = 28.346 dpi
     pdf.setPageSize((pageWidth*cm,pageHeight*cm)) # 尺寸
-    pdf.setFont('song',25) # 设置字体
-  
-    
-    # 加载图片 background
-    two_dimensional_code_path = L2['qr_code']
-    file_path = r"/home/webroot/data/lwerp/open/background/total.png"
-    pdf.drawImage(file_path,0,0,pageWidth*cm,pageHeight*cm)                 # 背景
-    pdf.drawImage(two_dimensional_code_path,17.61*cm,24.3*cm,2.82*cm,2.82*cm) # 二维码 
 
-    # 加载内容
-
-    amounT = 3                     # 每页显示的数目 (四联二等分:5, 四联整张纸:15)
+    amounT = 15                     # 每页显示的数目 (四联二等分:5, 四联整张纸:15)
     pages = len(data)//amounT + 1         # 页数
-    # print data
-
-    tel = L2['sup_tel']                   # 电话
-    usr_name = L2['usr_name']             # 制单人
-    cg_usr_name = L2['cg_usr_name']       # 采购员
-    shd_no = L2['shd_no']                 # 送货单号
-    cgzt   = L2['cgzt']                   # 采购主体
-    zt = L2['sup_name']                           # 送货单最上面大字
-    project_name = L2['proj_name']     # 收货项目
-    sh_date = L2['sh_date']                   # 送货日期
-    all_amount  = 0.                       # 合计金额
-
-
-    pdf.drawString(21,755,str(zt))    # 送货单最上面大字
-    pdf.setFont('song',9) # 设置字体  
-
-    pdf.drawString(135,21.5,str(cg_usr_name)) # 采购员
-    pdf.drawString(55,21.5,str(usr_name))    # 制单人
-    pdf.drawString(361,727,str(tel))    # 电话
-
-    pdf.drawString(65,727,str(shd_no))    # 送货单号
-    pdf.drawString(65,710.5,str(cgzt))    # 采购主体
-    pdf.drawString(65,694,str(project_name))    # 收货项目
-
-    pdf.drawString(220,727,str(sh_date)[:10])           # 送货日期
-
-
-
-
-
-
-
-
     for index in range(pages):
-        pdf.setFont('song',25) # 设置字体
-
+        pdf.setFont('song',25) # 设置标题字体
         
         # 加载图片 background
-        two_dimensional_code_path = L2['qr_code']
+        two_dimensional_code_path = L2['qr_code']   # 二维码
         file_path = r"/home/webroot/data/lwerp/open/background/total.png"
         pdf.drawImage(file_path,0,0,pageWidth*cm,pageHeight*cm)                 # 背景
         pdf.drawImage(two_dimensional_code_path,17.61*cm,24.3*cm,2.82*cm,2.82*cm) # 二维码 
@@ -184,9 +138,8 @@ def printPdfShd(request):
         sh_date = L2['sh_date']                   # 送货日期
         all_amount  = 0.                       # 合计金额
 
-
         pdf.drawString(21,755,str(zt))    # 送货单最上面大字
-        pdf.setFont('song',9) # 设置字体  
+        pdf.setFont('song',9) # 设置文字字体  
 
         pdf.drawString(135,21.5,str(cg_usr_name)) # 采购员
         pdf.drawString(55,21.5,str(usr_name))    # 制单人
@@ -198,18 +151,11 @@ def printPdfShd(request):
 
         pdf.drawString(220,727,str(sh_date)[:10])           # 送货日期
 
-
-
-
-
-
-
-
         # ---------------   #
         #   y坐标：Y + 100 = 上升 2.5格 -->1格：40
-        x = 32
+        x = 32  # 序号
         x1, y = 48, 638 # x：材料名称的x1坐标 y:第一行记录初始y坐标
-        x2 = x1 +60
+        x2 = x1 +60     # 材料名称
         x3 = x2 + 90 # 规格
         x4 = x3 + 70 # 型号
         x5 = x4 +47 # 品牌
@@ -220,7 +166,6 @@ def printPdfShd(request):
         x10 = x9 + 51 # 备注
         for i in range(min(len(data)-index*amounT,amounT)):
             i = int(index*amounT + i)    # 索引位置
-            print('i:',i)
             info = data[i]
             # 材料列表信息 
 
@@ -230,7 +175,6 @@ def printPdfShd(request):
             material_name = info['cl_name']         # 材料名称
             standard = info['cl_spec']              # 规格
             material_model = info['cl_model']       # 型号
-            material_model = 'WDZB-YJY'
             material_brand = info['cl_brand']       # 品牌
             material_unit = info['cl_unit']         # 单位
             quantity_current = info['total_qty']    # 数量
@@ -256,7 +200,6 @@ def printPdfShd(request):
         pdf.drawString(460,46,str(all_amount))          # 总额
         pdf.drawString(115,46,str(process_all_amount(all_amount)))  # 大写
         pdf.showPage()
-
 
     # 其他变量
     # pdf.
@@ -286,14 +229,12 @@ def drawText(x,y,V,length):
             except:
                 pass
         else:
-            pdf.drawString(x,y-5,'eeror')
+            pdf.drawString(x,y-5,'内容加载错误!')
 
     elif L>2*length:
         for _tempI in range(3):
             try:
                 pdf.drawString(x,y+5,V[:length+_tempI])
-                # pdf.drawString(x2,y-5,material_name[length+_tempI:])
-                # pdf.drawString(x2,y-5,material_name[-27+_tempI:])
                 break
             except:
                 pass
@@ -309,16 +250,18 @@ def process_all_amount(value):
         }
     suffix={0:'分',1:'角',2:'圆',3:'拾',4:'佰',
         5:'仟',6:'万',7:'拾',8:'佰',9:'仟',10:'亿',11:'拾',12:'佰'
-        }
+        ,13:'仟',14:'万'}
     temp = [] # 转换容器
+    value =  '{:.2f}'.format(float(value))
     _value = str(value).replace('.','')
     for i,v in enumerate(_value):
         v = int(v)
         if v%10:    # 不为0
             temp.extend((prefix[v],suffix[len(_value)-i-1])) # 前缀+后缀
         else:
-            if suffix[len(_value)-i-1] in ['圆','角','分']:
+            if suffix[len(_value)-i-1] in ['圆',] and int(float(value)):
                 temp.append(suffix[len(_value)-i-1])
             else:
-                temp.append(prefix[v])
+                if suffix[len(_value)-i-1] not in ['分','角'] and temp[-1]!='零':
+                    temp.append(prefix[v])
     return ''.join(temp)
