@@ -2319,9 +2319,11 @@ def saveStep21(request,data_list):
         field_options = field_options_txt1
     if str(field_type) == '22':
         if btn_type == 'pdf':
-            url = 'common/printPDF?field_id=%s'%(id)
+            if url == '':
+                url = 'common/printPDF?field_id=%s'%(id)
         elif url =='':
             url = 'common/savePageForm' 
+    print url
     #新建字段
     if str(new_field) == '1' and table_name!='' and col_name!='':
         sql="select column_name from information_schema.columns where table_schema='%s' and table_name='%s' and column_name='%s'"%(m_dbname,table_name,col_name)

@@ -2262,7 +2262,7 @@ def saveStep13(request,data_list):
     return s
 
 def saveStep21(request,data_list):
-    #print data_list
+    print data_list
     status = data_list.get('status',1)
     linkfield2 = data_list.get('linkfield2','')
     linkfield1 = data_list.get('linkfield1','')
@@ -2319,7 +2319,8 @@ def saveStep21(request,data_list):
         field_options = field_options_txt1
     if str(field_type) == '22':
         if btn_type == 'pdf':
-            url = 'common/printPDF?field_id=%s'%(id)
+            if url == '':
+                url = 'common/printPDF?field_id=%s'%(id) 
         elif url =='':
             url = 'common/savePageForm' 
     #新建字段

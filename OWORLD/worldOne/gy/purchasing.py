@@ -245,18 +245,23 @@ def audit(request):
                     if iN>0:
                         cl_id = rows[0][0]
                 if cl_id == '':             #主系统中没有的材料
-                    sql = "select isnull(max(cast(substring(code,charindex('-',code)+1,len(code)-charindex('-',code)) as int)),'') from mat where code like '%s-%%'"%(e[9])
-                    print sql
+                    sql = "select isnull(matcodenum,0) from mat_type where type_code = '%s'"%(e[9])
+                    #print sql
                     rows,iN = remote_db.select(sql)
                     if iN>0:
                         code = rows[0][0]
                         if code == '':
+                            maxnum = 1
                             code = "%s-00001"%(e[9])
                         else:
                             maxnum = int(code)+1
+                            maxnum = str(maxnum).zfill(5)
                             code = "%s-%s"%(e[9],maxnum)
                     else:
+                        maxnum = 1
                         code = "%s-00001"%(e[9])
+                    sql = "update mat_type set matcodenum = %s where type_code = '%s'"%(maxnum,e[9])
+                    remote_db.executesql(sql)
                     #print code
                     sql="""INSERT INTO mat
                            ([cname],[code],[type],[sepc],brand
@@ -533,10 +538,10 @@ def pushCgd(request):
             gw_id = add_save_master('cgd',title,usr_id_qy,usr_name,dept_id,flow_next_usr)
             t=time.time()
             date_ary=time.localtime(t)
-            x=time.strftime("CG%Y%m%d",date_ary)
+            x=time.strftime("WCG%Y%m%d",date_ary)
         
-            sql = "select isnull(max(last_code),'') from code_lib where last_code like '%s%%' and src = 'D017'"%(x)
-            rows,iN = remote_db.select(sql)
+            sql = "select ifnull(max(last_code),'') from code_lib where last_code like '%s%%' and src = 'D017'"%(x)
+            rows,iN = db.select(sql)
             if iN>0:
                 code = rows[0][0]
                 if code == '':
@@ -551,7 +556,7 @@ def pushCgd(request):
                 code = "%s001"%(x)
                 maxnum = 1
             sql = "update code_lib set last_code='%s',maxnum=%s where src = 'D017'"%(code,maxnum)
-            remote_db.executesql(sql)
+            db.executesql(sql)
 
             #保存主表单
             sql = """INSERT INTO [prj_mat_buy](
@@ -1521,7 +1526,8 @@ def getRkdInfo(request):
         canEdit = 1
     else:
         canEdit = 0
-
+    if usr_id_qy == 2110:
+        canEdit = 1
              
     s = """
         {
@@ -1706,10 +1712,10 @@ def pushRkd(request):
             gw_id = add_save_master('rkd',title,usr_id_qy,usr_name,dept_id,flow_next_usr)
             t=time.time()
             date_ary=time.localtime(t)
-            x=time.strftime("CG%Y%m%d",date_ary)
+            x=time.strftime("WYS%Y%m%d",date_ary)
         
-            sql = "select isnull(max(last_code),'') from code_lib where last_code like '%s%%' and src = 'D402'"%(x)
-            rows,iN = remote_db.select(sql)
+            sql = "select ifnull(max(last_code),'') from code_lib where last_code like '%s%%' and src = 'D402'"%(x)
+            rows,iN = db.select(sql)
             if iN>0:
                 code = rows[0][0]
                 if code == '':
@@ -1724,7 +1730,7 @@ def pushRkd(request):
                 code = "%s001"%(x)
                 maxnum = 1
             sql = "update code_lib set last_code='%s',maxnum=%s where src = 'D402'"%(code,maxnum)
-            remote_db.executesql(sql)
+            db.executesql(sql)
 
             #保存主表单
             sql = """INSERT INTO Prj_Mat_Master (gw_id,Prj_id,Req_No,cDate,Stype,Iscolla,Total_Price,Ysd_Code,mpb_id,sup_id,ship_type
@@ -1832,7 +1838,6 @@ def pushRkd(request):
                 remote_db.executesql(sql)
 
             mForm_2_save(gw_id,flow_next_flow,flow_next_dept,flow_next_role,flow_next_usr,flow_memo,usr_id_qy,usr_name,dept_id)
-
 
         sql = "update _m3000004_rkd set status=1,req_no='%s',rk_id=%s,rk_gwid=%s where id = %s"%(code,m_id,gw_id,pk)
         db.executesql(sql)
