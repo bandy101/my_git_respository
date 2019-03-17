@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
-
+    'blog.apps.BlogConfig',
     'django.contrib.admin', # 管理员框架
     'django.contrib.auth', # 认证授权框架
     'django.contrib.contenttypes', # 内容类型框架
