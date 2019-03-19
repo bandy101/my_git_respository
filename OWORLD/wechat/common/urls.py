@@ -76,5 +76,6 @@ urlpatterns = [
     url(r'getSaleLists/$', codeUpload.getSaleLists, name='getSaleLists'),  
     url(r'batchOperation/$', batchOperation.batchOperation, name='batchOperation'),  
     url(r'exportExcel/$', exportExcel.exportExcel, name='exportExcel'),  
+    url(r'pressCB/$', flow.pressCB, name='pressCB'),  
 
 ]

@@ -8,7 +8,7 @@ import datetime
 from HW_DT_TOOL                 import getToday
 import httplib
 import random
-exec ('from %s.share import db,dActiveUser,mValidateUser,get_dept_data,HttpResponseCORS,HttpResponseJsonCORS,ToGBK,m_corp_name'%prj_name) 
+exec ('from %s.share import db,my_urlencode,dActiveUser,mValidateUser,get_dept_data,HttpResponseCORS,HttpResponseJsonCORS,ToGBK,m_corp_name'%prj_name) 
 exec ('from %s.wx_cb.wxpush        import mWxPushMsg_Audit'%prj_name) 
 from save_finish import saveFinishData
 
@@ -802,6 +802,8 @@ def saveAudit(request):
         """%pk       
     return HttpResponseCORS(request,s)
 
+
+
 def addViewUsers(pk):
     users = ''
     sql = "select type_id,ifnull(cybl,''),ifnull(proj_id,0) from gw_doc where id=%s"%(pk)
@@ -1137,7 +1139,7 @@ def rePushMsg(request):
     L=list(rows[0])
     menu_id = L[0]
     if L[4] != 1 and str(L[7]) not in ['0','3']:
-        title = """催办：【%s】%s"""%(L[5],L[1])
+        title = """新待办：【%s】%s"""%(L[5],L[1])
         toUser = L[2]
         state = 'gw_audit'
 
@@ -1291,3 +1293,87 @@ def updateDB(request):
         }
         """      
     return HttpResponseJsonCORS(request,s)
+
+# 催办
+def pressCB(request):
+
+    data = request.POST.get('data','')
+    try:
+        data_list = json.loads(data)
+    except:
+        pass
+    # pk = data_list.get('pk','')
+    pk = ''
+    mode = request.POST.get('mode','')
+    menu_id = request.POST.get('menu_id', 0)
+
+
+    sql=""" SELECT GD.menu_id
+                ,GT.cname 
+                ,ifnull(US.wxqy_id,US.login_id)
+                ,ifnull(UC.wxqy_id,UC.login_id)
+                ,GD.finish
+                ,UC.usr_name
+                ,H.cusrname
+                ,H.opt
+                ,H.id
+            FROM gw_flow_his H                    
+            LEFT JOIN gw_doc GD ON GD.id = H.m_id
+            LEFT JOIN gw_type GT ON GT.ID=GD.type_id
+            LEFT JOIN users UC ON UC.usr_id=GD.cid
+            LEFT JOIN users US ON US.usr_id=H.next_usr_id
+            WHERE GD.id = %s and H.opt is not null
+            order by H.ctime desc
+            limit 1
+        """%('17031')
+    
+    # rows,iN = db.select(sql)
+    # _T = list(rows[0]) or 'None'
+    # toUser = _T[2] or _T[3] or 'None'
+    # title = "新代办:  【%s】%s"%(_T[5],_T[1])
+
+    toUser='zhuwb'
+    title = "新代办:"
+    # firmwechat
+    # 业务办理se
+    corp_id,corpsecret = 'ww195af1272348fe24','vCqIAGe1UUbxkIuR_BHPvsN4EVbBhDoxU1VGlqglc6A' # 业务办理
+    url = "/cgi-bin/gettoken?corpid=%s&corpsecret=%s"%(corp_id,corpsecret)
+    conn = httplib.HTTPSConnection('qyapi.weixin.qq.com')
+    conn.request('GET', url)
+    res = conn.getresponse()
+    accessToken = json.loads(res.read())['access_token']
+
+    print(accessToken)
+    urls = "/cgi-bin/message/send?access_token=%s" % (accessToken)
+
+    _url = 'http://pr.sz-hongjing.com/commonDataTable.html?menu_id=%s&tab=audit&mode=audit&pk=%s'%(203,17809)
+    
+    print('url:',_url)
+    sMsg ="""{
+              "touser": "%s",
+                     """%(toUser)
+    sMsg +="""    "msgtype": "news",
+              "agentid": "1000003",
+              "news": {
+                  "articles":[
+                        {
+                        "title": "%s",
+                        "url": "%s"
+                        }
+                  ]
+                }
+             }
+             """%(title,_url)
+
+    conn.request('POST',urls,sMsg.encode('utf-8'))
+    print(my_urlencode(_url))
+    s = """
+        {
+        "errcode":0,
+        "errmsg":"保存成功",
+        "pk":%s,
+        }
+        """%pk
+
+           
+    return HttpResponseCORS(request,s)
