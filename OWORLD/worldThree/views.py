@@ -102,7 +102,6 @@ def get_data_wx(request):
     s = get_data_wx_func(request)
     return s
 
-
 def select(request):
     s = select_func(request)
     return s

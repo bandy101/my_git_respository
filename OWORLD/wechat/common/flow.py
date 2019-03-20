@@ -8,7 +8,7 @@ import datetime
 from HW_DT_TOOL                 import getToday
 import httplib
 import random
-exec ('from %s.share import db,my_urlencode,dActiveUser,mValidateUser,get_dept_data,HttpResponseCORS,HttpResponseJsonCORS,ToGBK,m_corp_name'%prj_name) 
+exec ('from %s.share import db,data_url,my_urlencode,dActiveUser,mValidateUser,get_dept_data,HttpResponseCORS,HttpResponseJsonCORS,ToGBK,m_corp_name'%prj_name) 
 exec ('from %s.wx_cb.wxpush        import mWxPushMsg_Audit'%prj_name) 
 from save_finish import saveFinishData
 
@@ -1297,13 +1297,18 @@ def updateDB(request):
 # 催办
 def pressCB(request):
 
-    data = request.POST.get('data','')
-    try:
-        data_list = json.loads(data)
-    except:
-        pass
+    pk = request.POST.get('pk', 11912)
+    if not pk:
+        return HttpResponseCORS(request,'无权限!')
+    print 'pk:',pk
+    # data = request.POST.get('data','')
+    # try:
+    #     data_list = json.loads(data)
+    # except:
+    #     print('datalist__Error')
+    #     pass
     # pk = data_list.get('pk','')
-    pk = ''
+    # pk = ''
     mode = request.POST.get('mode','')
     menu_id = request.POST.get('menu_id', 0)
 
@@ -1325,15 +1330,19 @@ def pressCB(request):
             WHERE GD.id = %s and H.opt is not null
             order by H.ctime desc
             limit 1
-        """%('17031')
-    
-    # rows,iN = db.select(sql)
-    # _T = list(rows[0]) or 'None'
-    # toUser = _T[2] or _T[3] or 'None'
-    # title = "新代办:  【%s】%s"%(_T[5],_T[1])
+        """%(pk)
+    # GD.id = %s and  %('17031')
+    rows,iN = db.select(sql)
+
+    print rows
+
+    _T = list(rows[0])
+    menu_id = _T[0]
+    toUser = _T[2] or _T[3]
+    title = "新催办:  【%s】%s"%(_T[5],_T[1])
 
     toUser='zhuwb'
-    title = "新代办:"
+    # title = "新代办:"
     # firmwechat
     # 业务办理se
     corp_id,corpsecret = 'ww195af1272348fe24','vCqIAGe1UUbxkIuR_BHPvsN4EVbBhDoxU1VGlqglc6A' # 业务办理
@@ -1343,9 +1352,10 @@ def pressCB(request):
     res = conn.getresponse()
     accessToken = json.loads(res.read())['access_token']
 
-    print(accessToken)
+    # print(accessToken)
     urls = "/cgi-bin/message/send?access_token=%s" % (accessToken)
 
+    sUrl='%s/index_wx/?menu_id=%s&pk=%s&func=%s'%(data_url,menu_id,pk,'gw_audit')
     _url = 'http://pr.sz-hongjing.com/commonDataTable.html?menu_id=%s&tab=audit&mode=audit&pk=%s'%(203,17809)
     
     print('url:',_url)
@@ -1363,10 +1373,10 @@ def pressCB(request):
                   ]
                 }
              }
-             """%(title,_url)
+             """%(title,sUrl)
 
     conn.request('POST',urls,sMsg.encode('utf-8'))
-    print(my_urlencode(_url))
+    # print(my_urlencode(_url))
     s = """
         {
         "errcode":0,
