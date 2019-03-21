@@ -1309,8 +1309,8 @@ def pressCB(request):
     #     pass
     # pk = data_list.get('pk','')
     # pk = ''
-    mode = request.POST.get('mode','')
-    menu_id = request.POST.get('menu_id', 0)
+    mode = request.POST.get('mode','gw_audit')
+    menu_id = request.POST.get('menu_id', 203)
 
 
     sql=""" SELECT GD.menu_id
@@ -1355,7 +1355,7 @@ def pressCB(request):
     # print(accessToken)
     urls = "/cgi-bin/message/send?access_token=%s" % (accessToken)
 
-    sUrl='%s/index_wx/?menu_id=%s&pk=%s&func=%s'%(data_url,menu_id,pk,'gw_audit')
+    sUrl='%s/index_wx/?menu_id=%s&pk=%s&func=%s'%(data_url,menu_id,pk,mode)
     _url = 'http://pr.sz-hongjing.com/commonDataTable.html?menu_id=%s&tab=audit&mode=audit&pk=%s'%(203,17809)
     
     print('url:',_url)

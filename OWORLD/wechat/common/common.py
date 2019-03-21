@@ -535,6 +535,10 @@ def getAllSign(request,pk):
 def getPageForm(request):
     #print request.POST
     #print getToday(7)
+    
+
+
+
     menu_id = request.POST.get('menu_id') or request.GET.get('menu_id',0)
     mode =  request.POST.get('mode') or request.GET.get('mode','view')
     ret,errmsg,d_value = mValidateUser(request,mode,menu_id)
@@ -819,6 +823,29 @@ def getPageForm(request):
         L2 = [dict(zip(names, d)) for d in L]
         validityData = json.dumps(L2,ensure_ascii=False,cls=ComplexEncoder)      
 
+    # 判断权限  # --
+    # showCB
+    showCB = 0
+    # _formData = dict(formData,ensure_ascii=False,cls=ComplexEncoder)
+    
+    if pk:
+        sql = "select cid from gw_doc where id=%s and finish=%s"%(pk,0)
+        rows1 ,iN = db.select(sql)
+        if iN>0:
+            sql = "select cid from gw_flow_his where id=%s"%(pk)
+            rows2,iN  = db.select(sql)
+            _d = [ _[0] for _ in (rows1+rows2)][:-1]
+            if d_value[0] in _d:
+                showCB = 1
+    # _frontUrl ='http://pr.sz-hongjing.com'
+    url_= str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk')
+    url_ = json.dumps(str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk'))
+    extraBtnData = [{'btn_name':'BUTTON','url':{'href':url_,
+            'para':[{'link_field_name':'pk','para_name':'pk'},
+                    {'link_field_name':'mode','para_name':'mode'},
+                    {'link_field_name':'menu_id','para_name':'menu_id'}
+            ]},'show_flag':showCB
+        }]
     s = """
         {
         "errcode":0,
@@ -832,9 +859,11 @@ def getPageForm(request):
         "validityData":%s,
         "stepData":%s,
         "activeStep":"%s",
-        "scheduleData":%s
+        "scheduleData":%s,
+        "extraBtnData":%s,
+
         }
-        """%(title,menu,formData,showData,gridData,calData,validityData,stepData,step,scheduleData)
+        """%(title,menu,formData,showData,gridData,calData,validityData,stepData,step,scheduleData,extraBtnData)
     #print getToday(7)
     #print ToGBK(s)
     return HttpResponseCORS(request,s)
@@ -873,6 +902,7 @@ def getPageBtn(menu_id,mode,step,has_btn,steps):
 
     return L
 
+# 返回记录的列表
 def getFlowHis(pk):
     if pk=='':
         return []

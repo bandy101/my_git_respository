@@ -30,7 +30,6 @@ def index_wx_func(request):
         ip = request.META['REMOTE_ADDR']  
     print ip
     code = request.GET.get('code','')
-    print ('code:',code)
     func = request.GET.get('func','')
     if func == '':
         func = request.GET.get('state','')

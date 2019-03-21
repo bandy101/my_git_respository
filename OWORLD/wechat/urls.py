@@ -20,6 +20,7 @@ from . import users
 from . import xcx
 from . import proj
 from . import statistics
+from . import share
 
 urlpatterns = [
     url(r'sysinfo/$', views.sysinfo, name='sysinfo'),  
@@ -54,5 +55,7 @@ urlpatterns = [
 
     url(r'proj/getProjInfo/$', proj.getProjInfo, name='getProjInfo'),  
     url(r'proj/getRecentlyProj/$', proj.getRecentlyProj, name='getRecentlyProj'),  
-    url(r'proj/setRecentlyProj/$', proj.setRecentlyProj, name='setRecentlyProj'),  
+    url(r'proj/setRecentlyProj/$', proj.setRecentlyProj, name='setRecentlyProj'),
+    url(r'test_fun/$', share.test_fun, name='test_fun'),  
+
 ]

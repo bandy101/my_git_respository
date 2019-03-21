@@ -577,6 +577,55 @@ def get_col_field(sDF,page_id,title='',single=True):
             L.append([col1,col2,b])
     return L
 
+def test_fun(request):
+    # mode =  request.POST.get('mode') or request.GET.get('mode','view')
+    # request.GET.get('mode','view')
+    pk = 13175
+    # menu_id = request.POST.get('menu_id') or request.GET.get('menu_id',0)
+    # ret,errmsg,d_value = mValidateUser(request,mode,menu_id)
+    # usr_id = request.session.get('usr_id', 0)
+    # AccessToken = request.POST.get('AccessToken', '')
+    # wxcpt=WXBizMsgCrypt('szoworld',m_aesKey)
+    # ret,login_id,sTimeStamp = wxcpt.DecryptMsg(AccessToken)   
+    # sql = "select usr_name from users where login_id='%s'"%(login_id)
+    # rows,iN = db.select(sql)
+    # # print rows
+    # print '###~:',(rows[0][-1]) in ['维护员'.decode('GBK')],'~维护员'.decode('gbk'),1==1
+
+    # # print '###~：',(rows[0][-1]).encode('utf-8').decode('utf-8')==u'维护员',1==1
+    # if iN==0:
+    #     errCode = -1
+    #     s = """
+    #         {
+    #         "errcode": -1,
+    #         "errmsg": "你没有权限浏览当前页！sss",
+    #         }        """
+    #     # return errCode,ToUnicode(s),d_value
+    #     return HttpResponseCORS(request,ToUnicode(s))
+    # return HttpResponseCORS(request,ToUnicode('okokok!'))
+
+    showCB = False
+    # _formData = dict(formData,ensure_ascii=False,cls=ComplexEncoder)
+    sql = "select cid from gw_doc where id=%s and finish=%s"%(pk,0)
+    rows1 ,iN = db.select(sql)
+    sql = "select cid from gw_flow_his where id=%s"%(pk)
+    rows2,iN  = db.select(sql)
+    _d = [ _[0] for _ in (rows1+rows2)]
+
+    AccessToken = request.POST.get('AccessToken', '')
+    wxcpt=WXBizMsgCrypt('szoworld',m_aesKey)
+    ret,login_id,sTimeStamp = wxcpt.DecryptMsg(AccessToken)   
+    sql = "select usr_id from users where login_id='%s'"%(login_id)
+    rows,iN = db.select(sql)
+    if iN:
+        if rows[-1][-1] in _d:
+            showCB = True
+    else:
+        print '数据库中找不到该登录id!'.decode('gbk')
+    prin 
+    return HttpResponseCORS(request,ToUnicode('okokok!'))
+
+
 def mValidateUser(request,mode,menu_id):
     """功能：验证用户是否有访问当前功能的权限"""
     d_value = ['']*10
