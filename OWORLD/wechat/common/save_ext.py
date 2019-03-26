@@ -571,7 +571,7 @@ def getAutoCode(cllb):
                 maxnum= str(lT[0][0] + 1)
             else:
                 maxnum = '1'
-            maxnum = maxnum.zfill(4)
+            maxnum = maxnum.zfill(5)
             code += maxnum
 
     return code

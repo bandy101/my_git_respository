@@ -833,19 +833,33 @@ def getPageForm(request):
         rows1 ,iN = db.select(sql)
         if iN>0:
             sql = "select cid from gw_flow_his where id=%s"%(pk)
-            rows2,iN  = db.select(sql)
-            _d = [ _[0] for _ in (rows1+rows2)][:-1]
+            rows2,iN_  = db.select(sql)
+            if iN_>1:
+                rows2 = rows2[:-1]
+            _d = [ _[0] for _ in (rows1+rows2)]
             if d_value[0] in _d:
                 showCB = 1
     # _frontUrl ='http://pr.sz-hongjing.com'
     url_= str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk')
     url_ = json.dumps(str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk'))
-    extraBtnData = [{'btn_name':'BUTTON','url':{'href':url_,
+    url_ = url_.replace('"','')+'/'
+    
+    btn_name = '催办'
+    try:
+        btn_name = btn_name.encode('gbk').decode('gbk')
+    except:
+        try:
+            btn_name = btn_name.encode('utf-8').decode('utf-8')
+        except:
+            pass
+    extraBtnData = [{'btn_name':btn_name,'url':{'href':url_,
             'para':[{'link_field_name':'pk','para_name':'pk'},
                     {'link_field_name':'mode','para_name':'mode'},
                     {'link_field_name':'menu_id','para_name':'menu_id'}
             ]},'show_flag':showCB
         }]
+    if not showCB:
+        extraBtnData =''
     s = """
         {
         "errcode":0,

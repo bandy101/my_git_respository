@@ -578,9 +578,17 @@ def get_col_field(sDF,page_id,title='',single=True):
     return L
 
 def test_fun(request):
+    
+    title = '中文'.decode('gbk')
+
+    result = """{
+        'test':%s,
+        'test2':'abc'
+    }"""%(title)
+    return HttpResponseCORS(request,result)
     # mode =  request.POST.get('mode') or request.GET.get('mode','view')
     # request.GET.get('mode','view')
-    pk = 13175
+    # pk = 13175
     # menu_id = request.POST.get('menu_id') or request.GET.get('menu_id',0)
     # ret,errmsg,d_value = mValidateUser(request,mode,menu_id)
     # usr_id = request.session.get('usr_id', 0)
@@ -604,26 +612,26 @@ def test_fun(request):
     #     return HttpResponseCORS(request,ToUnicode(s))
     # return HttpResponseCORS(request,ToUnicode('okokok!'))
 
-    showCB = False
-    # _formData = dict(formData,ensure_ascii=False,cls=ComplexEncoder)
-    sql = "select cid from gw_doc where id=%s and finish=%s"%(pk,0)
-    rows1 ,iN = db.select(sql)
-    sql = "select cid from gw_flow_his where id=%s"%(pk)
-    rows2,iN  = db.select(sql)
-    _d = [ _[0] for _ in (rows1+rows2)]
+    # showCB = False
+    # # _formData = dict(formData,ensure_ascii=False,cls=ComplexEncoder)
+    # sql = "select cid from gw_doc where id=%s and finish=%s"%(pk,0)
+    # rows1 ,iN = db.select(sql)
+    # sql = "select cid from gw_flow_his where id=%s"%(pk)
+    # rows2,iN  = db.select(sql)
+    # _d = [ _[0] for _ in (rows1+rows2)]
 
-    AccessToken = request.POST.get('AccessToken', '')
-    wxcpt=WXBizMsgCrypt('szoworld',m_aesKey)
-    ret,login_id,sTimeStamp = wxcpt.DecryptMsg(AccessToken)   
-    sql = "select usr_id from users where login_id='%s'"%(login_id)
-    rows,iN = db.select(sql)
-    if iN:
-        if rows[-1][-1] in _d:
-            showCB = True
-    else:
-        print '数据库中找不到该登录id!'.decode('gbk')
-    prin 
-    return HttpResponseCORS(request,ToUnicode('okokok!'))
+    # AccessToken = request.POST.get('AccessToken', '')
+    # wxcpt=WXBizMsgCrypt('szoworld',m_aesKey)
+    # ret,login_id,sTimeStamp = wxcpt.DecryptMsg(AccessToken)   
+    # sql = "select usr_id from users where login_id='%s'"%(login_id)
+    # rows,iN = db.select(sql)
+    # if iN:
+    #     if rows[-1][-1] in _d:
+    #         showCB = True
+    # else:
+    #     print '数据库中找不到该登录id!'.decode('gbk')
+    # prin 
+    # return HttpResponseCORS(request,ToUnicode('okokok!'))
 
 
 def mValidateUser(request,mode,menu_id):
