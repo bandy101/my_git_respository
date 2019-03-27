@@ -176,7 +176,7 @@ def file_list(request):
         sql="SELECT '',file_size,ifnull(title,''),'','','',fname,YEAR(ctime),MONTH(ctime),is_pic FROM file_pic WHERE menu_id=%s and gw_id=%s and source=0"%(menu_id,pk)
     else:
         sql="SELECT '',file_size,ifnull(title,''),'','','',fname,YEAR(ctime),MONTH(ctime),is_pic FROM file_pic WHERE menu_id=%s and random_no='%s' and source=0"%(menu_id,random_no)
-    #print sql    
+    print sql    
     lT,iN=db.select(sql)
     if len(lT)==0:
         s = """{"files":[]}

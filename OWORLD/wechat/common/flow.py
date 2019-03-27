@@ -8,7 +8,7 @@ import datetime
 from HW_DT_TOOL                 import getToday
 import httplib
 import random
-exec ('from %s.share import db,data_url,my_urlencode,dActiveUser,mValidateUser,get_dept_data,HttpResponseCORS,HttpResponseJsonCORS,ToGBK,m_corp_name'%prj_name) 
+exec ('from %s.share import op_CB,db,data_url,my_urlencode,dActiveUser,mValidateUser,get_dept_data,HttpResponseCORS,HttpResponseJsonCORS,ToGBK,m_corp_name'%prj_name) 
 exec ('from %s.wx_cb.wxpush        import mWxPushMsg_Audit'%prj_name) 
 from save_finish import saveFinishData
 
@@ -1309,7 +1309,7 @@ def pressCB(request):
     #     pass
     # pk = data_list.get('pk','')
     # pk = ''
-    # mode = request.POST.get('mode','gw_audit')
+    mode = request.POST.get('mode','gw_audit')
     mode = 'gw_audit'
     menu_id = request.POST.get('menu_id', 203)
 
@@ -1323,6 +1323,7 @@ def pressCB(request):
                 ,H.cusrname
                 ,H.opt
                 ,H.id
+                ,H.cid
             FROM gw_flow_his H                    
             LEFT JOIN gw_doc GD ON GD.id = H.m_id
             LEFT JOIN gw_type GT ON GT.ID=GD.type_id
@@ -1339,6 +1340,7 @@ def pressCB(request):
 
     _T = list(rows[0])
     menu_id = _T[0]
+    usr_id = _T[-1]
     toUser = _T[2] or _T[3]
     title = "新催办:  【%s】%s"%(_T[5],_T[1])
 
@@ -1356,7 +1358,7 @@ def pressCB(request):
     # print(accessToken)
     urls = "/cgi-bin/message/send?access_token=%s" % (accessToken)
 
-    sUrl='%s/index_wx/?menu_id=%s&pk=%s&func=gw_audit'%(data_url,menu_id,pk)
+    sUrl='%s/index_wx/?menu_id=%s&pk=%s&func=%s'%(data_url,menu_id,pk,mode)
     _url = 'http://pr.sz-hongjing.com/commonDataTable.html?menu_id=%s&tab=audit&mode=audit&pk=%s'%(203,17809)
     
     print('url:',_url)
@@ -1375,16 +1377,21 @@ def pressCB(request):
                 }
              }
              """%(title,sUrl)
-
-    conn.request('POST',urls,sMsg.encode('utf-8'))
+    errcode = -1
+    _OP,_time = op_CB(usr_id)
+    errmsg = "催办已发出，%s秒后可再次催办"%_time
+    if _OP:
+        errcode = 0
+        errmsg = "催办成功!"
+        conn.request('POST',urls,sMsg.encode('utf-8'))
     # print(my_urlencode(_url))
     s = """
         {
-        "errcode":0,
-        "errmsg":"操作成功",
+        "errcode":%s,
+        "errmsg":'%s',
         "pk":%s,
         }
-        """%pk
+        """%(errcode,errmsg,pk)
 
            
     return HttpResponseCORS(request,s)

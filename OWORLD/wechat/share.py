@@ -110,7 +110,7 @@ m_corp_name = Lsys[0]
 m_aesKey = Lsys[16]
 m_corp_wxid =  Lsys[10]
 m_muti_lang = Lsys[13]
-
+# CB_timeout = 0 # 催办时间
 class GlobalVar:   
     usr_id = None
     usr_name = None
@@ -579,13 +579,13 @@ def get_col_field(sDF,page_id,title='',single=True):
 
 def test_fun(request):
     
-    title = '中文'.decode('gbk')
+    # title = '中文'.decode('gbk')
 
-    result = """{
-        'test':%s,
-        'test2':'abc'
-    }"""%(title)
-    return HttpResponseCORS(request,result)
+    # result = """{
+    #     'test':%s,
+    #     'test2':'abc'
+    # }"""%(title)
+    # return HttpResponseCORS(request,result)
     # mode =  request.POST.get('mode') or request.GET.get('mode','view')
     # request.GET.get('mode','view')
     # pk = 13175
@@ -632,6 +632,63 @@ def test_fun(request):
     #     print '数据库中找不到该登录id!'.decode('gbk')
     # prin 
     # return HttpResponseCORS(request,ToUnicode('okokok!'))
+    a = op_CB(2)
+    print(a)
+    return HttpResponse('sqlOP:%s',str(a))
+# 操作催办显示时间
+def op_CB(loginId):
+    currentTime = datetime.now()   # 当前时间
+
+    def op_loginTime(_id,flag):
+        # 更新
+        if flag:
+            sql = """
+                        update _cuiban set logintime='%s' where usrId=%s
+                    """%(currentTime,_id)
+        else:
+            sql = """
+                insert into _cuiban values(%s,'%s')
+            """%(_id,currentTime)
+        print sql
+        db.executesql(sql)
+
+    sql_query = """
+                    select usrId,logintime from _cuiban
+                """
+    try:
+        rows ,iN = db.select(sql_query)
+    except:
+        sql = """
+            create TABLE `_cuiban` (
+                `usrId` int(255) NOT NULL,
+                `logintime` datetime(0) NULL,
+                PRIMARY KEY (`usrId`)
+            )
+        """
+        db.executesql(sql)
+        rows ,iN = db.select(sql_query)
+    result = None
+    _TT = 0
+    if iN:
+        for _id,logintime in rows:
+            if _id == loginId:
+                # 判断时间 小于两个小时不可催办
+                print('id:',_id,'loginid:',loginId)
+                if ((currentTime - logintime).seconds)//3600 < 2:
+                    result = False
+                    _TT = (currentTime - logintime).seconds
+                else:
+                    op_loginTime(_id,True)
+                    result = True
+                break
+        else:
+            op_loginTime(loginId,False) # 插入
+            result = True
+    else:
+        op_loginTime(loginId,False) # 插入
+        result = True
+    return [result,7200-_TT]
+
 
 
 def mValidateUser(request,mode,menu_id):

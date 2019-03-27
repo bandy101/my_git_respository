@@ -44,7 +44,7 @@ def index_wx_func(request):
         agentname = '固定资产管理'
     else:
         agentname = '通讯录'
-
+    print func
     error_url = '%s/wx/mui/error.html'%front_url
     if func == 'FA_Code':
         FAcode = request.GET.get('facode','')

@@ -33,9 +33,11 @@ class PostListView(ListView):
     # Django内置的ListView返回的变量名称叫做page_obj 修改模板T
     # model = Post    # 可用queryset = Post.published.all() 替代
     queryset = Post.published.all()
+    print (queryset)
     context_object_name='posts'    # 如果不设置context_object_name参数，默认的变量名称是object_list
     paginate_by = 2 # 每页的显示文章数
     template_name = 'blog/post/list.html'
+
 
 from .forms import EmailPostForm
 from django.core.mail import send_mail

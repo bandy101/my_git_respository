@@ -57,4 +57,6 @@
     把页码和要展示的内容传给页面。
     返回变了名字 page_obj  {% include 'paginator.html' with page=page_obj %}
         with重新指定了变量名称以让分页模板
-
+    
+# 表单 
+    Django默认会对所有POST请求进行CSRF检查，在所有POST方式提交的表单中，都要添加csrf_token。

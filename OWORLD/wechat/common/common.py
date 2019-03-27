@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 # 尝试
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+
 prj_name=__name__.split('.')[0]
 import md5
 import os
@@ -16,7 +21,7 @@ from django.http import HttpResponseRedirect
 exec ('from %s.share        import ComplexEncoder,mValidateUser,get_YES_NO_data,get_mtc_t_data,get_roles_list,HttpResponseCORS,get_mtc_sys_data'%prj_name) 
 exec ('from %s.share        import addtwodimdict,get_gw_type_data1,get_gw_type_data2,get_flow_data,get_table_field,get_page_field,get_col_field,get_all_tables,get_use_tables'%prj_name) 
 exec ('from %s.share        import get_options_data,ToGBK,get_options_data_view,get_options_data_level,get_options_data_search'%prj_name) 
-exec ('from %s.share        import db,dActiveUser,g_data,data_url,front_url,fs_url,m_corp_name,m_muti_lang'%prj_name) 
+exec ('from %s.share        import op_CB,db,dActiveUser,g_data,data_url,front_url,fs_url,m_corp_name,m_muti_lang'%prj_name) 
 from flow import get_next_flow,get_next_sel_type,get_next_dept,get_next_role,get_next_user
 from info import getInfoAttribute,getInfoList,getInfoFormView,saveComment,saveInfo,getInfoAuditHis
 from save_list import saveListData
@@ -838,28 +843,35 @@ def getPageForm(request):
                 rows2 = rows2[:-1]
             _d = [ _[0] for _ in (rows1+rows2)]
             if d_value[0] in _d:
-                showCB = 1
+                # print(_d)
+                # print('rows:',rows1[0][0])
+                # if op_CB(int(rows1[0][0])):
+                    showCB = 1
+    # 是否相差两个小时
+    
     # _frontUrl ='http://pr.sz-hongjing.com'
     url_= str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk')
     url_ = json.dumps(str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk'))
-    url_ = url_.replace('"','')+'/'
+    # url_ = url_.replace('"','')+'/'
+    url_ = url_ + '/'
     
-    btn_name = '催办'
-    try:
-        btn_name = btn_name.encode('gbk').decode('gbk')
-    except:
-        try:
-            btn_name = btn_name.encode('utf-8').decode('utf-8')
-        except:
-            pass
-    extraBtnData = [{'btn_name':btn_name,'url':{'href':url_,
+    btn_name = "催办"
+    # try:
+    #     btn_name = btn_name.encode('gbk').decode('gbk')
+    # except:
+    #     try:
+    #         btn_name = btn_name.encode('utf-8').decode('utf-8')
+    #     except:
+    #         pass
+    extraBtnData = """[{'btn_name':'%s','url':{'href':'%s',
             'para':[{'link_field_name':'pk','para_name':'pk'},
                     {'link_field_name':'mode','para_name':'mode'},
                     {'link_field_name':'menu_id','para_name':'menu_id'}
-            ]},'show_flag':showCB
-        }]
+            ]},'show_flag':%s
+        }]"""%(btn_name,url_,showCB)
     if not showCB:
-        extraBtnData =''
+        extraBtnData = """''"""
+ 
     s = """
         {
         "errcode":0,

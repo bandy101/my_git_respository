@@ -8,7 +8,7 @@ from django.urls import reverse
 # 增加模型管理器 （默认objects）
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status='draft')
+        return super(PublishedManager, self).get_queryset().filter(status='published')
 
 class Post(models.Model):
     objects = models.Manager()  # 默认的管理器
@@ -37,3 +37,21 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+# 评论系统
+class Comment(models.Model):
+    # 将评论和文字进行关联
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comment')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    # auto_now_add表示当创建一行数据的时候，自动用创建数据的时间填充。
+    created = models.DateTimeField(auto_now_add=True)
+    # auto_now表示每次更新数据的时候，都会用当前的时间填充该字段。
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True) # 用于手工关闭不恰当的评论
+
+    # 根据创建时间结果排序
+    class Meta:
+        ordering = ('created',)
+
