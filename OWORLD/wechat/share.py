@@ -636,24 +636,24 @@ def test_fun(request):
     print(a)
     return HttpResponse('sqlOP:%s',str(a))
 # 操作催办显示时间
-def op_CB(loginId):
+def op_CB(loginId,pks):
     currentTime = datetime.now()   # 当前时间
 
     def op_loginTime(_id,flag):
         # 更新
         if flag:
             sql = """
-                        update _cuiban set logintime='%s' where usrId=%s
-                    """%(currentTime,_id)
+                        update _cuiban set logintime='%s' where usrId=%s and pk=%s
+                    """%(currentTime,_id,pks)
         else:
             sql = """
-                insert into _cuiban values(%s,'%s')
-            """%(_id,currentTime)
+                insert into _cuiban values(%s,'%s',%s)
+            """%(_id,currentTime,pks)
         print sql
         db.executesql(sql)
 
     sql_query = """
-                    select usrId,logintime from _cuiban
+                    select usrId,logintime,pk from _cuiban
                 """
     try:
         rows ,iN = db.select(sql_query)
@@ -662,16 +662,17 @@ def op_CB(loginId):
             create TABLE `_cuiban` (
                 `usrId` int(255) NOT NULL,
                 `logintime` datetime(0) NULL,
-                PRIMARY KEY (`usrId`)
-            )
+                `pk` int(255) NOT NULL,
+                PRIMARY KEY (`usrId`,`pk`)
+            )COMMENT = '记录每个人员催办时间和单号'
         """
         db.executesql(sql)
         rows ,iN = db.select(sql_query)
     result = None
     _TT = 0
     if iN:
-        for _id,logintime in rows:
-            if _id == loginId:
+        for _id,logintime,pk_ in rows:
+            if _id == loginId and pk_==int(pks):
                 # 判断时间 小于两个小时不可催办
                 print('id:',_id,'loginid:',loginId)
                 if ((currentTime - logintime).seconds)//3600 < 2:

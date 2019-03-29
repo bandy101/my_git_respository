@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',  # 消息应用
     'django.contrib.staticfiles',   # 管理静态文件
     'blog.apps.BlogConfig',
+    'taggit',
 ]
 # 中间件列表
 MIDDLEWARE = [

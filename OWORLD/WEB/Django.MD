@@ -42,7 +42,7 @@
     template tags：进行渲染控制，类似{% tag %}
     template variables：可认为是模板标签的一种特殊形式，即只是一个变量，渲染的时候只替换内容，类似{{ variable }}
     template filters：附加在模板变量上改变变量最终显示结果，类似{{ variable|filter }}
- 
+        pluralize :表示复数
 
 # Django的路由系统指的是路径和函数的对应关系
 # Django 对于末尾没有/的路径,会自动加上”/”然后在用这个URL去匹配,如果想关闭该功能,需要在settings.py中加上 APPEND_SLASH=False 即可.默认是True
@@ -60,3 +60,5 @@
     
 # 表单 
     Django默认会对所有POST请求进行CSRF检查，在所有POST方式提交的表单中，都要添加csrf_token。
+    如果浏览器在提交根据表单的HTML元素属性先进行了验证，关闭浏览器验证的方法是给表单添加novalidate属性：<form action="" novalidate>
+    {% with %}标签经常用于避免反复对数据库进行查询和向模板传入过多变量。

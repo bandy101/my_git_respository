@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post,Comment
 
 # Register your models here.
 # 向管理后台内添加模型
@@ -24,4 +24,9 @@ class PostAdmin(admin.ModelAdmin):
     # 排序的依据
     ordering = ('status', 'publish',)
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name','email','active')
+    list_filter = ('created','active')
+    search_fields = ('name', 'email', 'body')
 

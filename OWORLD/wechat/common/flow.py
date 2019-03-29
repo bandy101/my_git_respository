@@ -1378,7 +1378,7 @@ def pressCB(request):
              }
              """%(title,sUrl)
     errcode = -1
-    _OP,_time = op_CB(usr_id)
+    _OP,_time = op_CB(usr_id,pk)
     errmsg = "催办已发出，%s秒后可再次催办"%_time
     if _OP:
         errcode = 0

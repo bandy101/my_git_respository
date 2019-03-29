@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 # 增加模型管理器 （默认objects）
 class PublishedManager(models.Manager):
@@ -13,10 +14,11 @@ class PublishedManager(models.Manager):
 class Post(models.Model):
     objects = models.Manager()  # 默认的管理器
     published = PublishedManager()  # 自定义管理器
+    tags = TaggableManager()
 
     STATUS_CHOICES = (('draft', 'Draft'), ('published', 'Published'))
     title = models.CharField(max_length=250)
-    # unique_for_date 通过日期和简称可以找到唯一的一篇文章（或者找不到）
+    # unique_for_date 通过日期和简称可以找到唯一的一篇文章（或者找不到)
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     # on_delete参数表示删除外键关联的内容时候的操作  
     #   CASCADE意味着如果删除一个作者，将自动删除所有与这个作者关联的文章
@@ -40,8 +42,8 @@ class Post(models.Model):
 
 # 评论系统
 class Comment(models.Model):
-    # 将评论和文字进行关联
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comment')
+    # 将评论和文字进行关联  
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
     name = models.CharField(max_length=80)
     email = models.EmailField()
     body = models.TextField()
