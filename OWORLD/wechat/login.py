@@ -16,7 +16,7 @@ from django.db import connection
 from share import db,is_valid,generate_valid,create_db,DB_Op,dActiveUser,g_data,TIME_OUT,ToGBK,HttpResponseCORS,fs_url,oSysInfo,m_aesKey,m_prjname,m_muti_lang
 from users import ProcessPassword
 
-# 修改密码
+# 修改密码`
 def change_pwd(request):
     errCode = 0
     msg = u''
