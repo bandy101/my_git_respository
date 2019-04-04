@@ -35,11 +35,14 @@ def saveLaborInfo(request):
         validateDate = request.POST.get("validateDate",'')
         sex = request.POST.get("sex",'')
         issuer = request.POST.get("issuer",'')
-        pic_ext = idCardFaceImg.split(';')[0]
-        pic_ext = pic_ext.split('/')[-1]
-        pic_data = idCardFaceImg.split(';')[1] 
-        pic_data = pic_data.split(',')[-1]
-        filename = "head.%s"%(pic_ext)
+        if idCardFaceImg != '':
+            pic_ext = idCardFaceImg.split(';')[0]
+            pic_ext = pic_ext.split('/')[-1]
+            pic_data = idCardFaceImg.split(';')[1] 
+            pic_data = pic_data.split(',')[-1]
+            filename = "head.%s"%(pic_ext)
+        else:
+            filename = ''
         if idNo == '':
             s = """
         {
@@ -53,9 +56,10 @@ def saveLaborInfo(request):
         if iN == 0:
             pic_path = "%s_%s"%(int(time.time()),random.randint(0,99))
             head_pic = "labor/%s/%s/%s"%(year,pic_path,filename)
-            sql = """insert into labor_info (cname,gender,nation,birth,address,idcard_no,authority,valid_date,head_pic,pic_path,year,ctime,cid)
-                     values ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',now(),%s)
-                  """%(username,sex,nation,birthDate,place,idNo,issuer,validateDate,head_pic,pic_path,year,usr_id)
+            sql = """insert into labor_info (cname,gender,nation,birth,address,idcard_no,authority,valid_date,pic_path,year,ctime,cid)
+                     values ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',now(),%s)
+                  """%(username,sex,nation,birthDate,place,idNo,issuer,validateDate,pic_path,year,usr_id)
+            print ToGBK(sql)
             db.executesql(sql)
             sql = "select last_insert_id();"
             rows,iN = db.select(sql)
@@ -65,14 +69,21 @@ def saveLaborInfo(request):
             pic_path = rows[0][1]
             year = rows[0][2]
             head_pic = "labor/%s/%s/%s"%(year,pic_path,filename)
-            sql = """update labor_info set address='%s',authority='%s',valid_date='%s',head_pic='%s'
+            sql = """update labor_info set cname='%s',gender='%s',nation='%s',birth='%s',address='%s',authority='%s',valid_date='%s'
                      where id = %s
-                  """%(place,issuer,validateDate,head_pic,labor_id)
+                  """%(username,sex,nation,birthDate,place,issuer,validateDate,labor_id)
             print ToGBK(sql)
             db.executesql(sql)
 
-        savePic(pic_data,pic_path,year,filename)
+        if idCardFaceImg != '':
+            sql = """update labor_info set head_pic='%s'
+                     where id = %s
+                  """%(head_pic,labor_id)
+            print ToGBK(sql)
+            db.executesql(sql)
+            savePic(pic_data,pic_path,year,filename)
     elif str(step) == '2':  
+        #print request.POST
         labor_id = request.POST.get("labor_id",'')
         idCardImg = request.POST.get("idCardImg",'')
         if idCardImg != '':
@@ -82,6 +93,7 @@ def saveLaborInfo(request):
             pic_data = pic_data.split(',')[-1]
             filename = "idCard.%s"%(pic_ext)
             sql = "select id,pic_path,year from labor_info where id = '%s'"%(labor_id)
+            print sql
             rows,iN = db.select(sql)       
             pic_path = rows[0][1]
             year = rows[0][2]
@@ -91,6 +103,24 @@ def saveLaborInfo(request):
                   """%(idcard_pic,labor_id)
             db.executesql(sql)
             savePic(pic_data,pic_path,year,filename)
+        idCardImg1 = request.POST.get("idCardImg1",'')
+        if idCardImg1 != '':
+            pic_ext = idCardImg1.split(';')[0]
+            pic_ext = pic_ext.split('/')[-1]
+            pic_data = idCardImg1.split(';')[1] 
+            pic_data = pic_data.split(',')[-1]
+            filename = "idCard1.%s"%(pic_ext)
+            sql = "select id,pic_path,year from labor_info where id = '%s'"%(labor_id)
+            rows,iN = db.select(sql)       
+            pic_path = rows[0][1]
+            year = rows[0][2]
+            idcard_pic1 = "labor/%s/%s/%s"%(year,pic_path,filename)
+            sql = """update labor_info set idcard_pic1='%s'
+                     where id = %s
+                  """%(idcard_pic1,labor_id)
+            db.executesql(sql)
+            savePic(pic_data,pic_path,year,filename)
+
     elif str(step) == '3':  
         labor_id = request.POST.get("labor_id",'')
         proj_id = request.POST.get("proj_id") or 0
@@ -204,7 +234,9 @@ def getLaborInfo(request):
     idNo = request.POST.get("idNo",'')
 
     sql = """SELECT
+    li.cname,li.gender,li.nation,li.birth,li.address,li.idcard_no,li.authority,li.valid_date,ifnull(li.head_pic, ''),
     ifnull(li.idcard_pic, ''),
+    ifnull(li.idcard_pic1, ''),
 	ifnull(lp.bank_name, li.bank_name),
 	ifnull(
 		lp.account_name,
@@ -237,13 +269,13 @@ WHERE
     print sql
     rows,iN = db.select(sql)     
     if iN == 0:
-        L = ['']*15
+        L = ['']*25
         job_id = 0
         team_id = 0
     else:
         L = list(rows[0])
-        job_id = rows[0][6]
-        team_id = rows[0][7]
+        job_id = rows[0][16]
+        team_id = rows[0][17]
     sql = "select id,name,id=%s from addr_book where id in (select addr_book_id from addr_book_group where addr_group_id=6)"%(team_id)
     rows,iN = db.select(sql)      
     names = 'id name selected'.split()
@@ -254,9 +286,9 @@ WHERE
     names = 'id name  selected'.split()
     data2 = [dict(zip(names, d)) for d in rows]
 
-    L[6] = data2
-    L[7] = data1
-    names = 'idcard_pic bank_name account_name account_no bankCard_pic scene_pic job team mobile status h_press l_press temperature heartRate labor_id'.split()
+    L[16]= data2
+    L[17]= data1
+    names = 'cname gender nation birth address idcard_no authority valid_date head_pic idcard_pic idcard_pic1 bank_name account_name account_no bankCard_pic scene_pic job team mobile status h_press l_press temperature heartRate labor_id'.split()
     data = dict(zip(names, L))
     s1 = json.dumps(data,ensure_ascii=False,cls=ComplexEncoder)
 

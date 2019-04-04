@@ -13,13 +13,223 @@ from aesMsgCrypt                import WXBizMsgCrypt
 import httplib
 import urllib
 from django.db import connection
-from share import db,dActiveUser,g_data,TIME_OUT,ToGBK,HttpResponseCORS,fs_url,oSysInfo,m_aesKey,m_prjname,m_muti_lang
+from share import db,is_valid,generate_valid,create_db,DB_Op,dActiveUser,g_data,TIME_OUT,ToGBK,HttpResponseCORS,fs_url,oSysInfo,m_aesKey,m_prjname,m_muti_lang
 from users import ProcessPassword
+
+# 修改密码
+def change_pwd(request):
+    errCode = 0
+    msg = u''
+
+    now = datetime.datetime.now()
+    login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
+    oldpwd = request.POST.get('oldpassword','') or request.GET.get('oldpassword','')
+    password =  request.POST.get('password','') or request.GET.get('password','')
+
+    # 判断旧密码是否正确
+    sql = "select password `usr_info` where login_id='%s'"%(loginId)
+    rows,iN = db.select(sql)
+    if not oldpwd == rows[0][-1]:
+        errCode = -1
+        msg = u'旧密码输入错误'
+
+    # 判断新密码是否符合要求
+    sql = "select old_password `usr_history_info` where login_id='%s'"%(loginId)
+    rows,iN = db.select(sql)
+    if not password or password in [_[0] for _ in rows]:
+        errCode = -1
+        msg = u'密码不符合要求'
+    if not errCode:
+        # 更新用户记录表
+        DB_Op('usr_info',['password','update_time'],["'%s'"%password,"'%s'"%now]," where login_id='%s'"%login_id)
+        sql = "select create_time,update_time from `usr_info` where login_id='%s'"%(loginId)
+        rows,iN = db.select(sql)
+
+        # 插入历史数据
+        old_createTime = rows[0][-1] or rows[0][0] # 优先密码更新时间
+        DB_Op('usr_history_info',['login_id','old_password','old_createTime'],\
+                ["'%s'"%login_id,oldpassword,"'%s'"%old_createTime],'insert')
+
+    s = """
+        {
+        "errcode": %s,
+        "errmsg": "%s",
+        "login_id": "%s",
+        }
+        """ %(errCode,msg,login_id)  
+    response = HttpResponseCORS(request,s)
+    return response
+
+
+# 提示过期账户
+def update_login(request):
+    # 取消账户过期提示（90天）
+    login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
+    ignore   = request.POST.get('is_ignore','') or request.GET.get('is_ignore','')
+    now = datetime.datetime.now()
+    if ignore:
+        DB_Op('usr_info',['update_time'],["'%s'"%now]," where login_id='%s'"%login_id)
+    errCode = 0
+    msg = u'操作成功'
+    s = """
+        {
+        "errcode": %s,
+        "errmsg": "%s",
+        "login_id": "%s",
+        }
+        """ %(errCode,msg,login_id)  
+    response = HttpResponseCORS(request,s)
+    return response
+
+
+# 解锁 将login_record login_time（60天） 改成当前时间进行解锁
+# def update_login_lock(request):
+
+
+# 登录验证
+def login_test(request):
+    currentTime = datetime.datetime.now()   # 当前时间
+    errCode = -1
+    msg, s='', ''   # 返回的基础信息
+    error_count = 0
+
+    login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
+    password =  request.POST.get('password','') or request.GET.get('password','')
+    valid_code = request.POST.get('valid','') or request.GET.get('valid','')
+
+    image_code, valid_code_real = '','' # 图片数据 验证码 -1 or ''
+
+    print(valid_code_real)
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):  
+        login_ip =  request.META['HTTP_X_FORWARDED_FOR']  
+    else:  
+        login_ip = request.META['REMOTE_ADDR']  
+    # 获取验证码
+    _sql = """
+        select valid_code from `temp_sheet` where temp_id='%s' and temp_ip='%s'
+        """%(login_id,login_ip)
+    rows,iN = db.select(_sql)
+    if iN:
+        valid_code_real = rows[0][-1] # 验证码
+        print('valid:',valid_code_real)
+
+
+    # login_id = 'abc'
+    sql = """
+            select password from `usr_info` where login_id='%s'
+            """%(login_id)
+    rows,iN= db.select(sql)
+    if iN:
+        real_pwd = [_[0] for _ in rows][0]
+    else:
+        real_pwd = ''
+    print(sql)
+    # print ('#:',login_id_set[0])
+    if not iN:
+        errCode = -1
+        msg = u'用户名不存在'
+        s = """
+            {
+            "errcode": %s,
+            "errmsg": "%s",
+            "login_id": "%s",
+            }
+            """ %(errCode,msg,login_id)  
+        response = HttpResponseCORS(request,s)
+        return response
+    else:   
+        # 密码正确 记录登录信息到相应表
+        if password == real_pwd and any([valid_code_real in ['','-1'],valid_code_real == valid_code]):
+            # 检验是否过期
+            if is_valid(login_id)>=90:
+                errCode = 2 # 用户过期
+                msg = u'用户已过期！'
+                s ="""
+                    {
+                        "errCode":%s,
+                        "errmsg:":%s",
+                        "login_id":"%s",
+                    }
+                    """%(errCode,msg,login_id) 
+                return HttpResponseCORS(request,s)
+            if is_lock(login_id)>=60:
+                errCode = 3 # 用户锁定
+                msg = u'用户已锁定！'
+                s ="""
+                    {
+                        "errCode":%s,
+                        "errmsg:":%s",
+                        "login_id":"%s",
+                    }
+                    """%(errCode,msg,login_id) 
+                return HttpResponseCORS(request,s)
+
+            errCode = 0
+            msg = u'操作正确'
+            _sql = """
+                    select login_id from `login_record` 
+                    """
+            print db.executesql(_sql)
+            if not db.executesql(_sql):
+                DB_Op('login_record',['login_id','login_ip','login_time'],\
+                    ["'%s'"%login_id,"'%s'"%login_ip,"'%s'"%(currentTime)],'insert')
+            else:
+                DB_Op('login_record',['login_ip','login_time'],\
+                    ["'%s'"%login_ip,"'%s'"%(currentTime)]," where login_id='%s'"%(login_id))
+        
+            # 删除临时表中的记录
+            _sql = "delete from `temp_sheet` where temp_id='%s' and temp_ip='%s'"%(login_id,login_ip)
+            db.executesql(_sql)
+        
+        # 密码错误记录到临时表
+        else:
+            _sql = """
+                    select temp_id,temp_ip,login_num from `temp_sheet` where temp_id='%s' and temp_ip='%s'
+                    """%(login_id,login_ip)
+            rows,iN = db.select(_sql)
+            s +=''
+            # 不存在记录 插入数据
+            if not iN:
+                DB_Op('temp_sheet',['temp_id','temp_ip','login_num','valid_code'],\
+                    ["'%s'"%login_id,"'%s'"%login_ip,1,"''"],'insert')
+                error_count = 1
+            else:
+                # 更新数据
+                if int(rows[0][2])>=2:
+                    image_code, valid_code_real = generate_valid()
+
+                DB_Op('temp_sheet',['login_num','valid_code'],\
+                    [int(rows[0][2])+1,"'%s'"%valid_code_real],"where temp_id='%s'"%(login_id))
+                error_count =int(rows[0][2])+1
+            errcode = -1    
+            msg = u'账户或密码错误！'
+            if password == real_pwd:
+                msg = u'验证码错误！'
+            
+
+        s = """
+            {
+            "errcode": %s,
+            "errmsg": "%s",
+            "login_id": "%s",
+            "image_code":"%s",
+            "error_count":%s,
+            }
+            """ %(errCode,msg,login_id,image_code,error_count)
+        response = HttpResponseCORS(request,s)
+        return response
+
+
+
+    
+
+
 
 def login_func(request):
     import base64 , time
     import random
-    random_no='%s'%(random.randint(0,999999))   
+    random_no='%s'%(random.randint(0,999999))
+    print(request.POST)
     usr_id,usr_name,dept_id,dept_name='','','',''
     login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
     password =  request.POST.get('password','') or request.GET.get('password','')
@@ -191,7 +401,6 @@ def login_func(request):
             "errcode": %s,
             "errmsg": "%s",
             "login_id": "%s",
-            %s
         }
         """ %(errCode,msg,login_id,s1)  
     #print ToGBK(s)

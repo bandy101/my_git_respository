@@ -829,8 +829,9 @@ def getPageForm(request):
         validityData = json.dumps(L2,ensure_ascii=False,cls=ComplexEncoder)      
 
     # 判断权限  # --
-    # 显示催办按钮表示 0表示不显示
+    # showCB
     showCB = 0
+    # _formData = dict(formData,ensure_ascii=False,cls=ComplexEncoder)
     
     if pk:
         # sql = "select cid from gw_doc where id=%s and finish=%s"%(pk,0)
@@ -838,16 +839,27 @@ def getPageForm(request):
         # if iN>0:
         sql = "select cid from gw_flow_his where m_id=%s"%(pk)
         rows2,iN_  = db.select(sql)
+        # if iN_>1:
+        #     rows2 = rows2[:-1]
         print(rows2)
         _d = [ _[0] for _ in rows2[:-1]]
         if d_value[0] in _d:
                 showCB = 1
-
+    
+    # _frontUrl ='http://pr.sz-hongjing.com'
     url_= str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk')
     url_ = json.dumps(str('%s/common/pressCB'%(data_url)).encode('gbk').decode('gbk'))
+    # url_ = url_.replace('"','')+'/'
     url_ = url_ + '/'
     
     btn_name = "催办"
+    # try:
+    #     btn_name = btn_name.encode('gbk').decode('gbk')
+    # except:
+    #     try:
+    #         btn_name = btn_name.encode('utf-8').decode('utf-8')
+    #     except:
+    #         pass
     extraBtnData = """[{'btn_name':'%s','url':{'href':'%s',
             'para':[{'link_field_name':'pk','para_name':'pk'},
                     {'link_field_name':'mode','para_name':'mode'},

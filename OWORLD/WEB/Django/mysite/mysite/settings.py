@@ -122,7 +122,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+#     'mysite/blog/',
+# ]
 
+# STATICFILES_DIRS=(
+#     os.path.join(BASE_DIR,'sta')
+# )
 # 邮箱
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_HOST_USER = '1255381744'

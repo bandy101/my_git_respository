@@ -21,8 +21,10 @@ from . import xcx
 from . import proj
 from . import statistics
 from . import share
-
+from . import login
 urlpatterns = [
+    url(r'login_test/$', login.login_test, name='login'),  
+
     url(r'sysinfo/$', views.sysinfo, name='sysinfo'),  
     url(r'translate/$', views.translate, name='translate'),  
     url(r'login/$', views.login, name='login'),  

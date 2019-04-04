@@ -11,6 +11,9 @@ from datetime import date, datetime
 import decimal
 import re
 import MySQLdb
+import cv2
+import numpy as np
+import base64
 #限制用 "from XXXX import *" 时可以导入的名字
 __all__ = ['CLIENT_NAME','WEBSITE_PATH','m_sCorpID','m_sCorpSecret',
            'db','dActiveUser',
@@ -1840,3 +1843,151 @@ def get_menu_list(sDF,title='--请选择--',single=True):
         txt= e[1]
         L.append([e[0],txt,b])
     return L
+
+def DB_Op(tableName,fields,values,flag):
+    # flag: true 插入数据 , false: 更新数据
+     
+    currentTime = datetime.now()   # 当前时间
+    values = list(map(lambda x:str(x),values))
+    if 'insert' in flag:
+    # 插入数据
+        sql = """
+                insert into %s (%s) values (%s)
+                """%(tableName,','.join(fields),','.join(values))
+    else:
+    # 更新数据
+        sql = """
+                update `%s` set %s %s
+                """%(tableName,','.join(['='.join(_) for _ in zip(fields,values)]),flag)
+    print(sql)
+    db.executesql(sql)
+    # 涉及操作注意提交
+
+# 用户登录记录
+USRLogin_fields = ['login_id','login_ip','login_time','valid_code']
+USRLogin_type = ['varchar(30)','varchar(16)','datetime(0)','varchar(16)']
+USRLogin_pk = ['login_id']
+# 用户信息
+USRInfo_fields = ['usr_id','create_time','login_id','password','update_time']
+USRInfo_type = ['int(11)','datetime(0)','varchar(30)','varchar(16)','datetime(0)']
+USRInfo_pk = ['usr_id']
+# 历史记录
+USRHistory_fields = ['login_id','old_password','old_createTime']
+USRHistory_type = ['varchar(30)','varchar(16)','datetime(0)']
+USRHistory_pk = ['login_id']
+# 后台临时验证表
+USRTemp_fields = ['temp_id','temp_ip','login_num']
+USRTemp_type = ['varchar(30)','varchar(16)','int(11)']
+USRTemp_pk = ['temp_id','temp_ip']
+
+def create_db(tableName,field,types,pk):
+    # 根据表名 字段，类型，主键 创建表
+    sql = """
+            create TABLE if not exists `%s` (
+                `id` int(255) NULL 
+            )
+            """%(tableName)
+    # print( sql)
+    db.execute(sql)
+    _sql = ''
+    pos = None
+    sql = """
+            alter table `%s`  
+            """ %(tableName)
+    for index,(_field,_type) in enumerate(zip(field,types)):
+        _isnone = 'NULL'
+        if _field in pk:
+            _isnone = 'NOT NULL'
+        if not pos:
+            pos = 'after `%s` '%('id')
+        else:
+            pos = 'after `%s` '%(field[index-1])
+        sql = sql + ' add column `%s` %s %s %s, '%(_field,_type,_isnone,pos)
+    pKeys = '('
+    for _pk in pk:
+        pKeys =pKeys + '`%s`,'%(_pk)
+    pKeys = pKeys[:-1]+') '
+    sql = sql + """ADD PRIMARY KEY %s 
+        USING BTREE"""%(pKeys)
+    
+    print('sql:',sql)
+    db.executesql(sql)
+
+def generate_valid():
+    line_num = 10
+    pic_num = 1000
+    path = os.path.join(os.path.abspath('.'),'path')
+
+    try:
+        os.makedirs(path)
+    except:
+        pass
+    def randcolor():        
+        return (np.random.randint(0,255),np.random.randint(0,255),np.random.randint(0,255))
+        
+    def randchar():
+        return chr(np.random.randint(65,90)) 
+        
+    def randpos(x_start,x_end,y_start,y_end):
+        return (np.random.randint(x_start,x_end),
+                np.random.randint(y_start,y_end))
+
+    img_heigth = 60
+    img_width = 240
+    # 生成次数
+    for i in range(1):
+        img_name = ""
+        #生成一个随机矩阵，randint(low[, high, size, dtype])
+        img = np.random.randint(100,200,(img_heigth,img_width, 3), np.uint8)
+        #显示图像
+        # cv2.imshow("ranImg",img)
+        
+        x_pos = 0
+        y_pos = 25
+        for i in range(4):
+            char = randchar()
+            img_name += char
+            cv2.putText(img,char,
+                        (np.random.randint(x_pos,x_pos + 50),np.random.randint(y_pos,y_pos + 35)), 
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        1.5,
+                        randcolor(),
+                        2,
+                        cv2.LINE_AA)
+            x_pos += 45
+        
+        #cv2.imshow("res",img)
+        
+        #添加线段
+        for i in range(line_num):
+            img = cv2.line(img,
+                        randpos(0,img_width,0,img_heigth),
+                        randpos(0,img_width,0,img_heigth),
+                            randcolor(),
+                            np.random.randint(1,2))
+        # cv2.imshow("line",img)
+        # key = 
+        # cv2.waitKey()
+        # cv2.imwrite(os.path.join(path,"test.jpg"),img)
+        # print '###url:',os.path.join(path,"test.jpg")
+
+        imgcode = str(base64.b64encode(img))[2:-1]
+        return  imgcode,img_name
+# 判断90天是否过期
+def is_valid(loginId):
+    sql = "select create_time,update_time from `usr_info` where login_id='%s'"%(loginId)
+    rows,iN = db.select(sql)
+    if iN:
+        createTime = rows[0][-1] or rows[0][0] # 优先密码更新时间
+        currentTime = datetime.now()
+        days = (currentTime-createTime).total_seconds()//(24*3600)
+        return days
+    return -1     
+def is_lock(loginId):
+    sql = "login_time from `usr_info` where login_id='%s'"%(loginId)
+    rows,iN = db.select(sql)
+    if iN:
+        loginTime =  rows[0][0] # 优先密码更新时间
+        currentTime = datetime.now()
+        days = (currentTime-loginTime).total_seconds()//(24*3600)
+        return days

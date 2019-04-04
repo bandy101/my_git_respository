@@ -32,6 +32,11 @@ def post_list(request,tag_slug=None):
 
 from .forms import CommentForm
 
+def tk(request):
+    import os 
+    print('###:',os.getcwd())
+    return render(request,'k/index.html')
+
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post, status="published", publish__year=year, publish__month=month,
                              publish__day=day)
