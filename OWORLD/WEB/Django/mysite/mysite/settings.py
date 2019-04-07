@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',   # 管理静态文件
     'blog.apps.BlogConfig',
     'taggit',
+    # 'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 # 中间件列表
 MIDDLEWARE = [
@@ -78,7 +80,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #           必须始终有一个名称为default的数据库，默认使用SQLite 3数据库。
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }

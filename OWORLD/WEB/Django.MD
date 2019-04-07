@@ -62,3 +62,22 @@
     Django默认会对所有POST请求进行CSRF检查，在所有POST方式提交的表单中，都要添加csrf_token。
     如果浏览器在提交根据表单的HTML元素属性先进行了验证，关闭浏览器验证的方法是给表单添加novalidate属性：<form action="" novalidate>
     {% with %}标签经常用于避免反复对数据库进行查询和向模板传入过多变量。
+
+# 自定义标签
+    simple_tag: 处理数据并且返回字符串
+    inclusion_tag: 处理数据并返回一个渲染的模板
+
+    Django对于生成的HTML代码都会进行转义而不会当成HTML代码解析，只有对mark_safe标记的内容才会正常解析，这是为了避免在页面中出现危险代码（如添加外部JavaScript文件的代码）。
+    @register.filter(name='markdown')
+    def markdown_format(text):
+        return mark_safe(markdown.markdown(text))
+
+# 站点地图
+    在setting 中激活应用
+        <!-- 'django.contrib.sites', -->
+        'django.contrib.sitemaps',
+
+# 全文搜索
+    先安装postgreSQL和python 相关依赖项
+    sudo apt-get install libpq-dev python-dev
+    sudo apt-get install postgresql postgresql-contrib

@@ -14,7 +14,7 @@ class PublishedManager(models.Manager):
 class Post(models.Model):
     objects = models.Manager()  # 默认的管理器
     published = PublishedManager()  # 自定义管理器
-    tags = TaggableManager()
+    tags = TaggableManager()    # django-taggit 标签模板
 
     STATUS_CHOICES = (('draft', 'Draft'), ('published', 'Published'))
     title = models.CharField(max_length=250)
