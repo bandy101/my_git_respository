@@ -24,7 +24,7 @@ def change_pwd(request):
     now = datetime.datetime.now()
     login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
     oldpwd = request.POST.get('oldpassword','') or request.GET.get('oldpassword','')
-    password =  request.POST.get('password','') or request.GET.get('password','')
+    password =  request.POST.get('password_login','') or request.GET.get('password_login','')
 
     # 判断旧密码是否正确
     sql = "select password `usr_info` where login_id='%s'"%(loginId)
@@ -94,7 +94,7 @@ def login_test(request):
     error_count = 0
 
     login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
-    password =  request.POST.get('password','') or request.GET.get('password','')
+    password =  request.POST.get('password_login','') or request.GET.get('password_login','')
     valid_code = request.POST.get('valid','') or request.GET.get('valid','')
 
     image_code, valid_code_real = '','' # 图片数据 验证码 -1 or ''
@@ -152,17 +152,17 @@ def login_test(request):
                     }
                     """%(errCode,msg,login_id) 
                 return HttpResponseCORS(request,s)
-            if is_lock(login_id)>=60:
-                errCode = 3 # 用户锁定
-                msg = u'用户已锁定！'
-                s ="""
-                    {
-                        "errCode":%s,
-                        "errmsg:":%s",
-                        "login_id":"%s",
-                    }
-                    """%(errCode,msg,login_id) 
-                return HttpResponseCORS(request,s)
+            # if is_lock(login_id)>=60:
+            #     errCode = 3 # 用户锁定
+            #     msg = u'用户已锁定！'
+            #     s ="""
+            #         {
+            #             "errCode":%s,
+            #             "errmsg:":%s",
+            #             "login_id":"%s",
+            #         }
+            #         """%(errCode,msg,login_id) 
+            #     return HttpResponseCORS(request,s)
 
             errCode = 0
             msg = u'操作正确'
@@ -203,6 +203,7 @@ def login_test(request):
                 error_count =int(rows[0][2])+1
             errcode = -1    
             msg = u'账户或密码错误！'
+            print(password,real_pwd,password == real_pwd)
             if password == real_pwd:
                 msg = u'验证码错误！'
             
@@ -216,6 +217,7 @@ def login_test(request):
             "error_count":%s,
             }
             """ %(errCode,msg,login_id,image_code,error_count)
+
         response = HttpResponseCORS(request,s)
         return response
 

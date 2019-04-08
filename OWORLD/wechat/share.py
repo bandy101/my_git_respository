@@ -1971,8 +1971,8 @@ def generate_valid():
         # cv2.imwrite(os.path.join(path,"test.jpg"),img)
         # print '###url:',os.path.join(path,"test.jpg")
 
-        imgcode = str(base64.b64encode(img))[2:-1]
-        return  imgcode,img_name
+        imgcode = cv2.imencode('.jpg', img)[1].tostring()
+        return  str(base64.b64encode(imgcode)),img_name
 # 判断90天是否过期
 def is_valid(loginId):
     sql = "select create_time,update_time from `usr_info` where login_id='%s'"%(loginId)
@@ -1980,6 +1980,7 @@ def is_valid(loginId):
     if iN:
         createTime = rows[0][-1] or rows[0][0] # 优先密码更新时间
         currentTime = datetime.now()
+        print(currentTime,createTime)
         days = (currentTime-createTime).total_seconds()//(24*3600)
         return days
     return -1     
