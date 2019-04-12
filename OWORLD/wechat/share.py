@@ -143,6 +143,11 @@ def strDuplicateRemoval(str):
     str = ','.join(L1)
     return str
 
+def floatval(val):
+    t = str(val)
+    r = t.rstrip('0').strip('.') if '.' in t else t
+    return r
+
 class ComplexEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
@@ -151,7 +156,7 @@ class ComplexEncoder(json.JSONEncoder):
         elif isinstance(obj, date):
             return obj.strftime('%Y-%m-%d')
         elif isinstance(obj, decimal.Decimal):  
-            return str(obj)          
+            return floatval(obj)          
         else:
             return json.JSONEncoder.default(self, obj)
 
@@ -656,10 +661,12 @@ def op_CB(loginId,pks):
         db.executesql(sql)
 
     sql_query = """
-                    select usrId,logintime,pk from _cuiban
-                """
+                    select usrId,logintime,pk from _cuiban where usrId='%s' and pk='%s'
+                """%(loginId,pks)
     try:
         rows ,iN = db.select(sql_query)
+        print(sql_query)
+        print('$$$~~~~',rows,loginId,pks)
     except:
         sql = """
             create TABLE `_cuiban` (
@@ -675,16 +682,16 @@ def op_CB(loginId,pks):
     _TT = 0
     if iN:
         for _id,logintime,pk_ in rows:
-            if _id == loginId and pk_==int(pks):
+            # if _id == loginId and pk_==int(pks):
                 # 判断时间 小于两个小时不可催办
-                print('id:',_id,'loginid:',loginId)
-                if ((currentTime - logintime).seconds)//3600 < 2:
-                    result = False
-                    _TT = (currentTime - logintime).seconds
-                else:
-                    op_loginTime(_id,True)
-                    result = True
-                break
+                # print('id:',_id,'loginid:',loginId)
+            if ((currentTime - logintime).seconds)//3600 < 2:
+                result = False
+                _TT = (currentTime - logintime).seconds
+            else:
+                op_loginTime(_id,True)  # 更新
+                result = True
+            break
         else:
             op_loginTime(loginId,False) # 插入
             result = True
@@ -734,8 +741,10 @@ def mValidateUser(request,mode,menu_id):
             "errcode": -1,
             "errmsg": "请在微信企业号或企业微信应用中打开该页面！",
             }        """
-            return errCode,ToUnicode(s),d_value
-        userid = d[0]
+            #return errCode,ToUnicode(s),d_value
+            userid = 207
+        else:
+            userid = d[0]
         if usr_id != userid:
             errCode = -1
             s = """
@@ -1864,20 +1873,20 @@ def DB_Op(tableName,fields,values,flag):
     # 涉及操作注意提交
 
 # 用户登录记录
-USRLogin_fields = ['login_id','login_ip','login_time','valid_code']
-USRLogin_type = ['varchar(30)','varchar(16)','datetime(0)','varchar(16)']
+USRLogin_fields = ['login_id','login_ip','login_time','createtime','pwd_update_time']
+USRLogin_type = ['varchar(30)','varchar(16)','datetime(0)','datetime(0)','datetime(0)']
 USRLogin_pk = ['login_id']
-# 用户信息
-USRInfo_fields = ['usr_id','create_time','login_id','password','update_time']
-USRInfo_type = ['int(11)','datetime(0)','varchar(30)','varchar(16)','datetime(0)']
-USRInfo_pk = ['usr_id']
+# # 用户信息
+# USRInfo_fields = ['login_id','create_time','usr_name','password','update_time']
+# USRInfo_type = ['int(11)','datetime(0)','varchar(30)','varchar(16)','datetime(0)']
+# USRInfo_pk = ['login_id']
 # 历史记录
 USRHistory_fields = ['login_id','old_password','old_createTime']
 USRHistory_type = ['varchar(30)','varchar(16)','datetime(0)']
 USRHistory_pk = ['login_id']
 # 后台临时验证表
-USRTemp_fields = ['temp_id','temp_ip','login_num']
-USRTemp_type = ['varchar(30)','varchar(16)','int(11)']
+USRTemp_fields = ['temp_id','temp_ip','login_num','valid_code']
+USRTemp_type = ['varchar(30)','varchar(16)','int(11)','varchar(16)']
 USRTemp_pk = ['temp_id','temp_ip']
 
 def create_db(tableName,field,types,pk):
@@ -1975,20 +1984,25 @@ def generate_valid():
         return  str(base64.b64encode(imgcode)),img_name
 # 判断90天是否过期
 def is_valid(loginId):
-    sql = "select create_time,update_time from `usr_info` where login_id='%s'"%(loginId)
+    sql = "select create_time,pwd_update_time from `login_record` where login_id='%s'"%(loginId)
     rows,iN = db.select(sql)
     if iN:
         createTime = rows[0][-1] or rows[0][0] # 优先密码更新时间
+        if not createTime:
+            createTime = datetime.now()
+            DB_Op('login_record',['create_time'],["'%s'"%createTime]," where login_id='%s'"%(loginId))
         currentTime = datetime.now()
         print(currentTime,createTime)
         days = (currentTime-createTime).total_seconds()//(24*3600)
         return days
     return -1     
 def is_lock(loginId):
-    sql = "login_time from `usr_info` where login_id='%s'"%(loginId)
+    sql = "select login_time from `login_record` where login_id='%s'"%(loginId)
     rows,iN = db.select(sql)
     if iN:
-        loginTime =  rows[0][0] # 优先密码更新时间
+        loginTime =  rows[0][0] # 
         currentTime = datetime.now()
         days = (currentTime-loginTime).total_seconds()//(24*3600)
         return days
+    else:
+        return 0

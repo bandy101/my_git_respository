@@ -560,7 +560,7 @@ def chn_cap(value):
     func = value[:pos1]
     bit = int(func.split('_')[2])
     
-    f_value = float(value[pos1+1:pos2])
+    f_value = float(value[pos1+1:pos2] or 0)
     if f_value < pow(10,bit-1):
         return ''
     elif f_value < pow(10,bit):

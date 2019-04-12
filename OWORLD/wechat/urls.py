@@ -23,7 +23,9 @@ from . import statistics
 from . import share
 from . import login
 urlpatterns = [
-    url(r'login_test/$', login.login_test, name='login'),  
+    url(r'login_test/$', login.login_test, name='login_test'),  
+    url(r'get_valid/$', login.valid_generater, name='get_valid'),  
+    url(r'change_pwd/$', login.change_pwd, name='change_pwd'),  
 
     url(r'sysinfo/$', views.sysinfo, name='sysinfo'),  
     url(r'translate/$', views.translate, name='translate'),  
