@@ -14,24 +14,24 @@ import MySQLdb
 import cv2
 import numpy as np
 import base64
-#限制用 "from XXXX import *" 时可以导入的名字
+#?????? "from XXXX import *" ?????????????
 __all__ = ['CLIENT_NAME','WEBSITE_PATH','m_sCorpID','m_sCorpSecret',
            'db','dActiveUser',
            'TIME_OUT','mValidateUser','get_YES_NO_data','get_dept_data',
            'get_mtc_t_data','HttpResponseCORS'
            ]
 
-#获取客户名
+#????????
 CLIENT_NAME      = __name__.split('.')[0]
-#配置失效时间为半个小时
+#?????????????????
 TIME_OUT = 30 
 try:
-    db=DataBaseParent()     #关系数据库
+    db=DataBaseParent()     #????????
 except:
     raise Exception('db connect error')
 
-def ToUnicode(s):#因python对字符串进行unicode编码后会在字符串的前面加上一个前辍u,该前辍对编码没有起到作用，且还限制了程序对该字符串的修改，本函数仅是去掉该前辍
-    try:#可以直接转换成字符串的，直接转换，不可以直接转换的，先拆分，再组合
+def ToUnicode(s):#??python???????????unicode??????????????????????????u,????????????????????????????????????????????????????????????
+    try:#?????????????????????????????????????????????????????
         s=str(s.decode("GBK").encode("utf-8"))
     except:
         s1=''
@@ -76,7 +76,7 @@ class cSysInfo:
                      '','',icp,aesKey
                from `sys_info` s
                left join wx_corp_agent a on a.corp_id = s.corp_id and a.`name` = '%s'  
-            """ %(ToUnicode('授权登录'))
+            """ %(ToUnicode('??????'))
         lT,iN=db.select(sql)
         self.Lsys=list(lT[0])
         
@@ -100,7 +100,7 @@ class cSysInfo:
         
 oSysInfo=cSysInfo()
 
-#公共的常数，和一些共享的变量
+#?????????????????????????
 WEBSITE_PATH=os.path.join('/home/webroot/oWorld/',CLIENT_NAME)
 dActiveUser={}     
 Lsys = oSysInfo.get()   
@@ -113,7 +113,7 @@ m_corp_name = Lsys[0]
 m_aesKey = Lsys[16]
 m_corp_wxid =  Lsys[10]
 m_muti_lang = Lsys[13]
-# CB_timeout = 0 # 催办时间
+# CB_timeout = 0 # ??????
 class GlobalVar:   
     usr_id = None
     usr_name = None
@@ -167,11 +167,11 @@ def get_YES_NO_data(sDF):
     else:
         b = '1'
     L = []
-    L.append(['1',ToUnicode('是'),'',a])
-    L.append(['0',ToUnicode('否'),'',b])
+    L.append(['1',ToUnicode('??'),'',a])
+    L.append(['0',ToUnicode('??'),'',b])
     return L
 
-def get_mtc_t_data(sDF,type,title=ToUnicode('--请选择--'),single=True):
+def get_mtc_t_data(sDF,type,title=ToUnicode('--?????--'),single=True):
     sql="SELECT id,txt1 FROM mtc_t WHERE type='%s' order by sort" %type
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -188,7 +188,7 @@ def get_mtc_t_data(sDF,type,title=ToUnicode('--请选择--'),single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_mtc_sys_data(sDF,type,title=ToUnicode('--请选择--'),single=True):
+def get_mtc_sys_data(sDF,type,title=ToUnicode('--?????--'),single=True):
     sql="SELECT id,txt1 FROM mtc_sys WHERE type='%s' order by sort" %type
     #print sql + str(single) + str(sDF)
     lT,iN = db.select(sql)
@@ -269,7 +269,7 @@ def get_sel_cols(sDF,type,title='',single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_dept_data(sDF,title=ToUnicode('--选择部门--'),single=True):
+def get_dept_data(sDF,title=ToUnicode('--?????--'),single=True):
     sql="SELECT id,cname,parent_id,iLevel=1 FROM dept where del_flag = 0 ORDER BY sort" 
     lT,iN = db.select(sql)
     ldf=[]
@@ -298,23 +298,23 @@ def get_dept_data(sDF,title=ToUnicode('--选择部门--'),single=True):
     return L
 
 def get_USTAT_data_delete(sDF,single=True):
-    #返回用户的状态选择数据,0:禁用,1:有效
+    #??????????????????,0:????,1:????
     sDF=str(sDF)
     if sDF=='':b='1'
     else:b=''
-    L=[['','--状态--','',b]]
+    L=[['','--??--','',b]]
     if sDF=='0':b='1'
     else:b=''
-    L.append(['0','无效','',b])
+    L.append(['0','????','',b])
     if sDF=='1':b='1'
     else:b=''
-    L.append(['1','有效','',b])
+    L.append(['1','????','',b])
     if sDF=='3':b='1'
     else:b=''
-    L.append(['3','删除','',b])
+    L.append(['3','???','',b])
     return L
 
-def get_roles_list(sDF,deptid,title=ToUnicode('--选择角色--'),single=True):
+def get_roles_list(sDF,deptid,title=ToUnicode('--?????--'),single=True):
     if sDF=='':b='1'
     else: b=''
     if title!='':
@@ -342,8 +342,8 @@ def get_roles_list(sDF,deptid,title=ToUnicode('--选择角色--'),single=True):
             L.append([id,name,'',b])
     return L
 
-#获得流程一级分类
-def get_gw_type_data1(sDF,title=ToUnicode('--请选择--'),single=True):
+#??????????????
+def get_gw_type_data1(sDF,title=ToUnicode('--?????--'),single=True):
     sql="SELECT id,cname,i_level FROM gw_type WHERE i_level = 0 and status=1 ORDER BY id" 
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -360,8 +360,8 @@ def get_gw_type_data1(sDF,title=ToUnicode('--请选择--'),single=True):
         L.append([e[0],txt,b])
     return L
 
-#获得流程二级分类
-def get_gw_type_data2(sDF,parent_id,title=ToUnicode('--公文流程二级分类--'),single=True):
+#??????????????
+def get_gw_type_data2(sDF,parent_id,title=ToUnicode('--???????????????--'),single=True):
     lT=[]
     if parent_id!='':
         sql="SELECT id,cname,i_level FROM gw_type WHERE p_id = %s and status=1 ORDER BY id"%(parent_id)
@@ -380,7 +380,7 @@ def get_gw_type_data2(sDF,parent_id,title=ToUnicode('--公文流程二级分类--'),sing
         L.append([int(e[0]),txt,b])
     return L
 
-def get_first_flow_data(sDF,gw_type,title=ToUnicode('--起始流程--'),single=True):
+def get_first_flow_data(sDF,gw_type,title=ToUnicode('--???????--'),single=True):
     lT=[]
     if gw_type !='':
         sql="SELECT id,cname FROM gw_flow_def where type_id=%s AND IFNULL(s_flag,0) = 1"%(gw_type)        
@@ -399,7 +399,7 @@ def get_first_flow_data(sDF,gw_type,title=ToUnicode('--起始流程--'),single=True)
         L.append([int(e[0]),txt,b])
     return L
 
-def get_flow_data(sDF,gw_type,has_flow,title=ToUnicode('--请选择--'),single=True):
+def get_flow_data(sDF,gw_type,has_flow,title=ToUnicode('--?????--'),single=True):
     lT=[]
     if gw_type !='':
         sql="SELECT id,cname FROM gw_flow_def where type_id=%s"%(gw_type)  
@@ -435,7 +435,7 @@ def get_all_tables(sDF,title='',single=True):
         table_name = e[0]
         table_name = table_name.upper()
         table_comment = e[1] 
-        table_comment = table_comment.replace(ToUnicode('自动创建：'),'')
+        table_comment = table_comment.replace(ToUnicode('?????????'),'')
         txt = table_name
         if table_comment != '':
             txt += "(%s)"%(table_comment)
@@ -471,7 +471,7 @@ def get_use_tables(sDF,page_id,title='',single=True):
         L.append([table_name,table_name,b])
     return L
 
-def get_form_tables(sDF,step_id,title='--选择关联表--',single=True):
+def get_form_tables(sDF,step_id,title='--????????--',single=True):
     lT=[]
     if step_id!='':
         sql="select table_name,table_ab from menu_form_tables where step_id=%s;"%step_id 
@@ -497,7 +497,7 @@ def get_form_tables(sDF,step_id,title='--选择关联表--',single=True):
         L.append([table_name,table_name,b])
     return L
 
-def get_table_field(sDF,table_name,title=ToUnicode('--字段名称--'),single=True):
+def get_table_field(sDF,table_name,title=ToUnicode('--???????--'),single=True):
     lT=[]
     if table_name !='' and table_name!=None:
         table = table_name.split(' ')
@@ -587,7 +587,7 @@ def get_col_field(sDF,page_id,title='',single=True):
 
 def test_fun(request):
     
-    # title = '中文'.decode('gbk')
+    # title = '????'.decode('gbk')
 
     # result = """{
     #     'test':%s,
@@ -606,15 +606,15 @@ def test_fun(request):
     # sql = "select usr_name from users where login_id='%s'"%(login_id)
     # rows,iN = db.select(sql)
     # # print rows
-    # print '###~:',(rows[0][-1]) in ['维护员'.decode('GBK')],'~维护员'.decode('gbk'),1==1
+    # print '###~:',(rows[0][-1]) in ['????'.decode('GBK')],'~????'.decode('gbk'),1==1
 
-    # # print '###~：',(rows[0][-1]).encode('utf-8').decode('utf-8')==u'维护员',1==1
+    # # print '###~??',(rows[0][-1]).encode('utf-8').decode('utf-8')==u'????',1==1
     # if iN==0:
     #     errCode = -1
     #     s = """
     #         {
     #         "errcode": -1,
-    #         "errmsg": "你没有权限浏览当前页！sss",
+    #         "errmsg": "?????????????????sss",
     #         }        """
     #     # return errCode,ToUnicode(s),d_value
     #     return HttpResponseCORS(request,ToUnicode(s))
@@ -637,18 +637,18 @@ def test_fun(request):
     #     if rows[-1][-1] in _d:
     #         showCB = True
     # else:
-    #     print '数据库中找不到该登录id!'.decode('gbk')
+    #     print '????????????????id!'.decode('gbk')
     # prin 
     # return HttpResponseCORS(request,ToUnicode('okokok!'))
     a = op_CB(2)
     print(a)
     return HttpResponse('sqlOP:%s',str(a))
-# 操作催办显示时间
+# ?????????????
 def op_CB(loginId,pks):
-    currentTime = datetime.now()   # 当前时间
+    currentTime = datetime.now()   # ??????
 
     def op_loginTime(_id,flag):
-        # 更新
+        # ????
         if flag:
             sql = """
                         update _cuiban set logintime='%s' where usrId=%s and pk=%s
@@ -674,7 +674,7 @@ def op_CB(loginId,pks):
                 `logintime` datetime(0) NULL,
                 `pk` int(255) NOT NULL,
                 PRIMARY KEY (`usrId`,`pk`)
-            )COMMENT = '记录每个人员催办时间和单号'
+            )COMMENT = '???????????????????'
         """
         db.executesql(sql)
         rows ,iN = db.select(sql_query)
@@ -683,27 +683,27 @@ def op_CB(loginId,pks):
     if iN:
         for _id,logintime,pk_ in rows:
             # if _id == loginId and pk_==int(pks):
-                # 判断时间 小于两个小时不可催办
+                # ??????? ?????????????????
                 # print('id:',_id,'loginid:',loginId)
             if ((currentTime - logintime).seconds)//3600 < 2:
                 result = False
                 _TT = (currentTime - logintime).seconds
             else:
-                op_loginTime(_id,True)  # 更新
+                op_loginTime(_id,True)  # ????
                 result = True
             break
         else:
-            op_loginTime(loginId,False) # 插入
+            op_loginTime(loginId,False) # ????
             result = True
     else:
-        op_loginTime(loginId,False) # 插入
+        op_loginTime(loginId,False) # ????
         result = True
     return [result,7200-_TT]
 
 
 
 def mValidateUser(request,mode,menu_id):
-    """功能：验证用户是否有访问当前功能的权限"""
+    """??????????????????????????????"""
     d_value = ['']*10
     usr_id = request.session.get('usr_id', 0)
     AccessToken = request.POST.get('AccessToken', '')
@@ -716,7 +716,7 @@ def mValidateUser(request,mode,menu_id):
         s = """
             {
             "errcode": -1,
-            "errmsg": "验证信息有误，请重新登陆！",
+            "errmsg": "????????????????????",
             }        """
         return errCode,ToUnicode(s),d_value
 
@@ -727,7 +727,7 @@ def mValidateUser(request,mode,menu_id):
         s = """
             {
             "errcode": -1,
-            "errmsg": "你没有权限浏览当前页！",
+            "errmsg": "?????????????????",
             }        """
         return errCode,ToUnicode(s),d_value
     usr_id = rows[0][0]  
@@ -739,7 +739,7 @@ def mValidateUser(request,mode,menu_id):
             s = """
             {
             "errcode": -1,
-            "errmsg": "请在微信企业号或企业微信应用中打开该页面！",
+            "errmsg": "???????????????????????????????",
             }        """
             #return errCode,ToUnicode(s),d_value
             userid = 207
@@ -750,7 +750,7 @@ def mValidateUser(request,mode,menu_id):
             s = """
             {
             "errcode": -1,
-            "errmsg": "请在微信企业号或企业微信应用中打开该页面！",
+            "errmsg": "???????????????????????????????",
             }        """
             return errCode,ToUnicode(s),d_value
 
@@ -776,7 +776,7 @@ def mValidateUser(request,mode,menu_id):
         s = """
             {
             "errcode": -1,
-            "errmsg": "你没有权限浏览当前页！",
+            "errmsg": "?????????????????",
             }        """
         return errCode,ToUnicode(s),d_value
     sec = rows[0][5] or 0
@@ -786,7 +786,7 @@ def mValidateUser(request,mode,menu_id):
         s = """
             {
             "errcode": 1,
-            "errmsg": "登录超时！",
+            "errmsg": "????????",
             }        """
         return errCode,ToUnicode(s),d_value
     sql = "update users_login set refresh_time=now() where id=%s"%rows[0][7]
@@ -851,7 +851,7 @@ def HttpResponseJsonCORS(request,s):
 
 def sql_decode(final_sql):
     final_sql = final_sql.upper()
-    #只保留一个空格
+    #???????????
     import re
     final_sql = re.sub(r'\s+', ' ', final_sql)
     #print final_sql
@@ -863,7 +863,7 @@ def sql_decode(final_sql):
     field_sql = field_sql.replace('SELECT','')
     field_sql = field_sql.replace('%Y-%M-%D','%Y-%m-%d')
 
-    #解析字段结构
+    #?????????
     field_list = field_sql.split(',')
     field_list1 = []
     n = 0
@@ -901,17 +901,17 @@ def sql_decode(final_sql):
             if L[0] == "'ADD'":
                 L[1] = ''
                 L[2] = 'add'
-                L[3] = ToUnicode('添加')
+                L[3] = ToUnicode('????')
                 L[4] = 2
             elif L[0] == "'UPDATE'":
                 L[1] = ''
                 L[2] = 'update'
-                L[3] = ToUnicode('修改')
+                L[3] = ToUnicode('???')
                 L[4] = 2
             elif L[0] == "'DELETE'":
                 L[1] = ''
                 L[2] = 'delete'
-                L[3] = ToUnicode('删除')
+                L[3] = ToUnicode('???')
                 L[4] = 2
             field_list1.append(L)
             sTemp = ''
@@ -920,7 +920,7 @@ def sql_decode(final_sql):
             n = n - 1
             sTemp = sTemp + e1 +","
             bFlag = 0
-    #解析表结构
+    #????????
     table_list = table_sql.split(' JOIN ')
     table_list1 = []
     iCount = len(table_list)
@@ -977,7 +977,7 @@ def sql_decode(final_sql):
 
 def sql_decode_form(final_sql):
     final_sql = final_sql.upper()
-    #只保留一个空格
+    #???????????
     import re
     final_sql = re.sub(r'\s+', ' ', final_sql)
     iPos = final_sql.find(' FROM ')
@@ -988,7 +988,7 @@ def sql_decode_form(final_sql):
     field_sql = field_sql.replace('SELECT','')
     field_sql = field_sql.replace('%Y-%M-%D','%Y-%m-%d')
 
-    #解析字段结构
+    #?????????
     field_list = field_sql.split(',')
     field_list1 = []
     n = 0
@@ -1034,7 +1034,7 @@ def sql_decode_form(final_sql):
             n = n - 1
             sTemp = sTemp + e1 +","
             bFlag = 0
-    #解析表结构
+    #????????
     table_list = table_sql1.split(' JOIN ')
     table_list1 = []
     iCount = len(table_list)
@@ -1170,10 +1170,10 @@ def get_options_data_view(menu_id,usr_id,pk,type,txt,title,default,para1,para2,s
         if str(e[2])=='1': 
             #print e
             if single:
-                return e[1] or ToUnicode('是')
+                return e[1] or ToUnicode('??')
             else:
                 value += "%s,"%e[1]
-    if value==',': value = ToUnicode('是')
+    if value==',': value = ToUnicode('??')
     return value
 
 def get_options_data(menu_id,usr_id,pk,type,txt,title,default,para1,para2,single = True):
@@ -1210,7 +1210,7 @@ def get_options_data_search(menu_id,usr_id,pk,type,txt,title,default,para1,para2
 def get_options_search(menu_id,usr_id,pk,type,txt,title,default,para1,para2,single,value_dict,para_cols):
     L = []
     
-    if type==26:   #材料
+    if type==26:   #????
         sql="""select option_id,concat(number,'/',name),ifnull(size,'') from user_options o
                left join _m504_clgl m on m.id = o.option_id
                where option_id='%s'  and o.option_type='%s' order by o.ctime desc limit 1
@@ -1340,7 +1340,7 @@ def get_options_level(menu_id,usr_id,pk,type,txt,title,default,para1,para2,singl
 
     return L
 
-def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),view = False):
+def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--?????--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1352,7 +1352,7 @@ def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'
     else:
         L=[]
     
-    if usr_id=='':#资金帐号是根据授权用户提取的，因此，当usr_id为空时，应该返回空的列表
+    if usr_id=='':#?????????????????????????????usr_id???????????????????
         return L
     
     if view==True:
@@ -1382,9 +1382,9 @@ def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'
             lT1,iN1=db.select(sql1)
             if iN1>0: type_name = lT1[0][0]
             else:type_name=''
-            if type_name in [ToUnicode('现金')]:#type为非空，取出指定类型的资金帐号，如:0、现金账，1、银行账
+            if type_name in [ToUnicode('???')]:#type?????????????????????????:0????????1????????
                 sql+="AND type=0"
-            elif type_name in [ToUnicode('支票'),ToUnicode('转账')]:#type为非空，取出指定类型的资金帐号，如:0、现金账，1、银行账
+            elif type_name in [ToUnicode('??'),ToUnicode('???')]:#type?????????????????????????:0????????1????????
                 sql+="AND type=1"
             else:
                 sql+="AND type=2"
@@ -1397,7 +1397,7 @@ def get_capital_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'
         L.append([e[0],txt,b])
     return L
 
-def get_sup_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),view = False):
+def get_sup_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--?????--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1422,7 +1422,7 @@ def get_sup_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),vi
         L.append([e[0],txt,b])
     return L
 
-def get_users_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),view = False):
+def get_users_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--?????--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1447,7 +1447,7 @@ def get_users_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),
         L.append([e[0],txt,b])
     return L
 
-def get_mat_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),view = False):
+def get_mat_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--?????--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1472,7 +1472,7 @@ def get_mat_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),vi
         L.append([e[0],txt,b])
     return L
 
-def get_proj_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),view = False):
+def get_proj_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--?????--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1502,7 +1502,7 @@ def get_proj_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),v
         L.append([e[0],txt,b])
     return L
 
-def get_proj_info_by_user(menu_id,usr_id,sDF,type,title=ToUnicode('--请选择--')):
+def get_proj_info_by_user(menu_id,usr_id,sDF,type,title=ToUnicode('--?????--')):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1525,7 +1525,7 @@ def get_proj_info_by_user(menu_id,usr_id,sDF,type,title=ToUnicode('--请选择--'))
         L.append([e[0],txt,b])
     return L
 
-def get_ht_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),view = False):
+def get_ht_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--?????--'),view = False):
     sDF=str(sDF)
     
     if sDF!='':
@@ -1553,7 +1553,7 @@ def get_ht_info(menu_id,usr_id,sDF,para1,para2,title=ToUnicode('--请选择--'),vie
         L.append([e[0],txt,b])
     return L
 
-def get_cw_data(menu_id,sDF,para1,para2,title='--请选择--',view = False):
+def get_cw_data(menu_id,sDF,para1,para2,title='--?????--',view = False):
     if view == True:
         sql_str = """
           SELECT cw.id                          
@@ -1619,7 +1619,7 @@ def get_cw_data(menu_id,sDF,para1,para2,title='--请选择--',view = False):
     return L
 
 
-def get_sql_data_level(sDF,txt,para1,para2,title='--请选择--',single=True):
+def get_sql_data_level(sDF,txt,para1,para2,title='--?????--',single=True):
     ldf=[]
     sDF=str(sDF)
     if not sDF is None and sDF != '' and single==False:
@@ -1709,7 +1709,7 @@ def get_input_data(sDF,txt,title='',single=True):
         L.append([e1[0],txt,b])
     return L
 
-def get_sql_data(sDF,txt,para1,para2,title='--请选择--',single=True): 
+def get_sql_data(sDF,txt,para1,para2,title='--?????--',single=True): 
     ldf=[]
     sDF=str(sDF)
     if not sDF is None and sDF != '' and single==False:
@@ -1753,7 +1753,7 @@ def get_sql_data(sDF,txt,para1,para2,title='--请选择--',single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_mtc_t_data1(sDF,type,title='--请选择--',single=True):
+def get_mtc_t_data1(sDF,type,title='--?????--',single=True):
     ldf=[]
     sDF=str(sDF)
     if not sDF is None and sDF != '' and single==False:
@@ -1818,7 +1818,7 @@ def get_roleslist(dept,sDF,pk,single=True):
                 L[n][2]=1
     return L
 
-def get_dept_data1(sDF,title='--请选择--',single=True):
+def get_dept_data1(sDF,title='--?????--',single=True):
     sql="SELECT id,cname,'',ifnull(ilevel,0) FROM dept where id!=1 and del_flag = 0 order by sort" 
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -1836,7 +1836,7 @@ def get_dept_data1(sDF,title='--请选择--',single=True):
         L.append([e[0],txt,b])
     return L
 
-def get_menu_list(sDF,title='--请选择--',single=True):
+def get_menu_list(sDF,title='--?????--',single=True):
     sql="SELECT menu_id,menu_name FROM menu_func where menu=1 order by sort" 
     lT,iN = db.select(sql)
     sDF=str(sDF)
@@ -1854,43 +1854,43 @@ def get_menu_list(sDF,title='--请选择--',single=True):
     return L
 
 def DB_Op(tableName,fields,values,flag):
-    # flag: true 插入数据 , false: 更新数据
+    # flag: true ???????? , false: ????????
      
-    currentTime = datetime.now()   # 当前时间
+    currentTime = datetime.now()   # ??????
     values = list(map(lambda x:str(x),values))
     if 'insert' in flag:
-    # 插入数据
+    # ????????
         sql = """
                 insert into %s (%s) values (%s)
                 """%(tableName,','.join(fields),','.join(values))
     else:
-    # 更新数据
+    # ????????
         sql = """
                 update `%s` set %s %s
                 """%(tableName,','.join(['='.join(_) for _ in zip(fields,values)]),flag)
     print(sql)
     db.executesql(sql)
-    # 涉及操作注意提交
+    # ??p?????????
 
-# 用户登录记录
+# ?????????
 USRLogin_fields = ['login_id','login_ip','login_time','createtime','pwd_update_time']
 USRLogin_type = ['varchar(30)','varchar(16)','datetime(0)','datetime(0)','datetime(0)']
 USRLogin_pk = ['login_id']
-# # 用户信息
+# # ??????
 # USRInfo_fields = ['login_id','create_time','usr_name','password','update_time']
 # USRInfo_type = ['int(11)','datetime(0)','varchar(30)','varchar(16)','datetime(0)']
 # USRInfo_pk = ['login_id']
-# 历史记录
+# ??????
 USRHistory_fields = ['login_id','old_password','old_createTime']
 USRHistory_type = ['varchar(30)','varchar(16)','datetime(0)']
 USRHistory_pk = ['login_id']
-# 后台临时验证表
+# ???????????
 USRTemp_fields = ['temp_id','temp_ip','login_num','valid_code']
 USRTemp_type = ['varchar(30)','varchar(16)','int(11)','varchar(16)']
 USRTemp_pk = ['temp_id','temp_ip']
 
 def create_db(tableName,field,types,pk):
-    # 根据表名 字段，类型，主键 创建表
+    # ??????? ?????????????? ??????
     sql = """
             create TABLE if not exists `%s` (
                 `id` int(255) NULL 
@@ -1943,12 +1943,12 @@ def generate_valid():
 
     img_heigth = 60
     img_width = 240
-    # 生成次数
+    # ???????
     for i in range(1):
         img_name = ""
-        #生成一个随机矩阵，randint(low[, high, size, dtype])
+        #??????????????randint(low[, high, size, dtype])
         img = np.random.randint(100,200,(img_heigth,img_width, 3), np.uint8)
-        #显示图像
+        #??????
         # cv2.imshow("ranImg",img)
         
         x_pos = 0
@@ -1967,7 +1967,7 @@ def generate_valid():
         
         #cv2.imshow("res",img)
         
-        #添加线段
+        #???????
         for i in range(line_num):
             img = cv2.line(img,
                         randpos(0,img_width,0,img_heigth),
@@ -1982,12 +1982,12 @@ def generate_valid():
 
         imgcode = cv2.imencode('.jpg', img)[1].tostring()
         return  str(base64.b64encode(imgcode)),img_name
-# 判断90天是否过期
+# ????90????????
 def is_valid(loginId):
     sql = "select create_time,pwd_update_time from `login_record` where login_id='%s'"%(loginId)
     rows,iN = db.select(sql)
     if iN:
-        createTime = rows[0][-1] or rows[0][0] # 优先密码更新时间
+        createTime = rows[0][-1] or rows[0][0] # ??????????????
         if not createTime:
             createTime = datetime.now()
             DB_Op('login_record',['create_time'],["'%s'"%createTime]," where login_id='%s'"%(loginId))

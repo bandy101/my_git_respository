@@ -22,10 +22,18 @@ from . import proj
 from . import statistics
 from . import share
 from . import login
+from .aliyunsdkcore.get_valid import test_getValid
 urlpatterns = [
+    url(r'test_getvalid/$', test_getValid, name='test_getValid'),  
+
     url(r'login_test/$', login.login_test, name='login_test'),  
     url(r'get_valid/$', login.valid_generater, name='get_valid'),  
-    url(r'change_pwd/$', login.change_pwd, name='change_pwd'),  
+    url(r'change_pwd/$', login.change_pwd, name='change_pwd'),
+    url(r'forgetpwd/(\D+)/$', login.forgetpwd, name='forgetpwd'),
+    url(r'forgetpwd/$', login.forgetpwd_origin, name='forgetpwd_origin'),
+
+
+
 
     url(r'sysinfo/$', views.sysinfo, name='sysinfo'),  
     url(r'translate/$', views.translate, name='translate'),  

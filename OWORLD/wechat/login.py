@@ -16,8 +16,10 @@ from django.db import connection
 from share import db,is_lock,is_valid,generate_valid,create_db,DB_Op,dActiveUser,g_data,TIME_OUT,ToGBK,HttpResponseCORS,fs_url,oSysInfo,m_aesKey,m_prjname,m_muti_lang
 from users import ProcessPassword
 import re
+from .aliyunsdkcore.get_valid import test_getValid
+import random
 
-# 验证码接口
+# 图片验证码接口
 def valid_generater(request):
     errCode = 0
     imgcode = ''
@@ -37,7 +39,7 @@ def valid_generater(request):
             "imgcode": "%s",
             "login_id":'%s',
             }
-            """%(errCode,msg,imgcode,_real_valid,login_id)
+            """%(errCode,msg,imgcode,login_id)
         DB_Op('temp_sheet',['valid_code'],\
                     ["'%s'"%_real_valid],"where temp_id='%s' and temp_ip='%s' "%(login_id,login_ip))
         print("where temp_id='%s' and temp_ip='%s' "%(login_id,login_ip))
@@ -59,33 +61,37 @@ def valid_generater(request):
     return response
 
 
+
 # 修改密码`
 def change_pwd(request):
     errCode = 0
     msg = u''
     now = datetime.datetime.now()
+    # flag:1 修改密码 0:重置密码
+    flag =  request.POST.get('flag','') or request.GET.get('flag','')
     login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
     oldpwd = request.POST.get('oldpassword','') or request.GET.get('oldpassword','')
     password =  request.POST.get('password_login','') or request.GET.get('password_login','')
 
     # 判断旧密码是否正确
-    sql = "select password from `users` where login_id='%s'"%(login_id)
-    rows,iN = db.select(sql)
-    print(request.POST)
-    print('rows:',rows,login_id)
-    if iN:
-        print('###:',oldpwd,rows[0][-1])
-        if oldpwd != rows[0][0]:
-            errCode = 1
-            msg = u'旧密码输入错误'
-            s = """
-                {
-                "errcode": %s,
-                "errmsg": "%s",
-                "login_id": "%s",
-                }
-                """ %(errCode,msg,login_id)
-            response = HttpResponseCORS(request,s)
+    if flag in [1,'1']:
+        sql = "select password from `users` where login_id='%s'"%(login_id)
+        rows,iN = db.select(sql)
+        print(request.POST)
+        print('rows:',rows,login_id)
+        if iN:
+            print('###:',oldpwd,rows[0][-1])
+            if oldpwd != rows[0][0]:
+                errCode = 1
+                msg = u'旧密码输入错误'
+                s = """
+                    {
+                    "errcode": %s,
+                    "errmsg": "%s",
+                    "login_id": "%s",
+                    }
+                    """ %(errCode,msg,login_id)
+                response = HttpResponseCORS(request,s)
     # else:
     #     errCode = 1
     #     msg = u'旧密码输入错误'
@@ -157,6 +163,7 @@ def update_login_lock(request):
 
 # 登录验证
 def login_test(request):
+
     currentTime = datetime.datetime.now()   # 当前时间
     errCode = -1
     msg, s='', ''   # 返回的基础信息
@@ -219,28 +226,26 @@ def login_test(request):
         if (password==real_pwd or password in [pwd_real]) and any([valid_code_real in ['','-1'],valid_code_real.lower() == valid_code.lower()]):
             # 检验是否过期
             if is_valid(login_id)>=90:
-                errCode = 2 # 用户过期
+                errCode = -2 # 用户过期
                 msg = u'用户已过期！'
                 s ="""
                     {
                         "errcode":%s,
-                        "errmsg:":%s",
+                        "errmsg:":"%s",
                         "login_id":"%s",
                         "usr_name":"%s",
-
                     }
                     """%(errCode,msg,login_id,usr_name) 
                 return HttpResponseCORS(request,s)
             if is_lock(login_id)>=60:
-                errCode = 3 # 用户锁定
+                errCode = -3 # 用户锁定
                 msg = u'用户已锁定！'
                 s ="""
                     {
                         "errcode":%s,
-                        "errmsg:":%s",
+                        "errmsg:":'%s',
                         "login_id":"%s",
                         "usr_name":"%s",
-
                     }
                     """%(errCode,msg,login_id,usr_name) 
                 return HttpResponseCORS(request,s)
@@ -331,8 +336,105 @@ def login_test(request):
             response = HttpResponseCORS(request,s)
             return response
 
+# 填写账号
+def forgetpwd_origin(request):
+    name =  request.POST.get('usrname','') or request.GET.get('usrname','')
+    login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
+    errCode = 0
+    # s = ''
+    msg = ''
+    tel = ''
 
+    # 判断账户填写是否错误
+    sql = " select mobil from users where login_id='%s' and usr_name='%s' "%(login_id,name)
+    rows,iN = db.select(sql)
+    if iN:
+        # 获取验证码
+        tel = rows[0][-1]
+        msg = 'sucess'
+        errCode = 0
+    else:
+        # 登录名或用户名错误
+        msg = '请填写正确的用户名和姓名！'
+        errCode = -1
+    s ="""
+            {
+            "errcode":"%s",
+            "errmsg": "%s",
+            "tel": "%s",
+            }
+        """%(errCode,msg,tel)
+    return HttpResponseCORS(request,s)
 
+def forgetpwd(request,Opname):
+    errCode = 0
+    s = """ """
+    msg = ''
+    tel = ''
+
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        login_ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:
+        login_ip = request.META['REMOTE_ADDR']
+    name =  request.POST.get('usrname','') or request.GET.get('usrname','')
+    login_id =  request.POST.get('login_id','') or request.GET.get('login_id','')
+    mobil =  request.POST.get('mobil','') or request.GET.get('mobil','')
+    mobil_valid = request.POST.get('mobil_valid','') or request.GET.get('mobil_valid','')
+
+    # 发送短信
+    if Opname in ['getmobilvalid']:
+        tel='%s'%(random.randint(0,999999))
+        res = test_getValid(mobil,tel)
+
+        if res['Code'].lower() in ['ok']:
+            # 删除相应的数据存在验证码在临时表中
+            _sql = "delete from `temp_sheet` where temp_id='%s' and temp_ip='%s'"%(login_id,login_ip)
+            db.executesql(_sql)
+            DB_Op('temp_sheet',['temp_id','temp_ip','valid_code'],\
+                    ["'%s'"%login_id,"'%s'"%login_ip,"'%s'"%(tel)],'insert')
+            errCode = 0
+            msg = 'sucess'
+        else:
+            errCode = -1
+            msg = '验证码发送失败'
+        s +="""{
+                "errcode":%s,
+                "errmsg": "%s",
+                "tel": "%s",
+                }
+            """%(errCode,msg,mobil)
+        return HttpResponseCORS(request,s)
+    # if Opname in ['fillcount']:
+    #     s +="""{
+    #             "errcode":"%s",
+    #             "errmsg": "%s",
+    #             "tel": "%s",}
+    #         """%(errCode,msg,tel)
+    #     return HttpResponseCORS(request,s)
+    if Opname in ['checkVerify']:
+        # 获取验证码
+        sql = " select valid_code from `temp_sheet` where temp_id='%s' "%(login_id)
+        rows,iN = db.select(sql)
+        if iN:
+            # 验证码正确
+            if str(rows[0][-1]) == str(mobil_valid):
+                errCode = 0   
+                msg = 'sucess'
+                _sql = "delete from `temp_sheet` where temp_id='%s' and temp_ip='%s'"%(login_id,login_ip)
+                db.executesql(_sql)
+            else:
+                errCode = -1   
+                msg = '验证码错误'
+        else:
+            errCode = -1   
+            msg = '该手机未收到验证码！'
+        # 验证码正确
+        s +="""{
+                "errcode":'%s',
+                "errmsg": "%s",
+                "valid": "%s",}
+            """%(errCode,msg,mobil_valid)
+        return HttpResponseCORS(request,s)
 
 
 
@@ -358,8 +460,9 @@ def login_func(request):
     response = login_test(request)
     if  response:
         return response
+
+    errCode, msg = -1, '该账户已失效！'
     
-    print('验证借宿·············')
 
 
 # ----#
@@ -411,112 +514,112 @@ def login_func(request):
         #             """ %(errCode,msg,login_id)  
         #         response = HttpResponseCORS(request,s)
         #         return response
-            usr_id=lT[0][0]
-            #求得用户的权限
-            dActiveUser[usr_id]={}
-            dActiveUser[usr_id]['roles']={}                       #用户角色
-            dActiveUser[usr_id]['access_dept_data']=[]            #访问部门内所有人员数据的权限,格式:['部门ID1','部门ID2',...]
-            dActiveUser[usr_id]['access_person_data']=[]          #访问人员数据的权限,格式:['人员ID1','人员ID2',...]
-            dActiveUser[usr_id]['login_time']=time.time()         #登入时间
-            dActiveUser[usr_id]['usr_name']=lT[0][1]              #用户名
-            dActiveUser[usr_id]['login_id']=login_id
-            dActiveUser[usr_id]['usr_dept']=lT[0][2],lT[0][3]           #用户部门
-            dActiveUser[usr_id]['pic']=lT[0][4]
-                    
-            #用户角色/访问部门内所有人员数据的权限
-            sql="""SELECT WUR.role_id,WR.role_name,WR.sort,WR.dept_id
-                            FROM usr_role WUR LEFT JOIN roles WR ON WUR.role_id=WR.role_id
-                            WHERE WUR.usr_id=%s
-                """ % usr_id
-            print(sql)
-            lT1,iN1 = db.select(sql)
-            if iN1>0:
-                for e in lT1:
-                    #用户角色
-                    dActiveUser[usr_id]['roles'][e[0]]=e[1:]   
+        usr_id=lT[0][0]
+        #求得用户的权限
+        dActiveUser[usr_id]={}
+        dActiveUser[usr_id]['roles']={}                       #用户角色
+        dActiveUser[usr_id]['access_dept_data']=[]            #访问部门内所有人员数据的权限,格式:['部门ID1','部门ID2',...]
+        dActiveUser[usr_id]['access_person_data']=[]          #访问人员数据的权限,格式:['人员ID1','人员ID2',...]
+        dActiveUser[usr_id]['login_time']=time.time()         #登入时间
+        dActiveUser[usr_id]['usr_name']=lT[0][1]              #用户名
+        dActiveUser[usr_id]['login_id']=login_id
+        dActiveUser[usr_id]['usr_dept']=lT[0][2],lT[0][3]           #用户部门
+        dActiveUser[usr_id]['pic']=lT[0][4]
+                
+        #用户角色/访问部门内所有人员数据的权限
+        sql="""SELECT WUR.role_id,WR.role_name,WR.sort,WR.dept_id
+                        FROM usr_role WUR LEFT JOIN roles WR ON WUR.role_id=WR.role_id
+                        WHERE WUR.usr_id=%s
+            """ % usr_id
+        print(sql)
+        lT1,iN1 = db.select(sql)
+        if iN1>0:
+            for e in lT1:
+                #用户角色
+                dActiveUser[usr_id]['roles'][e[0]]=e[1:]   
 
-            request.session['usr_id'] = usr_id
-            request.session['usr_name'] = dActiveUser[usr_id]['usr_name']
-            request.session['dept_id'] = lT[0][2]
-            request.session['dept_name'] = lT[0][3]
-            request.session['dActiveUser'] = dActiveUser
-            d_value = ['','','','','']
-            d_value[0] = usr_id
-            d_value[1] = dActiveUser[usr_id]['usr_name']
-            d_value[2] = lT[0][2]
-            d_value[3] = lT[0][3]
-            d_value[4] = 0
-            g_data.set_value(d_value)
-            errCode = 0
-            msg = 'OK'
-            pic = lT[0][4]
-            if pic=='':
-                pic_url = "%s/user_pic/default.jpg"%fs_url
+        request.session['usr_id'] = usr_id
+        request.session['usr_name'] = dActiveUser[usr_id]['usr_name']
+        request.session['dept_id'] = lT[0][2]
+        request.session['dept_name'] = lT[0][3]
+        request.session['dActiveUser'] = dActiveUser
+        d_value = ['','','','','']
+        d_value[0] = usr_id
+        d_value[1] = dActiveUser[usr_id]['usr_name']
+        d_value[2] = lT[0][2]
+        d_value[3] = lT[0][3]
+        d_value[4] = 0
+        g_data.set_value(d_value)
+        errCode = 0
+        msg = 'OK'
+        pic = lT[0][4]
+        if pic=='':
+            pic_url = "%s/user_pic/default.jpg"%fs_url
+        else:
+            pic_url = "%s/user_pic/small_"%fs_url+pic
+
+        sTimeStamp = str(time.time())
+        wxcpt=WXBizMsgCrypt('szoworld',m_aesKey)
+        ret,token = wxcpt.EncryptMsg(login_id,random_no,sTimeStamp)            
+        
+        if m_muti_lang==1 and lang_id>1:
+            if usr_id in [1,2]:
+                sql="""SELECT distinct WMF.menu,WMF.menu_id,case l.`name` when '' then WMF.menu_name else l.`name` end,
+                        WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
+                        FROM menu_func WMF 
+                        Left JOIN menu_func WMF1 on WMF.parent_id = WMF1.menu_id
+                        left join muti_lang_menu l on l.menu_id = WMF.menu_id and l.lang_id = %s
+                        WHERE WMF.status=1 and WMF.menu_id>0 and WMF1.status=1
+                        ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
+                    """%(lang_id)
             else:
-                pic_url = "%s/user_pic/small_"%fs_url+pic
-
-            sTimeStamp = str(time.time())
-            wxcpt=WXBizMsgCrypt('szoworld',m_aesKey)
-            ret,token = wxcpt.EncryptMsg(login_id,random_no,sTimeStamp)            
-            
-            if m_muti_lang==1 and lang_id>1:
-                if usr_id in [1,2]:
-                    sql="""SELECT distinct WMF.menu,WMF.menu_id,case l.`name` when '' then WMF.menu_name else l.`name` end,
-                            WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
-                            FROM menu_func WMF 
-                            Left JOIN menu_func WMF1 on WMF.parent_id = WMF1.menu_id
-                            left join muti_lang_menu l on l.menu_id = WMF.menu_id and l.lang_id = %s
-                            WHERE WMF.status=1 and WMF.menu_id>0 and WMF1.status=1
-                            ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
-                        """%(lang_id)
-                else:
-                    sql="""SELECT distinct WMF.menu,WMF.menu_id,case l.`name` when '' then WMF.menu_name else l.`name` end,
-                            WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
-                            FROM usr_role WUR JOIN (role_menu WRM JOIN menu_func WMF ON WRM.menu_id=WMF.menu_id) ON WUR.role_id=WRM.role_id
-                            left join muti_lang_menu l on l.menu_id = WMF.menu_id and l.lang_id = %s
-                            WHERE WUR.usr_id='%s' AND WMF.status=1 and WMF.menu_id>0 and WRM.can_view=1
-                            ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
-                        """%(lang_id,usr_id)
+                sql="""SELECT distinct WMF.menu,WMF.menu_id,case l.`name` when '' then WMF.menu_name else l.`name` end,
+                        WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
+                        FROM usr_role WUR JOIN (role_menu WRM JOIN menu_func WMF ON WRM.menu_id=WMF.menu_id) ON WUR.role_id=WRM.role_id
+                        left join muti_lang_menu l on l.menu_id = WMF.menu_id and l.lang_id = %s
+                        WHERE WUR.usr_id='%s' AND WMF.status=1 and WMF.menu_id>0 and WRM.can_view=1
+                        ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
+                    """%(lang_id,usr_id)
+        else:
+            if usr_id in [1,2]:
+                sql="""SELECT distinct WMF.menu,WMF.menu_id,WMF.menu_name,
+                        WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
+                        FROM menu_func WMF 
+                        Left JOIN menu_func WMF1 on WMF.parent_id = WMF1.menu_id
+                        WHERE WMF.status=1 and WMF.menu_id>0 and WMF1.status=1
+                        ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
+                    """
             else:
-                if usr_id in [1,2]:
-                    sql="""SELECT distinct WMF.menu,WMF.menu_id,WMF.menu_name,
-                            WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
-                            FROM menu_func WMF 
-                            Left JOIN menu_func WMF1 on WMF.parent_id = WMF1.menu_id
-                            WHERE WMF.status=1 and WMF.menu_id>0 and WMF1.status=1
-                            ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
-                        """
-                else:
-                    sql="""SELECT distinct WMF.menu,WMF.menu_id,WMF.menu_name,
-                            WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
-                            FROM usr_role WUR JOIN (role_menu WRM JOIN menu_func WMF ON WRM.menu_id=WMF.menu_id) ON WUR.role_id=WRM.role_id
-                            WHERE WUR.usr_id='%s' AND WMF.status=1 and WMF.menu_id>0 and WRM.can_view=1
-                            ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
-                        """%usr_id
-        #print sql   # ---#
-            print(sql)
-            rows,iN = db.select(sql)
-            L1=[2]
-            L2=[]
-            #L = formatData(rows,L1,L2)
-            names = 'level menu_id menu_name sort parent_id status url icon'.split()
-            data = [dict(zip(names, d)) for d in rows]
+                sql="""SELECT distinct WMF.menu,WMF.menu_id,WMF.menu_name,
+                        WMF.sort,WMF.parent_id,WMF.status,WMF.url,WMF.icon
+                        FROM usr_role WUR JOIN (role_menu WRM JOIN menu_func WMF ON WRM.menu_id=WMF.menu_id) ON WUR.role_id=WRM.role_id
+                        WHERE WUR.usr_id='%s' AND WMF.status=1 and WMF.menu_id>0 and WRM.can_view=1
+                        ORDER BY WMF.parent_id,WMF.menu,WMF.sort,WMF.menu_id
+                    """%usr_id
+    #print sql   # ---#
+        print(sql)
+        rows,iN = db.select(sql)
+        L1=[2]
+        L2=[]
+        #L = formatData(rows,L1,L2)
+        names = 'level menu_id menu_name sort parent_id status url icon'.split()
+        data = [dict(zip(names, d)) for d in rows]
 
-            s3 = json.dumps(data,ensure_ascii=False)
+        s3 = json.dumps(data,ensure_ascii=False)
 
-            s1 = """"userid":%s,
-                    "username":"%s",
-                    "dept_id":%s,
-                    "dept_name":"%s",
-                    "pic_url":"%s",
-                    "AccessToken":"%s",
-                    "menu_data":%s,"""%(lT[0][0],(lT[0][1]),lT[0][2],(lT[0][3]),pic_url,token,s3)
-            sql = """insert into users_login (usr_id,source,token,login_ip,login_time,refresh_time,expire_time)
-                        values (%s,'%s','%s','%s',now(),now(),%s) 
-                    """%(lT[0][0],source,token,ip,int(TIME_OUT)*60)
-            #print ToGBK(sql)
-            
-            db.executesql(sql)
+        s1 = """"userid":%s,
+                "username":"%s",
+                "dept_id":%s,
+                "dept_name":"%s",
+                "pic_url":"%s",
+                "AccessToken":"%s",
+                "menu_data":%s,"""%(lT[0][0],(lT[0][1]),lT[0][2],(lT[0][3]),pic_url,token,s3)
+        sql = """insert into users_login (usr_id,source,token,login_ip,login_time,refresh_time,expire_time)
+                    values (%s,'%s','%s','%s',now(),now(),%s) 
+                """%(lT[0][0],source,token,ip,int(TIME_OUT)*60)
+        #print ToGBK(sql)
+        
+        db.executesql(sql)
             # --#
     # else:
     #     errCode = 1

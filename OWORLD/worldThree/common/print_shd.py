@@ -223,7 +223,7 @@ def printPdfShd(request):
         pdf.drawString(115,46,str(process_all_amount(all_amount)))  # 大写
         pdf.drawString(542,21.5,"{}/{}".format(index+1,pages))                              # 页码
         pdf.showPage()
-
+        
     # 其他变量
     # pdf.
     pdf.save()
@@ -268,29 +268,6 @@ def drawText(x,y,V,length):
 
 # 转换对应金额至中文
 def process_all_amount(value):
-    prefix={0:'零',1:'壹',2:'贰',3:'叁',4:'肆',
-        5:'伍',6:'陆',7:'柒',8:'捌',9:'玖'
-        }
-    suffix={0:'分',1:'角',2:'圆',3:'拾',4:'佰',
-        5:'仟',6:'万',7:'拾',8:'佰',9:'仟',10:'亿',11:'拾',12:'佰'
-        ,13:'仟',14:'万'}
-    temp = [] # 转换容器
-    value =  '{:.2f}'.format(float(value))
-    _value = str(value).replace('.','')
-    for i,v in enumerate(_value):
-        v = int(v)
-        if v%10:    # 不为0
-            temp.extend((prefix[v],suffix[len(_value)-i-1])) # 前缀+后缀
-        else:
-            if suffix[len(_value)-i-1] in ['圆',] and int(float(value)):
-                temp.append(suffix[len(_value)-i-1])
-            else:
-                if suffix[len(_value)-i-1] not in ['分','角'] and temp:
-                    if temp[-1]!='零':
-                        temp.append(prefix[v])
-    return ''.join(temp)
-
-
     prefix={0:'零',1:'壹',2:'贰',3:'叁',4:'肆',
         5:'伍',6:'陆',7:'柒',8:'捌',9:'玖'
         }
